@@ -1,3 +1,7 @@
+" colorscheme and true colors
+colo dracula
+set termguicolors
+
 " indentation
 set expandtab tabstop=2 shiftwidth=2
 
@@ -37,6 +41,6 @@ inoremap {<CR> {<CR>}<ESC>0
 
 " plugins
 call plug#begin('~/.local/share/nvim/plugged')
-  Plug 'dracula/vim'
+  Plug 'vim-airline/vim-airline'
   Plug 'alvan/vim-closetag'
 call plug#end()
