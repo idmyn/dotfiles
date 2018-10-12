@@ -1,6 +1,11 @@
-" colorscheme and true colors
+" syntax colorscheme and true colors
 colo dracula
 set termguicolors
+
+" lightline colorscheme
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ }
 
 " indentation
 set expandtab tabstop=2 shiftwidth=2
@@ -12,6 +17,10 @@ augroup numbertoggle
   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
+
+" indication that I've spilled over 79 character line-length limit
+highlight ColorColumn ctermbg=red
+call matchadd('ColorColumn', '\%80v', 100)
 
 " open vertical splits to the right
 set splitright
@@ -41,6 +50,6 @@ inoremap {<CR> {<CR>}<ESC>0
 
 " plugins
 call plug#begin('~/.local/share/nvim/plugged')
-  Plug 'vim-airline/vim-airline'
+  Plug 'itchyny/lightline.vim'
   Plug 'alvan/vim-closetag'
 call plug#end()
