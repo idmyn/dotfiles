@@ -1,11 +1,37 @@
 " syntax colorscheme and true colors
-colo dracula
+colo gruvbox
+set background=dark
 set termguicolors
+
+function! WordCount()
+   let s:old_status = v:statusmsg
+   let position = getpos(".")
+   exe ":silent normal g\<c-g>"
+   let stat = v:statusmsg
+   let s:word_count = 0
+   if stat != '--No lines in buffer--'
+     let s:word_count = str2nr(split(v:statusmsg)[11])
+     let v:statusmsg = s:old_status
+   end
+   call setpos('.', position)
+   return s:word_count
+endfunction
+
+function! LightLineWordCount()
+  return &filetype == 'nroff' ? WordCount() . ' words' : ''
+endfunction
 
 " lightline colorscheme
 let g:lightline = {
-  \ 'colorscheme': 'one',
-  \ }
+      \ 'colorscheme': 'seoul256',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified', 'wordcount' ] ]
+      \ },
+      \ 'component_function': {
+      \   'wordcount': 'LightLineWordCount'
+      \ },
+      \ }
 
 " indentation
 set expandtab tabstop=2 shiftwidth=2
@@ -42,12 +68,6 @@ let g:netrw_dirhistmax = 0
 " keep swap files out of working directory
 set dir=/private/tmp
 
-" jk/kj (instead of <ESC>) to leave insert mode
-let g:easyescape_chars = { "j": 1, "k": 1 }
-let g:easyescape_timeout = 2000
-cnoremap jk <ESC>
-cnoremap kj <ESC>
-
 " shiftless commands
 nnoremap ; :
 nnoremap : ;
@@ -74,8 +94,8 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'itchyny/lightline.vim'
   Plug 'alvan/vim-closetag'
   Plug 'scrooloose/nerdcommenter'
-  Plug 'zhou13/vim-easyescape'
   Plug 'terryma/vim-smooth-scroll'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'mattn/emmet-vim'
+  Plug 'tpope/vim-surround'
 call plug#end()
