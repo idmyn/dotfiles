@@ -1,7 +1,5 @@
 # dotfiles
 very much a work in progress - nothing terribly original here
 
-## symlinks
-_**disclaimer:** symlink destination files should be pretty standard, but initial files depend on where you cloned this repo_
-
-**Neovim:** ```ln -s ~/GitHub/Active/dotfiles/init.vim ~/.config/nvim/init.vim```
+## things to watch out for
+base16 colorscheme is used here with the [Base16 Shell script](https://github.com/chriskempson/base16-shell)

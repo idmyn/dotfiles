@@ -1,7 +1,26 @@
 " syntax colorscheme and true colors
-colo gruvbox
-set background=dark
-set termguicolors
+"colo gruvbox
+"let g:gruvbox_contrast_dark = 'soft'
+"set background=dark
+"set termguicolors
+
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
+
+" autosave if tex
+"function! TexPrefFunction()
+  "autocmd TextChanged,TextChangedI <buffer> silent write
+"endfunction
+"autocmd Filetype tex call TexPrefFunction()
+
+let g:vimtex_view_general_viewer = 'TeXShop'
+let g:vimtex_fold_enabled = 1
+
+" distraction-free writing (see plugin list below)
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
 
 function! WordCount()
    let s:old_status = v:statusmsg
@@ -18,7 +37,7 @@ function! WordCount()
 endfunction
 
 function! LightLineWordCount()
-  return &filetype == 'nroff' ? WordCount() . ' words' : ''
+  return &filetype == 'tex' ? WordCount() . ' words' : ''
 endfunction
 
 " lightline colorscheme
@@ -81,7 +100,7 @@ nnoremap <C-l> <C-w>l
 " autoclose parenthesis
 inoremap ( ()<left>
 inoremap [ []<left>
-inoremap {<CR> {<CR><CR>}<up><tab>
+inoremap { {}<left>
 
 " smooth scrolling
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
@@ -97,5 +116,8 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'terryma/vim-smooth-scroll'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'mattn/emmet-vim'
-  Plug 'tpope/vim-surround'
+  Plug 'machakann/vim-sandwich'
+  Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/limelight.vim'
+  Plug 'lervag/vimtex'
 call plug#end()
