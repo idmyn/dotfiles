@@ -93,8 +93,11 @@ set splitright
 let g:netrw_banner = 0
 let g:netrw_dirhistmax = 0
 
-" keep swap files out of working directory
-set dir=/private/tmp
+" keep swap/backup/undo files out of working directory
+set backupdir=.backup/,~/.backup/,/tmp//
+set directory=.swp/,~/.swp/,/tmp//
+set undodir=.undo/,~/.undo/,/tmp//
+
 
 " shiftless commands
 nnoremap ; :
@@ -125,6 +128,7 @@ map <Leader>q :VimuxCloseRunner<CR>
 
 " plugins
 call plug#begin('~/.local/share/nvim/plugged')
+  Plug 'chriskempson/base16-vim'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'benmills/vimux'
   Plug 'itchyny/lightline.vim'

@@ -2,6 +2,7 @@
 
 cd ~/GitHub/Active/dotfiles
 cp ~/.vimrc .
+cp ~/.tmux.conf .
 
 cd ~/GitHub/Active/dotfiles/.config
 cp -R ~/.config/fish .
