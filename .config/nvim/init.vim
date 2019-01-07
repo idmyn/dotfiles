@@ -4,6 +4,9 @@
 "set background=dark
 "set termguicolors
 
+" remap esc to enter command mode in :terminal
+tnoremap <Esc> <C-\><C-n>
+
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
@@ -69,6 +72,12 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
+set incsearch
+set ignorecase
+set smartcase
+" Remove highlights with leader + enter
+nnoremap <Leader><CR> :noh<cr>
+
 " indication that I've spilled over 79 character line-length limit
 highlight ColorColumn ctermbg=red
 call matchadd('ColorColumn', '\%80v', 100)
@@ -108,8 +117,16 @@ noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
+nnoremap <silent> <leader>f :TestFile<CR>
+nnoremap <silent> <leader>n :TestNearest<CR>
+nnoremap <silent> <leader>l :TestLast<CR>
+let test#strategy = "vimux"
+map <Leader>q :VimuxCloseRunner<CR>
+
 " plugins
 call plug#begin('~/.local/share/nvim/plugged')
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'benmills/vimux'
   Plug 'itchyny/lightline.vim'
   Plug 'alvan/vim-closetag'
   Plug 'scrooloose/nerdcommenter'
@@ -120,4 +137,5 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
   Plug 'lervag/vimtex'
+  Plug 'janko-m/vim-test'
 call plug#end()
