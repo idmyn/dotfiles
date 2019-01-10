@@ -1,8 +1,5 @@
 syntax on
 
-" Highlight current line when in insert mode
-autocmd InsertEnter,InsertLeave * set cul!
-
 " leader key
 let mapleader=" "
 
@@ -23,8 +20,6 @@ set smartcase
 " Remove highlights with leader + enter
 nnoremap <Leader><CR> :nohlsearch<cr>
 
-set clipboard=unnamed
-
 " indication that I've spilled over 79 character line-length limit
 highlight ColorColumn ctermbg=red
 call matchadd('ColorColumn', '\%80v', 100)
@@ -44,6 +39,11 @@ let g:netrw_dirhistmax = 0
 nnoremap ; :
 nnoremap : ;
 
+" keep swap/backup/undo files out of working directory
+set backupdir=.backup/,~/.backup/,/tmp//
+set directory=.swp/,~/.swp/,/tmp//
+set undodir=.undo/,~/.undo/,/tmp//
+
 " window navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -55,7 +55,15 @@ inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
 
+" install vim-plug if needed
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.vim/plugged')
+  Plug 'wincent/terminus'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'scrooloose/nerdcommenter'
   Plug 'ntpeters/vim-better-whitespace'
