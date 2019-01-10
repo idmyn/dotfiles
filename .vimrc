@@ -3,8 +3,10 @@ syntax on
 " leader key
 let mapleader=" "
 
-" indentation
+" indentation and folding (unfolded by default)
 set expandtab tabstop=2 shiftwidth=2
+set foldmethod=indent
+au BufRead * normal zR
 
 " hybrid line numbers, loosing relative numbers when inserting
 set number relativenumber
