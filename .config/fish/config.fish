@@ -1,3 +1,7 @@
+set -Ux EDITOR nvim
+set -Ux NNN_USE_EDITOR 1
+set -Ux NNN_SHOW_HIDDEN 1
+
 fish_vi_key_bindings
 
 # Fisher

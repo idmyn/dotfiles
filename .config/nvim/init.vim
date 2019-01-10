@@ -1,9 +1,3 @@
-" syntax colorscheme and true colors
-"colo gruvbox
-"let g:gruvbox_contrast_dark = 'soft'
-"set background=dark
-"set termguicolors
-
 " remap esc to enter command mode in :terminal
 tnoremap <Esc> <C-\><C-n>
 
@@ -55,8 +49,10 @@ let g:lightline = {
       \ },
       \ }
 
-" indentation
+" indentation and folding (unfolded by default)
 set expandtab tabstop=2 shiftwidth=2
+set foldmethod=indent
+au BufRead * normal zR
 
 " leader key
 let mapleader=" "
@@ -97,7 +93,6 @@ let g:netrw_dirhistmax = 0
 set backupdir=.backup/,~/.backup/,/tmp//
 set directory=.swp/,~/.swp/,/tmp//
 set undodir=.undo/,~/.undo/,/tmp//
-
 
 " shiftless commands
 nnoremap ; :
