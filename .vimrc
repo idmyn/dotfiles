@@ -65,6 +65,7 @@ endif
 call plug#begin('~/.vim/plugged')
   Plug 'wincent/terminus'
   Plug 'christoomey/vim-tmux-navigator'
+  Plug 'tpope/vim-obsession'
   Plug 'scrooloose/nerdcommenter'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'machakann/vim-sandwich'

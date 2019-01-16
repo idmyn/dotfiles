@@ -126,6 +126,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'chriskempson/base16-vim'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'benmills/vimux'
+  Plug 'tpope/vim-obsession'
   Plug 'itchyny/lightline.vim'
   Plug 'alvan/vim-closetag'
   Plug 'scrooloose/nerdcommenter'
