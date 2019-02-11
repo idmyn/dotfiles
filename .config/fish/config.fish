@@ -1,6 +1,5 @@
 set -Ux EDITOR nvim
 set -Ux NNN_USE_EDITOR 1
-set -Ux NNN_SHOW_HIDDEN 1
 
 fish_vi_key_bindings
 
@@ -29,6 +28,7 @@ function n --description 'support nnn quit and change directory'
 end
 
 # Aliases
+#alias ruby="/usr/local/Cellar/ruby/2.6.0_1/bin/ruby"
 alias groff="cd /usr/local/Cellar/groff/1.22.3/bin/groff"
 
 alias fishrc="nvim ~/.config/fish/config.fish"
@@ -43,3 +43,6 @@ alias ghTest="cd /Users/david/GitHub/Active/test"
 alias exP="cd /Users/david/Exercism/python"
 alias exR="cd /Users/david/Exercism/ruby"
 alias exJ="cd /Users/david/Exercism/java"
+set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+
+status --is-interactive; and source (rbenv init -|psub)

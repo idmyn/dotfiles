@@ -138,4 +138,5 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'junegunn/limelight.vim'
   Plug 'lervag/vimtex'
   Plug 'janko-m/vim-test'
+  Plug 'wesQ3/vim-windowswap'
 call plug#end()
