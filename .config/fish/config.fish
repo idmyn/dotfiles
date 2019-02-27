@@ -37,7 +37,7 @@ alias nvimrc="nvim ~/.config/nvim/init.vim"
 alias alacrittyrc="nvim ~/.config/alacritty/alacritty.yml"
 
 alias dt="cd /Users/david/Dropbox/System/Desktop"
-alias diss="cd /Users/david/Dropbox/Documents/University/Documents/Fourth\ Year/Dissertation"
+alias diss="cd /Users/david/GitHub/Active/dissertation"
 alias projects="cd /Users/david/Documents/Local\ Projects"
 alias ghTest="cd /Users/david/GitHub/Active/test"
 alias exP="cd /Users/david/Exercism/python"

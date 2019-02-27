@@ -59,6 +59,8 @@ let mapleader=" "
 " unmap the shortcut to suspend vim
 nnoremap <c-z> <nop>
 let g:user_emmet_leader_key='<c-z>' " z for zen
+" fix weird backtick behaviour in from VimTex
+let g:vimtex_imaps_leader = ':'
 
 " hybrid line numbers, loosing relative numbers when inserting
 set number relativenumber
