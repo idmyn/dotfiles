@@ -100,6 +100,10 @@ set undodir=.undo/,~/.undo/,/tmp//
 nnoremap ; :
 nnoremap : ;
 
+" easier motion within lines
+noremap H ^
+noremap L g_
+
 " window navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
