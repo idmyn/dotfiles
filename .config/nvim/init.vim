@@ -109,6 +109,8 @@ nnoremap : ;
 " easier motion within lines
 noremap H ^
 noremap L g_
+nnoremap K H
+nnoremap J L
 
 " window navigation
 nnoremap <C-h> <C-w>h
