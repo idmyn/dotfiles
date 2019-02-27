@@ -15,6 +15,12 @@ endif
 let g:vimtex_view_general_viewer = 'TeXShop'
 let g:vimtex_fold_enabled = 1
 
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
+
 " distraction-free writing (see plugin list below)
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
