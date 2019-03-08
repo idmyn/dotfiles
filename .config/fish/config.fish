@@ -35,6 +35,7 @@ alias fishrc="nvim ~/.config/fish/config.fish"
 alias vimrc="nvim ~/.vimrc"
 alias nvimrc="nvim ~/.config/nvim/init.vim"
 alias alacrittyrc="nvim ~/.config/alacritty/alacritty.yml"
+alias tridactylrc="nvim ~/.config/tridactyl/tridactylrc"
 
 alias dt="cd /Users/david/Dropbox/System/Desktop"
 alias diss="cd /Users/david/GitHub/Active/dissertation"

@@ -24,12 +24,11 @@ nnoremap <Leader><CR> :nohlsearch<cr>
 highlight ColorColumn ctermbg=red
 call matchadd('ColorColumn', '\%80v', 100)
 
-" better-whitespace plugin
-let g:strip_whitespace_on_save=1
+" Automatically delete all trailing whitespace on save
+autocmd BufWritePre * %s/\s\+$//e
 
 " open horizontal splits below, and vertical splits to the right
-set splitbelow
-set splitright
+set splitbelow splitright
 
 " remove netrw file tree banner and prevent history files
 let g:netrw_banner = 0
@@ -65,8 +64,6 @@ endif
 call plug#begin('~/.vim/plugged')
   Plug 'wincent/terminus'
   Plug 'christoomey/vim-tmux-navigator'
-  Plug 'tpope/vim-obsession'
   Plug 'scrooloose/nerdcommenter'
-  Plug 'ntpeters/vim-better-whitespace'
   Plug 'machakann/vim-sandwich'
 call plug#end()
