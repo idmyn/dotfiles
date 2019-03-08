@@ -2,4 +2,7 @@
      :applications {:iterm2 ["^com\\.googlecode\\.iterm2$"]}
      :main [{:des "caps_lock to f13" :rules [[:caps_lock :f13 :!iterm2]]}
             {:des "in iterm2: caps_lock alone to escape, held to f13"
-             :rules [[:caps_lock nil :iterm2 {:alone :escape :held {:key :f13 :repeat false :halt true}}]]}]}
+             :rules [[:caps_lock nil :iterm2 {:alone :escape :held {:key :f13 :repeat false :halt true}}]]}
+            {:des "equal_sign and backspace to forward delete"
+             :rules [[[:equal_sign :delete_or_backspace] :delete_forward]]}]}
+            #_ ^change this so that equals is more of a modifier for backspace
