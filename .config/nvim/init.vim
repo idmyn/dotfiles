@@ -1,10 +1,20 @@
+" Copy selected text to system clipboard (requires gvim/nvim/vim-x11)
+" (on macOS I emulate this behaviour with cmd-c and cmd-v via iTerm2 prefs)
+vnoremap <C-c> "+y
+map <C-p> "+P
+
 " remap esc to enter command mode in :terminal
 tnoremap <Esc> <C-\><C-n>
 
+" syntax highlighting via base16 shell
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
 endif
+
+let g:airline_theme='base16_oceanicnext'
+
+let g:tmuxline_powerline_separators = 0
 
 " autosave if tex
 "function! TexPrefFunction()
@@ -12,8 +22,18 @@ endif
 "endfunction
 "autocmd Filetype tex call TexPrefFunction()
 
+let g:tex_flavor = "latex"
+
 let g:vimtex_view_general_viewer = 'TeXShop'
 let g:vimtex_fold_enabled = 1
+
+" indentation and folding (unfolded by default)
+set expandtab tabstop=2 shiftwidth=2
+set foldmethod=indent
+au BufRead * normal zR
+
+" prevent folds closing automatically
+set nofoldenable
 
 augroup remember_folds
   autocmd!
@@ -25,40 +45,8 @@ augroup END
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-function! WordCount()
-   let s:old_status = v:statusmsg
-   let position = getpos(".")
-   exe ":silent normal g\<c-g>"
-   let stat = v:statusmsg
-   let s:word_count = 0
-   if stat != '--No lines in buffer--'
-     let s:word_count = str2nr(split(v:statusmsg)[11])
-     let v:statusmsg = s:old_status
-   end
-   call setpos('.', position)
-   return s:word_count
-endfunction
-
-function! LightLineWordCount()
-  return &filetype == 'tex' ? WordCount() . ' words' : ''
-endfunction
-
-" lightline colorscheme
-let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified', 'wordcount' ] ]
-      \ },
-      \ 'component_function': {
-      \   'wordcount': 'LightLineWordCount'
-      \ },
-      \ }
-
-" indentation and folding (unfolded by default)
-set expandtab tabstop=2 shiftwidth=2
-set foldmethod=indent
-au BufRead * normal zR
+let g:NERDDefaultAlign = 'left'
+let g:NERDCompactSexyComs = 1
 
 " leader key
 let mapleader=" "
@@ -86,12 +74,11 @@ nnoremap <Leader><CR> :noh<cr>
 highlight ColorColumn ctermbg=red
 call matchadd('ColorColumn', '\%80v', 100)
 
-" better-whitespace plugin
-let g:strip_whitespace_on_save=1
+" Automatically delete all trailing whitespace on save
+autocmd BufWritePre * %s/\s\+$//e
 
 " open horizontal splits below, and vertical splits to the right
-set splitbelow
-set splitright
+set splitbelow splitright
 
 " remove netrw file tree banner and prevent history files
 let g:netrw_banner = 0
@@ -123,17 +110,15 @@ inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
 
-" smooth scrolling
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-
 nnoremap <silent> <leader>f :TestFile<CR>
 nnoremap <silent> <leader>n :TestNearest<CR>
 nnoremap <silent> <leader>l :TestLast<CR>
 let test#strategy = "vimux"
 map <Leader>q :VimuxCloseRunner<CR>
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " plugins
 call plug#begin('~/.local/share/nvim/plugged')
@@ -141,11 +126,9 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'benmills/vimux'
   Plug 'tpope/vim-obsession'
-  Plug 'itchyny/lightline.vim'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
   Plug 'alvan/vim-closetag'
-  Plug 'scrooloose/nerdcommenter'
-  Plug 'terryma/vim-smooth-scroll'
-  Plug 'ntpeters/vim-better-whitespace'
   Plug 'mattn/emmet-vim'
   Plug 'machakann/vim-sandwich'
   Plug 'junegunn/goyo.vim'
@@ -153,4 +136,8 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'lervag/vimtex'
   Plug 'janko-m/vim-test'
   Plug 'wesQ3/vim-windowswap'
+  Plug 'scrooloose/nerdcommenter'
+	Plug 'edkolev/tmuxline.vim'
+	Plug 'honza/vim-snippets'
+	Plug 'SirVer/ultisnips'
 call plug#end()
