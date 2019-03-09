@@ -1,3 +1,6 @@
+" leader key
+let mapleader=" "
+
 " Copy selected text to system clipboard (requires gvim/nvim/vim-x11)
 " (on macOS I emulate this behaviour with cmd-c and cmd-v via iTerm2 prefs)
 vnoremap <C-c> "+y
@@ -67,11 +70,11 @@ endfunction
 autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave()
 
+nnoremap <Leader>g :Goyo<CR>
+
 let g:NERDDefaultAlign = 'left'
 let g:NERDCompactSexyComs = 1
 
-" leader key
-let mapleader=" "
 " unmap the shortcut to suspend vim
 nnoremap <c-z> <nop>
 let g:user_emmet_leader_key='<c-z>' " z for zen
