@@ -6,6 +6,14 @@ map <C-p> "+P
 " remap esc to enter command mode in :terminal
 tnoremap <Esc> <C-\><C-n>
 
+" hybrid line numbers, loosing relative numbers when inserting
+set number relativenumber
+augroup numbertoggle
+	autocmd!
+	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
 " syntax highlighting via base16 shell
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
@@ -41,9 +49,20 @@ augroup remember_folds
   autocmd BufWinEnter * silent! loadview
 augroup END
 
-" distraction-free writing (see plugin list below)
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
+function! s:goyo_enter()
+	Limelight
+	set norelativenumber
+	autocmd! numbertoggle
+endfunction
+
+function! s:goyo_leave()
+	Limelight!
+	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+endfunction
+
+autocmd! User GoyoEnter call <SID>goyo_enter()
+autocmd! User GoyoLeave call <SID>goyo_leave()
 
 let g:NERDDefaultAlign = 'left'
 let g:NERDCompactSexyComs = 1
@@ -55,14 +74,6 @@ nnoremap <c-z> <nop>
 let g:user_emmet_leader_key='<c-z>' " z for zen
 " fix weird backtick behaviour in from VimTex
 let g:vimtex_imaps_leader = ':'
-
-" hybrid line numbers, loosing relative numbers when inserting
-set number relativenumber
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
 
 set incsearch
 set ignorecase
