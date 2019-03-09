@@ -43,11 +43,14 @@ au BufRead * normal zR
 " prevent folds closing automatically
 set nofoldenable
 
-augroup remember_folds
+augroup AutoSaveFolds
   autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
-augroup END
+  " view files are about 500 bytes
+  " bufleave but not bufwinleave captures closing 2nd tab
+  " nested is needed by bufwrite* (if triggered via other autocmd)
+  autocmd BufWinLeave,BufLeave,BufWritePost ?* nested silent! mkview!
+  autocmd BufWinEnter ?* silent! loadview
+augroup end
 
 function! s:goyo_enter()
 	Limelight
