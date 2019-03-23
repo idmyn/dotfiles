@@ -1,10 +1,28 @@
+let g:vimtex_view_general_viewer = 'TeXShop'
+let g:vimtex_fold_enabled = 1
+
 " leader key
 let mapleader=" "
+
+set background=light
+colo eink
 
 " indentation and folding (unfolded by default)
 set expandtab tabstop=2 shiftwidth=2
 set foldmethod=indent
 au BufRead * normal zR
+
+" prevent folds closing automatically
+set nofoldenable
+
+augroup AutoSaveFolds
+  autocmd!
+  " view files are about 500 bytes
+  " bufleave but not bufwinleave captures closing 2nd tab
+  " nested is needed by bufwrite* (if triggered via other autocmd)
+  autocmd BufWinLeave,BufLeave,BufWritePost ?* nested silent! mkview!
+  autocmd BufWinEnter ?* silent! loadview
+augroup end
 
 " hybrid line numbers, loosing relative numbers when inserting
 set number relativenumber
@@ -18,7 +36,7 @@ set incsearch
 set ignorecase
 set smartcase
 " Remove highlights with leader + enter
-nnoremap <Leader><CR> :nohlsearch<cr>
+nnoremap <Leader><CR> :noh<cr>
 
 " indication that I've spilled over 79 character line-length limit
 highlight ColorColumn ctermbg=red
@@ -37,6 +55,12 @@ let g:netrw_dirhistmax = 0
 " shiftless commands
 nnoremap ; :
 nnoremap : ;
+
+" easier motion within lines
+noremap H ^
+noremap L g_
+nnoremap K H
+nnoremap J L
 
 " keep swap/backup/undo files out of working directory
 set backupdir=.backup/,~/.backup/,/tmp//
@@ -62,8 +86,12 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+  Plug 'lervag/vimtex'
+  Plug 'junegunn/limelight.vim'
   Plug 'wincent/terminus'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'scrooloose/nerdcommenter'
   Plug 'machakann/vim-sandwich'
+	Plug 'honza/vim-snippets'
+	Plug 'SirVer/ultisnips'
 call plug#end()
