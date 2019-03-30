@@ -2,7 +2,13 @@
 
 cd ~
 cp ~/GitHub/Active/dotfiles/.vimrc .
-cp -R ~/GitHub/Active/dotfiles/.tmux .
+
+cd ~/.tmux
+cp ~/GitHub/Active/dotfiles/.tmux/.tmux.conf .
+cp ~/GitHub/Active/dotfiles/.tmux/tmuxline .
+
+cd ~/.emacs.d
+cp ~/GitHub/Active/dotfiles/.emacs.d/init.el .
 
 cd ~/.config
 cp -R ~/GitHub/Active/dotfiles/.config/fish .
