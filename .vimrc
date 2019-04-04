@@ -1,5 +1,7 @@
 let g:vimtex_view_general_viewer = 'TeXShop'
 let g:vimtex_fold_enabled = 1
+" fix weird backtick behaviour in from VimTex
+let g:vimtex_imaps_leader = ':'
 
 " leader key
 let mapleader=" "

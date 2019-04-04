@@ -154,7 +154,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'janko-m/vim-test'
   Plug 'wesQ3/vim-windowswap'
   Plug 'scrooloose/nerdcommenter'
-	Plug 'edkolev/tmuxline.vim'
-	Plug 'honza/vim-snippets'
-	Plug 'SirVer/ultisnips'
+  Plug 'edkolev/tmuxline.vim'
+  Plug 'honza/vim-snippets'
+  Plug 'SirVer/ultisnips'
 call plug#end()
