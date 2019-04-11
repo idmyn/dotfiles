@@ -9,7 +9,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (ranger emmet-mode goto-chg))))
+ '(package-selected-packages (quote (evil-escape ranger emmet-mode goto-chg))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -32,6 +32,16 @@
 (require 'undo-tree)
 (global-undo-tree-mode)
 
+;; emacs bindings in insert mode
+;; a la https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
+(setcdr evil-insert-state-map nil)
+(define-key evil-insert-state-map
+  (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+;; fix escape key
+(require 'evil-escape)
+(evil-escape-mode)
+(global-set-key (kbd "<escape>") 'evil-escape)
+
 ;; swap colon and semicolon
 (define-key evil-motion-state-map ";" 'evil-ex)
 (define-key evil-motion-state-map ":" 'evil-repeat-find-char)
@@ -46,12 +56,15 @@
 (evil-leader/set-leader "<SPC>")
 
 (evil-leader/set-key
-  "<SPC>" 'execute-extended-command
+  "x" 'execute-extended-command
   "f" 'find-file
   "b" 'switch-to-buffer
-  "k" 'kill-buffer
   "r" 'recentf-open-files
-  "d" 'deer)
+  "d" 'deer
+  "h" 'windmove-left
+  "j" 'windmove-down
+  "k" 'windmove-up
+  "l" 'windmove-right)
 
 
 ;; RANGER
@@ -110,13 +123,6 @@
 (setq recentf-max-menu-items 25)
 (setq recentf-max-saved-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files) ; also <leader>r
-
-
-;; EDITDOR NAVIGATION BINDINGS
-(global-set-key (kbd "C-h")  'windmove-left)
-(global-set-key (kbd "C-l") 'windmove-right)
-(global-set-key (kbd "C-k")    'windmove-up)
-(global-set-key (kbd "C-j")  'windmove-down)
 
 ;; C-; to comment/uncomment
 (define-key evil-motion-state-map (kbd "C-;") 'comment-dwim)
