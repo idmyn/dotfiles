@@ -107,8 +107,8 @@ set directory=.swp/,~/.swp/,/tmp//
 set undodir=.undo/,~/.undo/,/tmp//
 
 " shiftless commands
-nnoremap ; :
-nnoremap : ;
+noremap ; :
+noremap : ;
 
 " easier motion within lines
 noremap H ^
