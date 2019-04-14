@@ -17,6 +17,18 @@
   (require 'use-package))
 
 
+;; IVY
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+
+  (use-package counsel
+    :ensure t
+    :config (counsel-mode 1)))
+
+
 ;; EVIL
 (setq evil-want-C-u-scroll t)
 (use-package evil
@@ -30,16 +42,10 @@
     (global-evil-leader-mode)
     (evil-leader/set-leader "<SPC>")
     (evil-leader/set-key
-      "x" 'execute-extended-command
-      "f" 'find-file
+      "x" 'counsel-M-x
+      "f" 'counsel-find-file
       "b" 'switch-to-buffer
-      "r" 'recentf-open-files
-      "d" 'deer
-      "p" 'projectile-command-map
-      "h" 'windmove-left
-      "j" 'windmove-down
-      "k" 'windmove-up
-      "l" 'windmove-right))
+      "d" 'deer))
 
   (evil-mode 1)
 
@@ -76,13 +82,6 @@
   :config
   (ranger-override-dired-mode t)
   (setq ranger-hide-cursor nil))
-
-
-;; PROJECTILE
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-mode +1))
 
 
 ;; EMMET
@@ -122,14 +121,10 @@
    kept-old-versions 2
    version-control t)       ; use versioned backups
 
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (setq recentf-max-saved-items 25)
-(global-set-key "\C-x\ \C-r" 'recentf-open-files) ; also <leader>r
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 ;; C-; to comment/uncomment
 (define-key evil-motion-state-map (kbd "C-;") 'comment-dwim)
