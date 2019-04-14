@@ -1,76 +1,88 @@
-;; LOAD PACKAGES
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+;; http://cachestocaches.com/2015/8/getting-started-use-package/
 
+;; Update package-archive lists
 (require 'package)
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(package-initialize)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (evil-escape ranger emmet-mode goto-chg))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; Install 'use-package' if necessary
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; Enable use-package
+(eval-when-compile
+  (require 'use-package))
 
 
 ;; EVIL
 (setq evil-want-C-u-scroll t)
-(add-to-list 'load-path "~/.emacs.d/evil")
+(use-package evil
+  :ensure t
+  :config
 
-;; initialise evil-leader before evil to enable in initial buffers
-(require 'evil-leader)
-(global-evil-leader-mode)
+  ;; initialise evil-leader before evil to enable in initial buffers
+  (use-package evil-leader
+    :ensure t
+    :config
+    (global-evil-leader-mode)
+    (evil-leader/set-leader "<SPC>")
+    (evil-leader/set-key
+      "x" 'execute-extended-command
+      "f" 'find-file
+      "b" 'switch-to-buffer
+      "r" 'recentf-open-files
+      "d" 'deer
+      "p" 'projectile-command-map
+      "h" 'windmove-left
+      "j" 'windmove-down
+      "k" 'windmove-up
+      "l" 'windmove-right))
 
-(require 'evil)
-(evil-mode 1)
+  (evil-mode 1)
 
-(require 'undo-tree)
-(global-undo-tree-mode)
+  (use-package undo-tree
+    :ensure t
+    :config (global-undo-tree-mode))
 
-;; emacs bindings in insert mode
-;; a la https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
-(setcdr evil-insert-state-map nil)
-(define-key evil-insert-state-map
-  (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
-;; fix escape key
-(require 'evil-escape)
-(evil-escape-mode)
-(global-set-key (kbd "<escape>") 'evil-escape)
+  ;; emacs bindings in insert mode
+  ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
+  (setcdr evil-insert-state-map nil)
+  (define-key evil-insert-state-map
+    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+  ;; fix escape key
+  (use-package evil-escape
+    :ensure t
+    :config
+    (evil-escape-mode)
+    (global-set-key (kbd "<escape>") 'evil-escape))
 
-;; swap colon and semicolon
-(define-key evil-motion-state-map ";" 'evil-ex)
-(define-key evil-motion-state-map ":" 'evil-repeat-find-char)
+  ;; swap colon and semicolon
+  (define-key evil-motion-state-map ";" 'evil-ex)
+  (define-key evil-motion-state-map ":" 'evil-repeat-find-char)
 
-;; easier motion within lines
-(define-key evil-motion-state-map "H" 'evil-first-non-blank)
-(define-key evil-motion-state-map "L" 'evil-last-non-blank)
-(define-key evil-motion-state-map "K" 'evil-window-top)
-(define-key evil-motion-state-map "J" 'evil-window-bottom)
-
-;; leader bindings
-(evil-leader/set-leader "<SPC>")
-
-(evil-leader/set-key
-  "x" 'execute-extended-command
-  "f" 'find-file
-  "b" 'switch-to-buffer
-  "r" 'recentf-open-files
-  "d" 'deer
-  "h" 'windmove-left
-  "j" 'windmove-down
-  "k" 'windmove-up
-  "l" 'windmove-right)
+  ;; easier motion within lines
+  (define-key evil-motion-state-map "H" 'evil-first-non-blank)
+  (define-key evil-motion-state-map "L" 'evil-last-non-blank)
+  (define-key evil-motion-state-map "K" 'evil-window-top)
+  (define-key evil-motion-state-map "J" 'evil-window-bottom))
 
 
 ;; RANGER
-(require 'ranger)
-(ranger-override-dired-mode t)
-(setq ranger-hide-cursor nil)
+(use-package ranger
+  :ensure t
+  :config
+  (ranger-override-dired-mode t)
+  (setq ranger-hide-cursor nil))
+
+
+;; PROJECTILE
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1))
 
 
 ;; EMMET
@@ -80,7 +92,8 @@
 
 
 ;; EDITOR APPEARANCE
-(require 'eink-theme)
+(use-package eink-theme
+  :ensure t)
 
 (setq inhibit-startup-screen t)
 (toggle-scroll-bar -1)
@@ -97,12 +110,6 @@
 (global-whitespace-mode t)
 ;; while we're at it...
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; less file info in dired
-(defun xah-dired-mode-setup ()
-  "to be run as hook for `dired-mode'."
-  (dired-hide-details-mode 1))
-(add-hook 'dired-mode-hook 'xah-dired-mode-setup)
 
 
 ;; ADD FUNCTIONALITY
