@@ -1,3 +1,4 @@
+;;; INITIALISE USE-PACKAGE
 ;; http://cachestocaches.com/2015/8/getting-started-use-package/
 
 ;; Update package-archive lists
@@ -17,22 +18,55 @@
   (require 'use-package))
 
 
-;; IVY
-(use-package ivy
-  :ensure t
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
+;;; EDITOR APPEARANCE / QUALITY OF LIFE TWEAKS
 
-  (use-package counsel
-    :ensure t
-    :config (counsel-mode 1)))
+(use-package eink-theme
+  :ensure t)
+
+(setq inhibit-startup-screen t)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+(setq-default mode-line-format nil)
+
+(global-display-line-numbers-mode)
+(setq-default display-line-numbers-type 'relative)
+
+(show-paren-mode 1)
+(electric-pair-mode 1)
+
+;; Eighty Column Rule
+(require 'whitespace)
+(setq whitespace-line-column 80)
+(setq whitespace-style '(face tabs lines-tail trailing))
+(global-whitespace-mode t)
+;; while we're at it...
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+    '(("." . "~/.saves/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
 
 
-;; EVIL
-(setq evil-want-C-u-scroll t)
+;;; EDITOR NAVIGATION / INTERACTION
+
+;; General
+;(use-package general
+;  :ensure t
+;  :config
+;  (general-swap-key nil 'motion
+;    ";" ":")
+;  )
+
+;; Evil
 (use-package evil
   :ensure t
+  :init
+  (setq evil-want-C-u-scroll t)
   :config
 
   ;; initialise evil-leader before evil to enable in initial buffers
@@ -45,7 +79,9 @@
       "x" 'counsel-M-x
       "f" 'counsel-find-file
       "b" 'switch-to-buffer
-      "d" 'deer))
+      "d" 'deer
+      "s" 'shell
+      "e" 'eshell))
 
   (evil-mode 1)
 
@@ -70,13 +106,28 @@
   (define-key evil-motion-state-map ":" 'evil-repeat-find-char)
 
   ;; easier motion within lines
+  (define-key evil-normal-state-map "J" nil) ; unbind from evil-join
   (define-key evil-motion-state-map "H" 'evil-first-non-blank)
   (define-key evil-motion-state-map "L" 'evil-last-non-blank)
-  (define-key evil-motion-state-map "K" 'evil-window-top)
-  (define-key evil-motion-state-map "J" 'evil-window-bottom))
+  (define-key evil-motion-state-map "K" 'backward-paragraph)
+  (define-key evil-motion-state-map "J" 'forward-paragraph))
 
+;; C-; to comment/uncomment
+(define-key evil-motion-state-map (kbd "C-;") 'comment-dwim)
 
-;; RANGER
+;; Ivy
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (global-set-key "\C-s" 'swiper)
+
+  (use-package counsel
+    :ensure t
+    :config (counsel-mode 1)))
+
+;; Ranger
 (use-package ranger
   :ensure t
   :config
@@ -84,47 +135,47 @@
   (setq ranger-hide-cursor nil))
 
 
-;; EMMET
+;;; LANGUAGE SPECIFIC
+
+;; TXT/ORG
+(add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
+
+;; HTML/CSS
 (add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
 (define-key evil-insert-state-map (kbd "C-z") 'emmet-expand-line)
 
+;; Ruby
+(use-package inf-ruby
+  :ensure t
+  :interpreter "ruby")
 
-;; EDITOR APPEARANCE
-(use-package eink-theme
-  :ensure t)
-
-(setq inhibit-startup-screen t)
-(toggle-scroll-bar -1)
-(tool-bar-mode -1)
-(setq-default mode-line-format nil)
-
-(global-display-line-numbers-mode)
-(setq-default display-line-numbers-type 'relative)
-
-;; Eighty Column Rule
-(require 'whitespace)
-(setq whitespace-line-column 80)
-(setq whitespace-style '(face tabs lines-tail trailing))
-(global-whitespace-mode t)
-;; while we're at it...
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(use-package seeing-is-believing
+  :ensure t
+  :interpreter "ruby"
+  :config
+  (setq seeing-is-believing-executable "/Users/david/.rbenv/shims/seeing_is_believing"))
 
 
-;; ADD FUNCTIONALITY
-(setq
-   backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist
-    '(("." . "~/.saves/"))    ; don't litter my fs tree
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t)       ; use versioned backups
+;;; macOS SPECIFIC
+;; set the path variable (important for macOS?)
+(use-package exec-path-from-shell
+  :ensure t
+  :config (exec-path-from-shell-initialize))
 
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-(setq recentf-max-saved-items 25)
-(global-set-key "\C-x\ \C-r" 'recentf-open-files)
-
-;; C-; to comment/uncomment
-(define-key evil-motion-state-map (kbd "C-;") 'comment-dwim)
+;; Allow hash to be entered on UK macbook keyboard layout
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (general use-package seeing-is-believing ruby-test-mode rbenv ranger projectile pdf-tools org-noter minitest interleave inf-ruby helm exec-path-from-shell evil-leader evil-escape eink-theme counsel))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
