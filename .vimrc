@@ -4,7 +4,7 @@ let mapleader=" "
 set background=light
 colo eink
 
-" hybrid line numbers, loosing relative numbers when inserting
+" hybrid line numbers, losing relative numbers when inserting
 set number relativenumber
 augroup numbertoggle
   autocmd!
