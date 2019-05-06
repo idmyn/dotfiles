@@ -12,14 +12,14 @@ PS1='
 
 bindkey -e
 
+export LSCOLORS=AxFxcxdxbxegfhabagacEx
+# colors via https://geoff.greer.fm/lscolors/
+
 function chpwd() {
     emulate -L zsh
     echo && ls -a
 }
-
 setopt autocd
-
-LS_COLORS=$LS_COLORS:'di=0:fi=1:ln=4' ; export LS_COLORS; ls
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export TERM=xterm-256color
