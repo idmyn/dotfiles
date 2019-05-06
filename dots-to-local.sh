@@ -2,6 +2,7 @@
 
 cd ~
 cp ~/GitHub/Active/dotfiles/.vimrc .
+cp ~/GitHub/Active/dotfiles/.zshrc .
 
 cd ~/.emacs.d
 cp ~/GitHub/Active/dotfiles/.emacs.d/init.el .
