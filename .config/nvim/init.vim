@@ -1,42 +1,65 @@
 " leader key
 let mapleader=" "
 
-" Copy selected text to system clipboard (requires gvim/nvim/vim-x11)
-" (on macOS I emulate this behaviour with cmd-c and cmd-v via iTerm2 prefs)
-vnoremap <C-c> "+y
-map <C-p> "+P
+set background=light
+colo eink
 
-" remap esc to enter command mode in :terminal
-tnoremap <Esc> <C-\><C-n>
-
-" hybrid line numbers, loosing relative numbers when inserting
+" hybrid line numbers, losing relative numbers when inserting
 set number relativenumber
 augroup numbertoggle
-	autocmd!
-	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-" syntax highlighting via base16 shell
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
+" open horizontal splits below, and vertical splits to the right
+set splitbelow splitright
+
+" shiftless commands
+noremap ; :
+noremap : ;
+
+" easier motion within lines
+noremap H ^
+noremap L g_
+nnoremap K H
+nnoremap J L
+
+" window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" autoclose parenthesis
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+
+if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
+  echo "Downloading junegunn/vim-plug to manage plugins..."
+  silent !mkdir -p ~/.config/nvim/autoload/
+  silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
 endif
 
-let g:airline_theme='base16_oceanicnext'
-
-let g:tmuxline_powerline_separators = 0
-
-" autosave if tex
-"function! TexPrefFunction()
-  "autocmd TextChanged,TextChangedI <buffer> silent write
-"endfunction
-"autocmd Filetype tex call TexPrefFunction()
-
-let g:tex_flavor = "latex"
-
-let g:vimtex_view_general_viewer = 'TeXShop'
-let g:vimtex_fold_enabled = 1
+call plug#begin('~/.config/nvim/plugged')
+  Plug 'chriskempson/base16-vim'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'benmills/vimux'
+  Plug 'tpope/vim-obsession'
+  Plug 'alvan/vim-closetag'
+  Plug 'mattn/emmet-vim'
+  Plug 'machakann/vim-sandwich'
+  Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/limelight.vim'
+  Plug 'lervag/vimtex'
+  Plug 'janko-m/vim-test'
+  Plug 'wesQ3/vim-windowswap'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'edkolev/tmuxline.vim'
+  Plug 'honza/vim-snippets'
+  Plug 'SirVer/ultisnips'
+call plug#end()
 
 " indentation and folding (unfolded by default)
 set expandtab tabstop=2 shiftwidth=2
@@ -56,15 +79,15 @@ augroup AutoSaveFolds
 augroup end
 
 function! s:goyo_enter()
-	Limelight
-	set norelativenumber
-	autocmd! numbertoggle
+  Limelight
+  set norelativenumber
+  autocmd! numbertoggle
 endfunction
 
 function! s:goyo_leave()
-	Limelight!
-	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+  Limelight!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 endfunction
 
 autocmd! User GoyoEnter call <SID>goyo_enter()
@@ -94,9 +117,6 @@ call matchadd('ColorColumn', '\%80v', 100)
 " Automatically delete all trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
 
-" open horizontal splits below, and vertical splits to the right
-set splitbelow splitright
-
 " remove netrw file tree banner and prevent history files
 let g:netrw_banner = 0
 let g:netrw_dirhistmax = 0
@@ -105,27 +125,6 @@ let g:netrw_dirhistmax = 0
 set backupdir=.backup/,~/.backup/,/tmp//
 set directory=.swp/,~/.swp/,/tmp//
 set undodir=.undo/,~/.undo/,/tmp//
-
-" shiftless commands
-noremap ; :
-noremap : ;
-
-" easier motion within lines
-noremap H ^
-noremap L g_
-nnoremap K H
-nnoremap J L
-
-" window navigation
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" autoclose parenthesis
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
 
 nnoremap <silent> <leader>f :TestFile<CR>
 nnoremap <silent> <leader>n :TestNearest<CR>
@@ -136,25 +135,3 @@ map <Leader>q :VimuxCloseRunner<CR>
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" plugins
-call plug#begin('~/.local/share/nvim/plugged')
-  Plug 'chriskempson/base16-vim'
-  Plug 'christoomey/vim-tmux-navigator'
-  Plug 'benmills/vimux'
-  Plug 'tpope/vim-obsession'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'alvan/vim-closetag'
-  Plug 'mattn/emmet-vim'
-  Plug 'machakann/vim-sandwich'
-  Plug 'junegunn/goyo.vim'
-  Plug 'junegunn/limelight.vim'
-  Plug 'lervag/vimtex'
-  Plug 'janko-m/vim-test'
-  Plug 'wesQ3/vim-windowswap'
-  Plug 'scrooloose/nerdcommenter'
-  Plug 'edkolev/tmuxline.vim'
-  Plug 'honza/vim-snippets'
-  Plug 'SirVer/ultisnips'
-call plug#end()
