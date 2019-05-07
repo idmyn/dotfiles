@@ -8,6 +8,9 @@
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
+;; Manually installed plugins go in a 'lisp' folder
+(add-to-list 'load-path "~/.emacs.d/lisp")
+
 ;; Install 'use-package' if necessary
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -50,6 +53,12 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)       ; use versioned backups
+
+;; Eshell aliases
+(use-package load-bash-alias
+  :ensure t
+  :config
+  (setq load-bash-alias-bashrc-file "~/.aliases"))
 
 
 ;;; EDITOR NAVIGATION / INTERACTION
@@ -117,9 +126,14 @@
   (define-key evil-motion-state-map (kbd "M-k") 'windmove-up)
   (define-key evil-motion-state-map (kbd "M-l") 'windmove-right)
 
+  (require 'move-border)
+  (define-key evil-motion-state-map (kbd "M-y") 'move-border-left)
+  (define-key evil-motion-state-map (kbd "M-u") 'move-border-down)
+  (define-key evil-motion-state-map (kbd "M-i") 'move-border-up)
+  (define-key evil-motion-state-map (kbd "M-o") 'move-border-right)
+
   ;; C-; to comment/uncomment
-  (define-key evil-motion-state-map (kbd "C-;") 'comment-dwim)
-  )
+  (define-key evil-motion-state-map (kbd "C-;") 'comment-dwim))
 
 ;; Ivy
 (use-package ivy
