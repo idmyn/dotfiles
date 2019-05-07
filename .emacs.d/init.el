@@ -110,10 +110,16 @@
   (define-key evil-motion-state-map "H" 'evil-first-non-blank)
   (define-key evil-motion-state-map "L" 'evil-last-non-blank)
   (define-key evil-motion-state-map "K" 'backward-paragraph)
-  (define-key evil-motion-state-map "J" 'forward-paragraph))
+  (define-key evil-motion-state-map "J" 'forward-paragraph)
 
-;; C-; to comment/uncomment
-(define-key evil-motion-state-map (kbd "C-;") 'comment-dwim)
+  (define-key evil-motion-state-map (kbd "M-h") 'windmove-left)
+  (define-key evil-motion-state-map (kbd "M-j") 'windmove-down)
+  (define-key evil-motion-state-map (kbd "M-k") 'windmove-up)
+  (define-key evil-motion-state-map (kbd "M-l") 'windmove-right)
+
+  ;; C-; to comment/uncomment
+  (define-key evil-motion-state-map (kbd "C-;") 'comment-dwim)
+  )
 
 ;; Ivy
 (use-package ivy
