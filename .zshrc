@@ -21,16 +21,4 @@ function chpwd() {
 }
 setopt autocd
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export TERM=xterm-256color
-
-alias zshrc="nvim ~/.zshrc"
-alias kittyrc="nvim ~/.config/kitty/kitty.conf"
-alias vimrc="nvim ~/.vimrc"
-alias nvimrc="nvim ~/.config/nvim/init.vim"
-
-alias dt="/Users/david/Dropbox/System/Desktop"
-alias projects="/Users/david/Documents/Local\ Projects"
-alias ghTest="/Users/david/GitHub/Active/test"
-alias exP="/Users/david/Exercism/python"
-alias exR="/Users/david/Exercism/ruby"
+source $HOME/.aliases
