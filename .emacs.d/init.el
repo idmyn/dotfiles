@@ -63,13 +63,56 @@
 
 ;;; EDITOR NAVIGATION / INTERACTION
 
-;; General
-;(use-package general
-;  :ensure t
-;  :config
-;  (general-swap-key nil 'motion
-;    ";" ":")
-;  )
+;; General (keybindings)
+(use-package general
+  :ensure t
+  :after evil
+  :config
+  (general-swap-key nil 'motion
+    ";" ":")
+
+  (general-create-definer my-leader-def
+    :prefix "SPC")
+  (my-leader-def 'motion 'override
+      "x" 'counsel-M-x
+      "f" 'counsel-find-file
+      "b" 'switch-to-buffer
+      "d" 'deer
+      "s" 'shell
+      "e" 'eshell)
+
+  (require 'move-border)
+  (define-key evil-normal-state-map "J" nil) ; unbind from evil-join
+  (general-def 'motion
+    ;; easier motion around lines and paragraphs
+    "H" 'evil-first-non-blank
+    "L" 'evil-last-non-blank
+    "K" 'backward-paragraph
+    "J" 'forward-paragraph
+
+    "M-h" 'windmove-left
+    "M-j" 'windmove-down
+    "M-k" 'windmove-up
+    "M-l" 'windmove-right
+
+    "M-y" 'move-border-left
+    "M-u" 'move-border-down
+    "M-i" 'move-border-up
+    "M-o" 'move-border-right
+
+    "C-;" 'comment-dwim)
+
+    ;; emacs bindings in insert mode
+    ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
+    (setcdr evil-insert-state-map nil)
+    (define-key evil-insert-state-map
+      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+    ;; fix escape key
+    (use-package evil-escape
+      :ensure t
+      :config
+      (evil-escape-mode)
+      (global-set-key (kbd "<escape>") 'evil-escape)))
 
 ;; Evil
 (use-package evil
@@ -77,63 +120,10 @@
   :init
   (setq evil-want-C-u-scroll t)
   :config
-
-  ;; initialise evil-leader before evil to enable in initial buffers
-  (use-package evil-leader
-    :ensure t
-    :config
-    (global-evil-leader-mode)
-    (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key
-      "x" 'counsel-M-x
-      "f" 'counsel-find-file
-      "b" 'switch-to-buffer
-      "d" 'deer
-      "s" 'shell
-      "e" 'eshell))
-
   (evil-mode 1)
-
   (use-package undo-tree
     :ensure t
-    :config (global-undo-tree-mode))
-
-  ;; emacs bindings in insert mode
-  ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
-  (setcdr evil-insert-state-map nil)
-  (define-key evil-insert-state-map
-    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
-  ;; fix escape key
-  (use-package evil-escape
-    :ensure t
-    :config
-    (evil-escape-mode)
-    (global-set-key (kbd "<escape>") 'evil-escape))
-
-  ;; swap colon and semicolon
-  (define-key evil-motion-state-map ";" 'evil-ex)
-  (define-key evil-motion-state-map ":" 'evil-repeat-find-char)
-
-  ;; easier motion within lines
-  (define-key evil-normal-state-map "J" nil) ; unbind from evil-join
-  (define-key evil-motion-state-map "H" 'evil-first-non-blank)
-  (define-key evil-motion-state-map "L" 'evil-last-non-blank)
-  (define-key evil-motion-state-map "K" 'backward-paragraph)
-  (define-key evil-motion-state-map "J" 'forward-paragraph)
-
-  (define-key evil-motion-state-map (kbd "M-h") 'windmove-left)
-  (define-key evil-motion-state-map (kbd "M-j") 'windmove-down)
-  (define-key evil-motion-state-map (kbd "M-k") 'windmove-up)
-  (define-key evil-motion-state-map (kbd "M-l") 'windmove-right)
-
-  (require 'move-border)
-  (define-key evil-motion-state-map (kbd "M-y") 'move-border-left)
-  (define-key evil-motion-state-map (kbd "M-u") 'move-border-down)
-  (define-key evil-motion-state-map (kbd "M-i") 'move-border-up)
-  (define-key evil-motion-state-map (kbd "M-o") 'move-border-right)
-
-  ;; C-; to comment/uncomment
-  (define-key evil-motion-state-map (kbd "C-;") 'comment-dwim))
+    :config (global-undo-tree-mode)))
 
 ;; Ivy
 (use-package ivy
@@ -152,7 +142,9 @@
   :ensure t
   :config
   (ranger-override-dired-mode t)
-  (setq ranger-hide-cursor nil))
+  (setq ranger-hide-cursor nil)
+  (general-def 'motion ranger-mode-map
+    "." 'ranger-toggle-dotfiles))
 
 
 ;;; LANGUAGE SPECIFIC
