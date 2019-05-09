@@ -54,12 +54,6 @@
    kept-old-versions 2
    version-control t)       ; use versioned backups
 
-;; Eshell aliases
-(use-package load-bash-alias
-  :ensure t
-  :config
-  (setq load-bash-alias-bashrc-file "~/.aliases"))
-
 
 ;;; EDITOR NAVIGATION / INTERACTION
 
@@ -147,7 +141,16 @@
     "." 'ranger-toggle-dotfiles))
 
 
-;;; LANGUAGE SPECIFIC
+;;; LANGUAGE/MODE SPECIFIC
+
+;; Eshell aliases and autosuggest
+(use-package load-bash-alias
+  :ensure t
+  :config
+  (setq load-bash-alias-bashrc-file "~/.aliases"))
+(use-package esh-autosuggest
+  :hook (eshell-mode . esh-autosuggest-mode)
+  :ensure t)
 
 ;; TXT/ORG
 (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
