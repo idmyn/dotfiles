@@ -161,6 +161,10 @@
 (define-key evil-insert-state-map (kbd "C-z") 'emmet-expand-line)
 
 ;; Ruby
+(use-package chruby
+  :ensure t
+  :config (chruby "2.6.3"))
+
 (use-package inf-ruby
   :ensure t
   :interpreter "ruby")
