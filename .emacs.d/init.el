@@ -65,6 +65,9 @@
 (add-hook 'prog-mode-hook 'enable-tabs)
 (add-hook 'lisp-mode-hook 'disable-tabs)
 (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
+(add-hook 'css-mode-hook 'disable-tabs)
+(custom-set-variables
+ '(smie-config (quote ((css-mode (2 :elem basic 4))))))
 
 (setq
    backup-by-copying t      ; don't clobber symlinks
@@ -178,23 +181,12 @@
 (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
 
 ;; HTML/CSS
-(use-package web-mode
+(use-package emmet-mode
   :ensure t
   :config
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-  (setq web-mode-css-indent-offset 2)
-  )
-
-(add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
-(add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
-(define-key evil-insert-state-map (kbd "C-z") 'emmet-expand-line)
+  (add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
+  (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
+  (define-key evil-insert-state-map (kbd "C-z") 'emmet-expand-line))
 
 ;; Ruby
 (use-package chruby
