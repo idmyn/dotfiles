@@ -40,10 +40,31 @@
 ;; Eighty Column Rule
 (require 'whitespace)
 (setq whitespace-line-column 80)
-(setq whitespace-style '(face tabs lines-tail trailing))
+(setq whitespace-style '(face tabs tab-mark lines-tail trailing))
+
+(custom-set-faces
+ '(whitespace-tab ((t (:foreground "#9e9e9e")))))
+(setq whitespace-display-mappings
+  '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
+
 (global-whitespace-mode t)
 ;; while we're at it...
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Indentation
+(setq custom-tab-width 3)
+(defun disable-tabs () (setq indent-tabs-mode nil))
+(defun enable-tabs  ()
+  ;; (local-set-key (kbd "TAB") 'tab-to-tab-stop)
+  (setq indent-tabs-mode t)
+  (setq tab-width custom-tab-width))
+
+(setq backward-delete-char-untabify-method nil)
+(setq-default electric-indent-inhibit t)
+
+(add-hook 'prog-mode-hook 'enable-tabs)
+(add-hook 'lisp-mode-hook 'disable-tabs)
+(add-hook 'emacs-lisp-mode-hook 'disable-tabs)
 
 (setq
    backup-by-copying t      ; don't clobber symlinks
@@ -115,6 +136,7 @@
   (setq evil-want-C-u-scroll t)
   :config
   (evil-mode 1)
+  ;; (setq-default evil-shift-width custom-tab-width)
   (use-package undo-tree
     :ensure t
     :config (global-undo-tree-mode)))
@@ -156,6 +178,20 @@
 (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
 
 ;; HTML/CSS
+(use-package web-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+  (setq web-mode-css-indent-offset 2)
+  )
+
 (add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
 (define-key evil-insert-state-map (kbd "C-z") 'emmet-expand-line)
