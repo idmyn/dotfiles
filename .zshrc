@@ -22,6 +22,5 @@ function chpwd() {
 setopt autocd
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
-chruby ruby-2.6.3
 
 source $HOME/.aliases
