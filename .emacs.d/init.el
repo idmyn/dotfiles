@@ -90,6 +90,7 @@
             (setq beg (line-beginning-position) end (line-end-position)))
         (comment-or-uncomment-region beg end)))
 
+
 ;;; EDITOR NAVIGATION / INTERACTION
 
 ;; General (keybindings)
@@ -122,6 +123,8 @@
   (require 'move-border)
   (define-key evil-normal-state-map "J" nil) ; unbind from evil-join
   (general-def 'motion
+    "C-e" 'er/expand-region
+
     ;; easier motion around lines and paragraphs
     "H" 'evil-first-non-blank
     "L" 'evil-last-non-blank
@@ -143,20 +146,23 @@
     :ensure t
     :config
     (evil-escape-mode)
-    (global-set-key (kbd "<escape>") 'evil-escape))
-  )
+    (global-set-key (kbd "<escape>") 'evil-escape)))
 
 ;; Evil
 (use-package evil
   :ensure t
   :init
   (setq evil-want-C-u-scroll t)
+  (use-package undo-tree
+    :ensure t
+    :config (global-undo-tree-mode))
+  (use-package expand-region
+    :ensure t)
+
   :config
   (evil-mode 1)
   ;; (setq-default evil-shift-width custom-tab-width)
-  (use-package undo-tree
-    :ensure t
-    :config (global-undo-tree-mode)))
+  )
 
 ;; Ivy
 (use-package ivy
