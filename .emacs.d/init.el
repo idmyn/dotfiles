@@ -60,7 +60,7 @@
   (setq tab-width custom-tab-width))
 
 (setq backward-delete-char-untabify-method nil)
-(setq-default electric-indent-inhibit t)
+(setq-default electric-indent-inhibit nil)
 
 (add-hook 'prog-mode-hook 'enable-tabs)
 (add-hook 'lisp-mode-hook 'disable-tabs)
@@ -68,6 +68,8 @@
 (add-hook 'css-mode-hook 'disable-tabs)
 (custom-set-variables
  '(smie-config (quote ((css-mode (2 :elem basic 4))))))
+(add-hook 'ruby-mode-hook 'disable-tabs)
+(setq ruby-indent-level 2)
 
 (setq
    backup-by-copying t      ; don't clobber symlinks
@@ -89,15 +91,23 @@
   (general-swap-key nil 'motion
     ";" ":")
 
-  (general-create-definer my-leader-def
+  ;; global bindings
+  (general-define-key
+    "M-h" 'windmove-left
+    "M-j" 'windmove-down
+    "M-k" 'windmove-up
+    "M-l" 'windmove-right)
+
+  (general-create-definer global-leader
     :prefix "SPC")
-  (my-leader-def 'motion 'override
+  (global-leader 'motion 'override
       "x" 'counsel-M-x
       "f" 'counsel-find-file
       "b" 'switch-to-buffer
       "d" 'deer
       "s" 'shell
-      "e" 'eshell)
+      "e" 'eshell
+      "y" 'yari)
 
   (require 'move-border)
   (define-key evil-normal-state-map "J" nil) ; unbind from evil-join
@@ -108,11 +118,6 @@
     "K" 'backward-paragraph
     "J" 'forward-paragraph
 
-    "M-h" 'windmove-left
-    "M-j" 'windmove-down
-    "M-k" 'windmove-up
-    "M-l" 'windmove-right
-
     "M-y" 'move-border-left
     "M-u" 'move-border-down
     "M-i" 'move-border-up
@@ -120,17 +125,18 @@
 
     "C-;" 'comment-dwim)
 
-    ;; emacs bindings in insert mode
-    ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
-    (setcdr evil-insert-state-map nil)
-    (define-key evil-insert-state-map
-      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
-    ;; fix escape key
-    (use-package evil-escape
-      :ensure t
-      :config
-      (evil-escape-mode)
-      (global-set-key (kbd "<escape>") 'evil-escape)))
+  ;; emacs bindings in insert mode
+  ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
+  (setcdr evil-insert-state-map nil)
+  (define-key evil-insert-state-map
+    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+  ;; fix escape key
+  (use-package evil-escape
+    :ensure t
+    :config
+    (evil-escape-mode)
+    (global-set-key (kbd "<escape>") 'evil-escape))
+  )
 
 ;; Evil
 (use-package evil
@@ -186,7 +192,8 @@
   :config
   (add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
   (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
-  (define-key evil-insert-state-map (kbd "C-z") 'emmet-expand-line))
+  (general-def 'insert
+    "C-z" 'emmet-expand-line))
 
 ;; Ruby
 (use-package chruby
@@ -203,6 +210,9 @@
   :config
   (setq seeing-is-believing-executable "/Users/david/.rbenv/shims/seeing_is_believing"))
 
+(use-package yari
+  :ensure t
+  :interpreter "ruby")
 
 ;;; macOS SPECIFIC
 ;; set the path variable (important for macOS?)
