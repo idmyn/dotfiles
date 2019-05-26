@@ -80,6 +80,15 @@
    kept-old-versions 2
    version-control t)       ; use versioned backups
 
+;; Function for commenting line/region
+;; https://stackoverflow.com/a/9697222
+(defun comment-or-uncomment-region-or-line ()
+    (interactive)
+    (let (beg end)
+        (if (region-active-p)
+            (setq beg (region-beginning) end (region-end))
+            (setq beg (line-beginning-position) end (line-end-position)))
+        (comment-or-uncomment-region beg end)))
 
 ;;; EDITOR NAVIGATION / INTERACTION
 
@@ -107,7 +116,7 @@
       "d" 'deer
       "s" 'shell
       "e" 'eshell
-      "c" 'evil-commentary
+      "c" 'comment-or-uncomment-region-or-line
       "y" 'yari)
 
   (require 'move-border)
@@ -144,8 +153,6 @@
   (setq evil-want-C-u-scroll t)
   :config
   (evil-mode 1)
-  (use-package evil-commentary
-    :ensure t)
   ;; (setq-default evil-shift-width custom-tab-width)
   (use-package undo-tree
     :ensure t
