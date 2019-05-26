@@ -107,6 +107,7 @@
       "d" 'deer
       "s" 'shell
       "e" 'eshell
+      "c" 'evil-commentary
       "y" 'yari)
 
   (require 'move-border)
@@ -121,9 +122,7 @@
     "M-y" 'move-border-left
     "M-u" 'move-border-down
     "M-i" 'move-border-up
-    "M-o" 'move-border-right
-
-    "C-;" 'comment-dwim)
+    "M-o" 'move-border-right)
 
   ;; emacs bindings in insert mode
   ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
@@ -145,6 +144,8 @@
   (setq evil-want-C-u-scroll t)
   :config
   (evil-mode 1)
+  (use-package evil-commentary
+    :ensure t)
   ;; (setq-default evil-shift-width custom-tab-width)
   (use-package undo-tree
     :ensure t
