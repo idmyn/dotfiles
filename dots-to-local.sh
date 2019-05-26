@@ -7,8 +7,8 @@ cp ~/GitHub/Active/dotfiles/.zshrc .
 cd ~/.emacs.d
 cp ~/GitHub/Active/dotfiles/.emacs.d/init.el .
 
-cd ~/.config
-cp -R ~/GitHub/Active/dotfiles/.config/nvim .
+cd ~/.config/nvim
+cp ~/GitHub/Active/dotfiles/.config/nvim/init.vim .
 
 cd ~/.config/karabiner
 cp ~/GitHub/Active/dotfiles/.config/karabiner/karabiner.json .
