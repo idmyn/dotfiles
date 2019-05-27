@@ -115,7 +115,7 @@
       "f" 'counsel-find-file
       "b" 'switch-to-buffer
       "d" 'deer
-      "s" 'shell
+      "s" 'window-swap-states
       "e" 'eshell
       "c" 'comment-or-uncomment-region-or-line
       "y" 'yari)
@@ -167,9 +167,14 @@
 ;; Ivy
 (use-package ivy
   :ensure t
+  ;; :init ;; use flx if ivy--regex-fuzzy
+  ;; (use-package flx
+  ;;   :ensure t)
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
+  (setq ivy-re-builders-alist
+      '((t . ivy--regex-ignore-order)))
   (global-set-key "\C-s" 'swiper)
 
   (use-package counsel
@@ -225,6 +230,10 @@
   (setq seeing-is-believing-executable "/Users/david/.rbenv/shims/seeing_is_believing"))
 
 (use-package yari
+  :ensure t
+  :interpreter "ruby")
+
+(use-package rubocop
   :ensure t
   :interpreter "ruby")
 
