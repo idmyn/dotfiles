@@ -162,6 +162,10 @@
   :config
   (evil-mode 1)
   ;; (setq-default evil-shift-width custom-tab-width)
+
+  (use-package evil-surround
+    :ensure t
+    :config (global-evil-surround-mode 1))
   )
 
 ;; Ivy
@@ -180,6 +184,10 @@
   (use-package counsel
     :ensure t
     :config (counsel-mode 1)))
+
+;; Hyperbole
+(use-package hyperbole
+  :ensure t)
 
 ;; Ranger
 (use-package ranger
