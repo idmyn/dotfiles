@@ -117,8 +117,11 @@
       "d" 'deer
       "s" 'window-swap-states
       "e" 'eshell
-      "c" 'comment-or-uncomment-region-or-line
-      "y" 'yari)
+      "c" 'comment-or-uncomment-region-or-line)
+
+  (general-create-definer local-leader
+    :prefix "SPC m")
+    ;; "d" for docs and "l" for lint
 
   (require 'move-border)
   (define-key evil-normal-state-map "J" nil) ; unbind from evil-join
@@ -223,6 +226,10 @@
     "C-z" 'emmet-expand-line))
 
 ;; Ruby
+(local-leader 'motion ruby-mode-map
+  "d" 'yari
+  "l" 'rubocop-check-current-file)
+
 (use-package chruby
   :ensure t
   :config (chruby "2.6.3"))
