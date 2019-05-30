@@ -1,3 +1,6 @@
+(setq user-full-name "David Mynors"
+  user-mail-address "hello@davidmyno.rs")
+
 ;;; INITIALISE USE-PACKAGE
 ;; http://cachestocaches.com/2015/8/getting-started-use-package/
 
@@ -203,6 +206,10 @@
 
 
 ;;; LANGUAGE/MODE SPECIFIC
+
+;; Magit
+(use-package magit
+  :ensure t)
 
 ;; Eshell aliases and autosuggest
 (use-package load-bash-alias
