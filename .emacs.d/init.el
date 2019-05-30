@@ -120,6 +120,7 @@
       "d" 'deer
       "s" 'window-swap-states
       "e" 'eshell
+      "g" 'magit-status
       "c" 'comment-or-uncomment-region-or-line)
 
   (general-create-definer local-leader
@@ -209,7 +210,10 @@
 
 ;; Magit
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  (add-to-list 'evil-insert-state-modes 'magit-status-mode)
+  (add-to-list 'evil-insert-state-modes 'magit-log-edit-mode))
 
 ;; Eshell aliases and autosuggest
 (use-package load-bash-alias
