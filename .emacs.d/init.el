@@ -212,8 +212,10 @@
 (use-package magit
   :ensure t
   :config
-  (add-to-list 'evil-insert-state-modes 'magit-status-mode)
-  (add-to-list 'evil-insert-state-modes 'magit-log-edit-mode))
+  (with-eval-after-load 'evil
+    (add-to-list 'evil-insert-state-modes 'magit-status-mode)
+    (add-hook 'git-commit-mode-hook 'evil-insert-state)
+    (evil-set-initial-state 'magit-log-edit-mode 'insert)))
 
 ;; Eshell aliases and autosuggest
 (use-package load-bash-alias
