@@ -1,5 +1,5 @@
 (setq user-full-name "David Mynors"
-  user-mail-address "hello@davidmyno.rs")
+      user-mail-address "hello@davidmyno.rs")
 
 ;;; INITIALISE USE-PACKAGE
 ;; http://cachestocaches.com/2015/8/getting-started-use-package/
@@ -42,8 +42,8 @@
 
 ;; Eighty Column Rule
 (require 'whitespace)
-(setq whitespace-line-column 80)
-(setq whitespace-style '(face tabs tab-mark lines-tail trailing))
+(setq whitespace-line-column 80
+      whitespace-style '(face tabs tab-mark lines-tail trailing))
 
 (custom-set-faces
  '(whitespace-tab ((t (:foreground "#9e9e9e")))))
@@ -56,8 +56,7 @@
 
 ;; Indentation
 (use-package aggressive-indent
-  :ensure t
-  :config (global-aggressive-indent-mode 1))
+  :ensure t)
 
 (setq custom-tab-width 3)
 (defun disable-tabs () (setq indent-tabs-mode nil))
@@ -67,7 +66,7 @@
   (setq tab-width custom-tab-width))
 
 (setq backward-delete-char-untabify-method nil)
-;; (setq-default electric-indent-inhibit nil)
+(setq-default electric-indent-inhibit nil)
 
 (add-hook 'prog-mode-hook 'enable-tabs)
 (add-hook 'lisp-mode-hook 'disable-tabs)
@@ -127,6 +126,7 @@
       "s" 'window-swap-states
       "e" 'eshell
       "g" 'magit-status
+      "i" 'aggressive-indent-indent-defun
       "c" 'comment-or-uncomment-region-or-line)
 
   (general-create-definer local-leader
@@ -195,7 +195,7 @@
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-re-builders-alist
-      '((t . ivy--regex-fuzzy)))
+        '((t . ivy--regex-fuzzy)))
   (global-set-key "\C-s" 'swiper)
 
   (use-package counsel
