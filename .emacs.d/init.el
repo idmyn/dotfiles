@@ -55,6 +55,10 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Indentation
+(use-package aggressive-indent
+  :ensure t
+  :config (global-aggressive-indent-mode 1))
+
 (setq custom-tab-width 3)
 (defun disable-tabs () (setq indent-tabs-mode nil))
 (defun enable-tabs  ()
@@ -63,7 +67,7 @@
   (setq tab-width custom-tab-width))
 
 (setq backward-delete-char-untabify-method nil)
-(setq-default electric-indent-inhibit nil)
+;; (setq-default electric-indent-inhibit nil)
 
 (add-hook 'prog-mode-hook 'enable-tabs)
 (add-hook 'lisp-mode-hook 'disable-tabs)
@@ -178,14 +182,14 @@
 ;; Ivy
 (use-package ivy
   :ensure t
-  ;; :init ;; use flx if ivy--regex-fuzzy
-  ;; (use-package flx
-  ;;   :ensure t)
+  :init ;; use flx if ivy--regex-fuzzy
+  (use-package flx
+    :ensure t)
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-re-builders-alist
-      '((t . ivy--regex-ignore-order)))
+      '((t . ivy--regex-fuzzy)))
   (global-set-key "\C-s" 'swiper)
 
   (use-package counsel
