@@ -75,6 +75,8 @@
 (add-hook 'css-mode-hook 'disable-tabs)
 (custom-set-variables
  '(smie-config (quote ((css-mode (2 :elem basic 4))))))
+(add-hook 'js-mode-hook 'disable-tabs)
+(setq js-indent-level 2)
 (add-hook 'ruby-mode-hook 'disable-tabs)
 (setq ruby-indent-level 2)
 
@@ -241,6 +243,17 @@
   (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
   (general-def 'insert
     "C-z" 'emmet-expand-line))
+
+;; Javascript
+(use-package indium
+  :ensure t
+  :interpreter "JavaScript"
+  :init
+    (local-leader 'normal js-mode-map
+    "s" 'indium-launch
+    "e" 'indium-eval-buffer)
+    (local-leader 'visual js-mode-map
+    "e" 'indium-eval-region))
 
 ;; Ruby
 (local-leader 'motion ruby-mode-map
