@@ -218,8 +218,9 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
-  :init
-  (setq flycheck-global-modes '(not emacs-lisp)
+  :config
+  (global-flycheck-mode)
+  (setq flycheck-global-modes '(not emacs-lisp-mode)
         flycheck-check-syntax-automatically '(mode-enabled save)))
 
 
