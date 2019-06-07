@@ -131,10 +131,14 @@
 
   (general-create-definer local-leader
     :prefix "SPC m")
-    ;; "d" for docs and "l" for lint
+    ;; "d" for docs, "l" for lint,, "s" for server "e" for evaluate
+
+  (general-def 'normal
+    "J" nil ; unbind from evil-join
+    ">" 'evil-shift-right-line
+    "<" 'evil-shift-left-line)
 
   (require 'move-border)
-  (define-key evil-normal-state-map "J" nil) ; unbind from evil-join
   (general-def 'motion
     "C-e" 'er/expand-region
 
