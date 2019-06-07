@@ -215,6 +215,13 @@
   (general-def 'motion ranger-mode-map
     "." 'ranger-toggle-dotfiles))
 
+;; Flycheck
+(use-package flycheck
+  :ensure t
+  :init
+  (setq flycheck-global-modes '(not emacs-lisp)
+        flycheck-check-syntax-automatically '(mode-enabled save)))
+
 
 ;;; LANGUAGE/MODE SPECIFIC
 
