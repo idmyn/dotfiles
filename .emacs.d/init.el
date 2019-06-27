@@ -98,6 +98,11 @@
             (setq beg (line-beginning-position) end (line-end-position)))
         (comment-or-uncomment-region beg end)))
 
+;; Separate evil clipboard from system clipboard
+;; https://github.com/rolandwalker/simpleclip
+(require 'simpleclip)
+(simpleclip-mode 1)
+
 
 ;;; EDITOR NAVIGATION / INTERACTION
 
@@ -131,12 +136,16 @@
 
   (general-create-definer local-leader
     :prefix "SPC m")
-    ;; "d" for docs, "l" for lint,, "s" for server "e" for evaluate
+    ;; "d" for docs, "l" for lint, "s" for server "e" for evaluate
 
   (general-def 'normal
     "J" nil ; unbind from evil-join
     ">" 'evil-shift-right-line
     "<" 'evil-shift-left-line)
+
+  (general-def 'visual
+    ">" 'evil-shift-right
+    "<" 'evil-shift-left)
 
   (require 'move-border)
   (general-def 'motion
@@ -182,8 +191,10 @@
 
   (use-package evil-surround
     :ensure t
-    :config (global-evil-surround-mode 1))
-  )
+    :config (global-evil-surround-mode 1)))
+
+
+
 
 ;; Ivy
 (use-package ivy
@@ -213,7 +224,8 @@
   (ranger-override-dired-mode t)
   (setq ranger-hide-cursor nil)
   (general-def 'motion ranger-mode-map
-    "." 'ranger-toggle-dotfiles))
+    "." 'ranger-toggle-dotfiles
+    "r" 'wdired-change-to-wdired-mode))
 
 ;; Flycheck
 (use-package flycheck
@@ -293,6 +305,7 @@
 (use-package rubocop
   :ensure t
   :interpreter "ruby")
+
 
 ;;; macOS SPECIFIC
 ;; set the path variable (important for macOS?)
