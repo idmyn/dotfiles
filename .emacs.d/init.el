@@ -119,7 +119,9 @@
     "M-h" 'windmove-left
     "M-j" 'windmove-down
     "M-k" 'windmove-up
-    "M-l" 'windmove-right)
+    "M-l" 'windmove-right
+
+    "C-;" 'comment-or-uncomment-region-or-line)
 
   (general-create-definer global-leader
     :prefix "SPC")
@@ -135,7 +137,7 @@
       "c" 'comment-or-uncomment-region-or-line)
 
   (general-create-definer local-leader
-    :prefix "SPC m")
+    :prefix "m")
     ;; "d" for docs, "l" for lint, "s" for server "e" for evaluate
 
   (general-def 'normal
@@ -187,7 +189,7 @@
 
   :config
   (evil-mode 1)
-  ;; (setq-default evil-shift-width custom-tab-width)
+  (setq-default evil-shift-width 2)
 
   (use-package evil-surround
     :ensure t
