@@ -234,6 +234,27 @@
   (setq flycheck-global-modes '(not emacs-lisp-mode)
         flycheck-check-syntax-automatically '(mode-enabled save)))
 
+;; LSP
+(use-package lsp-mode
+  :ensure t
+  :hook ((ruby-mode js-mode) . lsp)
+  :commands lsp
+  :config
+  (setq
+   lsp-prefer-flymake nil
+   lsp-enable-snippet nil
+   lsp-ui-doc-enable nil
+   lsp-ui-peek-enable nil
+   lsp-ui-sideline-enable nil
+   lsp-ui-imenu-enable nil))
+
+;; optionally if you want to use debugger
+(use-package dap-mode
+  :ensure t
+  :config
+  (dap-mode 1)
+  (dap-ui-mode 1))
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 ;;; LANGUAGE/MODE SPECIFIC
 
@@ -268,20 +289,26 @@
     "C-z" 'emmet-expand-line))
 
 ;; Javascript
-(use-package indium
-  :ensure t
-  :interpreter "JavaScript"
-  :init
-    (local-leader 'normal js-mode-map
-    "s" 'indium-launch
-    "e" 'indium-eval-buffer)
-    (local-leader 'visual js-mode-map
-    "e" 'indium-eval-region))
+(use-package dap-node
+  :config
+  (local-leader 'normal js-mode-map
+    "d" 'dap-debug
+    "b" 'dap-breakpoint-toggle
+    "e" 'dap-eval-thing-at-point)
+  (local-leader 'visual js-mode-map
+    "e" 'dap-eval-region))
 
 ;; Ruby
-(local-leader 'motion ruby-mode-map
-  "d" 'yari
-  "l" 'rubocop-check-current-file)
+(use-package dap-ruby
+  :config
+  (local-leader 'normal ruby-mode-map
+    "l" 'yari
+    "d" 'dap-debug
+    "b" 'dap-breakpoint-toggle
+    "e" 'dap-eval-thing-at-point
+    "r" 'inf-ruby)
+  (local-leader 'visual ruby-mode-map
+    "e" 'dap-eval-region))
 
 (use-package chruby
   :ensure t
@@ -290,12 +317,6 @@
 (use-package inf-ruby
   :ensure t
   :interpreter "ruby")
-
-(use-package seeing-is-believing
-  :ensure t
-  :interpreter "ruby"
-  :config
-  (setq seeing-is-believing-executable "/Users/david/.rbenv/shims/seeing_is_believing"))
 
 (use-package yari
   :ensure t
