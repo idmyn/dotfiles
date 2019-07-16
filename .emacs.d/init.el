@@ -32,7 +32,7 @@
 (setq inhibit-startup-screen t)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(setq-default mode-line-format nil)
+;; (setq-default mode-line-format nil)
 
 (global-display-line-numbers-mode)
 (setq-default display-line-numbers-type 'relative)
@@ -126,19 +126,19 @@
   (general-create-definer global-leader
     :prefix "SPC")
   (global-leader 'motion 'override
-      "x" 'counsel-M-x
-      "f" 'counsel-find-file
-      "b" 'switch-to-buffer
-      "d" 'deer
-      "s" 'window-swap-states
-      "e" 'eshell
-      "g" 'magit-status
-      "i" 'aggressive-indent-indent-defun
-      "c" 'comment-or-uncomment-region-or-line)
+    "x" 'counsel-M-x
+    "f" 'counsel-find-file
+    "b" 'switch-to-buffer
+    "d" 'deer
+    "s" 'window-swap-states
+    "e" 'eshell
+    "g" 'magit-status
+    "i" 'aggressive-indent-indent-defun
+    "c" 'comment-or-uncomment-region-or-line)
 
   (general-create-definer local-leader
     :prefix "m")
-    ;; "d" for docs, "l" for lint, "s" for server "e" for evaluate
+    ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
 
   (general-def 'normal
     "J" nil ; unbind from evil-join
@@ -194,9 +194,6 @@
   (use-package evil-surround
     :ensure t
     :config (global-evil-surround-mode 1)))
-
-
-
 
 ;; Ivy
 (use-package ivy
