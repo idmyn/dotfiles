@@ -32,7 +32,37 @@
 (setq inhibit-startup-screen t)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(setq-default mode-line-format nil)
+;; (setq-default mode-line-format nil)
+
+;; Minimal modeline
+;; https://gitlab.com/mark.feller/emacs.d/blob/master/modules/module-solarized.el
+(set-face-attribute 'mode-line nil
+                    :background "#e6e6e1"
+                    :foreground "#323232"
+                    :box '(:line-width 4 :color "#e6e6e1")
+                    :overline nil
+                    :underline nil)
+
+(set-face-attribute 'mode-line-inactive nil
+                    :background "#f7f7ef"
+                    :foreground "#8a8a8a"
+                    :box '(:line-width 4 :color "#f7f7ef")
+                    :overline nil
+                    :underline nil)
+
+(define-minor-mode minor-mode-blackout-mode
+  "Hides minor modes from the mode line."
+  t)
+
+(catch 'done
+  (mapc (lambda (x)
+          (when (and (consp x)
+                     (equal (cadr x) '("" minor-mode-alist)))
+            (let ((original (copy-sequence x)))
+              (setcar x 'minor-mode-blackout-mode)
+              (setcdr x (list "" original)))
+            (throw 'done t)))
+        mode-line-modes))
 
 ;; File path in title bar
 ;; https://stackoverflow.com/a/29821453
