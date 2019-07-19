@@ -250,6 +250,7 @@
   :config
   (setq
    lsp-prefer-flymake nil
+   lsp-ui-flycheck-live-reporting nil
    lsp-enable-snippet nil
    lsp-ui-doc-enable nil
    lsp-ui-peek-enable nil
