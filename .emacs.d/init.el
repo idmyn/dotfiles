@@ -32,7 +32,15 @@
 (setq inhibit-startup-screen t)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-;; (setq-default mode-line-format nil)
+(setq-default mode-line-format nil)
+
+;; File path in title bar
+;; https://stackoverflow.com/a/29821453
+(setq frame-title-format
+      '(buffer-file-name "%b - %f" ; File buffer
+        (dired-directory dired-directory ; Dired buffer
+         (revert-buffer-function "%b" ; Buffer Menu
+          ("%b - Dir: " default-directory))))) ; Plain buffer
 
 (global-display-line-numbers-mode)
 (setq-default display-line-numbers-type 'relative)
