@@ -1,0 +1,108 @@
+{:devices      {:logitech [{:vendor_id 1133 :product_id 45890}]}
+
+ :input-sources {:british {:input_mode_id   ""
+                           :input_source_id "com.apple.keylayout.British"
+                           :language        "en"}}
+
+ :applications {:Editors  ["^org\\.gnu\\.Emacs$"
+                           "^org\\.vim\\.MacVim$"
+                           "^com\\.apple\\.Terminal$"
+                           "^com\\.google\\.Chrome$"]
+                :Vim      ["^org\\.gnu\\.Emacs$"
+                           "^org\\.vim\\.MacVim$"
+                           "^com\\.apple\\.Terminal$"]
+                :uk       ["^com\\.apple\\.Mail$"
+                           "^org\\.gnu\\.Emacs$"
+                           "^org\\.vim\\.MacVim$"
+                           "^com\\.apple\\.Terminal$"
+                           "^ru.keepcoder.Telegram$"]}
+
+ :main [{:des   "everywhere: tab to opt/meta as modifier"
+         :rules [[:tab :left_alt nil {:alone :tab}]]}
+
+        {:des   "in vim (and emulators): caps_lock to esc when pressed alone, to ctrl as modifier"
+         :rules [[:condi :Vim] [:##caps_lock :left_control nil {:alone :escape}]]}
+
+        {:des   "outside vim (and emulators): caps_lock to f13 when pressed alone, to ctrl as modifier"
+         :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
+
+        {:des   "in editors flip numbers/symbols"
+         :rules [[:condi :Editors]
+                 [:1 :!S1]
+                 [:!S1 :1]
+                 [:2 :!S2]
+                 [:!S2 :2]
+                 [:3 :!S3]
+                 [:!S3 :3]
+                 [:4 :!S4]
+                 [:!S4 :4]
+                 [:5 :!S5]
+                 [:!S5 :5]
+                 [:6 :!S6]
+                 [:!S6 :6]
+                 [:7 :!S7]
+                 [:!S7 :7]
+                 [:8 :!S8]
+                 [:!S8 :8]
+                 [:9 :!S9]
+                 [:!S9 :9]
+                 [:0 :!S0]
+                 [:!S0 :0]
+]}
+
+        {:des   "When British input source, workman-IO layout on logitech"
+         :rules [[:condi :uk :logitech]
+                 [:q :q]
+                 [:!Sq :!Sq]
+                 [:w :d]
+                 [:!Sw :!Sd]
+                 [:e :r]
+                 [:!Se :!Sr]
+                 [:r :w]
+                 [:!Sr :!Sw]
+                 [:t :b]
+                 [:!St :!Sb]
+                 [:y :j]
+                 [:!Sy :!Sj]
+                 [:u :f]
+                 [:!Su :!Sf]
+                 [:i :u]
+                 [:!Si :!Su]
+                 [:o :p]
+                 [:!So :!Sp]
+                 [:p :semicolon]
+                 [:!Sp :!Ssemicolon]
+                 [:a :a]
+                 [:!Sa :!Sa]
+                 [:s :s]
+                 [:!Ss :!Ss]
+                 [:d :h]
+                 [:!Sd :!Sh]
+                 [:f :t]
+                 [:!Sf :!St]
+                 [:g :g]
+                 [:!Sg :!Sg]
+                 [:h :y]
+                 [:!Sh :!Sy]
+                 [:j :n]
+                 [:!Sj :!Sn]
+                 [:k :e]
+                 [:!Sk :!Se]
+                 [:l :i]
+                 [:!Sl :!Si]
+                 [:semicolon :o]
+                 [:!Ssemicolon :!So]
+                 [:z :z]
+                 [:!Sz :!Sz]
+                 [:x :x]
+                 [:!Sx :!Sx]
+                 [:c :m]
+                 [:!Sc :!Sm]
+                 [:v :c]
+                 [:!Sv :!Sc]
+                 [:b :v]
+                 [:!Sb :!Sv]
+                 [:n :k]
+                 [:!Sn :!Sk]
+                 [:m :l]
+                 [:!Sm :!Sl]]}]}
