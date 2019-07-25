@@ -13,6 +13,9 @@ cp ~/GitHub/Active/dotfiles/.config/nvim/init.vim .
 cd ~/.config/karabiner
 cp ~/GitHub/Active/dotfiles/.config/karabiner/karabiner.json .
 
+cd ~/.config/
+cp ~/GitHub/Active/dotfiles/.config/karabiner.edn .
+
 cd ~/.config/tridactyl
 cp ~/GitHub/Active/dotfiles/.config/tridactyl/tridactylrc .
 
