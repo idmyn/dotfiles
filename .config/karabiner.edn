@@ -50,7 +50,7 @@
                  [:!S0 :0]
 ]}
 
-        {:des   "When British input source, workman-IO layout on logitech"
+      #_{:des   "When British input source, workman-IO layout on logitech"
          :rules [[:condi :uk :logitech]
                  [:q :q]
                  [:!Sq :!Sq]
