@@ -150,7 +150,8 @@
   :after evil
   :config
   (general-swap-key nil 'motion
-    ";" ":")
+    ";" ":"
+    "0" ")") ;; swapped in karabiner but I want normal behaviour in normal mode
 
   ;; global bindings
   (general-define-key

@@ -30,25 +30,73 @@
          :rules [[:condi :Editors]
                  [:1 :!S1]
                  [:!S1 :1]
+                 [:!R1 :1]
                  [:2 :!S2]
                  [:!S2 :2]
+                 [:!R2 :2]
                  [:3 :!S3]
                  [:!S3 :3]
+                 [:!R3 :3]
                  [:4 :!S4]
                  [:!S4 :4]
+                 [:!R4 :4]
                  [:5 :!S5]
                  [:!S5 :5]
+                 [:!R5 :5]
                  [:6 :!S6]
                  [:!S6 :6]
+                 [:!R6 :6]
                  [:7 :!S7]
                  [:!S7 :7]
+                 [:!R7 :7]
                  [:8 :!S8]
                  [:!S8 :8]
+                 [:!R8 :8]
                  [:9 :!S9]
                  [:!S9 :9]
+                 [:!R9 :9]
                  [:0 :!S0]
                  [:!S0 :0]
-]}
+                 [:!R0 :0]]}
+
+        #_{:simlayers {:dead-state {:key :comma}}
+         :main [{:des "dead state"
+                 :rules [
+                         [:4 :!Sgrave_accent_and_tilde :dead-state] ;; ~
+                         [:5 :grave_accent_and_tilde :dead-state] ;; `
+                         [:7 :!O3 :dead-state] ;; #
+                         [:8 :!S6 :dead-state] ;; ^
+                         [:q :!S9 :dead-state] ;; %
+                         [:w :!S7 :dead-state] ;; &
+                         [:e :!Sslash :dead-state] ;; ?
+                         [:r :!Sequal_sign :dead-state] ;; +
+                         [:t :!S2 :dead-state] ;; @
+                         [:y :!S4 :dead-state] ;; $
+                         [:u :!Shyphen :dead-state] ;; _
+                         [:i :open_bracket :dead-state] ;; [
+                         [:o :close_bracket :dead-state] ;; ]
+                         [:p :!S1 :dead-state] ;; !
+                         [:a :slash :dead-state] ;; /
+                         [:s :!S9 :dead-state] ;; (
+                         [:d :equal_sign :dead-state] ;; =
+                         [:f :0 :dead-state] ;; 0
+                         [:g :!Sopen_bracket :dead-state] ;; {
+                         [:h :!Sclose_bracket :dead-state] ;; }
+                         [:j :1 :dead-state] ;; 1
+                         [:k :!S8 :dead-state] ;; *
+                         [:l :!S0 :dead-state] ;; )
+                         [:semicolon :hyphen :dead-state] ;; -
+                         [:z :6 :dead-state] ;; 6
+                         [:x :7 :dead-state] ;; 7
+                         [:c :8 :dead-state] ;; 8
+                         [:v :9 :dead-state] ;; 9
+                         [:b :!Snon_us_backslash :dead-state] ;; |
+                         [:n :non_us_backslash :dead-state] ;; \
+                         [:m :2 :dead-state] ;; 2
+                         [:comma :3 :dead-state] ;; 3
+                         [:period :4 :dead-state] ;; 4
+                         [:slash :5 :dead-state] ;; 5
+                         [:spacebar [:comma :spacebar] :dead-state]]}]}
 
       #_{:des   "When British input source, workman-IO layout on logitech"
          :rules [[:condi :uk :logitech]
