@@ -32,6 +32,7 @@ command archive composite js "https://web.archive.org/save/" + document.location
 
 blacklistadd http://chriskempson.com/projects/base16/
 blacklistadd https://thetypingcat.com
+blacklistadd https://tagpro.koalabeast.com/
 
 " "set colourscheme shydactyl
 " ^this doesn't seem to work and I'm not sure why
