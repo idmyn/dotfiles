@@ -29,6 +29,9 @@
 (use-package eink-theme
   :ensure t)
 
+(set-face-attribute 'default nil :font "Input Sans Narrow-13")
+(set-frame-font "Input Sans Narrow-13" nil t)
+
 (setq inhibit-startup-screen t)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
@@ -72,8 +75,11 @@
          (revert-buffer-function "%b" ; Buffer Menu
           ("%b - Dir: " default-directory))))) ; Plain buffer
 
-(global-display-line-numbers-mode)
-(setq-default display-line-numbers-type 'relative)
+;; (global-display-line-numbers-mode)
+;; (setq-default display-line-numbers-type 'relative)
+(use-package avy ;; exploring avy to move around without line numbers
+  :ensure t
+  :config (setq avy-timeout-seconds 0.2))
 
 (show-paren-mode 1)
 (electric-pair-mode 1)
@@ -84,9 +90,10 @@
       whitespace-style '(face tabs tab-mark lines-tail trailing))
 
 (custom-set-faces
+ '(default ((t (:background "#fffff8" :foreground "#111111"))))
  '(whitespace-tab ((t (:foreground "#9e9e9e")))))
 (setq whitespace-display-mappings
-  '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
+      '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
 
 (global-whitespace-mode t)
 ;; while we're at it...
@@ -96,6 +103,7 @@
 (use-package aggressive-indent
   :ensure t)
 
+(setq-default indent-tabs-mode nil)
 (setq custom-tab-width 3)
 (defun disable-tabs () (setq indent-tabs-mode nil))
 (defun enable-tabs  ()
@@ -111,11 +119,19 @@
 (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
 (add-hook 'css-mode-hook 'disable-tabs)
 (custom-set-variables
- '(smie-config (quote ((css-mode (2 :elem basic 4))))))
+ '(show-paren-mode t)
+ '(smie-config (quote ((css-mode (2 :elem basic 4)))))
+ '(tool-bar-mode nil))
 (add-hook 'js-mode-hook 'disable-tabs)
 (setq js-indent-level 2)
 (add-hook 'ruby-mode-hook 'disable-tabs)
 (setq ruby-indent-level 2)
+
+;; https://github.com/antonj/Highlight-Indentation-for-Emacs
+(use-package highlight-indentation
+  :config
+  (set-face-background 'highlight-indentation-face "#e6e6e1")
+  (add-hook 'ruby-mode-hook 'highlight-indentation-mode))
 
 (setq
    backup-by-copying t      ; don't clobber symlinks
@@ -150,8 +166,7 @@
   :after evil
   :config
   (general-swap-key nil 'motion
-    ";" ":"
-    "0" ")") ;; swapped in karabiner but I want normal behaviour in normal mode
+    ";" ":")
 
   ;; global bindings
   (general-define-key
@@ -160,19 +175,20 @@
     "M-k" 'windmove-up
     "M-l" 'windmove-right
 
-    "C-;" 'comment-or-uncomment-region-or-line)
+    "C-;" 'avy-goto-line)
 
   (general-create-definer global-leader
     :prefix "SPC")
   (global-leader 'motion 'override
+    "f" 'swiper
     "x" 'counsel-M-x
-    "f" 'counsel-find-file
     "b" 'switch-to-buffer
     "d" 'deer
     "s" 'window-swap-states
     "e" 'eshell
     "g" 'magit-status
     "i" 'aggressive-indent-indent-defun
+    "h" 'highlight-indentation-mode
     "c" 'comment-or-uncomment-region-or-line)
 
   (general-create-definer local-leader
@@ -180,6 +196,7 @@
     ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
 
   (general-def 'normal
+    "s" 'avy-goto-char-timer
     "J" nil ; unbind from evil-join
     ">" 'evil-shift-right-line
     "<" 'evil-shift-left-line)
