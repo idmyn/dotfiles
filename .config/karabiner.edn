@@ -26,7 +26,7 @@
         {:des   "outside vim (and emulators): caps_lock to f13 when pressed alone, to ctrl as modifier"
          :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
 
-        {:des   "in editors flip numbers/symbols"
+        #_{:des   "in editors flip numbers/symbols"
          :rules [[:condi :Editors]
                  [:1 :!S1]
                  [:!S1 :1]
