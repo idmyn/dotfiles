@@ -209,6 +209,8 @@
   (general-def 'motion
     "C-e" 'er/expand-region
 
+    ")" 'evil-beginning-of-line
+
     ;; easier motion around lines and paragraphs
     "H" 'evil-first-non-blank
     "L" 'evil-last-non-blank
