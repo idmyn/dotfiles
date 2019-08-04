@@ -162,8 +162,8 @@
   :ensure t
   :after evil
   :config
-  (general-swap-key nil 'motion
-    ";" ":")
+  ;; (general-swap-key nil 'motion
+  ;;   ";" ":")
 
   ;; global bindings
   (general-define-key
@@ -195,6 +195,7 @@
   (general-def 'normal
     "s" 'avy-goto-char-timer
     "J" nil ; unbind from evil-join
+    "p" nil ; unbind from evil-paste-after
     ">" 'evil-shift-right-line
     "<" 'evil-shift-left-line)
 
@@ -204,6 +205,14 @@
 
   (require 'move-border)
   (general-def 'motion
+    "j" 'evil-backward-char
+    "k" 'evil-next-line
+    "l" 'evil-previous-line
+    ";" 'evil-forward-char
+
+    "h" 'evil-paste-after
+    "p" 'evil-ex
+
     "C-e" 'er/expand-region
 
     ")" 'evil-beginning-of-line
