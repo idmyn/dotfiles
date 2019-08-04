@@ -29,9 +29,6 @@
 (use-package eink-theme
   :ensure t)
 
-(set-face-attribute 'default nil :font "Input Sans Narrow-13")
-(set-frame-font "Input Sans Narrow-13" nil t)
-
 (setq inhibit-startup-screen t)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
@@ -90,7 +87,7 @@
       whitespace-style '(face tabs tab-mark lines-tail trailing))
 
 (custom-set-faces
- '(default ((t (:background "#fffff8" :foreground "#111111"))))
+ '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width condensed :foundry "nil" :family "Input Mono Narrow"))))
  '(whitespace-tab ((t (:foreground "#9e9e9e")))))
 (setq whitespace-display-mappings
       '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
@@ -130,7 +127,7 @@
 ;; https://github.com/antonj/Highlight-Indentation-for-Emacs
 (use-package highlight-indentation
   :config
-  (set-face-background 'highlight-indentation-face "#e6e6e1")
+  (set-face-background 'highlight-indentation-face "#f7f7ef")
   (add-hook 'ruby-mode-hook 'highlight-indentation-mode))
 
 (setq
