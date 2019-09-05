@@ -76,7 +76,7 @@
 ;; (setq-default display-line-numbers-type 'relative)
 (use-package avy ;; exploring avy to move around without line numbers
   :ensure t
-  :config (setq avy-timeout-seconds 0.2))
+  :config (setq avy-timeout-seconds 0.3))
 
 (show-paren-mode 1)
 (electric-pair-mode 1)
@@ -87,7 +87,7 @@
       whitespace-style '(face tabs tab-mark lines-tail trailing))
 
 (custom-set-faces
- '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width condensed :foundry "nil" :family "Input Mono Narrow"))))
+ '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width condensed :foundry "nil" :family "Input Sans Narrow"))))
  '(whitespace-tab ((t (:foreground "#9e9e9e")))))
 (setq whitespace-display-mappings
       '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
@@ -364,6 +364,7 @@
 (use-package esh-autosuggest
   :hook (eshell-mode . esh-autosuggest-mode)
   :ensure t)
+(setq eshell-history-size 1000000)
 
 ;; TXT/ORG
 (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
