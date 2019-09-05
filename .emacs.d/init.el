@@ -167,26 +167,42 @@
 
   ;; global bindings
   (general-define-key
-    "M-h" 'windmove-left
-    "M-j" 'windmove-down
-    "M-k" 'windmove-up
-    "M-l" 'windmove-right
+    "M-j" 'windmove-left
+    "M-k" 'windmove-down
+    "M-l" 'windmove-up
+    "M-;" 'windmove-right
 
     "C-;" 'avy-goto-line)
+
+  ;; https://www.emacswiki.org/emacs/RecreateScratchBuffer
+  (defun switch-to-scratch-and-back ()
+      "Toggle between *scratch* buffer and the current buffer.
+      If the *scratch* buffer does not exist, create it."
+      (interactive)
+      (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
+          (if (equal (current-buffer) scratch-buffer-name)
+              (switch-to-buffer (other-buffer))
+              (switch-to-buffer scratch-buffer-name (lisp-interaction-mode)))))
 
   (general-create-definer global-leader
     :prefix "SPC")
   (global-leader 'motion 'override
-    "f" 'swiper
-    "x" 'counsel-M-x
+    ;; "f" 'swiper
+    ;; "x" 'counsel-M-x
     "b" 'switch-to-buffer
-    "d" 'deer
-    "s" 'window-swap-states
+    "f" 'deer
+    "RET" 'window-swap-states
+    "s" 'switch-to-scratch-and-back
+    "w" 'save-buffer
     "e" 'eshell
     "g" 'magit-status
     "i" 'aggressive-indent-indent-defun
     "h" 'highlight-indentation-mode
-    "c" 'comment-or-uncomment-region-or-line)
+    "c" 'comment-or-uncomment-region-or-line
+    "d" 'evil-quit
+    "v" 'split-window-right
+    "x" 'split-window-below
+    "r" 'query-replace)
 
   (general-create-definer local-leader
     :prefix "m")
@@ -211,22 +227,25 @@
     ";" 'evil-forward-char
 
     "h" 'evil-paste-after
+    "H" 'evil-paste-before
     "p" 'evil-ex
+
+    "RET" 'other-window
 
     "C-e" 'er/expand-region
 
-    ")" 'evil-beginning-of-line
+    ;; ")" 'evil-beginning-of-line
 
     ;; easier motion around lines and paragraphs
-    "H" 'evil-first-non-blank
-    "L" 'evil-last-non-blank
-    "K" 'backward-paragraph
-    "J" 'forward-paragraph
+    "J" 'evil-first-non-blank
+    "K" 'forward-paragraph
+    "L" 'backward-paragraph
+    ":" 'evil-last-non-blank
 
-    "M-y" 'move-border-left
-    "M-u" 'move-border-down
-    "M-i" 'move-border-up
-    "M-o" 'move-border-right)
+    "M-u" 'move-border-left
+    "M-i" 'move-border-down
+    "M-o" 'move-border-up
+    "M-p" 'move-border-right)
 
   ;; emacs bindings in insert mode
   ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
@@ -288,7 +307,12 @@
   (setq ranger-hide-cursor nil)
   (general-def 'motion ranger-mode-map
     "." 'ranger-toggle-dotfiles
-    "r" 'wdired-change-to-wdired-mode))
+    "r" 'wdired-change-to-wdired-mode
+
+    "j" 'ranger-up-directory
+    "k" 'ranger-next-file
+    "l" 'ranger-prev-file
+    ";" 'ranger-find-file))
 
 ;; Flycheck
 (use-package flycheck
