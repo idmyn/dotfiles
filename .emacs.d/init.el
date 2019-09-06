@@ -356,6 +356,7 @@
   :config
   (ranger-override-dired-mode t)
   (setq ranger-hide-cursor nil)
+  (add-hook 'ranger-mode-hook 'ranger-toggle-dotfiles)
   (general-def 'motion ranger-mode-map
     "." 'ranger-toggle-dotfiles
     "r" 'wdired-change-to-wdired-mode
