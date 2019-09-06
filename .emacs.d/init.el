@@ -27,7 +27,21 @@
 ;;; EDITOR APPEARANCE / QUALITY OF LIFE TWEAKS
 
 (use-package eink-theme
-  :ensure t)
+  :ensure t
+  :config ; fonts
+  (defun input-sans ()
+    "Set font to Input Sans Narrow in current buffer"
+    (interactive)
+    (setq buffer-face-mode-face '(:family "Input Sans Narrow"))
+    (buffer-face-mode))
+  (defun input-mono ()
+    "Set font to Input Mono Narrow in current buffer"
+    (interactive)
+    (setq buffer-face-mode-face '(:family "Input Mono Narrow"))
+    (buffer-face-mode))
+  (add-hook 'prog-mode-hook 'input-sans)
+  (add-hook 'ranger-mode-hook 'input-mono))
+
 
 (setq inhibit-startup-screen t)
 (toggle-scroll-bar -1)
@@ -72,9 +86,9 @@
          (revert-buffer-function "%b" ; Buffer Menu
           ("%b - Dir: " default-directory))))) ; Plain buffer
 
-;; (global-display-line-numbers-mode)
-;; (setq-default display-line-numbers-type 'relative)
-(use-package avy ;; exploring avy to move around without line numbers
+(global-display-line-numbers-mode)
+(setq-default display-line-numbers-type 'relative)
+(use-package avy
   :ensure t
   :config (setq avy-timeout-seconds 0.3))
 
@@ -88,6 +102,7 @@
 
 (custom-set-faces
  '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width condensed :foundry "nil" :family "Input Sans Narrow"))))
+ '(line-number ((t (:inherit (shadow default) :family "Input Mono Narrow"))))
  '(whitespace-tab ((t (:foreground "#9e9e9e")))))
 (setq whitespace-display-mappings
       '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
