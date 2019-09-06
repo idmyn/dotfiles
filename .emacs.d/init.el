@@ -197,6 +197,7 @@
     "M-l" 'windmove-up
     "M-;" 'windmove-right
 
+    "C-j" 'avy-goto-char-timer
     "C-;" 'avy-goto-line)
 
   ;; https://www.emacswiki.org/emacs/RecreateScratchBuffer
@@ -217,7 +218,8 @@
     "b" 'switch-to-buffer
     "f" 'deer
     "RET" 'window-swap-states
-    "s" 'switch-to-scratch-and-back
+    ;; "s" 'switch-to-scratch-and-back ; causing trouble with flycheck
+    "s" 'swiper
     "w" 'save-buffer
     "e" 'eshell
     "g" 'magit-status
@@ -236,7 +238,7 @@
     ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
 
   (general-def 'normal
-    "s" 'avy-goto-char-timer
+    ;; "s" 'avy-goto-char-timer
     "J" nil ; unbind from evil-join
     "p" nil ; unbind from evil-paste-after
     ">" 'evil-shift-right-line
