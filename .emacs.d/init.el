@@ -380,6 +380,7 @@
   :commands lsp
   :config
   (setq
+   lsp-auto-guess-root t
    lsp-prefer-flymake nil
    lsp-ui-flycheck-live-reporting nil
    lsp-enable-snippet nil
@@ -416,6 +417,8 @@
   :hook (eshell-mode . esh-autosuggest-mode)
   :ensure t)
 (setq eshell-history-size 1000000)
+(setq explicit-shell-file-name "/bin/bash") ; for cases where I can't use eshell
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; TXT/ORG
 (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
@@ -472,7 +475,9 @@
 ;; set the path variable (important for macOS?)
 (use-package exec-path-from-shell
   :ensure t
-  :config (exec-path-from-shell-initialize))
+  :config
+  (when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize)))
 
 ;; Allow hash to be entered on UK macbook keyboard layout
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
