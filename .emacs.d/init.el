@@ -116,6 +116,7 @@
 (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
 (add-hook 'css-mode-hook 'disable-tabs)
 (custom-set-variables
+ '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store" ".learn" ".rspec" ".gitignore")))
  '(show-paren-mode t)
  '(smie-config (quote ((css-mode (2 :elem basic 4)))))
  '(tool-bar-mode nil))
@@ -153,6 +154,15 @@
 ;; https://github.com/rolandwalker/simpleclip
 (require 'simpleclip)
 (simpleclip-mode 1)
+
+;; Flatiron niceties
+(defun learn-tests ()
+  "Run learn tests in `shell' buffer."
+  (interactive)
+  (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
+  (comint-send-string
+   (get-buffer-process (shell))
+   "learn\n")))
 
 
 ;;; EDITOR NAVIGATION / INTERACTION
@@ -202,6 +212,8 @@
     "d" 'evil-quit
     "v" 'split-window-right
     "x" 'split-window-below
+    "p" 'projectile-command-map
+    "l" 'learn-tests
     "r" 'query-replace)
 
   (general-create-definer local-leader
@@ -228,7 +240,8 @@
 
     "h" 'evil-paste-after
     "H" 'evil-paste-before
-    "p" 'evil-ex
+    ;; "p" 'evil-ex
+    "p" 'projectile-command-map
 
     "RET" 'other-window
 
@@ -291,9 +304,30 @@
         '((t . ivy--regex-fuzzy)))
   (global-set-key "\C-s" 'swiper)
 
+  (general-def
+    :keymaps '(ivy-minibuffer-map swiper-map)
+    "C-j" (kbd "DEL")
+    "C-k" 'ivy-next-line
+    "C-l" 'ivy-previous-line
+    "C-;" 'ivy-alt-done)
+
   (use-package counsel
     :ensure t
     :config (counsel-mode 1)))
+
+;; Projectile
+(use-package projectile
+  :ensure t
+  :config
+  (setq projectile-project-search-path '("~/Development/"))
+  (setq projectile-completion-system 'ivy)
+  (setq projectile-indexing-method 'native) ; seems to run quicker than 'alien'
+
+  (projectile-register-project-type 'learn '(".learn")
+                                    :test-suffix "_spec")
+
+  (projectile-mode +1))
+
 
 ;; Hyperbole
 (use-package hyperbole
