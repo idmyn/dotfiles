@@ -42,7 +42,6 @@
   (add-hook 'prog-mode-hook 'input-sans)
   (add-hook 'ranger-mode-hook 'input-mono))
 
-
 (setq inhibit-startup-screen t)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
@@ -197,6 +196,7 @@
     "M-l" 'windmove-up
     "M-;" 'windmove-right
 
+    "C-SPC" 'complete-symbol
     "C-j" 'avy-goto-char-timer
     "C-;" 'avy-goto-line)
 
@@ -231,6 +231,7 @@
     "x" 'split-window-below
     "p" 'projectile-command-map
     "l" 'learn-tests
+    "a" 'cheat-sh
     "r" 'query-replace)
 
   (general-create-definer local-leader
@@ -345,6 +346,12 @@
 
   (projectile-mode +1))
 
+;; Auto-complete
+(use-package auto-complete
+  :ensure t
+  :config (ac-config-default))
+
+(use-package cheat-sh) ; https://github.com/davep/cheat-sh.el
 
 ;; Hyperbole
 (use-package hyperbole
