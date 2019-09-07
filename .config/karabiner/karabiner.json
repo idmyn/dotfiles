@@ -611,7 +611,7 @@
             "key_code" : "b"
           },
           "to" : [ {
-            "key_code" : "non_us_backslash",
+            "key_code" : "backslash",
             "modifiers" : [ "left_shift" ]
           }, {
             "set_variable" : {
@@ -630,7 +630,7 @@
             "key_code" : "n"
           },
           "to" : [ {
-            "key_code" : "non_us_backslash"
+            "key_code" : "backslash"
           }, {
             "set_variable" : {
               "name" : "dead-state",

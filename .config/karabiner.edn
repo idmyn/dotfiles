@@ -87,8 +87,8 @@
                          [:x [:7 ["dead-state" 0]] :dead-state] ;; 7
                          [:c [:8 ["dead-state" 0]] :dead-state] ;; 8
                          [:v [:9 ["dead-state" 0]] :dead-state] ;; 9
-                         [:b [:!Snon_us_backslash ["dead-state" 0]] :dead-state] ;; |
-                         [:n [:non_us_backslash ["dead-state" 0]] :dead-state] ;; \
+                         [:b [:!Sbackslash ["dead-state" 0]] :dead-state] ;; |
+                         [:n [:backslash ["dead-state" 0]] :dead-state] ;; \
                          [:m [:2 ["dead-state" 0]] :dead-state] ;; 2
                          [:comma [:3 ["dead-state" 0]] :dead-state] ;; 3
                          [:period [:4 ["dead-state" 0]] :dead-state] ;; 4
