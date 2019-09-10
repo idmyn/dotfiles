@@ -154,10 +154,6 @@
 (require 'simpleclip)
 (simpleclip-mode 1)
 
-;; Easier daemon restart for config changes
-(use-package restart-emacs
-  :ensure t)
-
 ;; Flatiron School niceties
 (defun learn-tests ()
   "Run learn tests in `shell' buffer."
@@ -492,21 +488,9 @@
 ;; https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
 (use-package elpy
   :ensure t
-  :custom
-  (elpy-rpc-backend "jedi"))
-(use-package python
-  :config
+  :init
   (setq python-indent-offset 4)
   (elpy-enable))
-(use-package company-jedi
-  :ensure t
-  :defer t
-  :init
-  (defun enable-jedi()
-    (setq-local company-backends
-                (append '(company-jedi) company-backends)))
-  (with-eval-after-load 'company
-    (add-hook 'python-mode-hook 'enable-jedi)))
 
 
 ;;; macOS SPECIFIC
