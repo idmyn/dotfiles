@@ -45,7 +45,6 @@
 (setq inhibit-startup-screen t)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-;; (setq-default mode-line-format nil)
 
 ;; Minimal modeline
 ;; https://gitlab.com/mark.feller/emacs.d/blob/master/modules/module-solarized.el
@@ -129,6 +128,8 @@
   (set-face-background 'highlight-indentation-face "#f7f7ef")
   (add-hook 'ruby-mode-hook 'highlight-indentation-mode))
 
+;; Filesystem hygiene
+;; https://www.emacswiki.org/emacs/BackupFiles
 (setq
    backup-by-copying t      ; don't clobber symlinks
    backup-directory-alist
@@ -153,7 +154,11 @@
 (require 'simpleclip)
 (simpleclip-mode 1)
 
-;; Flatiron niceties
+;; Easier daemon restart for config changes
+(use-package restart-emacs
+  :ensure t)
+
+;; Flatiron School niceties
 (defun learn-tests ()
   "Run learn tests in `shell' buffer."
   (interactive)
@@ -200,7 +205,7 @@
     ;; "f" 'swiper
     ;; "x" 'counsel-M-x
     "b" 'switch-to-buffer
-    "f" 'deer
+    "n" 'deer
     "RET" 'window-swap-states
     ;; "s" 'switch-to-scratch-and-back ; causing trouble with flycheck
     "s" 'swiper
@@ -210,12 +215,13 @@
     "i" 'aggressive-indent-indent-defun
     "h" 'highlight-indentation-mode
     "c" 'comment-or-uncomment-region-or-line
-    "d" 'evil-quit
+    "q" 'evil-quit
     "v" 'split-window-right
     "x" 'split-window-below
     "p" 'projectile-command-map
     "l" 'learn-tests
     "a" 'cheat-sh
+    "u" 'undo-tree-visualize
     "r" 'query-replace)
 
   (general-create-definer local-leader
@@ -223,7 +229,7 @@
     ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
 
   (general-def 'normal
-    ;; "s" 'avy-goto-char-timer
+    "s" 'avy-goto-char-timer
     "J" nil ; unbind from evil-join
     "p" nil ; unbind from evil-paste-after
     ">" 'evil-shift-right-line
@@ -328,14 +334,22 @@
   (projectile-register-project-type 'learn '(".learn")
                                     :test-suffix "_spec")
 
+  (projectile-register-project-type 'python '("RPGtodo.py"))
+
   (projectile-mode +1))
 
-;; Auto-complete
-(use-package auto-complete
+;; Company
+(use-package company
+  :config
+  (company-tng-configure-default) ; tab 'n' go
+  (setq company-selection-wrap-around t)
+  (setq company-minimum-prefix-length 2)
+  (setq company-idle-delay 0.3)
+  (global-company-mode 1))
+(use-package company-lsp
   :ensure t
-  :config (ac-config-default))
-
-(use-package cheat-sh) ; https://github.com/davep/cheat-sh.el
+  :config
+  (push 'company-lsp company-backends))
 
 ;; Hyperbole
 (use-package hyperbole
@@ -389,6 +403,9 @@
   (dap-ui-mode 1))
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
+(use-package cheat-sh) ; https://github.com/davep/cheat-sh.el
+
+
 ;;; LANGUAGE/MODE SPECIFIC
 
 ;; Magit
@@ -400,7 +417,14 @@
     (add-hook 'git-commit-mode-hook 'evil-insert-state)
     (evil-set-initial-state 'magit-log-edit-mode 'insert)))
 
-;; Eshell aliases and autosuggest
+;; Eshell
+(defun eshell-setup-keys() ; implementation inspired by evil-collection
+  "Set up `evil' bindings for `eshell'."
+  (general-def 'insert eshell-mode-map
+    "C-k" 'eshell-next-matching-input-from-input
+    "C-l" 'eshell-previous-matching-input-from-input))
+(add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
+
 (use-package load-bash-alias
   :ensure t
   :config
