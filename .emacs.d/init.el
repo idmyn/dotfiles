@@ -460,13 +460,16 @@
   :config
   (setq ruby-indent-level 2)
   (local-leader 'normal ruby-mode-map
-    "l" 'yari
-    "d" 'dap-debug
-    "b" 'dap-breakpoint-toggle
-    "e" 'dap-eval-thing-at-point
-    "r" 'inf-ruby)
+    ;; "d" 'dap-debug
+    ;; "b" 'dap-breakpoint-toggle
+    ;; "e" 'dap-eval-thing-at-point
+    "d" 'yari ; d for documentation
+    "r" 'inf-ruby ; r for REPL
+    "b" 'ruby-send-buffer
+    "l" 'ruby-send-line)
   (local-leader 'visual ruby-mode-map
-    "e" 'dap-eval-region))
+    ;; "e" 'dap-eval-region
+    "v" 'ruby-send-region))
 
 (use-package chruby
   :ensure t
