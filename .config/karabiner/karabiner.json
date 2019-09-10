@@ -166,7 +166,7 @@
             "key_code" : "q"
           },
           "to" : [ {
-            "key_code" : "9",
+            "key_code" : "5",
             "modifiers" : [ "left_shift" ]
           }, {
             "set_variable" : {
@@ -704,6 +704,42 @@
           "to" : [ {
             "key_code" : "5"
           }, {
+            "set_variable" : {
+              "name" : "dead-state",
+              "value" : 0
+            }
+          } ],
+          "conditions" : [ {
+            "name" : "dead-state",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "return_or_enter"
+          },
+          "to" : [ {
+            "key_code" : "comma"
+          }, {
+            "key_code" : "return_or_enter"
+          }, {
+            "set_variable" : {
+              "name" : "dead-state",
+              "value" : 0
+            }
+          } ],
+          "conditions" : [ {
+            "name" : "dead-state",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "escape"
+          },
+          "to" : [ {
             "set_variable" : {
               "name" : "dead-state",
               "value" : 0

@@ -63,7 +63,7 @@
                          [:5 [:grave_accent_and_tilde ["dead-state" 0]] :dead-state] ;; `
                          [:7 [:!O3 ["dead-state" 0]] :dead-state] ;; #
                          [:8 [:!S6 ["dead-state" 0]] :dead-state] ;; ^
-                         [:q [:!S9 ["dead-state" 0]] :dead-state] ;; %
+                         [:q [:!S5 ["dead-state" 0]] :dead-state] ;; %
                          [:w [:!S7 ["dead-state" 0]] :dead-state] ;; &
                          [:e [:!Sslash ["dead-state" 0]] :dead-state] ;; ?
                          [:r [:!Sequal_sign ["dead-state" 0]] :dead-state] ;; +
@@ -93,6 +93,8 @@
                          [:comma [:3 ["dead-state" 0]] :dead-state] ;; 3
                          [:period [:4 ["dead-state" 0]] :dead-state] ;; 4
                          [:slash [:5 ["dead-state" 0]] :dead-state] ;; 5
+                         [:return_or_enter [:comma :return_or_enter ["dead-state" 0]] :dead-state] ;; ,\n
+                         [:escape ["dead-state" 0] :dead-state] ;; ,\n
                          [:spacebar [:comma :spacebar ["dead-state" 0]] :dead-state]]}
 
       #_{:des   "When British input source, workman-IO layout on logitech"
