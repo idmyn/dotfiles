@@ -7,10 +7,20 @@ set newtab about:blank
 set hintfiltermode vimperator-reflow
 set hintnames numeric
 
-bind H tabprev
-bind J back
-bind K forward
-bind L tabnext
+bind j scrollpx -50
+bind k scrollline 10
+bind l scrollline -10
+bind ; scrollpx 50
+
+bind p fillcmdline_notrail
+
+bind h clipboard open
+bind H clipboard tabopen
+
+bind J tabprev
+bind K back
+bind L forward
+bind : tabnext
 
 set searchengine duckduckgo
 set searchurls.lib https://discovered.ed.ac.uk/primo-explore/search?query=any,contains,%s&tab=default_tab&search_scope=default_scope&vid=44UOE_VU2&offset=0
