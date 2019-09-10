@@ -113,31 +113,15 @@
 ;; Indentation
 (use-package aggressive-indent
   :ensure t)
-
 (setq-default indent-tabs-mode nil)
-(setq custom-tab-width 3)
-(defun disable-tabs () (setq indent-tabs-mode nil))
-(defun enable-tabs  ()
-  ;; (local-set-key (kbd "TAB") 'tab-to-tab-stop)
-  (setq indent-tabs-mode t)
-  (setq tab-width custom-tab-width))
-
 (setq backward-delete-char-untabify-method nil)
 (setq-default electric-indent-inhibit nil)
 
-(add-hook 'prog-mode-hook 'enable-tabs)
-(add-hook 'lisp-mode-hook 'disable-tabs)
-(add-hook 'emacs-lisp-mode-hook 'disable-tabs)
-(add-hook 'css-mode-hook 'disable-tabs)
 (custom-set-variables
  '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store" ".learn" ".rspec" ".gitignore")))
  '(show-paren-mode t)
  '(smie-config (quote ((css-mode (2 :elem basic 4)))))
  '(tool-bar-mode nil))
-(add-hook 'js-mode-hook 'disable-tabs)
-(setq js-indent-level 2)
-(add-hook 'ruby-mode-hook 'disable-tabs)
-(setq ruby-indent-level 2)
 
 ;; https://github.com/antonj/Highlight-Indentation-for-Emacs
 (use-package highlight-indentation
@@ -443,6 +427,7 @@
 ;; Javascript
 (use-package dap-node
   :config
+  (setq js-indent-level 2)
   (local-leader 'normal js-mode-map
     "d" 'dap-debug
     "b" 'dap-breakpoint-toggle
@@ -453,6 +438,7 @@
 ;; Ruby
 (use-package dap-ruby
   :config
+  (setq ruby-indent-level 2)
   (local-leader 'normal ruby-mode-map
     "l" 'yari
     "d" 'dap-debug
@@ -478,14 +464,35 @@
   :ensure t
   :interpreter "ruby")
 
+;; Python
+;; https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
+(use-package elpy
+  :ensure t
+  :custom
+  (elpy-rpc-backend "jedi"))
+(use-package python
+  :config
+  (setq python-indent-offset 4)
+  (elpy-enable))
+(use-package company-jedi
+  :ensure t
+  :defer t
+  :init
+  (defun enable-jedi()
+    (setq-local company-backends
+                (append '(company-jedi) company-backends)))
+  (with-eval-after-load 'company
+    (add-hook 'python-mode-hook 'enable-jedi)))
+
 
 ;;; macOS SPECIFIC
+
 ;; set the path variable (important for macOS?)
 (use-package exec-path-from-shell
   :ensure t
   :config
   (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize)))
+    (exec-path-from-shell-initialize)))
 
 ;; Allow hash to be entered on UK macbook keyboard layout
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
