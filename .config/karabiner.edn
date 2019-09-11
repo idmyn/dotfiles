@@ -97,6 +97,14 @@
                          [:escape ["dead-state" 0] :dead-state] ;; ,\n
                          [:spacebar [:comma :spacebar ["dead-state" 0]] :dead-state]]}
 
+
+        {:des "Colemak Tarmak1(E)"
+         :rules [[:e :j]
+                [:j :n]
+                [:k :e]
+                [:n :k]
+                ]}
+
       #_{:des   "When British input source, workman-IO layout on logitech"
          :rules [[:condi :uk :logitech]
                  [:q :q]
