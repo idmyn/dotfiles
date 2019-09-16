@@ -117,6 +117,7 @@
 (setq-default electric-indent-inhibit nil)
 
 (custom-set-variables
+ '(hkey-init-override-local-keys nil)
  '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store" ".learn" ".rspec" ".gitignore")))
  '(show-paren-mode t)
  '(smie-config (quote ((css-mode (2 :elem basic 4)))))
@@ -171,6 +172,8 @@
   :ensure t
   :after evil
   :config
+  ;; (general-swap-key nil 'motion
+  ;;   ";" ":")
 
   ;; global bindings
   (general-define-key
@@ -434,6 +437,12 @@
 (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
 
 ;; HTML/CSS
+(use-package web-mode
+  :ensure t
+  :config
+  (general-def 'web-mode-map
+    "M-;" nil)
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
 (use-package emmet-mode
   :ensure t
   :config
@@ -469,9 +478,12 @@
     ;; "e" 'dap-eval-region
     "v" 'ruby-send-region))
 
-(use-package chruby
+;; (use-package chruby
+;;   :ensure t
+;;   :config (chruby "2.6.3"))
+(use-package rvm
   :ensure t
-  :config (chruby "2.6.3"))
+  :config (rvm-use-default))
 
 (use-package inf-ruby
   :ensure t
