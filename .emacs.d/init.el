@@ -234,12 +234,9 @@
     "<" 'evil-shift-left)
 
   (require 'move-border)
-  (general-def 'motion 'override
-    "j" 'evil-forward-word-end
-    "k" 'evil-search-next
-
-    "n" 'evil-backward-char
-    "e" 'evil-next-line
+  (general-def 'motion
+    "j" 'evil-backward-char
+    "k" 'evil-next-line
     "l" 'evil-previous-line
     ";" 'evil-forward-char
 
@@ -255,8 +252,8 @@
     ;; ")" 'evil-beginning-of-line
 
     ;; easier motion around lines and paragraphs
-    "N" 'evil-first-non-blank
-    "E" 'forward-paragraph
+    "J" 'evil-first-non-blank
+    "K" 'forward-paragraph
     "L" 'backward-paragraph
     ":" 'evil-last-non-blank
 
@@ -311,8 +308,8 @@
 
   (general-def
     :keymaps '(ivy-minibuffer-map swiper-map)
-    "C-n" (kbd "DEL")
-    "C-e" 'ivy-next-line
+    "C-j" (kbd "DEL")
+    "C-k" 'ivy-next-line
     "C-l" 'ivy-previous-line
     "C-;" 'ivy-alt-done)
 
@@ -418,9 +415,8 @@
 (defun eshell-setup-keys() ; implementation inspired by evil-collection
   "Set up `evil' bindings for `eshell'."
   (general-def 'insert eshell-mode-map
-    "C-e" 'eshell-next-matching-input-from-input
-    "C-l" 'eshell-previous-matching-input-from-input
-    "C-;" 'eshell-send-input))
+    "C-k" 'eshell-next-matching-input-from-input
+    "C-l" 'eshell-previous-matching-input-from-input))
 (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
 
 (use-package load-bash-alias
