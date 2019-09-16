@@ -26,3 +26,9 @@ chruby ruby-2.6.3
 eval "$(pyenv init -)"
 
 source $HOME/.aliases
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
