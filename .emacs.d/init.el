@@ -450,6 +450,9 @@
   (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
   (general-def 'insert
     "C-z" 'emmet-expand-line))
+(use-package evil-matchit
+  :ensure t
+  :config (global-evil-matchit-mode 1))
 
 ;; Javascript
 (use-package dap-node
