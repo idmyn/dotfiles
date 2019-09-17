@@ -379,7 +379,7 @@
 ;; LSP
 (use-package lsp-mode
   :ensure t
-  :hook ((ruby-mode js-mode) . lsp)
+  :hook ((js-mode) . lsp)
   :commands lsp
   :config
   (setq
@@ -463,31 +463,37 @@
     "e" 'dap-eval-region))
 
 ;; Ruby
-(use-package dap-ruby
+(use-package robe
+  :ensure t
   :config
+  (add-hook 'ruby-mode-hook 'robe-mode)
+  (push 'company-robe company-backends)
+
   (setq ruby-indent-level 2)
   (local-leader 'normal ruby-mode-map
-    ;; "d" 'dap-debug
-    ;; "b" 'dap-breakpoint-toggle
-    ;; "e" 'dap-eval-thing-at-point
     "d" 'yari ; d for documentation
     "r" 'inf-ruby ; r for REPL
+    "p" 'pry-intercept ; p for pry
     "b" 'ruby-send-buffer
     "l" 'ruby-send-line)
   (local-leader 'visual ruby-mode-map
-    ;; "e" 'dap-eval-region
     "v" 'ruby-send-region))
 
-;; (use-package chruby
-;;   :ensure t
-;;   :config (chruby "2.6.3"))
+;; https://github.com/jacott/emacs-pry
+(use-package pry
+  :init (add-to-list 'load-path "~/.emacs.d/lisp/emacs-pry"))
+
 (use-package rvm
   :ensure t
   :config (rvm-use-default))
 
 (use-package inf-ruby
   :ensure t
-  :interpreter "ruby")
+  :interpreter "ruby"
+  :config
+  ;; https://github.com/dgutov/robe#integration-with-rvmel
+  (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+    (rvm-activate-corresponding-ruby)))
 
 (use-package yari
   :ensure t
