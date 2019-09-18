@@ -339,6 +339,8 @@
 
   (projectile-register-project-type 'python '("RPGtodo.py"))
 
+  (projectile-register-project-type 'jekyll '(".jekyll-metadata"))
+
   (projectile-mode +1))
 
 ;; Company
@@ -419,6 +421,7 @@
     (add-to-list 'evil-insert-state-modes 'magit-status-mode)
     (add-hook 'git-commit-mode-hook 'evil-insert-state)
     (evil-set-initial-state 'magit-log-edit-mode 'insert)))
+(global-auto-revert-mode t) ; buffers should change when branch changes
 
 ;; Eshell
 (defun eshell-setup-keys() ; implementation inspired by evil-collection
@@ -441,6 +444,17 @@
 
 ;; TXT/ORG
 (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
+(use-package org
+  :ensure t
+  :config
+  (general-def 'org-mode-map
+    "C-j" 'org-metaleft
+    "C-k" 'org-metadown
+    "C-l" 'org-metaup
+    "C-;" 'org-metaright)
+  ;; couldn’t get the following bindings working with general.el unfortunately
+  (define-key org-mode-map (kbd "<C-return>") 'org-meta-return)
+  (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-respect-content))
 
 ;; HTML/CSS
 (use-package web-mode
