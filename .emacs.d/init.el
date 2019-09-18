@@ -188,7 +188,7 @@
     "M-l" 'windmove-up
     "M-;" 'windmove-right
 
-    "C-SPC" 'complete-symbol
+    "C-SPC" 'ivy-yasnippet
     "C-j" 'avy-goto-char-timer
     "C-;" 'avy-goto-line)
 
@@ -355,6 +355,19 @@
   :ensure t
   :config
   (push 'company-lsp company-backends))
+
+;; YASnippet
+(use-package yasnippet
+  :ensure t
+  :config
+  (use-package yasnippet-snippets
+    :ensure t)
+  (use-package ivy-yasnippet
+    :ensure t
+    :init
+    (use-package dash
+      :ensure t))
+  (yas-global-mode 1))
 
 ;; Hyperbole
 (use-package hyperbole
