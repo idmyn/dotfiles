@@ -85,7 +85,7 @@
           ("%b - Dir: " default-directory))))) ; Plain buffer
 
 (global-display-line-numbers-mode)
-(setq-default display-line-numbers-type 'relative)
+;; (setq-default display-line-numbers-type 'relative)
 (use-package avy
   :ensure t
   :config (setq avy-timeout-seconds 0.3))
@@ -101,6 +101,11 @@
 (custom-set-faces
  '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width condensed :foundry "nil" :family "Input Sans Narrow"))))
  '(line-number ((t (:inherit (shadow default) :family "Input Mono Narrow"))))
+ '(org-block-begin-line ((t (:height 0.8))))
+ '(web-mode-doctype-face ((t nil)))
+ '(web-mode-html-attr-name-face ((t nil)))
+ '(web-mode-html-tag-face ((t nil)))
+ '(web-mode-json-key-face ((t nil)))
  '(whitespace-tab ((t (:foreground "#9e9e9e")))))
 (setq whitespace-display-mappings
       '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
@@ -127,6 +132,7 @@
 (use-package highlight-indentation
   :config
   (set-face-background 'highlight-indentation-face "#f7f7ef")
+  (add-hook 'web-mode-hook 'highlight-indentation-mode)
   (add-hook 'ruby-mode-hook 'highlight-indentation-mode))
 
 ;; Filesystem hygiene
@@ -442,6 +448,7 @@
   :config
   (general-def 'web-mode-map
     "M-;" nil)
+  (setq web-mode-markup-indent-offset 2)
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
 (use-package emmet-mode
   :ensure t
