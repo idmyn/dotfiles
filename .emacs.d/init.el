@@ -244,6 +244,12 @@
     ">" 'evil-shift-right
     "<" 'evil-shift-left)
 
+  (general-def 'insert global-map
+    "C-j" 'left-char
+    "C-k" 'next-line
+    "C-l" 'previous-line
+    "C-;" 'right-char)
+
   (require 'move-border)
   (general-def 'motion
     "j" 'evil-backward-char
@@ -475,17 +481,24 @@
 (setq eshell-history-size 1000000)
 (setq explicit-shell-file-name "/bin/bash") ; for cases where I can't use eshell
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(general-def 'insert shell-mode-map
+    "C-k" 'comint-next-input
+    "C-l" 'comint-previous-input
+    "C-;" 'comint-send-input)
 
 ;; TXT/ORG
+(setq-default fill-column 80)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
 (use-package org
   :ensure t
   :config
-  (general-def 'org-mode-map
+  (general-def 'insert org-mode-map
     "C-j" 'org-metaleft
-    "C-k" 'org-metadown
-    "C-l" 'org-metaup
     "C-;" 'org-metaright)
+  (general-def 'motion org-mode-map
+    "C-k" 'org-metadown
+    "C-l" 'org-metaup)
   ;; couldn’t get the following bindings working with general.el unfortunately
   (define-key org-mode-map (kbd "<C-return>") 'org-meta-return)
   (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-respect-content))
