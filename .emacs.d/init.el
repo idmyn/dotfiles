@@ -122,7 +122,6 @@
 (setq-default electric-indent-inhibit nil)
 
 (custom-set-variables
- '(hkey-init-override-local-keys nil)
  '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store" ".learn" ".rspec" ".gitignore")))
  '(show-paren-mode t)
  '(smie-config (quote ((css-mode (2 :elem basic 4)))))
@@ -168,7 +167,7 @@
   (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
   (comint-send-string
    (get-buffer-process (shell))
-   "learn\n")))
+   "learn --f-f\n")))
 
 
 ;;; EDITOR NAVIGATION / INTERACTION
@@ -207,7 +206,9 @@
   (global-leader 'motion 'override
     ;; "f" 'swiper
     ;; "x" 'counsel-M-x
-    "b" 'switch-to-buffer
+    "f" 'switch-to-buffer
+    "d" 'dumb-jump-go
+    "b" 'dumb-jump-back
     "n" 'deer
     "RET" 'window-swap-states
     ;; "s" 'switch-to-scratch-and-back ; causing trouble with flycheck
@@ -343,6 +344,13 @@
 
   (projectile-mode +1))
 
+;; Dumb-jump
+(use-package dumb-jump
+  :ensure t
+  :config
+  (setq dumb-jump-selector 'ivy)
+  (setq dumb-jump-force-searcher 'rg))
+
 ;; Company
 (use-package company
   :config
@@ -367,11 +375,10 @@
     :init
     (use-package dash
       :ensure t))
-  (yas-global-mode 1))
-
-;; Hyperbole
-(use-package hyperbole
-  :ensure t)
+  (yas-global-mode 1)
+  :config
+  (general-def 'insert yas-minor-mode-map
+    "M-RET" 'yas-expand))
 
 ;; Ranger
 (use-package ranger
