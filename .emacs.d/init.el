@@ -542,13 +542,19 @@
 
   (setq ruby-indent-level 2)
   (local-leader 'normal ruby-mode-map
-    "d" 'yari ; d for documentation
+    "d" 'robe-doc ; d for documentation
     "r" 'inf-ruby ; r for REPL
     "p" 'pry-intercept ; p for pry
     "b" 'ruby-send-buffer
     "l" 'ruby-send-line)
   (local-leader 'visual ruby-mode-map
     "v" 'ruby-send-region))
+
+;; I only want to be promped to start the server when I open ruby files
+(add-hook 'find-file-hook 'open-rb-hook)
+(defun open-rb-hook ()
+  (when (string= (file-name-extension buffer-file-name) "rb")
+    (robe-start)))
 
 ;; https://github.com/jacott/emacs-pry
 (use-package pry
@@ -564,11 +570,15 @@
   :config
   ;; https://github.com/dgutov/robe#integration-with-rvmel
   (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-    (rvm-activate-corresponding-ruby)))
+    (rvm-activate-corresponding-ruby))
+  (general-def 'inf-ruby-mode-map
+    "C-k" 'comint-next-input
+    "C-l" 'comint-previous-input
+    "C-;" 'comint-send-input))
 
-(use-package yari
-  :ensure t
-  :interpreter "ruby")
+;; (use-package yari
+;;   :ensure t
+;;   :interpreter "ruby")
 
 (use-package rubocop
   :ensure t
