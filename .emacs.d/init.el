@@ -187,9 +187,10 @@
     "M-l" 'windmove-up
     "M-;" 'windmove-right
 
-    "C-SPC" 'ivy-yasnippet
-    "C-j" 'avy-goto-char-timer
-    "C-;" 'avy-goto-line)
+    "s-=" 'text-scale-increase
+    "s--" 'text-scale-decrease
+
+    "C-SPC" 'ivy-yasnippet)
 
   ;; https://www.emacswiki.org/emacs/RecreateScratchBuffer
   (defun switch-to-scratch-and-back ()
@@ -224,7 +225,7 @@
     "x" 'split-window-below
     "p" 'projectile-command-map
     "l" 'learn-tests
-    "a" 'cheat-sh
+    "a" 'howdoyou-query
     "u" 'undo-tree-visualize
     "r" 'query-replace)
 
@@ -428,7 +429,20 @@
   (dap-ui-mode 1))
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-(use-package cheat-sh) ; https://github.com/davep/cheat-sh.el
+(use-package howdoyou
+  :ensure t
+  :config
+  ;; keybinds for specific buffer names?
+  ;; (general-def
+  ;;                     :definer 'minor-mode
+  ;;                     :states 'normal
+  ;;                     :keymaps howdoyou-mode
+  ;;   "C-n" 'howdoyou-next-link
+  ;;   "C-p" 'howdoyou-previous-link)
+  ;; (local-leader 'howdoyou-mode-map
+  ;;   "p" 'howdoyou-previous-link
+  ;;   "n" 'howdoyou-next-link)
+  )
 
 
 ;;; LANGUAGE/MODE SPECIFIC
