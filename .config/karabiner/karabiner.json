@@ -465,7 +465,8 @@
             "key_code" : "j"
           },
           "to" : [ {
-            "key_code" : "1"
+            "key_code" : "hyphen",
+            "modifiers" : [ "left_shift" ]
           }, {
             "set_variable" : {
               "name" : "dead-state",

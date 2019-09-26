@@ -79,7 +79,7 @@
                          [:f [:0 ["dead-state" 0]] :dead-state] ;; 0
                          [:g [:!Sopen_bracket ["dead-state" 0]] :dead-state] ;; {
                          [:h [:!Sclose_bracket ["dead-state" 0]] :dead-state] ;; }
-                         [:j [:1 ["dead-state" 0]] :dead-state] ;; 1
+                         [:j [:!Shyphen ["dead-state" 0]] :dead-state] ;; _ (used to be '1')
                          [:k [:!S8 ["dead-state" 0]] :dead-state] ;; *
                          [:l [:!S0 ["dead-state" 0]] :dead-state] ;; )
                          [:semicolon [:hyphen ["dead-state" 0]] :dead-state] ;; -
