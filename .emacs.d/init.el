@@ -291,7 +291,7 @@ Version 2018-10-12"
     "n" 'deer
     "RET" 'window-swap-states
     ;; "s" 'switch-to-scratch-and-back ; causing trouble with flycheck
-    "s" 'swiper
+    "s" 'counsel-ag
     "w" 'save-buffer
     "e" 'eshell
     "g" 'magit-status
@@ -401,16 +401,16 @@ Version 2018-10-12"
         '((t . ivy--regex-fuzzy)))
   (global-set-key "\C-s" 'swiper)
 
+  (use-package counsel
+    :ensure t
+    :config (counsel-mode 1))
+
   (general-def
-    :keymaps '(ivy-minibuffer-map swiper-map)
+    :keymaps '(ivy-minibuffer-map swiper-map counsel-ag-map)
     "C-j" (kbd "DEL")
     "C-k" 'ivy-next-line
     "C-l" 'ivy-previous-line
-    "C-;" 'ivy-alt-done)
-
-  (use-package counsel
-    :ensure t
-    :config (counsel-mode 1)))
+    "C-;" 'ivy-alt-done))
 
 ;; Projectile
 (use-package projectile
@@ -418,7 +418,28 @@ Version 2018-10-12"
   :config
   (setq projectile-project-search-path '("~/Development/"))
   (setq projectile-completion-system 'ivy)
-  (setq projectile-indexing-method 'native) ; seems to run quicker than 'alien'
+  ;; (setq projectile-indexing-method 'native) ; seems to run quicker than 'alien'
+  (setq projectile-enable-caching t) ; ripgrep config from https://emacs.stackexchange.com/a/29200
+
+;;; Default rg arguments
+  ;; https://github.com/BurntSushi/ripgrep
+  (when (executable-find "rg")
+    (progn
+      (defconst modi/rg-arguments
+        `("--line-number"                     ; line numbers
+          "--smart-case"
+          "--follow"                          ; follow symlinks
+          "--mmap")                           ; apply memory map optimization when possible
+        "Default rg arguments used in the functions in `projectile' package.")
+      (defun modi/advice-projectile-use-rg ()
+        "Always use `rg' for getting a list of all files in the project."
+        (mapconcat 'identity
+                   (append '("\\rg") ; used unaliased version of `rg': \rg
+                           modi/rg-arguments
+                           '("--null" ; output null separated results,
+                             "--files")) ; get file names matching the regex '' (all files)
+                   " "))
+      (advice-add 'projectile-get-ext-command :override #'modi/advice-projectile-use-rg)))
 
   (projectile-register-project-type 'learn '(".learn")
                                     :test-suffix "_spec")
@@ -564,6 +585,8 @@ Version 2018-10-12"
     "C-k" 'comint-next-input
     "C-l" 'comint-previous-input
     "C-;" 'comint-send-input)
+(general-def 'normal shell-mode-map
+    "C-d" 'evil-scroll-down)
 
 ;; TXT/ORG
 (setq-default fill-column 80)
@@ -663,7 +686,7 @@ Version 2018-10-12"
   ;; https://github.com/dgutov/robe#integration-with-rvmel
   (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
     (rvm-activate-corresponding-ruby))
-  (general-def 'inf-ruby-mode-map
+  (general-def 'insert inf-ruby-mode-map
     "C-k" 'comint-next-input
     "C-l" 'comint-previous-input
     "C-;" 'comint-send-input))
