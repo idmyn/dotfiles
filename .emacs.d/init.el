@@ -40,6 +40,7 @@
     (setq buffer-face-mode-face '(:family "Input Mono Narrow"))
     (buffer-face-mode))
   (add-hook 'prog-mode-hook 'input-sans)
+  (add-hook 'sql-mode-hook 'input-mono)
   (add-hook 'ranger-mode-hook 'input-mono))
 
 (setq inhibit-startup-screen t)
@@ -624,7 +625,11 @@ Version 2018-10-12"
     "r" 'inf-ruby ; r for REPL
     "p" 'pry-intercept ; p for pry
     "b" 'ruby-send-buffer
-    "l" 'ruby-send-line)
+    "l" 'ruby-send-line
+
+    "t f" 'rspec-verify
+    "t a" 'rspec-verify-all
+    "t t" 'rspec-toggle-spec-and-target)
   (local-leader 'visual ruby-mode-map
     "v" 'ruby-send-region))
 
@@ -634,9 +639,18 @@ Version 2018-10-12"
   (when (string= (file-name-extension buffer-file-name) "rb")
     (robe-start)))
 
-;; https://github.com/jacott/emacs-pry
-(use-package pry
-  :init (add-to-list 'load-path "~/.emacs.d/lisp/emacs-pry"))
+(use-package rspec-mode
+  :ensure t
+  :config
+  (setq rspec-use-rvm t)
+  (defadvice rspec-compile (around rspec-compile-around)
+    "Use BASH shell for running the specs because of ZSH issues."
+    (let ((shell-file-name "/bin/bash"))
+      ad-do-it))
+
+  (ad-activate 'rspec-compile)
+
+  (general-def))
 
 (use-package rvm
   :ensure t
@@ -669,6 +683,18 @@ Version 2018-10-12"
   :init
   (setq python-indent-offset 4)
   (elpy-enable))
+
+;; SQL
+(use-package sqlup-mode
+  :ensure t
+  :config
+  (add-to-list 'sqlup-blacklist "name")
+
+  (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
+  (add-hook 'sql-mode-hook 'sqlup-mode))
+(use-package sql-indent
+  :ensure t
+  :config (add-hook 'sql-mode-hook 'sqlind-minor-mode))
 
 
 ;;; macOS SPECIFIC
