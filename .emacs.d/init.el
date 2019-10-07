@@ -387,7 +387,10 @@ Version 2018-10-12"
   (setq evil-want-C-u-scroll t)
   (use-package undo-tree
     :ensure t
-    :config (global-undo-tree-mode))
+    :config
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
+    (global-undo-tree-mode))
   (use-package expand-region
     :ensure t)
 
@@ -422,6 +425,18 @@ Version 2018-10-12"
     "C-k" 'ivy-next-line
     "C-l" 'ivy-previous-line
     "C-;" 'ivy-alt-done))
+
+(use-package prescient
+  :ensure t
+  :config
+  (use-package ivy-prescient
+    :ensure t)
+  (use-package company-prescient
+     :ensure t)
+
+  (ivy-prescient-mode)
+  (company-prescient-mode)
+  (prescient-persist-mode))
 
 ;; Projectile
 (use-package projectile
@@ -632,13 +647,21 @@ Version 2018-10-12"
 (use-package emmet-mode
   :ensure t
   :config
+  (add-hook 'web-mode-hook 'emmet-mode) ; auto-start on any markup modes
   (add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
   (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
-  (general-def 'insert
-    "C-z" 'emmet-expand-line))
+  (general-def 'insert web-mode-map
+    "C-SPC" 'emmet-expand-line))
 (use-package evil-matchit
   :ensure t
   :config (global-evil-matchit-mode 1))
+
+;; Sass
+(use-package sass-mode
+  ;; https://github.com/nex3/sass-mode
+  :init
+  (use-package haml-mode
+    :ensure t))
 
 ;; Javascript
 (use-package dap-node
@@ -714,13 +737,19 @@ Version 2018-10-12"
   :ensure t
   :interpreter "ruby")
 
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+
 ;; Python
 ;; https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
 (use-package elpy
   :ensure t
   :init
   (setq python-indent-offset 4)
-  (elpy-enable))
+  (elpy-enable)
+  :config
+  (when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode)))
 
 ;; SQL
 (use-package sqlup-mode
