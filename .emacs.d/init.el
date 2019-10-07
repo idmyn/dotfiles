@@ -86,7 +86,7 @@
           ("%b - Dir: " default-directory))))) ; Plain buffer
 
 (global-display-line-numbers-mode)
-;; (setq-default display-line-numbers-type 'relative)
+(setq-default display-line-numbers-type 'relative)
 (use-package avy
   :ensure t
   :config (setq avy-timeout-seconds 0.3))
@@ -123,6 +123,11 @@
 (setq-default electric-indent-inhibit nil)
 
 (custom-set-variables
+ '(emojify-display-style (quote image))
+ '(emojify-download-emojis-p (quote ask))
+ '(emojify-emoji-set "twemoji-v2-22")
+ '(emojify-emoji-styles (quote (unicode)))
+ '(global-emojify-mode t)
  '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store" ".learn" ".rspec" ".gitignore")))
  '(show-paren-mode t)
  '(smie-config (quote ((css-mode (2 :elem basic 4)))))
@@ -244,6 +249,12 @@ Version 2018-10-12"
               (shell-command $cmd-str $outputb ))
           (error "No recognized program file suffix for this file."))))
     (run-hooks 'xah-run-current-file-after-hook)))
+
+;; Emojis
+(use-package emojify
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-emojify-mode))
 
 
 ;;; EDITOR NAVIGATION / INTERACTION
@@ -671,9 +682,7 @@ Version 2018-10-12"
     (let ((shell-file-name "/bin/bash"))
       ad-do-it))
 
-  (ad-activate 'rspec-compile)
-
-  (general-def))
+  (ad-activate 'rspec-compile))
 
 (use-package rvm
   :ensure t
