@@ -277,7 +277,7 @@ Version 2018-10-12"
     "s-=" 'text-scale-increase
     "s--" 'text-scale-decrease
 
-    "C-SPC" 'ivy-yasnippet)
+    "M-SPC" 'ivy-yasnippet)
 
     (general-define-key (kbd "<C-return>") 'xah-run-current-file)
 
@@ -481,6 +481,11 @@ Version 2018-10-12"
   :config
   (push 'company-lsp company-backends))
 
+;; Hippie expand
+(general-define-key
+  "M-/" 'hippie-expand)
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-complete-file-name-partially try-complete-file-name try-expand-all-abbrevs try-expand-list try-expand-line try-complete-lisp-symbol-partially try-complete-lisp-symbol))
+
 ;; YASnippet
 (use-package yasnippet
   :ensure t
@@ -650,6 +655,7 @@ Version 2018-10-12"
 (use-package robe
   :ensure t
   :config
+  (setq ruby-insert-encoding-magic-comment nil)
   (add-hook 'ruby-mode-hook 'robe-mode)
   (push 'company-robe company-backends)
 
