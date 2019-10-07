@@ -76,7 +76,7 @@
                          [:a [:slash ["dead-state" 0]] :dead-state] ;; /
                          [:s [:!S9 ["dead-state" 0]] :dead-state] ;; (
                          [:d [:equal_sign ["dead-state" 0]] :dead-state] ;; =
-                         [:f [:0 ["dead-state" 0]] :dead-state] ;; 0
+                         [:f [:!O3 ["dead-state" 0]] :dead-state] ;; # (used to be "0")
                          [:g [:!Sopen_bracket ["dead-state" 0]] :dead-state] ;; {
                          [:h [:!Sclose_bracket ["dead-state" 0]] :dead-state] ;; }
                          [:j [:!Shyphen ["dead-state" 0]] :dead-state] ;; _ (used to be '1')

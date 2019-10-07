@@ -409,7 +409,8 @@
             "key_code" : "f"
           },
           "to" : [ {
-            "key_code" : "0"
+            "key_code" : "3",
+            "modifiers" : [ "left_option" ]
           }, {
             "set_variable" : {
               "name" : "dead-state",
