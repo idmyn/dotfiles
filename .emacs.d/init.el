@@ -316,6 +316,7 @@ Version 2018-10-12"
     "l" 'learn-tests
     "a" 'howdoyou-query
     "u" 'undo-tree-visualize
+    "t" 'neotree-toggle
     "r" 'query-replace)
 
   (general-create-definer local-leader
@@ -475,6 +476,11 @@ Version 2018-10-12"
   (projectile-register-project-type 'jekyll '(".jekyll-metadata"))
 
   (projectile-mode +1))
+
+;; Neotree
+(use-package neotree
+  :ensure t
+  :config (setq neo-theme 'nerd))
 
 ;; Dumb-jump
 (use-package dumb-jump
