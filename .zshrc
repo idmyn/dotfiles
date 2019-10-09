@@ -32,3 +32,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# Function for killing servers running at particular ports
+function kp { kill $(sudo lsof -t -i:"$1"); }
