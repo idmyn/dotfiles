@@ -18,6 +18,7 @@ export LSCOLORS=AxFxcxdxbxegfhabagacEx
 function chpwd() {
     emulate -L zsh
     echo && ls -a
+    print -Pn "\e]51;A$(pwd)\e\\"; # Directory tracking for emacs-libvterm
 }
 setopt autocd
 
