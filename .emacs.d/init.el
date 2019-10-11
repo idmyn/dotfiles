@@ -278,6 +278,7 @@ Version 2017-11-01"
     ))
 (setq initial-major-mode (quote ruby-mode))
 (setq initial-buffer-choice 'xah-new-empty-buffer)
+(setq initial-scratch-message "")
 
 ;; Emojis
 (use-package emojify
@@ -311,16 +312,6 @@ Version 2017-11-01"
     "M-SPC" 'ivy-yasnippet)
 
     (general-define-key (kbd "<C-return>") 'xah-run-current-file)
-
-  ;; https://www.emacswiki.org/emacs/RecreateScratchBuffer
-  (defun switch-to-scratch-and-back ()
-      "Toggle between *scratch* buffer and the current buffer.
-      If the *scratch* buffer does not exist, create it."
-      (interactive)
-      (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
-          (if (equal (current-buffer) scratch-buffer-name)
-              (switch-to-buffer (other-buffer))
-              (switch-to-buffer scratch-buffer-name (lisp-interaction-mode)))))
 
   (general-create-definer global-leader
     :prefix "SPC")
