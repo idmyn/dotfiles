@@ -103,6 +103,7 @@
  '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width condensed :foundry "nil" :family "Input Sans Narrow"))))
  '(line-number ((t (:inherit (shadow default) :family "Input Mono Narrow"))))
  '(org-block-begin-line ((t (:height 0.8))))
+ '(vterm-color-black ((t (:inherit term-color-black :background "dark gray"))))
  '(web-mode-doctype-face ((t nil)))
  '(web-mode-html-attr-name-face ((t nil)))
  '(web-mode-html-tag-face ((t nil)))
@@ -112,10 +113,10 @@
       '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
 
 (global-whitespace-mode t)
-(defun my-inhibit-global-linum-mode () ;; https://stackoverflow.com/a/6839968
-  "Counter-act `global-linum-mode'."
+(defun my-inhibit-global-whitespace-mode () ;; https://stackoverflow.com/a/6839968
+  "Counter-act `global-whitespace-mode'."
   (add-hook 'after-change-major-mode-hook
-            (lambda () (linum-mode 0))
+            (lambda () (whitespace-mode 0))
             :append :local))
 
 ;; while we're at it...
@@ -171,6 +172,10 @@
 ;; https://github.com/rolandwalker/simpleclip
 (require 'simpleclip)
 (simpleclip-mode 1)
+(defun my-vterm-yank-from-simpleclip ()
+  (interactive)
+  (kill-new (simpleclip-get-contents))
+  (vterm-yank))
 
 ;; Flatiron School niceties
 (defun learn-tests ()
@@ -648,6 +653,15 @@ Version 2017-11-01"
   :config
   (require 'vterm-toggle)
   (define-key vterm-mode-map (kbd "<escape>") 'evil-escape) ;; couldn't get general to work here
+  (general-def 'motion vterm-mode-map
+    "h" 'vterm-yank)
+  (general-def 'insert vterm-mode-map
+    "s-v" 'my-vterm-yank-from-simpleclip
+    "C-k" 'vterm-send-down
+    "C-l" 'vterm-send-up
+    "C-u" 'vterm--self-insert
+    )
+  ;; fix paste via simpleclip?
   (add-hook 'vterm-mode-hook 'my-inhibit-global-whitespace-mode))
 
 ;; Eshell
@@ -656,7 +670,8 @@ Version 2017-11-01"
   (general-def 'insert eshell-mode-map
     "C-k" 'eshell-next-matching-input-from-input
     "C-l" 'eshell-previous-matching-input-from-input
-    "C-;" 'eshell-send-input))
+    ;; "C-;" 'eshell-send-input
+    ))
 (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
 
 (use-package load-bash-alias
@@ -672,7 +687,8 @@ Version 2017-11-01"
 (general-def 'insert shell-mode-map
     "C-k" 'comint-next-input
     "C-l" 'comint-previous-input
-    "C-;" 'comint-send-input)
+    ;; "C-;" 'comint-send-input
+    )
 (general-def 'normal shell-mode-map
     "C-d" 'evil-scroll-down)
 
