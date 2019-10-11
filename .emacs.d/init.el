@@ -112,6 +112,12 @@
       '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
 
 (global-whitespace-mode t)
+(defun my-inhibit-global-linum-mode () ;; https://stackoverflow.com/a/6839968
+  "Counter-act `global-linum-mode'."
+  (add-hook 'after-change-major-mode-hook
+            (lambda () (linum-mode 0))
+            :append :local))
+
 ;; while we're at it...
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -250,6 +256,24 @@ Version 2018-10-12"
           (error "No recognized program file suffix for this file."))))
     (run-hooks 'xah-run-current-file-after-hook)))
 
+(defun xah-new-empty-buffer ()
+  "Create a new empty buffer.
+New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
+
+It returns the buffer (for elisp programing).
+
+URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
+Version 2017-11-01"
+  (interactive)
+  (let (($buf (generate-new-buffer "untitled")))
+    (switch-to-buffer $buf)
+    (funcall initial-major-mode)
+    (setq buffer-offer-save t)
+    $buf
+    ))
+(setq initial-major-mode (quote ruby-mode))
+(setq initial-buffer-choice 'xah-new-empty-buffer)
+
 ;; Emojis
 (use-package emojify
   :ensure t
@@ -276,6 +300,8 @@ Version 2018-10-12"
 
     "s-=" 'text-scale-increase
     "s--" 'text-scale-decrease
+
+    "s-n" 'xah-new-empty-buffer
 
     "M-SPC" 'ivy-yasnippet)
 
@@ -312,11 +338,11 @@ Version 2018-10-12"
     "q" 'evil-quit
     "v" (lambda () (interactive)(split-window-right) (other-window 1))
     "x" (lambda () (interactive)(split-window-below) (other-window 1))
-    "p" 'projectile-command-map
+    "t" 'vterm-toggle
     "l" 'learn-tests
     "a" 'howdoyou-query
     "u" 'undo-tree-visualize
-    "t" 'neotree-toggle
+    "p" 'neotree-project-dir
     "r" 'query-replace)
 
   (general-create-definer local-leader
@@ -389,8 +415,11 @@ Version 2018-10-12"
   (use-package undo-tree
     :ensure t
     :config
-    (setq undo-tree-auto-save-history t)
-    (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
+    ;; (setq undo-tree-auto-save-history t)
+    ;; (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
+    (use-package undohist
+      :ensure t
+      :config (undohist-initialize))
     (global-undo-tree-mode))
   (use-package expand-region
     :ensure t)
@@ -480,7 +509,21 @@ Version 2018-10-12"
 ;; Neotree
 (use-package neotree
   :ensure t
-  :config (setq neo-theme 'nerd))
+  :config
+  ;; (setq projectile-switch-project-action 'neotree-projectile-action)
+  (defun neotree-project-dir ()
+    "Open NeoTree using the git root."
+    (interactive)
+    (let ((project-dir (projectile-project-root))
+          (file-name (buffer-file-name)))
+      (neotree-toggle)
+      (if project-dir
+          (if (neo-global--window-exists-p)
+              (progn
+                (neotree-dir project-dir)
+                (neotree-find file-name)))
+        (message "Could not find git project root."))))
+  (setq neo-theme 'nerd))
 
 ;; Dumb-jump
 (use-package dumb-jump
@@ -599,6 +642,14 @@ Version 2018-10-12"
     (evil-set-initial-state 'magit-log-edit-mode 'insert)))
 (global-auto-revert-mode t) ; buffers should change when branch changes
 
+;; libvterm
+(add-to-list 'load-path "~/.emacs.d/lisp/emacs-libvterm")
+(use-package vterm
+  :config
+  (require 'vterm-toggle)
+  (define-key vterm-mode-map (kbd "<escape>") 'evil-escape) ;; couldn't get general to work here
+  (add-hook 'vterm-mode-hook 'my-inhibit-global-whitespace-mode))
+
 ;; Eshell
 (defun eshell-setup-keys() ; implementation inspired by evil-collection
   "Set up `evil' bindings for `eshell'."
@@ -644,7 +695,7 @@ Version 2018-10-12"
 
 ;; HTML/CSS
 (use-package web-mode
-  :ensure t
+  ;; :ensure t
   :config
   (general-def 'web-mode-map
     "M-;" nil)
