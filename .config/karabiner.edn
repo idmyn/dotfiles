@@ -58,10 +58,6 @@
                  [:!S0 :0]
                  [:!R0 :0]]}
 
-        {:des "swap : and ;"
-         :rules [[:#Psemicolon :!Ssemicolon]
-                 [:!Ssemicolon :semicolon]]}
-
         {:des "workman dead state"
                  :rules [[:comma ["dead-state" 1] :!dead-state]
                          [:4 [:!Sgrave_accent_and_tilde ["dead-state" 0]] :dead-state] ;; ~
@@ -101,6 +97,10 @@
                          [:return_or_enter [:comma :return_or_enter ["dead-state" 0]] :dead-state] ;; ,\n
                          [:escape ["dead-state" 0] :dead-state] ;; ,\n
                          [:spacebar [:comma :spacebar ["dead-state" 0]] :dead-state]]}
+
+        {:des "swap : and ;"
+         :rules [[:#Psemicolon :!Ssemicolon]
+                 [:!Ssemicolon :semicolon]]}
 
       #_{:des   "When British input source, workman-IO layout on logitech"
          :rules [[:condi :uk :logitech]
