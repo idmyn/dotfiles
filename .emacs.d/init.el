@@ -41,6 +41,9 @@
     (buffer-face-mode))
   (add-hook 'prog-mode-hook 'input-sans)
   (add-hook 'sql-mode-hook 'input-mono)
+  (add-hook 'vterm-mode-hook 'input-mono)
+  (add-hook 'shell-mode-hook 'input-mono)
+  (add-hook 'eshell-mode-hook 'input-mono)
   (add-hook 'ranger-mode-hook 'input-mono))
 
 (setq inhibit-startup-screen t)
