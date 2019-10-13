@@ -367,7 +367,7 @@ Version 2017-11-01"
     "j" 'evil-backward-char
     "k" 'evil-next-line
     "l" 'evil-previous-line
-    ";" 'evil-forward-char
+    ":" 'evil-forward-char
 
     "h" 'evil-paste-after
     "H" 'evil-paste-before
@@ -384,7 +384,7 @@ Version 2017-11-01"
     "J" 'evil-first-non-blank
     "K" 'forward-paragraph
     "L" 'backward-paragraph
-    ":" 'evil-last-non-blank
+    ";" 'evil-last-non-blank
 
     "M-u" 'move-border-left
     "M-i" 'move-border-down

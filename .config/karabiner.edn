@@ -1,3 +1,4 @@
+; much inspiration taken from https://github.com/nikitavoloboev/dotfiles/blob/master/karabiner/karabiner.edn
 {:devices      {:logitech [{:vendor_id 1133 :product_id 45890}]}
 
  :input-sources {:british {:input_mode_id   ""
@@ -56,6 +57,10 @@
                  [:0 :!S0]
                  [:!S0 :0]
                  [:!R0 :0]]}
+
+        {:des "swap : and ;"
+         :rules [[:#Psemicolon :!Ssemicolon]
+                 [:!Ssemicolon :semicolon]]}
 
         {:des "workman dead state"
                  :rules [[:comma ["dead-state" 1] :!dead-state]
