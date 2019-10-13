@@ -1,10 +1,16 @@
-export UPDATE_ZSH_DAYS=13
-plugins=(
-  git
-  zsh-autosuggestions
-)
-ZSH=$HOME/.oh-my-zsh
-source $ZSH/oh-my-zsh.sh
+autoload -U colors && colors
+
+autoload -Uz compinit
+if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+  compinit
+else
+  compinit -C
+fi
+
+source <(antibody init)
+antibody bundle < ~/.zsh_plugins.txt
+
+ENHANCD_FILTER=fzy; export ENHANCD_FILTER
 
 # https://arjanvandergaag.nl/blog/customize-zsh-prompt-with-vcs-info.html
 autoload -Uz vcs_info
@@ -21,12 +27,12 @@ PS1='
 
 bindkey -e
 
-export LSCOLORS=AxFxcxdxbxegfhabagacEx
 # colors via https://geoff.greer.fm/lscolors/
+export LSCOLORS=AxexcxdxbxegfhabagacEx
 
 function chpwd() {
     emulate -L zsh
-    echo && ls -a
+    echo && ls -GFa
     print -Pn "\e]51;A$(pwd)\e\\"; # Directory tracking for emacs-libvterm
 }
 setopt autocd
@@ -34,9 +40,6 @@ setopt autocd
 eval "$(pyenv init -)"
 
 source $HOME/.aliases
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 
 # Function for killing servers running at particular ports
 function kp { kill $(sudo lsof -t -i:"$1"); }
