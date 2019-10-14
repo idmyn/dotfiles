@@ -440,8 +440,6 @@ Version 2017-11-01"
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-re-builders-alist
-        '((t . ivy--regex-fuzzy)))
   (global-set-key "\C-s" 'swiper)
 
   (use-package counsel
@@ -842,3 +840,7 @@ Version 2017-11-01"
 
 ;; Allow hash to be entered on UK macbook keyboard layout
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+
+;; I've put this at the end because something else in this file was overriding it
+(setq ivy-re-builders-alist
+      '((t . ivy--regex-fuzzy)))
