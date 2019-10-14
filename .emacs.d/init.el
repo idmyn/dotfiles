@@ -418,7 +418,9 @@ Version 2017-11-01"
     ;; (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
     (use-package undohist
       :ensure t
-      :config (undohist-initialize))
+      :config
+      (undohist-initialize)
+      (setq undohist-ignored-files (list "COMMIT_EDITMSG")))
     (global-undo-tree-mode))
   (use-package expand-region
     :ensure t)
