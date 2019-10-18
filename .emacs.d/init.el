@@ -50,6 +50,7 @@
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 
+(display-time-mode 1)
 ;; Minimal modeline
 ;; https://gitlab.com/mark.feller/emacs.d/blob/master/modules/module-solarized.el
 (set-face-attribute 'mode-line nil
@@ -103,7 +104,7 @@
       whitespace-style '(face tabs tab-mark lines-tail trailing))
 
 (custom-set-faces
- '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width condensed :foundry "nil" :family "Input Sans Narrow"))))
+ '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width condensed :foundry "nil" :family "Input Sans Narrow"))))
  '(line-number ((t (:inherit (shadow default) :family "Input Mono Narrow"))))
  '(org-block-begin-line ((t (:height 0.8))))
  '(vterm-color-black ((t (:inherit term-color-black :background "dark gray"))))
@@ -111,6 +112,7 @@
  '(web-mode-html-attr-name-face ((t nil)))
  '(web-mode-html-tag-face ((t nil)))
  '(web-mode-json-key-face ((t nil)))
+ '(web-mode-symbol-face ((t nil)))
  '(whitespace-tab ((t (:foreground "#9e9e9e")))))
 (setq whitespace-display-mappings
       '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
@@ -579,7 +581,7 @@ Version 2017-11-01"
     "j" 'ranger-up-directory
     "k" 'ranger-next-file
     "l" 'ranger-prev-file
-    ";" 'ranger-find-file))
+    ":" 'ranger-find-file))
 
 ;; Flycheck
 (use-package flycheck
@@ -684,7 +686,8 @@ Version 2017-11-01"
     ;; "C-;" 'comint-send-input
     )
 (general-def 'normal shell-mode-map
-    "C-d" 'evil-scroll-down)
+  "C-d" 'evil-scroll-down)
+
 
 ;; TXT/ORG
 (setq-default fill-column 80)
