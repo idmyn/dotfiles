@@ -32,10 +32,12 @@ export LSCOLORS=AxexcxdxbxegfhabagacEx
 
 function chpwd() {
     emulate -L zsh
-    echo && ls -GFa
+    echo && ls -GFA
     print -Pn "\e]51;A$(pwd)\e\\"; # Directory tracking for emacs-libvterm
 }
 setopt autocd
+alias ls='ls -GF'
+alias e='emacsclient -c -a emacs'
 
 eval "$(pyenv init -)"
 
@@ -43,3 +45,7 @@ source $HOME/.aliases
 
 # Function for killing servers running at particular ports
 function kp { kill $(sudo lsof -t -i:"$1"); }
+
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+RUBIES+=(~/.rvm/rubies/*)
+chruby ruby-2.6.1

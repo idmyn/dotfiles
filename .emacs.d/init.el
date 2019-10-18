@@ -182,14 +182,32 @@
   (kill-new (simpleclip-get-contents))
   (vterm-yank))
 
+(defun crux-rename-file-and-buffer () ; https://github.com/bbatsov/crux
+  "Rename current buffer and if the buffer is visiting a file, rename it too."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (rename-buffer (read-from-minibuffer "New name: " (buffer-name)))
+      (let* ((new-name (read-from-minibuffer "New name: " filename))
+             (containing-dir (file-name-directory new-name)))
+        (make-directory containing-dir t)
+        (cond
+         ((vc-backend filename) (vc-rename-file filename new-name))
+         (t
+          (rename-file filename new-name t)
+          (set-visited-file-name new-name t t)))))))
+
 ;; Flatiron School niceties
 (defun learn-tests ()
-  "Run learn tests in `shell' buffer."
+  "Run learn tests asynchronously."
   (interactive)
   (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
-  (comint-send-string
-   (get-buffer-process (shell))
-   "learn --f-f\n")))
+  (async-shell-command "learn")))
+(defun learn--f-f ()
+  "Run learn --f-f asynchronously."
+  (interactive)
+  (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
+  (async-shell-command "learn --f-f")))
 
 (defun xah-run-current-file ()
   "Execute the current file.
@@ -659,14 +677,87 @@ Version 2017-11-01"
   (add-hook 'vterm-mode-hook 'my-inhibit-global-whitespace-mode))
 
 ;; Eshell
+; good inspo: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
+(setenv "PAGER" "cat")
+(eval-after-load 'eshell ; https://www.emacswiki.org/emacs/EshellAutojump
+  '(require 'eshell-autojump nil t))
+(setq eshell-last-dir-ring-size 500)
+(defun eshell-new() ; https://www.emacswiki.org/emacs/EshellMultipleEshellBuffers
+  "Open a new instance of eshell."
+  (interactive)
+  (eshell 'N))
 (defun eshell-setup-keys() ; implementation inspired by evil-collection
   "Set up `evil' bindings for `eshell'."
+  (general-def eshell-mode-map
+    "s-n" 'eshell-new)
+  (define-key eshell-mode-map (kbd "<s-backspace>") 'eshell-kill-input)
   (general-def 'insert eshell-mode-map
     "C-k" 'eshell-next-matching-input-from-input
     "C-l" 'eshell-previous-matching-input-from-input
     ;; "C-;" 'eshell-send-input
     ))
+(defun eshell/clear ()
+  "Clear the eshell buffer."
+  (let ((inhibit-read-only t))
+    (erase-buffer)))
 (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
+(add-hook 'eshell-mode-hook (lambda ()
+                              (eshell/alias "e" "find-file $1")
+                              (eshell/alias "ff" "find-file $1")
+                              (eshell/alias "emacs" "find-file $1")
+                              (eshell/alias "ee" "find-file-other-window $1")
+
+                              (eshell/alias "la" "ls -A")
+                              (eshell/alias "ll" "ls -hopA")
+
+                              (eshell/alias "gd" "magit-diff-unstaged")
+                              (eshell/alias "gds" "magit-diff-staged")
+                              (eshell/alias "d" "dired $1")
+
+(defun eshell/clear ()
+  "Clear the eshell buffer."
+  (let ((inhibit-read-only t))
+    (erase-buffer)))
+                              ))
+(add-hook 'eshell-directory-change-hook (lambda ()
+                                          (concat (eshell/ls) " -A")))
+
+(defun tidy-learn-buffer ()
+  (interactive)
+  (flush-lines "^[[:space:]]*# "))
+
+(defun eshell/gst (&rest args)
+    (magit-status (pop args) nil)
+    (eshell/echo))   ;; The echo command suppresses output
+
+(defun pwd-replace-home (pwd)
+  "Replace home in PWD with tilde (~) character."
+  (interactive)
+  (let* ((home (expand-file-name (getenv "HOME")))
+         (home-len (length home)))
+    (if (and
+         (>= (length pwd) home-len)
+         (equal home (substring pwd 0 home-len)))
+        (concat "~" (substring pwd home-len))
+      pwd)))
+(defun with-face (str &rest face-plist) ; https://www.emacswiki.org/emacs/EshellPrompt#toc3
+  (propertize str 'face face-plist))
+(defun git-prompt-branch-name () ; https://superuser.com/a/1265169
+  "Get current git branch name"
+  (let ((args '("symbolic-ref" "HEAD" "--short")))
+    (with-temp-buffer
+      (apply #'process-file "git" nil (list t nil) nil args)
+      (unless (bobp)
+        (goto-char (point-min))
+        (buffer-substring-no-properties (point) (line-end-position))))))
+
+(setq eshell-prompt-function
+      (lambda nil
+        (let ((branch-name (git-prompt-branch-name)))
+          (concat
+           "\n" (pwd-replace-home(eshell/pwd)) "\n "
+           (if branch-name (with-face branch-name :foreground "gray") )
+           " $ "))))
 
 (use-package load-bash-alias
   :ensure t
@@ -676,7 +767,7 @@ Version 2017-11-01"
   :hook (eshell-mode . esh-autosuggest-mode)
   :ensure t)
 (setq eshell-history-size 1000000)
-(setq explicit-shell-file-name "/bin/bash") ; for cases where I can't use eshell
+(setq shell-file-name "bash") ; for cases where I can't use eshell
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (general-def 'insert shell-mode-map
     "C-k" 'comint-next-input
@@ -842,3 +933,7 @@ Version 2017-11-01"
 ;; I've put this at the end because something else in this file was overriding it
 (setq ivy-re-builders-alist
       '((t . ivy--regex-fuzzy)))
+
+;; (setq explicit-shell-file-name "/bin/bash")
+;; (setenv "SHELL" shell-file-name)
+;; (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
