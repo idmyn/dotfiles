@@ -13,6 +13,20 @@
         "basic.to_if_held_down_threshold_milliseconds" : 500
       },
       "rules" : [ {
+        "description" : "everywhere: right cmd alone to f13 (alfred)",
+        "manipulators" : [ {
+          "to_if_alone" : [ {
+            "key_code" : "f13"
+          } ],
+          "from" : {
+            "key_code" : "right_command"
+          },
+          "to" : [ {
+            "key_code" : "right_command"
+          } ],
+          "type" : "basic"
+        } ]
+      }, {
         "description" : "everywhere: tab to opt/meta as modifier",
         "manipulators" : [ {
           "to_if_alone" : [ {
@@ -793,6 +807,17 @@
             "key_code" : "semicolon",
             "modifiers" : {
               "mandatory" : [ "left_shift" ]
+            }
+          },
+          "to" : [ {
+            "key_code" : "semicolon"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "semicolon",
+            "modifiers" : {
+              "mandatory" : [ "right_shift" ]
             }
           },
           "to" : [ {

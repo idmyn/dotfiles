@@ -16,7 +16,10 @@
                            "^com\\.apple\\.Terminal$"
                            "^ru.keepcoder.Telegram$"]}
 
- :main [{:des   "everywhere: tab to opt/meta as modifier"
+ :main [{:des   "everywhere: right cmd alone to f13 (alfred)"
+         :rules [[:right_command :right_command nil {:alone :f13}]]}
+
+        {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:tab :left_alt nil {:alone :tab}]]}
 
         {:des   "in vim (and emulators): caps_lock to esc when pressed alone, to ctrl as modifier"
@@ -100,7 +103,8 @@
 
         {:des "swap : and ;"
          :rules [[:#Psemicolon :!Ssemicolon]
-                 [:!Ssemicolon :semicolon]]}
+                 [:!Ssemicolon :semicolon]
+                 [:!Rsemicolon :semicolon]]}
 
       #_{:des   "When British input source, workman-IO layout on logitech"
          :rules [[:condi :uk :logitech]
