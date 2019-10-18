@@ -327,7 +327,6 @@ Version 2017-11-01"
     "d" 'dumb-jump-go
     "b" 'dumb-jump-back
     "n" 'deer
-    "RET" 'window-swap-states
     ;; "s" 'switch-to-scratch-and-back ; causing trouble with flycheck
     "s" 'counsel-ag
     "w" 'save-buffer
@@ -339,11 +338,13 @@ Version 2017-11-01"
     "q" 'evil-quit
     "v" (lambda () (interactive)(split-window-right) (other-window 1))
     "x" (lambda () (interactive)(split-window-below) (other-window 1))
-    "t" 'vterm-toggle
-    "l" 'learn-tests
-    "a" 'howdoyou-query
+    "L" 'learn-tests
+    "l" 'learn--f-f
+    "a" 'async-shell-command
     "u" 'undo-tree-visualize
+    "t" 'vterm-toggle
     "p" 'neotree-project-dir
+    "R" 'crux-rename-file-and-buffer
     "r" 'query-replace)
 
   (general-create-definer local-leader
@@ -351,7 +352,7 @@ Version 2017-11-01"
     ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
 
   (general-def 'normal
-    "s" 'avy-goto-char-timer
+    "s" 'avy-goto-word-1
     "J" nil ; unbind from evil-join
     "p" nil ; unbind from evil-paste-after
     ">" 'evil-shift-right-line
@@ -382,6 +383,13 @@ Version 2017-11-01"
     "RET" 'other-window
 
     "C-e" 'er/expand-region
+
+    ;; multiple-cursors
+    "C-k" 'evil-multiedit-match-symbol-and-next
+    "C-l" 'evil-multiedit-match-symbol-and-prev
+    "C-;" 'evil-multiedit-match-all
+    ;; "I" 'evil-mc-make-cursor-in-visual-selection-beg
+    ;; "A" 'evil-mc-make-cursor-in-visual-selection-end
 
     ;; ")" 'evil-beginning-of-line
 
@@ -435,6 +443,10 @@ Version 2017-11-01"
     :ensure t
     :config (global-evil-surround-mode 1)))
 
+;; Multiple cursors
+(use-package evil-multiedit
+  :ensure t)
+
 ;; Ivy
 (use-package ivy
   :ensure t
@@ -457,13 +469,14 @@ Version 2017-11-01"
     "C-l" 'ivy-previous-line
     "C-;" 'ivy-alt-done))
 
+
 (use-package prescient
   :ensure t
   :config
   (use-package ivy-prescient
     :ensure t)
   (use-package company-prescient
-     :ensure t)
+    :ensure t)
 
   (ivy-prescient-mode)
   (company-prescient-mode)
@@ -539,7 +552,7 @@ Version 2017-11-01"
   (company-tng-configure-default) ; tab 'n' go
   (setq company-selection-wrap-around t)
   (setq company-minimum-prefix-length 2)
-  (setq company-idle-delay 0.3)
+  (setq company-idle-delay 0.2)
   (global-company-mode 1))
 (use-package company-lsp
   :ensure t
@@ -615,21 +628,6 @@ Version 2017-11-01"
   (dap-ui-mode 1))
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-(use-package howdoyou
-  :ensure t
-  :config
-  ;; keybinds for specific buffer names?
-  ;; (general-def
-  ;;                     :definer 'minor-mode
-  ;;                     :states 'normal
-  ;;                     :keymaps howdoyou-mode
-  ;;   "C-n" 'howdoyou-next-link
-  ;;   "C-p" 'howdoyou-previous-link)
-  ;; (local-leader 'howdoyou-mode-map
-  ;;   "p" 'howdoyou-previous-link
-  ;;   "n" 'howdoyou-next-link)
-  )
-
 
 ;;; LANGUAGE/MODE SPECIFIC
 
@@ -687,7 +685,6 @@ Version 2017-11-01"
     )
 (general-def 'normal shell-mode-map
   "C-d" 'evil-scroll-down)
-
 
 ;; TXT/ORG
 (setq-default fill-column 80)
@@ -798,10 +795,6 @@ Version 2017-11-01"
     "C-k" 'comint-next-input
     "C-l" 'comint-previous-input
     "C-;" 'comint-send-input))
-
-;; (use-package yari
-;;   :ensure t
-;;   :interpreter "ruby")
 
 (use-package rubocop
   :ensure t
