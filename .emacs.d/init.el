@@ -510,7 +510,7 @@ Version 2017-11-01"
     :config (counsel-mode 1))
 
   (general-def
-    :keymaps '(ivy-minibuffer-map swiper-map counsel-ag-map)
+    :keymaps '(ivy-mode-map swiper-map counsel-ag-map)
     "C-j" (kbd "DEL")
     "C-k" 'ivy-next-line
     "C-l" 'ivy-previous-line
@@ -599,7 +599,7 @@ Version 2017-11-01"
   (company-tng-configure-default) ; tab 'n' go
   (setq company-selection-wrap-around t)
   (setq company-minimum-prefix-length 2)
-  (setq company-idle-delay 0.2)
+  (setq company-idle-delay 0.3)
   (global-company-mode 1))
 (use-package company-lsp
   :ensure t
