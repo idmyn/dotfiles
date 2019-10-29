@@ -209,6 +209,35 @@
   (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
   (async-shell-command "learn --f-f")))
 
+(defun xah-run-current-go-file ()
+  "Run or build current golang file.
+
+To build, call `universal-argument' first.
+
+Version 2018-10-12"
+  (interactive)
+  (when (not (buffer-file-name)) (save-buffer))
+  (when (buffer-modified-p) (save-buffer))
+  (let* (
+         ($outputb "*xah-run output*")
+         (resize-mini-windows nil)
+         ($fname (buffer-file-name))
+         ($fSuffix (file-name-extension $fname))
+         ($prog-name "go")
+         $cmd-str)
+    (setq $cmd-str (concat $prog-name " \""   $fname "\" &"))
+    (if current-prefix-arg
+        (progn
+          (setq $cmd-str (format "%s build \"%s\" " $prog-name $fname)))
+      (progn
+        (setq $cmd-str (format "%s run \"%s\" &" $prog-name $fname))))
+    (progn
+      (message "running %s" $fname)
+      (message "%s" $cmd-str)
+      (shell-command $cmd-str $outputb )
+      ;;
+      )))
+
 (defun xah-run-current-file ()
   "Execute the current file.
 For example, if the current buffer is x.py, then it'll call 「python x.py」 in a shell.
@@ -917,15 +946,27 @@ Version 2017-11-01"
   :ensure t
   :config (add-hook 'sql-mode-hook 'sqlind-minor-mode))
 
+;; Go
+(use-package go-mode
+  :ensure t
+  :config
+  (add-hook 'go-mode 'gofmt-before-save))
+(add-to-list 'load-path "~/go/src/golang.org/x/lint/misc/emacs/" t)
+(require 'golint)
+
+(use-package flycheck-golangci-lint
+  :ensure t
+  :hook (go-mode . flycheck-golangci-lint-setup))
+
 
 ;;; macOS SPECIFIC
 
 ;; set the path variable (important for macOS?)
 (use-package exec-path-from-shell
-  :ensure t
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
+     :ensure t
+     :defer 0.1
+     :config
+     (exec-path-from-shell-initialize))
 
 ;; Allow hash to be entered on UK macbook keyboard layout
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
