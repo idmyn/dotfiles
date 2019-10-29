@@ -559,7 +559,8 @@ Version 2017-11-01"
       (advice-add 'projectile-get-ext-command :override #'modi/advice-projectile-use-rg)))
 
   (projectile-register-project-type 'learn '(".learn")
-                                    :test-suffix "_spec")
+                                    :test-dir "test/"
+                                    :test-suffix "Test")
 
   (projectile-register-project-type 'python '("RPGtodo.py"))
 
@@ -652,33 +653,33 @@ Version 2017-11-01"
         flycheck-check-syntax-automatically '(mode-enabled save)))
 
 ;; LSP
-(use-package lsp-mode
-  :ensure t
-  :hook ((js-mode) . lsp)
-  :commands lsp
-  :config
-  (setq
-   lsp-auto-guess-root t
-   lsp-prefer-flymake nil
-   lsp-ui-flycheck-live-reporting nil
-   lsp-enable-snippet nil
-   lsp-ui-doc-enable nil
-   lsp-ui-peek-enable nil
-   lsp-ui-sideline-enable nil
-   lsp-ui-imenu-enable nil))
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :hook ((js-mode) . lsp)
+;;   :commands lsp
+;;   :config
+;;   (setq
+;;    lsp-auto-guess-root t
+;;    lsp-prefer-flymake nil
+;;    lsp-ui-flycheck-live-reporting nil
+;;    lsp-enable-snippet nil
+;;    lsp-ui-doc-enable nil
+;;    lsp-ui-peek-enable nil
+;;    lsp-ui-sideline-enable nil
+;;    lsp-ui-imenu-enable nil))
 
 ;; optionally if you want to use debugger
-(use-package dap-mode
-  :ensure t
-  :config
-  (dap-mode 1)
-  (dap-ui-mode 1))
+;; (use-package dap-mode
+;;   :ensure t
+;;   :config
+;;   (dap-mode 1)
+;;   (dap-ui-mode 1))
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 
 ;;; LANGUAGE/MODE SPECIFIC
 
-;; Magit
+;; Git
 (use-package magit
   :ensure t
   :config
@@ -830,6 +831,7 @@ Version 2017-11-01"
   (general-def 'web-mode-map
     "M-;" nil)
   (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
 (use-package emmet-mode
   :ensure t
@@ -851,15 +853,37 @@ Version 2017-11-01"
     :ensure t))
 
 ;; Javascript
-(use-package dap-node
+(use-package js2-mode
+  :ensure t
   :config
-  (setq js-indent-level 2)
-  (local-leader 'normal js-mode-map
-    "d" 'dap-debug
-    "b" 'dap-breakpoint-toggle
-    "e" 'dap-eval-thing-at-point)
-  (local-leader 'visual js-mode-map
-    "e" 'dap-eval-region))
+  (setq-default js2-basic-offset 2)
+  (setq js2-strict-missing-semi-warning nil)
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(javascript-jshint)))
+  ;; (flycheck-add-mode 'javascript-standard 'js2-mode)
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  (use-package rjsx-mode
+    :ensure t))
+(use-package json-mode
+  :ensure t)
+
+(use-package prettier-js
+  :ensure t
+  :config
+  (setq prettier-js-args '(
+                           "--no-semi" "false"
+                           )))
+
+;; (use-package dap-node
+;;   :config
+;;   (setq js-indent-level 2)
+;;   (local-leader 'normal js-mode-map
+;;     "d" 'dap-debug
+;;     "b" 'dap-breakpoint-toggle
+;;     "e" 'dap-eval-thing-at-point)
+;;   (local-leader 'visual js-mode-map
+;;     "e" 'dap-eval-region))
 
 ;; Ruby
 (use-package robe
