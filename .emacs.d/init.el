@@ -444,11 +444,11 @@ Version 2017-11-01"
     :config
     ;; (setq undo-tree-auto-save-history t)
     ;; (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
-    (use-package undohist
-      :ensure t
-      :config
-      (undohist-initialize)
-      (setq undohist-ignored-files (list "COMMIT_EDITMSG")))
+    ;; (use-package undohist
+    ;;   :ensure t
+    ;;   :config
+    ;;   (undohist-initialize)
+    ;;   (setq undohist-ignored-files (list "COMMIT_EDITMSG")))
     (global-undo-tree-mode))
   (use-package expand-region
     :ensure t)
