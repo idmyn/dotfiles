@@ -368,7 +368,8 @@
             "key_code" : "a"
           },
           "to" : [ {
-            "key_code" : "slash"
+            "key_code" : "4",
+            "modifiers" : [ "left_shift" ]
           }, {
             "set_variable" : {
               "name" : "dead-state",
@@ -609,7 +610,7 @@
             "key_code" : "v"
           },
           "to" : [ {
-            "key_code" : "9"
+            "key_code" : "slash"
           }, {
             "set_variable" : {
               "name" : "dead-state",
