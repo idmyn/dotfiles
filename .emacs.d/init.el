@@ -122,6 +122,8 @@
 
 (custom-set-faces
  '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width condensed :foundry "nil" :family "Input Sans Narrow"))))
+ '(js2-error ((t nil)))
+ '(js2-warning ((t nil)))
  '(line-number ((t (:inherit (shadow default) :family "Input Mono Narrow"))))
  '(org-block-begin-line ((t (:height 0.8))))
  '(vterm-color-black ((t (:inherit term-color-black :background "dark gray"))))
@@ -158,6 +160,7 @@
  '(emojify-emoji-set "twemoji-v2-22")
  '(emojify-emoji-styles (quote (unicode)))
  '(global-emojify-mode t)
+ '(js2-mode-show-parse-errors nil)
  '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store" ".learn" ".rspec" ".gitignore")))
  '(show-paren-mode t)
  '(smie-config (quote ((css-mode (2 :elem basic 4)))))
@@ -682,28 +685,22 @@ Version 2017-11-01"
         flycheck-check-syntax-automatically '(mode-enabled save)))
 
 ;; LSP
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :hook ((js-mode) . lsp)
-;;   :commands lsp
-;;   :config
-;;   (setq
-;;    lsp-auto-guess-root t
-;;    lsp-prefer-flymake nil
-;;    lsp-ui-flycheck-live-reporting nil
-;;    lsp-enable-snippet nil
-;;    lsp-ui-doc-enable nil
-;;    lsp-ui-peek-enable nil
-;;    lsp-ui-sideline-enable nil
-;;    lsp-ui-imenu-enable nil))
-
-;; optionally if you want to use debugger
-;; (use-package dap-mode
-;;   :ensure t
-;;   :config
-;;   (dap-mode 1)
-;;   (dap-ui-mode 1))
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+(use-package lsp-mode
+  :ensure t
+  ;; :hook ((js2-mode) . lsp)
+  :commands lsp
+  :config
+  (setq
+   lsp-auto-guess-root t
+   lsp-prefer-flymake nil
+   lsp-ui-flycheck-live-reporting nil
+   lsp-enable-snippet nil
+   lsp-ui-doc-enable nil
+   lsp-ui-peek-enable nil
+   lsp-ui-sideline-enable nil
+   lsp-ui-imenu-enable nil
+   lsp-enable-completion-at-point t
+   ))
 
 
 ;;; LANGUAGE/MODE SPECIFIC
@@ -891,6 +888,7 @@ Version 2017-11-01"
   :ensure t
   :config
   (setq-default js2-basic-offset 2)
+  ;; (setq js2-mode-show-parse-errors t)
   (setq js2-strict-missing-semi-warning nil)
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
@@ -909,22 +907,19 @@ Version 2017-11-01"
                            "--no-semi" "false"
                            )))
 
-;; (use-package dap-node
-;;   :config
-;;   (setq js-indent-level 2)
-;;   (local-leader 'normal js-mode-map
-;;     "d" 'dap-debug
-;;     "b" 'dap-breakpoint-toggle
-;;     "e" 'dap-eval-thing-at-point)
-;;   (local-leader 'visual js-mode-map
-;;     "e" 'dap-eval-region))
+(use-package eglot
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook 'eglot-ensure)
+  (add-hook 'js2-mode-hook 'eglot-ensure))
+
 
 ;; Ruby
 (use-package robe
   :ensure t
   :config
   (setq ruby-insert-encoding-magic-comment nil)
-  (add-hook 'ruby-mode-hook 'robe-mode)
+  ;; (add-hook 'ruby-mode-hook 'robe-mode)
   (push 'company-robe company-backends)
 
   (setq ruby-indent-level 2)
@@ -942,10 +937,10 @@ Version 2017-11-01"
     "v" 'ruby-send-region))
 
 ;; I only want to be promped to start the server when I open ruby files
-(add-hook 'find-file-hook 'open-rb-hook)
-(defun open-rb-hook ()
-  (when (string= (file-name-extension buffer-file-name) "rb")
-    (robe-start)))
+;; (add-hook 'find-file-hook 'open-rb-hook)
+;; (defun open-rb-hook ()
+;;   (when (string= (file-name-extension buffer-file-name) "rb")
+;;     (robe-start)))
 
 (use-package rspec-mode
   :ensure t
