@@ -23,6 +23,19 @@
 (eval-when-compile
   (require 'use-package))
 
+;; straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 ;;; EDITOR APPEARANCE / QUALITY OF LIFE TWEAKS
 
@@ -175,12 +188,14 @@
 
 ;; Separate evil clipboard from system clipboard
 ;; https://github.com/rolandwalker/simpleclip
-(require 'simpleclip)
-(simpleclip-mode 1)
-(defun my-vterm-yank-from-simpleclip ()
-  (interactive)
-  (kill-new (simpleclip-get-contents))
-  (vterm-yank))
+(use-package simpleclip
+  :config
+  (require 'simpleclip)
+  (defun my-vterm-yank-from-simpleclip ()
+    (interactive)
+    (kill-new (simpleclip-get-contents))
+    (vterm-yank))
+  (simpleclip-mode 1))
 
 (defun crux-rename-file-and-buffer () ; https://github.com/bbatsov/crux
   "Rename current buffer and if the buffer is visiting a file, rename it too."
@@ -360,6 +375,8 @@ Version 2017-11-01"
     "s--" 'text-scale-decrease
 
     "s-n" 'xah-new-empty-buffer
+    "s-i" 'complete-symbol
+    "s-r" 'browser-refresh
 
     "M-SPC" 'ivy-yasnippet)
 
@@ -516,6 +533,11 @@ Version 2017-11-01"
     "C-l" 'ivy-previous-line
     "C-;" 'ivy-alt-done))
 
+(use-package ivy-posframe
+  :ensure t
+  :config
+  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
+  (ivy-posframe-mode 1))
 
 (use-package prescient
   :ensure t
@@ -845,6 +867,12 @@ Version 2017-11-01"
   :ensure t
   :config (global-evil-matchit-mode 1))
 
+(use-package browser-refresh
+  :config
+  (setq browser-refresh-default-browser 'brave)
+  (setq browser-refresh-save-buffer nil)
+  (setq browser-refresh-activate nil))
+
 ;; Sass
 (use-package sass-mode
   ;; https://github.com/nex3/sass-mode
@@ -981,6 +1009,13 @@ Version 2017-11-01"
 (use-package flycheck-golangci-lint
   :ensure t
   :hook (go-mode . flycheck-golangci-lint-setup))
+
+;; HTTP
+(use-package restclient
+  :ensure t
+  :config
+  ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
 
 ;;; macOS SPECIFIC
