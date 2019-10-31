@@ -63,6 +63,10 @@
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 
+;; Prefer vertical split
+;; (setq split-height-threshold nil)
+;; (setq split-width-threshold 0)
+
 (display-time-mode 1)
 ;; Minimal modeline
 ;; https://gitlab.com/mark.feller/emacs.d/blob/master/modules/module-solarized.el
@@ -143,6 +147,7 @@
 ;; Indentation
 (use-package aggressive-indent
   :ensure t)
+(setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq backward-delete-char-untabify-method nil)
 (setq-default electric-indent-inhibit nil)
@@ -408,6 +413,7 @@ Version 2017-11-01"
     "u" 'undo-tree-visualize
     "t" 'vterm-toggle
     "p" 'neotree-project-dir
+    "m" 'counsel-imenu
     "R" 'crux-rename-file-and-buffer
     "r" 'query-replace)
 
@@ -548,7 +554,7 @@ Version 2017-11-01"
     :ensure t)
 
   (ivy-prescient-mode)
-  (company-prescient-mode)
+  ;; (company-prescient-mode)
   (prescient-persist-mode))
 
 ;; Projectile
@@ -623,7 +629,8 @@ Version 2017-11-01"
   (setq company-selection-wrap-around t)
   (setq company-minimum-prefix-length 2)
   (setq company-idle-delay 0.3)
-  (global-company-mode 1))
+  ;; (global-company-mode nil)
+  )
 (use-package company-lsp
   :ensure t
   :config
@@ -815,9 +822,7 @@ Version 2017-11-01"
   :ensure t
   :config
   (setq load-bash-alias-bashrc-file "~/.aliases"))
-(use-package esh-autosuggest
-  :hook (eshell-mode . esh-autosuggest-mode)
-  :ensure t)
+
 (setq eshell-history-size 1000000)
 (setq shell-file-name "bash") ; for cases where I can't use eshell
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -852,6 +857,7 @@ Version 2017-11-01"
   :config
   (general-def 'web-mode-map
     "M-;" nil)
+  (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
