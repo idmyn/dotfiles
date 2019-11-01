@@ -1,31 +1,6 @@
 (setq user-full-name "David Mynors"
       user-mail-address "hello@davidmyno.rs")
 
-;;; INITIALISE USE-PACKAGE
-;; http://cachestocaches.com/2015/8/getting-started-use-package/
-
-;; Update package-archive lists
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-(package-initialize)
-
-;; Manually installed plugins go in a 'lisp' folder
-(add-to-list 'load-path "~/.emacs.d/lisp")
-
-;; Install 'use-package' if necessary
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-;; http://irreal.org/blog/?p=5916
-(setq use-package-enable-imenu-support t)
-
-;; Enable use-package
-(eval-when-compile
-  (require 'use-package))
-
 ;; straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -40,10 +15,18 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;; http://irreal.org/blog/?p=5916
+(setq use-package-enable-imenu-support t)
+
+;; Enable use-package
+(eval-when-compile
+  (straight-use-package 'use-package))
+
+
 ;;; EDITOR APPEARANCE / QUALITY OF LIFE TWEAKS
 
 (use-package eink-theme
-  :ensure t
+  :straight t
   :config ; fonts
   (defun input-sans ()
     "Set font to Input Sans Narrow in current buffer"
@@ -112,7 +95,7 @@
 (global-display-line-numbers-mode)
 (setq-default display-line-numbers-type 'relative)
 (use-package avy
-  :ensure t
+  :straight t
   :config (setq avy-timeout-seconds 0.3))
 
 (show-paren-mode 1)
@@ -151,7 +134,7 @@
 
 ;; Indentation
 (use-package aggressive-indent
-  :ensure t)
+  :straight t)
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq backward-delete-char-untabify-method nil)
@@ -171,6 +154,7 @@
 
 ;; https://github.com/antonj/Highlight-Indentation-for-Emacs
 (use-package highlight-indentation
+  :straight (highlight-indentation :host github :repo "antonj/Highlight-Indentation-for-Emacs")
   :config
   (set-face-background 'highlight-indentation-face "#f7f7ef")
   (add-hook 'web-mode-hook 'highlight-indentation-mode)
@@ -200,8 +184,8 @@
 ;; Separate evil clipboard from system clipboard
 ;; https://github.com/rolandwalker/simpleclip
 (use-package simpleclip
+  :straight (simpleclip :host github :repo "rolandwalker/simpleclip")
   :config
-  (require 'simpleclip)
   (defun my-vterm-yank-from-simpleclip ()
     (interactive)
     (kill-new (simpleclip-get-contents))
@@ -360,7 +344,7 @@ Version 2017-11-01"
 
 ;; Emojis
 (use-package emojify
-  :ensure t
+  :straight t
   :config
   (add-hook 'after-init-hook #'global-emojify-mode))
 
@@ -369,7 +353,7 @@ Version 2017-11-01"
 
 ;; General (keybindings)
 (use-package general
-  :ensure t
+  :straight t
   :after evil
   :config
   ;; (general-swap-key nil 'motion
@@ -449,7 +433,9 @@ Version 2017-11-01"
     "C-l" 'previous-line
     "C-;" 'right-char)
 
-  (require 'move-border)
+  ;; (require 'move-border)
+  (use-package move-border
+    :straight (move-border :host github :repo "ramnes/move-border"))
   (general-def 'motion
     "j" 'evil-backward-char
     "k" 'evil-next-line
@@ -490,55 +476,55 @@ Version 2017-11-01"
     (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
   ;; fix escape key
   (use-package evil-escape
-    :ensure t
+    :straight t
     :config
     (evil-escape-mode)
     (global-set-key (kbd "<escape>") 'evil-escape)))
 
 ;; Evil
 (use-package evil
-  :ensure t
+  :straight t
   :init
   (setq evil-want-C-u-scroll t)
   (use-package undo-tree
-    :ensure t
+    :straight t
     :config
     ;; (setq undo-tree-auto-save-history t)
     ;; (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
     ;; (use-package undohist
-    ;;   :ensure t
+    ;;   :straight t
     ;;   :config
     ;;   (undohist-initialize)
     ;;   (setq undohist-ignored-files (list "COMMIT_EDITMSG")))
     (global-undo-tree-mode))
   (use-package expand-region
-    :ensure t)
+    :straight t)
 
   :config
   (evil-mode 1)
   (setq-default evil-shift-width 2)
 
   (use-package evil-surround
-    :ensure t
+    :straight t
     :config (global-evil-surround-mode 1)))
 
 ;; Multiple cursors
 (use-package evil-multiedit
-  :ensure t)
+  :straight t)
 
 ;; Ivy
 (use-package ivy
-  :ensure t
+  :straight t
   :init ;; use flx if ivy--regex-fuzzy
   (use-package flx
-    :ensure t)
+    :straight t)
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (global-set-key "\C-s" 'swiper)
 
   (use-package counsel
-    :ensure t
+    :straight t
     :config (counsel-mode 1))
 
   (general-def
@@ -554,18 +540,18 @@ Version 2017-11-01"
     ))
 
 (use-package ivy-posframe
-  :ensure t
+  :straight t
   :config
   (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
   (ivy-posframe-mode 1))
 
 (use-package prescient
-  :ensure t
+  :straight t
   :config
   (use-package ivy-prescient
-    :ensure t)
+    :straight t)
   (use-package company-prescient
-    :ensure t)
+    :straight t)
 
   (ivy-prescient-mode)
   ;; (company-prescient-mode)
@@ -573,11 +559,11 @@ Version 2017-11-01"
 
 ;; imenu-anywhere
 (use-package imenu-anywhere
-  :ensure t)
+  :straight t)
 
 ;; Projectile
 (use-package projectile
-  :ensure t
+  :straight t
   :config
   (setq projectile-project-search-path '("~/Development/"))
   (setq projectile-completion-system 'ivy)
@@ -616,7 +602,7 @@ Version 2017-11-01"
 
 ;; Neotree
 (use-package neotree
-  :ensure t
+  :straight t
   :config
   ;; (setq projectile-switch-project-action 'neotree-projectile-action)
   (defun neotree-project-dir ()
@@ -635,7 +621,7 @@ Version 2017-11-01"
 
 ;; Dumb-jump
 (use-package dumb-jump
-  :ensure t
+  :straight t
   :config
   (setq dumb-jump-selector 'ivy)
   (setq dumb-jump-force-searcher 'rg))
@@ -650,7 +636,7 @@ Version 2017-11-01"
   ;; (global-company-mode nil)
   )
 (use-package company-lsp
-  :ensure t
+  :straight t
   :config
   (push 'company-lsp company-backends))
 
@@ -661,15 +647,15 @@ Version 2017-11-01"
 
 ;; YASnippet
 (use-package yasnippet
-  :ensure t
+  :straight t
   :config
   (use-package yasnippet-snippets
-    :ensure t)
+    :straight t)
   (use-package ivy-yasnippet
-    :ensure t
+    :straight t
     :init
     (use-package dash
-      :ensure t))
+      :straight t))
   (yas-global-mode 1)
   :config
   (general-def 'insert yas-minor-mode-map
@@ -677,7 +663,7 @@ Version 2017-11-01"
 
 ;; Ranger
 (use-package ranger
-  :ensure t
+  :straight t
   :config
   (ranger-override-dired-mode t)
   (setq ranger-hide-cursor nil)
@@ -693,7 +679,7 @@ Version 2017-11-01"
 
 ;; Flycheck
 (use-package flycheck
-  :ensure t
+  :straight t
   :config
   (global-flycheck-mode)
   (setq flycheck-global-modes '(not emacs-lisp-mode)
@@ -701,7 +687,7 @@ Version 2017-11-01"
 
 ;; LSP
 (use-package lsp-mode
-  :ensure t
+  :straight t
   ;; :hook ((js2-mode) . lsp)
   :commands lsp
   :config
@@ -722,7 +708,7 @@ Version 2017-11-01"
 
 ;; Git
 (use-package magit
-  :ensure t
+  :straight t
   :config
   (with-eval-after-load 'evil
     (add-to-list 'evil-insert-state-modes 'magit-status-mode)
@@ -731,10 +717,12 @@ Version 2017-11-01"
 (global-auto-revert-mode t) ; buffers should change when branch changes
 
 ;; libvterm
-(add-to-list 'load-path "~/.emacs.d/lisp/emacs-libvterm")
+(add-to-list 'load-path "~/.emacs.d/libvterm")
 (use-package vterm
   :config
-  (require 'vterm-toggle)
+  ;; (require 'vterm-toggle)
+  (use-package vterm-toggle
+    :straight (vterm-toggle :host github :repo "jixiuf/vterm-toggle"))
   (define-key vterm-mode-map (kbd "<escape>") 'evil-escape) ;; couldn't get general to work here
   (general-def 'motion vterm-mode-map
     "h" 'vterm-yank)
@@ -831,7 +819,7 @@ Version 2017-11-01"
            " $ "))))
 
 (use-package load-bash-alias
-  :ensure t
+  :straight t
   :config
   (setq load-bash-alias-bashrc-file "~/.aliases"))
 
@@ -851,7 +839,7 @@ Version 2017-11-01"
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
 (use-package org
-  :ensure t
+  :straight t
   :config
   (general-def 'insert org-mode-map
     "C-j" 'org-metaleft
@@ -865,7 +853,7 @@ Version 2017-11-01"
 
 ;; HTML/CSS
 (use-package web-mode
-  ;; :ensure t
+  :straight t
   :config
   (general-def 'web-mode-map
     "M-;" nil)
@@ -874,7 +862,7 @@ Version 2017-11-01"
   (setq web-mode-code-indent-offset 2)
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
 (use-package emmet-mode
-  :ensure t
+  :straight t
   :config
   (add-hook 'web-mode-hook 'emmet-mode) ; auto-start on any markup modes
   (add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
@@ -882,10 +870,13 @@ Version 2017-11-01"
   (general-def 'insert web-mode-map
     "C-SPC" 'emmet-expand-line))
 (use-package evil-matchit
-  :ensure t
+  :straight t
   :config (global-evil-matchit-mode 1))
 
 (use-package browser-refresh
+  :straight (browser-refresh :host github :repo "syohex/emacs-browser-refresh"
+                      :fork (:host github
+                             :repo "idmyn/emacs-browser-refresh"))
   :config
   (setq browser-refresh-default-browser 'brave)
   (setq browser-refresh-save-buffer nil)
@@ -894,13 +885,14 @@ Version 2017-11-01"
 ;; Sass
 (use-package sass-mode
   ;; https://github.com/nex3/sass-mode
+  :straight (sass-mode :host github :repo "nex3/sass-mode")
   :init
   (use-package haml-mode
-    :ensure t))
+    :straight t))
 
 ;; Javascript
 (use-package js2-mode
-  :ensure t
+  :straight t
   :config
   (setq-default js2-basic-offset 2)
   ;; (setq js2-mode-show-parse-errors t)
@@ -911,19 +903,19 @@ Version 2017-11-01"
   ;; (flycheck-add-mode 'javascript-standard 'js2-mode)
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   (use-package rjsx-mode
-    :ensure t))
+    :straight t))
 (use-package json-mode
-  :ensure t)
+  :straight t)
 
 (use-package prettier-js
-  :ensure t
+  :straight t
   :config
   (setq prettier-js-args '(
                            "--no-semi" "false"
                            )))
 
 ;; (use-package eglot
-;;   :ensure t
+;;   :straight t
 ;;   :config
 ;;   (add-hook 'ruby-mode-hook 'eglot-ensure)
 ;;   (add-hook 'js2-mode-hook 'eglot-ensure))
@@ -932,7 +924,7 @@ Version 2017-11-01"
 
 ;; Ruby
 (use-package robe
-  :ensure t
+  :straight t
   :config
   (setq ruby-insert-encoding-magic-comment nil)
   ;; (add-hook 'ruby-mode-hook 'robe-mode)
@@ -959,7 +951,7 @@ Version 2017-11-01"
 ;;     (robe-start)))
 
 (use-package rspec-mode
-  :ensure t
+  :straight t
   :config
   (setq rspec-use-rvm t)
   (defadvice rspec-compile (around rspec-compile-around)
@@ -970,11 +962,11 @@ Version 2017-11-01"
   (ad-activate 'rspec-compile))
 
 (use-package rvm
-  :ensure t
+  :straight t
   :config (rvm-use-default))
 
 (use-package inf-ruby
-  :ensure t
+  :straight t
   :interpreter "ruby"
   :config
   ;; https://github.com/dgutov/robe#integration-with-rvmel
@@ -986,7 +978,7 @@ Version 2017-11-01"
     "C-;" 'comint-send-input))
 
 (use-package rubocop
-  :ensure t
+  :straight t
   :interpreter "ruby")
 
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
@@ -994,7 +986,7 @@ Version 2017-11-01"
 ;; Python
 ;; https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
 (use-package elpy
-  :ensure t
+  :straight t
   :init
   (setq python-indent-offset 4)
   (elpy-enable)
@@ -1005,31 +997,31 @@ Version 2017-11-01"
 
 ;; SQL
 (use-package sqlup-mode
-  :ensure t
+  :straight t
   :config
   (add-to-list 'sqlup-blacklist "name")
 
   (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
   (add-hook 'sql-mode-hook 'sqlup-mode))
 (use-package sql-indent
-  :ensure t
+  :straight t
   :config (add-hook 'sql-mode-hook 'sqlind-minor-mode))
 
 ;; Go
 (use-package go-mode
-  :ensure t
+  :straight t
   :config
   (add-hook 'go-mode 'gofmt-before-save))
 (add-to-list 'load-path "~/go/src/golang.org/x/lint/misc/emacs/" t)
 (require 'golint)
 
 (use-package flycheck-golangci-lint
-  :ensure t
+  :straight t
   :hook (go-mode . flycheck-golangci-lint-setup))
 
 ;; HTTP
 (use-package restclient
-  :ensure t
+  :straight t
   :config
   ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
@@ -1039,7 +1031,7 @@ Version 2017-11-01"
 
 ;; set the path variable (important for macOS?)
 (use-package exec-path-from-shell
-     :ensure t
+     :straight t
      :defer 0.1
      :config
      (exec-path-from-shell-initialize))
