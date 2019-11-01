@@ -19,6 +19,9 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; http://irreal.org/blog/?p=5916
+(setq use-package-enable-imenu-support t)
+
 ;; Enable use-package
 (eval-when-compile
   (require 'use-package))
@@ -351,7 +354,7 @@ Version 2017-11-01"
     (setq buffer-offer-save t)
     $buf
     ))
-(setq initial-major-mode (quote ruby-mode))
+(setq initial-major-mode (quote restclient-mode))
 (setq initial-buffer-choice 'xah-new-empty-buffer)
 (setq initial-scratch-message "")
 
@@ -378,6 +381,11 @@ Version 2017-11-01"
     "M-k" 'windmove-down
     "M-l" 'windmove-up
     "M-;" 'windmove-right
+
+    "M-u" 'move-border-left
+    "M-o" 'move-border-down
+    "M-i" 'move-border-up
+    "M-p" 'move-border-right
 
     "s-=" 'text-scale-increase
     "s--" 'text-scale-decrease
@@ -416,7 +424,7 @@ Version 2017-11-01"
     "u" 'undo-tree-visualize
     "t" 'vterm-toggle
     "p" 'neotree-project-dir
-    "m" 'counsel-imenu
+    "m" 'ivy-imenu-anywhere
     "R" 'crux-rename-file-and-buffer
     "r" 'query-replace)
 
@@ -470,12 +478,7 @@ Version 2017-11-01"
     "J" 'evil-first-non-blank
     "K" 'forward-paragraph
     "L" 'backward-paragraph
-    ";" 'evil-last-non-blank
-
-    "M-u" 'move-border-left
-    "M-i" 'move-border-down
-    "M-o" 'move-border-up
-    "M-p" 'move-border-right)
+    ";" 'evil-last-non-blank)
 
   ;; emacs bindings in insert mode
   ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
@@ -540,7 +543,11 @@ Version 2017-11-01"
     "C-j" (kbd "DEL")
     "C-k" 'ivy-next-line
     "C-l" 'ivy-previous-line
-    "C-;" 'ivy-alt-done))
+    "C-;" 'ivy-alt-done
+
+    "M-k" 'ivy-next-line-and-call
+    "M-l" 'ivy-previous-line-and-call
+    ))
 
 (use-package ivy-posframe
   :ensure t
@@ -559,6 +566,10 @@ Version 2017-11-01"
   (ivy-prescient-mode)
   ;; (company-prescient-mode)
   (prescient-persist-mode))
+
+;; imenu-anywhere
+(use-package imenu-anywhere
+  :ensure t)
 
 ;; Projectile
 (use-package projectile
