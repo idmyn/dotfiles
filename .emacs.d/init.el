@@ -548,8 +548,9 @@ Version 2017-11-01"
     "C-l" 'ivy-previous-line
     "C-;" 'ivy-alt-done
 
-    "M-k" 'ivy-next-line-and-call
-    "M-l" 'ivy-previous-line-and-call
+    ;; commented because they override my windmove keybinds?
+    ;; "M-k" 'ivy-next-line-and-call
+    ;; "M-l" 'ivy-previous-line-and-call
     ))
 
 (use-package ivy-posframe
@@ -921,12 +922,13 @@ Version 2017-11-01"
                            "--no-semi" "false"
                            )))
 
-(use-package eglot
-  :ensure t
-  :config
-  (add-hook 'ruby-mode-hook 'eglot-ensure)
-  (add-hook 'js2-mode-hook 'eglot-ensure))
-
+;; (use-package eglot
+;;   :ensure t
+;;   :config
+;;   (add-hook 'ruby-mode-hook 'eglot-ensure)
+;;   (add-hook 'js2-mode-hook 'eglot-ensure))
+(straight-use-package
+ '(eglot :host github :repo "joaotavora/eglot"))
 
 ;; Ruby
 (use-package robe
