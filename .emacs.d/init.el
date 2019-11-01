@@ -465,6 +465,9 @@ Version 2017-11-01"
 
     "C-e" 'er/expand-region
 
+    "C-i" 'evil-jump-backward
+    "C-o" 'evil-jump-forward
+
     ;; multiple-cursors
     "C-k" 'evil-multiedit-match-symbol-and-next
     "C-l" 'evil-multiedit-match-symbol-and-prev
