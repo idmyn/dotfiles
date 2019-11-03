@@ -7,3 +7,7 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+
+- link:
+    ~/.emacs.d/init.el: init.el
+    ~/.emacs.d/init.org: init.org
