@@ -5,6 +5,10 @@
             :delay   80
             :alone   120
             :held    70}}
+
+ :templates {:alfred "osascript -e 'tell application \"Alfred 4\" to run trigger \"%s\" in workflow \"%s\" with argument \"%s\"'"
+             :km "osascript -e 'tell application \"Keyboard Maestro Engine\" to do script \"%s\"'"}
+
  :devices      {:logitech [{:vendor_id 1133 :product_id 45890}]}
 
  :input-sources {:british {:input_mode_id   ""
@@ -23,10 +27,13 @@
                            "^ru.keepcoder.Telegram$"]}
 
  :simlayers {:f-mode {:key :f}
+             :j-mode {:key :j}
+             :a-mode {:key :a}
+             :w-mode {:key :w}
              :t-mode {:key :t}}
 
- :main [{:des   "everywhere: right cmd alone to f13 (alfred)"
-         :rules [[:right_command :right_command nil {:alone :f13}]]}
+ :main [{:des   "everywhere: right cmd alone to hyper-c (Contexts.app)"
+         :rules [[:right_command :right_command nil {:alone :!!c}]]}
 
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:tab :left_alt nil {:alone :tab}]]}
@@ -34,16 +41,37 @@
         {:des   "in vim (and emulators): caps_lock to esc when pressed alone, to ctrl as modifier"
          :rules [[:condi :Vim] [:##caps_lock :left_control nil {:alone :escape}]]}
 
-        {:des   "outside vim (and emulators): caps_lock to f13 when pressed alone, to ctrl as modifier"
-         :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
+        {:des   "outside vim (and emulators): caps_lock to hyper-c when pressed alone, to ctrl as modifier"
+         :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :!!c}]]}
 
         {:des "tkey (todoist)"
          :rules [:t-mode
                  [:o :!!1] ; open todoist
                  [:n :!!2]]} ; new todoist task
 
+        {:des "wkey (window management via Magnet.app)"
+         :rules [:w-mode
+                 [:j :!!j] ; split left
+                 [:k :!!k] ; split down
+                 [:l :!!l] ; split up
+                 [:semicolon :!!semicolon] ; split right
+                 [:f :!!f]]} ; fullscreen
+
+        {:des "akey (alfred)"
+         :rules [:a-mode
+                 [:s :f13]]} ; search alfred
+
+        {:des "jkey (open apps)"
+         :rules [:j-mode
+                 [:e [:km "open: Emacs"]]
+                 [:w [:km "open: Brave"]]
+                 [:s [:km "open: Terminal"]]
+                 [:t [:km "open: Telegram"]]]} ; open tidal
+
         {:des "fkey (open apps)"
          :rules [:f-mode
+                 [:m [:km "open: Tidal"]]
+                 [:b [:km "open: Bartender"]]
                  [:n :!!n]]} ; open nvALT
 
         {:des "workman dead state"
