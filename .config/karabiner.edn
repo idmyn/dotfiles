@@ -1,5 +1,11 @@
 ; much inspiration taken from https://github.com/nikitavoloboev/dotfiles/blob/master/karabiner/karabiner.edn
-{:devices      {:logitech [{:vendor_id 1133 :product_id 45890}]}
+{:profiles
+ {:Default {:default true
+            :sim     50
+            :delay   80
+            :alone   120
+            :held    70}}
+ :devices      {:logitech [{:vendor_id 1133 :product_id 45890}]}
 
  :input-sources {:british {:input_mode_id   ""
                            :input_source_id "com.apple.keylayout.British"
@@ -16,6 +22,9 @@
                            "^com\\.apple\\.Terminal$"
                            "^ru.keepcoder.Telegram$"]}
 
+ :simlayers {:f-mode {:key :f}
+             :t-mode {:key :t}}
+
  :main [{:des   "everywhere: right cmd alone to f13 (alfred)"
          :rules [[:right_command :right_command nil {:alone :f13}]]}
 
@@ -28,137 +37,58 @@
         {:des   "outside vim (and emulators): caps_lock to f13 when pressed alone, to ctrl as modifier"
          :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
 
-        #_{:des   "in editors flip numbers/symbols"
-         :rules [[:condi :Editors]
-                 [:1 :!S1]
-                 [:!S1 :1]
-                 [:!R1 :1]
-                 [:2 :!S2]
-                 [:!S2 :2]
-                 [:!R2 :2]
-                 [:3 :!O3]
-                 [:!S3 :3]
-                 [:!R3 :3]
-                 [:4 :!S4]
-                 [:!S4 :4]
-                 [:!R4 :4]
-                 [:5 :!S5]
-                 [:!S5 :5]
-                 [:!R5 :5]
-                 [:6 :!S6]
-                 [:!S6 :6]
-                 [:!R6 :6]
-                 [:7 :!S7]
-                 [:!S7 :7]
-                 [:!R7 :7]
-                 [:8 :!S8]
-                 [:!S8 :8]
-                 [:!R8 :8]
-                 [:9 :!S9]
-                 [:!S9 :9]
-                 [:!R9 :9]
-                 [:0 :!S0]
-                 [:!S0 :0]
-                 [:!R0 :0]]}
+        {:des "tkey (todoist)"
+         :rules [:t-mode
+                 [:o :!!1] ; open todoist
+                 [:n :!!2]]} ; new todoist task
+
+        {:des "fkey (open apps)"
+         :rules [:f-mode
+                 [:n :!!n]]} ; open nvALT
 
         {:des "workman dead state"
-                 :rules [[:comma ["dead-state" 1] :!dead-state]
-                         [:4 [:!Sgrave_accent_and_tilde ["dead-state" 0]] :dead-state] ;; ~
-                         [:5 [:grave_accent_and_tilde ["dead-state" 0]] :dead-state] ;; `
-                         [:7 [:!O3 ["dead-state" 0]] :dead-state] ;; #
-                         [:8 [:!S6 ["dead-state" 0]] :dead-state] ;; ^
-                         [:q [:!S5 ["dead-state" 0]] :dead-state] ;; %
-                         [:w [:!S7 ["dead-state" 0]] :dead-state] ;; &
-                         [:e [:!Sslash ["dead-state" 0]] :dead-state] ;; ?
-                         [:r [:!Sequal_sign ["dead-state" 0]] :dead-state] ;; +
-                         [:t [:!S2 ["dead-state" 0]] :dead-state] ;; @
-                         [:y [:!S4 ["dead-state" 0]] :dead-state] ;; $
-                         [:u [:!Shyphen ["dead-state" 0]] :dead-state] ;; _
-                         [:i [:open_bracket ["dead-state" 0]] :dead-state] ;; [
-                         [:o [:close_bracket ["dead-state" 0]] :dead-state] ;; ]
-                         [:p [:!S1 ["dead-state" 0]] :dead-state] ;; !
-                         [:a [:!S4 ["dead-state" 0]] :dead-state] ;; $ (used to be "/")
-                         [:s [:!S9 ["dead-state" 0]] :dead-state] ;; (
-                         [:d [:equal_sign ["dead-state" 0]] :dead-state] ;; =
-                         [:f [:!O3 ["dead-state" 0]] :dead-state] ;; # (used to be "0")
-                         [:g [:!Sopen_bracket ["dead-state" 0]] :dead-state] ;; {
-                         [:h [:!Sclose_bracket ["dead-state" 0]] :dead-state] ;; }
-                         [:j [:!Shyphen ["dead-state" 0]] :dead-state] ;; _ (used to be '1')
-                         [:k [:!S8 ["dead-state" 0]] :dead-state] ;; *
-                         [:l [:!S0 ["dead-state" 0]] :dead-state] ;; )
-                         [:semicolon [:hyphen ["dead-state" 0]] :dead-state] ;; -
-                         [:z [:6 ["dead-state" 0]] :dead-state] ;; 6
-                         [:x [:7 ["dead-state" 0]] :dead-state] ;; 7
-                         [:c [:8 ["dead-state" 0]] :dead-state] ;; 8
-                         [:v [:slash ["dead-state" 0]] :dead-state] ;; / (used to be "9")
-                         [:b [:!Sbackslash ["dead-state" 0]] :dead-state] ;; |
-                         [:n [:backslash ["dead-state" 0]] :dead-state] ;; \
-                         [:m [:2 ["dead-state" 0]] :dead-state] ;; 2
-                         [:comma [:3 ["dead-state" 0]] :dead-state] ;; 3
-                         [:period [:4 ["dead-state" 0]] :dead-state] ;; 4
-                         [:slash [:5 ["dead-state" 0]] :dead-state] ;; 5
-                         [:return_or_enter [:comma :return_or_enter ["dead-state" 0]] :dead-state] ;; ,\n
-                         [:escape ["dead-state" 0] :dead-state] ;; ,\n
-                         [:spacebar [:comma :spacebar ["dead-state" 0]] :dead-state]]}
+         :rules [[:comma ["dead-state" 1] :!dead-state]
+                 [:4 [:!Sgrave_accent_and_tilde ["dead-state" 0]] :dead-state] ;; ~
+                 [:5 [:grave_accent_and_tilde ["dead-state" 0]] :dead-state] ;; `
+                 [:7 [:!O3 ["dead-state" 0]] :dead-state] ;; #
+                 [:8 [:!S6 ["dead-state" 0]] :dead-state] ;; ^
+                 [:q [:!S5 ["dead-state" 0]] :dead-state] ;; %
+                 [:w [:!S7 ["dead-state" 0]] :dead-state] ;; &
+                 [:e [:!Sslash ["dead-state" 0]] :dead-state] ;; ?
+                 [:r [:!Sequal_sign ["dead-state" 0]] :dead-state] ;; +
+                 [:t [:!S2 ["dead-state" 0]] :dead-state] ;; @
+                 [:y [:!S4 ["dead-state" 0]] :dead-state] ;; $
+                 [:u [:!Shyphen ["dead-state" 0]] :dead-state] ;; _
+                 [:i [:open_bracket ["dead-state" 0]] :dead-state] ;; [
+                 [:o [:close_bracket ["dead-state" 0]] :dead-state] ;; ]
+                 [:p [:!S1 ["dead-state" 0]] :dead-state] ;; !
+                 [:a [:!S4 ["dead-state" 0]] :dead-state] ;; $ (used to be "/")
+                 [:s [:!S9 ["dead-state" 0]] :dead-state] ;; (
+                 [:d [:equal_sign ["dead-state" 0]] :dead-state] ;; =
+                 [:f [:!O3 ["dead-state" 0]] :dead-state] ;; # (used to be "0")
+                 [:g [:!Sopen_bracket ["dead-state" 0]] :dead-state] ;; {
+                 [:h [:!Sclose_bracket ["dead-state" 0]] :dead-state] ;; }
+                 [:j [:!Shyphen ["dead-state" 0]] :dead-state] ;; _ (used to be '1')
+                 [:k [:!S8 ["dead-state" 0]] :dead-state] ;; *
+                 [:l [:!S0 ["dead-state" 0]] :dead-state] ;; )
+                 [:semicolon [:hyphen ["dead-state" 0]] :dead-state] ;; -
+                 [:z [:6 ["dead-state" 0]] :dead-state] ;; 6
+                 [:x [:7 ["dead-state" 0]] :dead-state] ;; 7
+                 [:c [:8 ["dead-state" 0]] :dead-state] ;; 8
+                 [:v [:slash ["dead-state" 0]] :dead-state] ;; / (used to be "9")
+                 [:b [:!Sbackslash ["dead-state" 0]] :dead-state] ;; |
+                 [:n [:backslash ["dead-state" 0]] :dead-state] ;; \
+                 [:m [:2 ["dead-state" 0]] :dead-state] ;; 2
+                 [:comma [:3 ["dead-state" 0]] :dead-state] ;; 3
+                 [:period [:4 ["dead-state" 0]] :dead-state] ;; 4
+                 [:slash [:5 ["dead-state" 0]] :dead-state] ;; 5
+                 [:return_or_enter [:comma :return_or_enter ["dead-state" 0]] :dead-state] ;; ,\n
+                 [:escape ["dead-state" 0] :dead-state] ;; ,\n
+                 [:spacebar [:comma :spacebar ["dead-state" 0]] :dead-state]]}
 
         {:des "swap : and ;"
          :rules [[:#Psemicolon :!Ssemicolon]
                  [:!Ssemicolon :semicolon]
                  [:!Rsemicolon :semicolon]]}
 
-      #_{:des   "When British input source, workman-IO layout on logitech"
-         :rules [[:condi :uk :logitech]
-                 [:q :q]
-                 [:!Sq :!Sq]
-                 [:w :d]
-                 [:!Sw :!Sd]
-                 [:e :r]
-                 [:!Se :!Sr]
-                 [:r :w]
-                 [:!Sr :!Sw]
-                 [:t :b]
-                 [:!St :!Sb]
-                 [:y :j]
-                 [:!Sy :!Sj]
-                 [:u :f]
-                 [:!Su :!Sf]
-                 [:i :u]
-                 [:!Si :!Su]
-                 [:o :p]
-                 [:!So :!Sp]
-                 [:p :semicolon]
-                 [:!Sp :!Ssemicolon]
-                 [:a :a]
-                 [:!Sa :!Sa]
-                 [:s :s]
-                 [:!Ss :!Ss]
-                 [:d :h]
-                 [:!Sd :!Sh]
-                 [:f :t]
-                 [:!Sf :!St]
-                 [:g :g]
-                 [:!Sg :!Sg]
-                 [:h :y]
-                 [:!Sh :!Sy]
-                 [:j :n]
-                 [:!Sj :!Sn]
-                 [:k :e]
-                 [:!Sk :!Se]
-                 [:l :i]
-                 [:!Sl :!Si]
-                 [:semicolon :o]
-                 [:!Ssemicolon :!So]
-                 [:z :z]
-                 [:!Sz :!Sz]
-                 [:x :x]
-                 [:!Sx :!Sx]
-                 [:c :m]
-                 [:!Sc :!Sm]
-                 [:v :c]
-                 [:!Sv :!Sc]
-                 [:b :v]
-                 [:!Sb :!Sv]
-                 [:n :k]
-                 [:!Sn :!Sk]
-                 [:m :l]
-                 [:!Sm :!Sl]]}]}
+        ]}
