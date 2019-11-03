@@ -1,0 +1,25 @@
+alias otp='pass otp'
+alias groff='/usr/local/Cellar/groff/1.22.3/bin/groff'
+alias borg='/usr/local/bin/borg'
+alias goku='/usr/local/bin/goku'
+alias rpgtodo='python /Users/david/Development/personal/rpgtodo/rpgtodo/rpgtodo.py'
+
+alias ip="ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'"
+
+alias be="bundle exec"
+
+alias zshrc='e ~/.zshrc'
+alias kittyrc='e ~/.config/kitty/kitty.conf'
+alias vimrc='e ~/.vimrc'
+alias nvimrc='e ~/.config/nvim/init.vim'
+
+alias dt='/Users/david/MEGA/System/Desktop'
+alias dl='/Users/david/Downloads'
+alias projects='/Users/david/Documents/Local\ Projects'
+alias dots='/Users/david/GitHub/Active/dotfiles'
+alias ghTest='/Users/david/GitHub/Active/test'
+alias exP='/Users/david/Exercism/python'
+alias exR='/Users/david/Exercism/ruby'
+alias code='/Users/david/Development/flatiron'
+
+alias vault='/Volumes/THE\ VAULT'

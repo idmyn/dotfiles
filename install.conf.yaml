@@ -12,3 +12,7 @@
     ~/.emacs.d/init.el: emacs/init.el
     ~/.emacs.d/init.org: emacs/init.org
     ~/.config/karabiner.edn: karabiner/karabiner.edn
+    ~/.aliases: shell/.aliases
+    ~/.zshenv: shell/.zshenv
+    ~/.zshrc: shell/.zshrc
+    ~/.zsh_plugins.txt: shell/.zsh_plugins.txt
