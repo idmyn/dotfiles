@@ -1,5 +1,15 @@
+* My Emacs Config
+#+BEGIN_SRC emacs-lisp
 (setq user-full-name "David Mynors"
       user-mail-address "hello@davidmyno.rs")
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs ready in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
 
 ;; straight.el
 (defvar bootstrap-version)
@@ -1026,6 +1036,13 @@ Version 2017-11-01"
   ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
+;; Clojure
+(use-package clojure-mode
+  :straight t)
+
+;; YAML
+(use-package yaml-mode
+  :straight (yaml-mode :host github :repo "yoshiki/yaml-mode"))
 
 ;;; macOS SPECIFIC
 
@@ -1046,3 +1063,4 @@ Version 2017-11-01"
 ;; (setq explicit-shell-file-name "/bin/bash")
 ;; (setenv "SHELL" shell-file-name)
 ;; (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
+#+END_SRC

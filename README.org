@@ -1,0 +1,5 @@
+* dotfiles
+  These dotfiles are bootstrapped with
+  [[https://github.com/anishathalye/dotbot][dotbot]] and can be installed by
+  cloning this repo and running ~./install~ inside it. Much inspiration taken
+  from [[https://github.com/nikitavoloboev/dotfiles][here]].

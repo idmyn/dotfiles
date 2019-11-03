@@ -1,0 +1,6 @@
+rupa/z
+junegunn/fzf
+b4b4r07/enhancd
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
