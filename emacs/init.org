@@ -1,5 +1,5 @@
 * My Emacs Config                                                  :noexport:
-* Table of Contents                                                     :TOC:
+** Table of Contents                                                    :TOC:
 - [[#everyting][Everyting]]
 
 * Everyting
