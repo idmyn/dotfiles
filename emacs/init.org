@@ -1,8 +1,9 @@
 * My Emacs Config                                                  :noexport:
 ** Table of Contents                                                    :TOC:
-- [[#everyting][Everyting]]
+- [[#starting-up][Starting up]]
+- [[#everyting-else][Everyting else]]
 
-* Everyting
+* Starting up
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "David Mynors"
         user-mail-address "hello@davidmyno.rs")
@@ -35,8 +36,10 @@
   ;; Enable use-package
   (eval-when-compile
     (straight-use-package 'use-package))
+#+END_SRC
 
-
+* Everyting else
+#+BEGIN_SRC emacs-lisp
   ;;; EDITOR APPEARANCE / QUALITY OF LIFE TWEAKS
 
   (use-package eink-theme
