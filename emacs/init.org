@@ -442,7 +442,8 @@
       "u" 'undo-tree-visualize
       "t" 'vterm-toggle
       "p" 'neotree-project-dir
-      "m" 'ivy-imenu-anywhere
+      "m" 'counsel-imenu
+      "M" 'ivy-imenu-anywhere
       "R" 'crux-rename-file-and-buffer
       "r" 'query-replace)
 
