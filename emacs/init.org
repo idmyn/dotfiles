@@ -870,7 +870,7 @@
 
   (use-package toc-org
     :straight t
-    :hook org-mode)
+    :hook (org-mode . toc-org-mode))
 
   ;; HTML/CSS
   (use-package web-mode
