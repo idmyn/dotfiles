@@ -1040,6 +1040,9 @@ Version 2017-11-01"
 (use-package clojure-mode
   :straight t)
 
+;; YAML
+(use-package yaml-mode
+  :straight (yaml-mode :host github :repo "yoshiki/yaml-mode"))
 
 ;;; macOS SPECIFIC
 
