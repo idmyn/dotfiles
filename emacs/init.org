@@ -670,7 +670,9 @@
     :straight t
     :config
     (use-package yasnippet-snippets
-      :straight t)
+      :straight (yasnippet-snippets :host github :repo "AndreaCrotti/yasnippet-snippets"
+                                    :fork (:host github
+                                                 :repo "idmyn/yasnippet-snippets")))
     (use-package ivy-yasnippet
       :straight t
       :init
