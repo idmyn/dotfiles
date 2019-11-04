@@ -441,7 +441,7 @@
       "l" 'learn--f-f
       "a" 'async-shell-command
       "u" 'undo-tree-visualize
-      "t" 'vterm-toggle
+      ;; "t" 'vterm-toggle
       "p" 'neotree-project-dir
       "m" 'counsel-imenu
       "M" 'ivy-imenu-anywhere
@@ -786,12 +786,17 @@
   ;; libvterm
   (add-to-list 'load-path "~/.emacs.d/libvterm")
   (use-package vterm
-    :defer t
+    :init
+    (setq shell-file-name "zsh")
+    (setenv "SHELL" shell-file-name)
+    ;; :defer 1 ; not sure why but if I defer then vterm decides to use bash
     :config
     ;; (require 'vterm-toggle)
     (use-package vterm-toggle
       :straight (vterm-toggle :host github :repo "jixiuf/vterm-toggle")
-      :defer 2) ; this should probably be a :bind
+      :general
+      (global-leader 'motion 'override
+        "t" 'vterm-toggle))
     (define-key vterm-mode-map (kbd "<escape>") 'evil-escape) ;; couldn't get general to work here
     (general-def 'motion vterm-mode-map
       "h" 'vterm-yank)
@@ -1143,10 +1148,6 @@
   ;; I've put this at the end because something else in this file was overriding it
   (setq ivy-re-builders-alist
         '((t . ivy--regex-fuzzy)))
-
-  ;; (setq explicit-shell-file-name "/bin/bash")
-  ;; (setenv "SHELL" shell-file-name)
-  ;; (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
 
   ;; Make gc pauses faster by decreasing the threshold.
   (setq gc-cons-threshold (* 2 1000 1000))
