@@ -30,6 +30,7 @@
              :j-mode {:key :j}
              :a-mode {:key :a}
              :w-mode {:key :w}
+             :m-mode {:key :m}
              :t-mode {:key :t}}
 
  :main [{:des   "everywhere: right cmd alone to hyper-c (Contexts.app)"
@@ -66,15 +67,21 @@
                  [:e [:km "open: Emacs"]]
                  [:w [:km "open: Brave"]]
                  [:s [:km "open: Terminal"]]
-                 [:t [:km "open: Tidal"]]]} ; open tidal
+                 [:k [:km "open: KM"]]
+                 [:t [:km "open: Tidal"]]]}
+
+        {:des "mkey (open messaging apps)"
+         :rules [:m-mode
+                 [:s [:km "open: Slack"]]
+                 [:e [:km "open: Mail"]]
+                 [:t [:km "open: Telegram"]]]}
 
         {:des "fkey (open apps)"
          :rules [:f-mode
                  [:e [:km "open: Emacs"]]
                  [:w [:km "open: Brave"]]
-                 [:m [:km "open: Mail"]]
-                 [:c [:km "open: Telegram"]]
-                 [:b [:km "open: Bartender"]]
+                 [:s [:km "open: Terminal"]]
+                 [:k [:km "open: KM"]]
                  [:n :!!n]]} ; open nvALT
 
         {:des "workman dead state"
