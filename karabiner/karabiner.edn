@@ -69,6 +69,7 @@
                  [:e [:km "open: Emacs"]]
                  [:w [:km "open: Brave"]]
                  [:s [:km "open: Terminal"]]
+                 [:c [:km "open: Calendar"]]
                  [:k [:km "open: KM"]]
                  [:t [:km "open: Tidal"]]]}
 
