@@ -66,11 +66,14 @@
                  [:e [:km "open: Emacs"]]
                  [:w [:km "open: Brave"]]
                  [:s [:km "open: Terminal"]]
-                 [:t [:km "open: Telegram"]]]} ; open tidal
+                 [:t [:km "open: Tidal"]]]} ; open tidal
 
         {:des "fkey (open apps)"
          :rules [:f-mode
-                 [:m [:km "open: Tidal"]]
+                 [:e [:km "open: Emacs"]]
+                 [:w [:km "open: Brave"]]
+                 [:m [:km "open: Mail"]]
+                 [:c [:km "open: Telegram"]]
                  [:b [:km "open: Bartender"]]
                  [:n :!!n]]} ; open nvALT
 
