@@ -443,7 +443,7 @@
       "l" 'my/learn--f-f
       "a" 'async-shell-command
       "u" 'undo-tree-visualize
-      ;; "t" 'vterm-toggle
+      "t" 'term
       "p" 'neotree-project-dir
       "m" 'counsel-imenu
       "M" 'ivy-imenu-anywhere
@@ -796,30 +796,30 @@
   (global-auto-revert-mode t) ; buffers should change when branch changes
 
   ;; libvterm
-  (add-to-list 'load-path "~/.emacs.d/libvterm")
-  (use-package vterm
-    :init
-    ;; (setq shell-file-name "zsh")
-    ;; (setenv "SHELL" shell-file-name)
-    ;; :defer 1 ; not sure why but if I defer then vterm decides to use bash
-    :config
-    ;; (require 'vterm-toggle)
-    (use-package vterm-toggle
-      :straight (vterm-toggle :host github :repo "jixiuf/vterm-toggle")
-      :general
-      (global-leader 'motion 'override
-        "t" 'vterm-toggle))
-    (define-key vterm-mode-map (kbd "<escape>") 'evil-escape) ;; couldn't get general to work here
-    (general-def 'motion vterm-mode-map
-      "h" 'vterm-yank)
-    (general-def 'insert vterm-mode-map
-      "s-v" 'my-vterm-yank-from-simpleclip
-      "C-k" 'vterm-send-down
-      "C-l" 'vterm-send-up
-      "C-u" 'vterm--self-insert
-      )
-    ;; fix paste via simpleclip?
-    (add-hook 'vterm-mode-hook 'my-inhibit-global-whitespace-mode))
+  ;; (add-to-list 'load-path "~/.emacs.d/libvterm")
+  ;; (use-package vterm
+  ;;   :init
+  ;;   ;; (setq shell-file-name "zsh")
+  ;;   ;; (setenv "SHELL" shell-file-name)
+  ;;   ;; :defer 1 ; not sure why but if I defer then vterm decides to use bash
+  ;;   :config
+  ;;   ;; (require 'vterm-toggle)
+  ;;   (use-package vterm-toggle
+  ;;     :straight (vterm-toggle :host github :repo "jixiuf/vterm-toggle")
+  ;;     :general
+  ;;     (global-leader 'motion 'override
+  ;;       "t" 'vterm-toggle))
+  ;;   (define-key vterm-mode-map (kbd "<escape>") 'evil-escape) ;; couldn't get general to work here
+  ;;   (general-def 'motion vterm-mode-map
+  ;;     "h" 'vterm-yank)
+  ;;   (general-def 'insert vterm-mode-map
+  ;;     "s-v" 'my-vterm-yank-from-simpleclip
+  ;;     "C-k" 'vterm-send-down
+  ;;     "C-l" 'vterm-send-up
+  ;;     "C-u" 'vterm--self-insert
+  ;;     )
+  ;;   ;; fix paste via simpleclip?
+  ;;   (add-hook 'vterm-mode-hook 'my-inhibit-global-whitespace-mode))
 
   ;; Eshell
   ; good inspo: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
@@ -1010,7 +1010,7 @@
 
   (use-package prettier-js
     :straight t
-    :hook js2-mode
+    :defer t
     :config
     (setq prettier-js-args '(
                              "--no-semi" "false"
