@@ -56,6 +56,8 @@
                  [:k :!!k] ; split down
                  [:l :!!l] ; split up
                  [:semicolon :!!semicolon] ; split right
+                 [:d [:km "wm: Hide all"]]
+                 [:o :!!o] ; maximise window on other monitor
                  [:f :!!f]]} ; fullscreen
 
         {:des "akey (alfred)"
