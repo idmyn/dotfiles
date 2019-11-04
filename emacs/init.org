@@ -791,7 +791,7 @@
     ;; (require 'vterm-toggle)
     (use-package vterm-toggle
       :straight (vterm-toggle :host github :repo "jixiuf/vterm-toggle")
-      :defer t)
+      :defer 2) ; this should probably be a :bind
     (define-key vterm-mode-map (kbd "<escape>") 'evil-escape) ;; couldn't get general to work here
     (general-def 'motion vterm-mode-map
       "h" 'vterm-yank)
