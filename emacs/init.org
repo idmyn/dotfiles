@@ -73,6 +73,7 @@
     (add-hook 'vterm-mode-hook 'input-mono)
     (add-hook 'shell-mode-hook 'input-mono)
     (add-hook 'eshell-mode-hook 'input-mono)
+    (add-hook 'deft-mode-hook 'input-mono)
     (add-hook 'ranger-mode-hook 'input-mono))
 
   (setq inhibit-startup-screen t)
@@ -1071,6 +1072,14 @@
   (use-package yaml-mode
     :straight (yaml-mode :host github :repo "yoshiki/yaml-mode")
     :mode "\\.yaml\\'")
+
+  ;; Deft
+  (use-package deft
+    :straight t
+    :config
+    (setq deft-directory "~/Dropbox/notes"
+          deft-use-filter-string-for-filename t)
+    (add-to-list 'evil-insert-state-modes 'deft-mode))
 #+END_SRC
 * macOS specific
 #+BEGIN_SRC emacs-lisp
