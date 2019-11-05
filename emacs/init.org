@@ -389,6 +389,7 @@
       "s-i" 'complete-symbol
       "s-r" 'browser-refresh
       "s-f" 'switch-to-buffer
+      "s-b" 'counsel-bookmark
       "s-j" 'avy-goto-word-1
 
       "C-c k" 'deft
@@ -414,7 +415,7 @@
       ;; "x" 'counsel-M-x
       "f" 'switch-to-buffer
       "d" 'dumb-jump-go
-      "b" 'dumb-jump-back
+      "b" 'counsel-bookmark
       "n" 'deer
       ;; "s" 'switch-to-scratch-and-back ; causing trouble with flycheck
       "s" 'counsel-ag
@@ -460,9 +461,13 @@
       "C-l" 'previous-line
       "C-;" 'right-char)
 
-    ;; (require 'move-border)
     (use-package move-border
       :straight (move-border :host github :repo "ramnes/move-border"))
+
+    (defun my/evil-or-dumb-jump-backward()
+      (interactive)
+      (if (equal last-command 'dumb-jump-go) (dumb-jump-back) (evil-jump-backward)))
+
     (general-def 'motion
       "j" 'evil-backward-char
       "k" 'evil-next-line
@@ -478,7 +483,7 @@
 
       "C-e" 'er/expand-region
 
-      "C-i" 'evil-jump-backward
+      "C-i" 'my/evil-or-dumb-jump-backward
       "C-o" 'evil-jump-forward
 
       ;; multiple-cursors
