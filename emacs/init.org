@@ -456,6 +456,7 @@
       "<" 'evil-shift-left)
 
     (general-def 'insert global-map
+      "C-v" 'er/expand-region
       "C-j" 'left-char
       "C-k" 'next-line
       "C-l" 'previous-line
