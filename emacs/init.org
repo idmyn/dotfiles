@@ -388,6 +388,7 @@
       "s-n" 'xah-new-empty-buffer
       "s-i" 'complete-symbol
       "s-r" 'browser-refresh
+      "s-b" 'switch-to-buffer
 
       "C-c k" 'deft
 
