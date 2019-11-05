@@ -362,7 +362,6 @@
 #+END_SRC
 * Editor navigation and interaction
 #+BEGIN_SRC emacs-lisp
-
   ;; General (keybindings)
   (use-package general
     :straight t
@@ -390,9 +389,21 @@
       "s-i" 'complete-symbol
       "s-r" 'browser-refresh
 
+      "C-c k" 'deft
+
+      "C-RET" 'insert-line-below
+
       "M-SPC" 'ivy-yasnippet)
 
-      (general-define-key (kbd "<C-return>") 'xah-run-current-file)
+  (defun insert-line-below ()
+    "Insert an empty line below the current line."
+    (interactive)
+    (save-excursion
+      (end-of-line)
+      (open-line 1)))
+
+      (general-define-key (kbd "<C-return>") 'insert-line-below)
+      (general-define-key (kbd "<M-return>") 'xah-run-current-file)
 
     (general-create-definer global-leader
       :prefix "SPC")
@@ -420,6 +431,7 @@
       "u" 'undo-tree-visualize
       "t" 'term
       "p" 'neotree-project-dir
+      "k" 'deft ; k for KNOWLEDGE
       "m" 'counsel-imenu
       "M" 'ivy-imenu-anywhere
       "R" 'crux-rename-file-and-buffer
@@ -709,8 +721,9 @@
         :straight t))
     (yas-global-mode 1)
     :config
-    (general-def 'insert yas-minor-mode-map
-      "M-RET" 'yas-expand))
+    ;; (general-def 'insert yas-minor-mode-map
+    ;;   "M-RET" 'yas-expand)
+    )
 
   ;; Ranger
   (use-package ranger
@@ -900,7 +913,7 @@
   ;; HTML/CSS
   (use-package web-mode
     :straight t
-    :defer 2
+    :defer
     :config
     (general-def 'web-mode-map
       "M-;" nil)
@@ -924,7 +937,7 @@
     :straight (browser-refresh :host github :repo "syohex/emacs-browser-refresh"
                         :fork (:host github
                                      :repo "idmyn/emacs-browser-refresh"))
-    :defer 2
+    :defer
     :config
     (setq browser-refresh-default-browser 'brave)
     (setq browser-refresh-save-buffer nil)
@@ -961,7 +974,7 @@
 
   (use-package nodejs-repl
     :straight (nodejs-repl :host github :repo "abicky/nodejs-repl.el")
-    :defer 2)
+    :defer)
 
   (use-package prettier-js
     :straight t
@@ -973,7 +986,7 @@
 
   (use-package eglot
     :straight (eglot :host github :repo "joaotavora/eglot")
-    :defer 1
+    :defer
     :config
     (add-hook 'ruby-mode-hook 'eglot-ensure)
     (add-hook 'js2-mode-hook 'eglot-ensure))
@@ -1058,7 +1071,7 @@
   ;; HTTP
   (use-package restclient
     :straight t
-    :defer 2
+    ;; :defer 2
     :config
     ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
