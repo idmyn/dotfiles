@@ -37,7 +37,7 @@ function chpwd() {
 }
 setopt autocd
 alias ls='ls -GF'
-alias e='emacsclient -c -a emacs'
+alias e='emacsclient -c -a emacs &'
 
 eval "$(pyenv init -)"
 
