@@ -397,15 +397,15 @@
 
       "M-SPC" 'ivy-yasnippet)
 
-  (defun insert-line-below ()
-    "Insert an empty line below the current line."
-    (interactive)
-    (save-excursion
-      (end-of-line)
-      (open-line 1)))
+    (defun insert-line-below ()
+      "Insert an empty line below the current line."
+      (interactive)
+      (save-excursion
+        (end-of-line)
+        (open-line 1)))
 
-      (general-define-key (kbd "<C-return>") 'insert-line-below)
-      (general-define-key (kbd "<M-return>") 'xah-run-current-file)
+    (general-define-key (kbd "<C-return>") 'insert-line-below)
+    (general-define-key (kbd "<M-return>") 'xah-run-current-file)
 
     (general-create-definer global-leader
       :prefix "SPC")
@@ -441,7 +441,7 @@
 
     (general-create-definer local-leader
       :prefix "m")
-      ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
+    ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
 
     (general-def 'normal
       "s" 'avy-goto-word-1
