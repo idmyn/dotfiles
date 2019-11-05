@@ -140,22 +140,6 @@
           whitespace-style '(face tabs tab-mark lines-tail trailing)))
   (require 'whitespace)
 
-  (custom-set-faces
-   '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width condensed :foundry "nil" :family "Input Sans Narrow"))))
-   '(js2-error ((t nil)))
-   '(js2-warning ((t nil)))
-   '(line-number ((t (:inherit (shadow default) :family "Input Mono Narrow"))))
-   '(org-block-begin-line ((t (:height 0.8))))
-   '(vterm-color-black ((t (:inherit term-color-black :background "dark gray"))))
-   '(web-mode-doctype-face ((t nil)))
-   '(web-mode-html-attr-name-face ((t nil)))
-   '(web-mode-html-tag-face ((t nil)))
-   '(web-mode-json-key-face ((t nil)))
-   '(web-mode-symbol-face ((t nil)))
-   '(whitespace-tab ((t (:foreground "#9e9e9e")))))
-  (setq whitespace-display-mappings
-        '((tab-mark 9 [124 9] [92 9]))) ;; use pipe char to indicate tab
-
   (global-whitespace-mode t)
   (defun my-inhibit-global-whitespace-mode () ;; https://stackoverflow.com/a/6839968
     "Counter-act `global-whitespace-mode'."
@@ -173,18 +157,6 @@
   (setq-default indent-tabs-mode nil)
   (setq backward-delete-char-untabify-method nil)
   (setq-default electric-indent-inhibit nil)
-
-  (custom-set-variables
-   '(emojify-display-style (quote image))
-   '(emojify-download-emojis-p (quote ask))
-   '(emojify-emoji-set "twemoji-v2-22")
-   '(emojify-emoji-styles (quote (unicode)))
-   '(global-emojify-mode t)
-   '(js2-mode-show-parse-errors nil)
-   '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store" ".learn" ".rspec" ".gitignore")))
-   '(show-paren-mode t)
-   '(smie-config (quote ((css-mode (2 :elem basic 4)))))
-   '(tool-bar-mode nil))
 
   ;; https://github.com/antonj/Highlight-Indentation-for-Emacs
   (use-package highlight-indentation
