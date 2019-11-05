@@ -389,6 +389,7 @@
       "s-i" 'complete-symbol
       "s-r" 'browser-refresh
       "s-f" 'switch-to-buffer
+      "s-j" 'avy-goto-word-1
 
       "C-c k" 'deft
 
