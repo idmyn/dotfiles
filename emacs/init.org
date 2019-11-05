@@ -1,7 +1,11 @@
 * My Emacs Config                                                  :noexport:
 ** Table of Contents                                                    :TOC:
 - [[#starting-up][Starting up]]
-- [[#everyting-else][Everyting else]]
+- [[#editor-appearance-and-quality-of-life-tweaks][Editor appearance and quality of life tweaks]]
+- [[#editor-navigation-and-interaction][Editor navigation and interaction]]
+- [[#languages-and-other-major-modes][Languages and other major modes]]
+- [[#macos-specific][macOS specific]]
+- [[#closing-statements][Closing statements]]
 
 * Starting up
 #+BEGIN_SRC emacs-lisp
@@ -48,10 +52,8 @@
                        gcs-done)))
 #+END_SRC
 
-* Everyting else
+* Editor appearance and quality of life tweaks
 #+BEGIN_SRC emacs-lisp
-  ;;; EDITOR APPEARANCE / QUALITY OF LIFE TWEAKS
-
   (use-package eink-theme
     :straight t
     :config ; fonts
@@ -384,9 +386,9 @@
     :defer 2
     :config
     (add-hook 'after-init-hook #'global-emojify-mode))
-
-
-  ;;; EDITOR NAVIGATION / INTERACTION
+#+END_SRC
+* Editor navigation and interaction
+#+BEGIN_SRC emacs-lisp
 
   ;; General (keybindings)
   (use-package general
@@ -761,29 +763,9 @@
     (global-flycheck-mode)
     (setq flycheck-global-modes '(not emacs-lisp-mode)
           flycheck-check-syntax-automatically '(mode-enabled save)))
-
-  ;; LSP
-  ;; (use-package lsp-mode
-  ;;   :straight t
-  ;;   ;;
-    ;; :hook ((js2-mode) . lsp)
-    ;; :commands lsp
-    ;; :config
-    ;; (setq
-    ;;  lsp-auto-guess-root t
-    ;;  lsp-prefer-flymake nil
-    ;;  lsp-ui-flycheck-live-reporting nil
-    ;;  lsp-enable-snippet nil
-    ;;  lsp-ui-doc-enable nil
-    ;;  lsp-ui-peek-enable nil
-    ;;  lsp-ui-sideline-enable nil
-    ;;  lsp-ui-imenu-enable nil
-    ;;  lsp-enable-completion-at-point t
-    ;;  ))
-
-
-  ;;; LANGUAGE/MODE SPECIFIC
-
+#+END_SRC
+* Languages and other major modes
+#+BEGIN_SRC emacs-lisp
   ;; Git
   (use-package magit
     :straight t
@@ -1024,33 +1006,6 @@
     (add-hook 'js2-mode-hook 'eglot-ensure))
 
   ;; Ruby
-  ;; (use-package robe
-  ;;   :straight t
-  ;;   :config
-  ;;   (setq ruby-insert-encoding-magic-comment nil)
-  ;;   ;; (add-hook 'ruby-mode-hook 'robe-mode)
-  ;;   (push 'company-robe company-backends)
-
-  ;;   (setq ruby-indent-level 2)
-  ;;   (local-leader 'normal ruby-mode-map
-  ;;     "d" 'robe-doc ; d for documentation
-  ;;     "r" 'inf-ruby ; r for REPL
-  ;;     "p" 'pry-intercept ; p for pry
-  ;;     "b" 'ruby-send-buffer
-  ;;     "l" 'ruby-send-line
-
-  ;;     "t f" 'rspec-verify
-  ;;     "t a" 'rspec-verify-all
-  ;;     "t t" 'rspec-toggle-spec-and-target)
-  ;;   (local-leader 'visual ruby-mode-map
-  ;;     "v" 'ruby-send-region))
-
-  ;; I only want to be promped to start the server when I open ruby files
-  ;; (add-hook 'find-file-hook 'open-rb-hook)
-  ;; (defun open-rb-hook ()
-  ;;   (when (string= (file-name-extension buffer-file-name) "rb")
-  ;;     (robe-start)))
-
   (use-package rspec-mode
     :straight t
     :mode "\\.rspec\\'"
@@ -1144,10 +1099,9 @@
   (use-package yaml-mode
     :straight (yaml-mode :host github :repo "yoshiki/yaml-mode")
     :mode "\\.yaml\\'")
-
-  ;;; macOS SPECIFIC
-
-  ;; set the path variable (important for macOS?)
+#+END_SRC
+* macOS specific
+#+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
        :straight t
        :defer 0.1
@@ -1156,7 +1110,9 @@
 
   ;; Allow hash to be entered on UK macbook keyboard layout
   (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
-
+#+END_SRC
+* Closing statements
+#+BEGIN_SRC emacs-lisp
   ;; I've put this at the end because something else in this file was overriding it
   (setq ivy-re-builders-alist
         '((t . ivy--regex-fuzzy)))
