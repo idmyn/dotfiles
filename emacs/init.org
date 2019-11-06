@@ -921,14 +921,15 @@
   ;; HTML/CSS
   (use-package web-mode
     :straight t
-    :defer
+    :mode "\\.html?\\'"
     :config
     (general-def 'web-mode-map
       "M-;" nil)
     (setq web-mode-enable-current-element-highlight t)
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-code-indent-offset 2)
-    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+    ;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    )
   (use-package emmet-mode
     :straight t
     :config
@@ -994,7 +995,7 @@
 
   (use-package eglot
     :straight (eglot :host github :repo "joaotavora/eglot")
-    :defer
+    :defer 1
     :config
     (add-hook 'ruby-mode-hook 'eglot-ensure)
     (add-hook 'js2-mode-hook 'eglot-ensure))
