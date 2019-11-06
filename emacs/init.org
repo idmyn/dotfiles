@@ -61,7 +61,8 @@
 
   (use-package eink-theme
     :straight t
-    :config ; fonts
+    :config
+    (add-to-list 'default-frame-alist '(font . "Input Sans Narrow-13"))
     (defun input-sans ()
       "Set font to Input Sans Narrow in current buffer"
       (interactive)
@@ -81,13 +82,15 @@
     (add-hook 'deft-mode-hook 'input-mono)
     (add-hook 'ranger-mode-hook 'input-mono))
 
+  (global-hl-line-mode t)
+
   (setq inhibit-startup-screen t)
   (toggle-scroll-bar -1)
   (tool-bar-mode -1)
 
   ;; Prefer vertical split
-  ;; (setq split-height-threshold nil)
-  ;; (setq split-width-threshold 0)
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 0)
 
   (display-time-mode 1)
   ;; Minimal modeline
@@ -451,6 +454,7 @@
      ;; "C-c C-k" 'kill-region
 
      "C-x C-;" 'comment-or-uncomment-region-or-line
+     "C-x C-i" 'counsel-imenu
 
      "C-c k" 'deft
      "C-c e" 'eshell
@@ -519,7 +523,7 @@
       "<" 'evil-shift-left)
 
     (general-def 'insert global-map
-      "C-c r" 'er/expand-region
+      "s-e" 'er/expand-region
       ;; "C-j" 'left-char
       ;; "C-k" 'next-line
       ;; "C-l" 'previous-line
@@ -1048,7 +1052,7 @@
 
   (use-package nodejs-repl
     :straight (nodejs-repl :host github :repo "abicky/nodejs-repl.el")
-    :defer)
+    :defer t)
 
   (use-package prettier-js
     :straight t
@@ -1060,10 +1064,7 @@
 
   (use-package eglot
     :straight (eglot :host github :repo "joaotavora/eglot")
-    :defer 1
-    :config
-    (add-hook 'ruby-mode-hook 'eglot-ensure)
-    (add-hook 'js2-mode-hook 'eglot-ensure))
+    :hook ((ruby-mode js2-mode) . eglot-ensure))
 
   ;; Ruby
   (use-package rspec-mode
@@ -1081,7 +1082,6 @@
   ;; M-x my/learn-tests won’t run without this rvm package
   (use-package rvm
     :straight t
-    :defer 2
     :config (rvm-use-default))
 
   (use-package inf-ruby
