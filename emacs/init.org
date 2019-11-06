@@ -392,6 +392,11 @@
       "s-b" 'counsel-bookmark
       "s-j" 'avy-goto-word-1
 
+      ;; https://sites.google.com/site/steveyegge2/effective-emacs
+      "C-w" 'backward-kill-word
+      "C-x C-k" 'kill-region
+      "C-c C-k" 'kill-region
+
       "C-c k" 'deft
 
       "C-RET" 'insert-line-below
@@ -456,7 +461,7 @@
       "<" 'evil-shift-left)
 
     (general-def 'insert global-map
-      "C-v" 'er/expand-region
+      "C-c e" 'er/expand-region
       "C-j" 'left-char
       "C-k" 'next-line
       "C-l" 'previous-line
@@ -555,7 +560,7 @@
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
-    (global-set-key "\C-s" 'swiper)
+    ;; (global-set-key "\C-s" 'swiper)
 
     (use-package counsel
       :straight t
