@@ -18,14 +18,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#fffff8" :foreground "#111111" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width condensed :foundry "nil" :family "Input Sans Narrow"))))
  '(deft-summary-face ((t nil)))
  '(deft-title-face ((t (:inherit font-lock-function-name-face :weight bold))))
  '(hl-line ((t (:background "lavender"))))
+ '(isearch ((t (:background "honeydew" :foreground "#111111"))))
  '(js2-error ((t nil)))
  '(js2-warning ((t nil)))
  '(line-number ((t (:inherit (shadow default) :family "Input Mono Narrow"))))
- '(org-block-begin-line ((t (:height 0.8))))
  '(vterm-color-black ((t (:inherit term-color-black :background "dark gray"))))
  '(web-mode-doctype-face ((t nil)))
  '(web-mode-html-attr-name-face ((t nil)))
