@@ -54,6 +54,11 @@
 
 * Editor appearance and quality of life tweaks
 #+BEGIN_SRC emacs-lisp
+  ;; Keep emacs Custom-settings in separate file
+  ;; pinched this from https://github.com/magnars/.emacs.d/blob/master/init.el
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file)
+
   (use-package eink-theme
     :straight t
     :config ; fonts
@@ -119,9 +124,9 @@
   ;; https://stackoverflow.com/a/29821453
   (setq frame-title-format
         '(buffer-file-name "%b - %f" ; File buffer
-          (dired-directory dired-directory ; Dired buffer
-           (revert-buffer-function "%b" ; Buffer Menu
-            ("%b - Dir: " default-directory))))) ; Plain buffer
+                           (dired-directory dired-directory ; Dired buffer
+                                            (revert-buffer-function "%b" ; Buffer Menu
+                                                                    ("%b - Dir: " default-directory))))) ; Plain buffer
 
   (global-display-line-numbers-mode)
   (setq-default display-line-numbers-type 'relative)
@@ -171,23 +176,23 @@
   ;; Filesystem hygiene
   ;; https://www.emacswiki.org/emacs/BackupFiles
   (setq
-     backup-by-copying t      ; don't clobber symlinks
-     backup-directory-alist
-      '(("." . "~/.saves/"))    ; don't litter my fs tree
-     delete-old-versions t
-     kept-new-versions 6
-     kept-old-versions 2
-     version-control t)       ; use versioned backups
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+   '(("." . "~/.saves/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
 
   ;; Function for commenting line/region
   ;; https://stackoverflow.com/a/9697222
   (defun comment-or-uncomment-region-or-line ()
-      (interactive)
-      (let (beg end)
-          (if (region-active-p)
-              (setq beg (region-beginning) end (region-end))
-              (setq beg (line-beginning-position) end (line-end-position)))
-          (comment-or-uncomment-region beg end)))
+    (interactive)
+    (let (beg end)
+      (if (region-active-p)
+          (setq beg (region-beginning) end (region-end))
+        (setq beg (line-beginning-position) end (line-end-position)))
+      (comment-or-uncomment-region beg end)))
 
   ;; Separate evil clipboard from system clipboard
   ;; https://github.com/rolandwalker/simpleclip
@@ -199,7 +204,8 @@
       (interactive)
       (kill-new (simpleclip-get-contents))
       (vterm-yank))
-    (simpleclip-mode 1))
+    ;; (simpleclip-mode 1)
+    )
 
   (defun crux-rename-file-and-buffer () ; https://github.com/bbatsov/crux
     "Rename current buffer and if the buffer is visiting a file, rename it too."
@@ -223,19 +229,19 @@
     "Run learn tests asynchronously."
     (interactive)
     (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
-    (async-shell-command "learn")))
+      (async-shell-command "learn")))
   (defun my/learn--f-f ()
     "Run learn --f-f asynchronously."
     (interactive)
     (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
-    (async-shell-command "learn --f-f")))
+      (async-shell-command "learn --f-f")))
 
   (defun xah-run-current-go-file ()
     "Run or build current golang file.
 
-  To build, call `universal-argument' first.
+    To build, call `universal-argument' first.
 
-  Version 2018-10-12"
+    Version 2018-10-12"
     (interactive)
     (when (not (buffer-file-name)) (save-buffer))
     (when (buffer-modified-p) (save-buffer))
@@ -261,16 +267,16 @@
 
   (defun xah-run-current-file ()
     "Execute the current file.
-  For example, if the current buffer is x.py, then it'll call 「python x.py」 in a shell.
-  Output is printed to buffer “*xah-run output*”.
+    For example, if the current buffer is x.py, then it'll call 「python x.py」 in a shell.
+    Output is printed to buffer “*xah-run output*”.
 
-  The file can be Emacs Lisp, PHP, Perl, Python, Ruby, JavaScript, TypeScript, golang, Bash, Ocaml, Visual Basic, TeX, Java, Clojure.
-  File suffix is used to determine what program to run.
+    The file can be Emacs Lisp, PHP, Perl, Python, Ruby, JavaScript, TypeScript, golang, Bash, Ocaml, Visual Basic, TeX, Java, Clojure.
+    File suffix is used to determine what program to run.
 
-  If the file is modified or not saved, save it automatically before run.
+    If the file is modified or not saved, save it automatically before run.
 
-  URL `http://ergoemacs.org/emacs/elisp_run_current_file.html'
-  Version 2018-10-12"
+    URL `http://ergoemacs.org/emacs/elisp_run_current_file.html'
+    Version 2018-10-12"
     (interactive)
     (let (
           ($outputb "*xah-run output*")
@@ -336,12 +342,12 @@
 
   (defun xah-new-empty-buffer ()
     "Create a new empty buffer.
-  New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
+    New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
 
-  It returns the buffer (for elisp programing).
+    It returns the buffer (for elisp programing).
 
-  URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
-  Version 2017-11-01"
+    URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
+    Version 2017-11-01"
     (interactive)
     (let (($buf (generate-new-buffer "untitled")))
       (switch-to-buffer $buf)
@@ -370,38 +376,90 @@
     ;; (general-swap-key nil 'motion
     ;;   ";" ":")
 
+    (use-package ace-window
+      :straight t
+      :bind ("M-o" . ace-window))
+
+    ;; https://stackoverflow.com/a/2173393
+    (defun vi-open-line-above ()
+      "Insert a newline above the current line and put point at beginning."
+      (interactive)
+      (unless (bolp)
+        (beginning-of-line))
+      (newline)
+      (forward-line -1)
+      (indent-according-to-mode))
+
+    (defun xah-paste-or-paste-previous ()
+    "Paste. When called repeatedly, paste previous.
+  This command calls `yank', and if repeated, call `yank-pop'.
+
+  When `universal-argument' is called first with a number arg, paste that many times.
+
+  URL `http://ergoemacs.org/emacs/emacs_paste_or_paste_previous.html'
+  Version 2017-07-25"
+    (interactive)
+    (progn
+      (when (and delete-selection-mode (region-active-p))
+        (delete-region (region-beginning) (region-end)))
+      (if current-prefix-arg
+          (progn
+            (dotimes ($i (prefix-numeric-value current-prefix-arg))
+              (yank)))
+        (if (eq real-last-command this-command)
+            (yank-pop 1)
+          (yank)))))
+
+    ;; https://www.emacswiki.org/emacs/AutoIndentation
+    (defun yank-and-indent ()
+      "Yank and then indent the newly formed region according to mode."
+      (interactive)
+      (xah-paste-or-paste-previous)
+      (call-interactively 'indent-region))
+
     ;; global bindings
     (general-define-key
-      "M-j" 'windmove-left
-      "M-k" 'windmove-down
-      "M-l" 'windmove-up
-      "M-;" 'windmove-right
+     ;; "M-j" 'windmove-left
+     ;; "M-k" 'windmove-down
+     ;; "M-l" 'windmove-up
+     ;; "M-;" 'windmove-right
 
-      "M-u" 'move-border-left
-      "M-o" 'move-border-down
-      "M-i" 'move-border-up
-      "M-p" 'move-border-right
+     ;; "M-u" 'move-border-left
+     ;; "M-o" 'move-border-down
+     ;; "M-i" 'move-border-up
+     ;; "M-p" 'move-border-right
 
-      "s-=" 'text-scale-increase
-      "s--" 'text-scale-decrease
+     "C-y" 'yank-and-indent
 
-      "s-n" 'xah-new-empty-buffer
-      "s-i" 'complete-symbol
-      "s-r" 'browser-refresh
-      "s-f" 'switch-to-buffer
-      "s-b" 'counsel-bookmark
-      "s-j" 'avy-goto-word-1
+     "C-c g" 'magit-status
 
-      ;; https://sites.google.com/site/steveyegge2/effective-emacs
-      "C-w" 'backward-kill-word
-      "C-x C-k" 'kill-region
-      "C-c C-k" 'kill-region
+     "s-=" 'text-scale-increase
+     "s--" 'text-scale-decrease
 
-      "C-c k" 'deft
+     "s-n" 'xah-new-empty-buffer
+     "s-i" 'complete-symbol
+     "s-r" 'browser-refresh
+     "s-f" 'switch-to-buffer
+     "s-b" 'counsel-bookmark
+     "s-j" 'avy-goto-word-1
 
-      "C-RET" 'insert-line-below
+     "C-o" 'vi-open-line-above
 
-      "M-SPC" 'ivy-yasnippet)
+     ;; https://sites.google.com/site/steveyegge2/effective-emacs
+     ;; "C-w" 'backward-kill-word
+     ;; "C-x C-k" 'kill-region
+     ;; "C-c C-k" 'kill-region
+
+     "C-x C-;" 'comment-or-uncomment-region-or-line
+
+     "C-c k" 'deft
+     "C-c e" 'eshell
+
+     "C-c p" 'projectile-command-map
+
+     "C-RET" 'insert-line-below
+
+     "M-SPC" 'ivy-yasnippet)
 
     (defun insert-line-below ()
       "Insert an empty line below the current line."
@@ -461,11 +519,12 @@
       "<" 'evil-shift-left)
 
     (general-def 'insert global-map
-      "C-c e" 'er/expand-region
-      "C-j" 'left-char
-      "C-k" 'next-line
-      "C-l" 'previous-line
-      "C-;" 'right-char)
+      "C-c r" 'er/expand-region
+      ;; "C-j" 'left-char
+      ;; "C-k" 'next-line
+      ;; "C-l" 'previous-line
+      ;; "C-;" 'right-char
+      )
 
     (use-package move-border
       :straight (move-border :host github :repo "ramnes/move-border"))
@@ -524,17 +583,18 @@
     :straight t
     :init
     (setq evil-want-C-u-scroll t)
-    (use-package undo-tree
-      :straight t
-      :config
-      ;; (setq undo-tree-auto-save-history t)
-      ;; (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
-      ;; (use-package undohist
-      ;;   :straight t
-      ;;   :config
-      ;;   (undohist-initialize)
-      ;;   (setq undohist-ignored-files (list "COMMIT_EDITMSG")))
-      (global-undo-tree-mode))
+    ;; (use-package undo-tree
+    ;;   :straight t
+    ;;   :config
+    ;;   ;; (setq undo-tree-auto-save-history t)
+    ;;   ;; (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
+    ;;   ;; (use-package undohist
+    ;;   ;;   :straight t
+    ;;   ;;   :config
+    ;;   ;;   (undohist-initialize)
+    ;;   ;;   (setq undohist-ignored-files (list "COMMIT_EDITMSG")))
+    ;;   (global-undo-tree-mode))
+    (setq global-undo-tree-mode -1)
     (use-package expand-region
       :straight t)
 
@@ -568,10 +628,10 @@
 
     (general-def
       :keymaps '(ivy-mode-map swiper-map counsel-ag-map)
-      "C-j" (kbd "DEL")
-      "C-k" 'ivy-next-line
-      "C-l" 'ivy-previous-line
-      "C-;" 'ivy-alt-done
+      ;; "C-j" (kbd "DEL")
+      ;; "C-k" 'ivy-next-line
+      ;; "C-l" 'ivy-previous-line
+      ;; "C-;" 'ivy-alt-done
 
       ;; commented because they override my windmove keybinds?
       ;; "M-k" 'ivy-next-line-and-call
