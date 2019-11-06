@@ -3,8 +3,8 @@
  {:Default {:default true
             :sim     50
             :delay   80
-            :alone   120
-            :held    70}}
+            :alone   1000
+            :held    500}}
 
  :templates {:alfred "osascript -e 'tell application \"Alfred 4\" to run trigger \"%s\" in workflow \"%s\" with argument \"%s\"'"
              :km "osascript -e 'tell application \"Keyboard Maestro Engine\" to do script \"%s\"'"}
@@ -33,8 +33,8 @@
              :m-mode {:key :m}
              :t-mode {:key :t}}
 
- :main [{:des   "everywhere: right cmd alone to hyper-c (Contexts.app)"
-         :rules [[:right_command :right_command nil {:alone :!!c}]]}
+ :main [{:des   "everywhere: right cmd alone to f13 (alfred)"
+         :rules [[:right_command :right_command nil {:alone :f13}]]}
 
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:tab :left_alt nil {:alone :tab}]]}
@@ -42,15 +42,16 @@
         {:des   "in vim (and emulators): caps_lock to esc when pressed alone, to ctrl as modifier"
          :rules [[:condi :Vim] [:##caps_lock :left_control nil {:alone :escape}]]}
 
-        {:des   "outside vim (and emulators): caps_lock to hyper-c when pressed alone, to ctrl as modifier"
-         :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :!!c}]]}
+        {:des   "outside vim (and emulators): caps_lock to f13 when pressed alone, to ctrl as modifier"
+         :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
 
         {:des "tkey (todoist)"
          :rules [:t-mode
                  [:o :!!1] ; open todoist
+                 [:a :!!2] ; new todoist task
                  [:n :!!2]]} ; new todoist task
 
-        {:des "wkey (window management via Magnet.app)"
+        {:des "wkey (window management via BTT)"
          :rules [:w-mode
                  [:j :!!j] ; split left
                  [:k :!!k] ; split down
@@ -120,11 +121,12 @@
                  [:b [:!Sbackslash ["dead-state" 0]] :dead-state] ;; |
                  [:n [:backslash ["dead-state" 0]] :dead-state] ;; \
                  [:m [:2 ["dead-state" 0]] :dead-state] ;; 2
-                 [:comma [:3 ["dead-state" 0]] :dead-state] ;; 3
+                 [:comma [:comma ["dead-state" 0]] :dead-state] ;; ,
                  [:period [:4 ["dead-state" 0]] :dead-state] ;; 4
                  [:slash [:5 ["dead-state" 0]] :dead-state] ;; 5
                  [:return_or_enter [:comma :return_or_enter ["dead-state" 0]] :dead-state] ;; ,\n
-                 [:escape ["dead-state" 0] :dead-state] ;; ,\n
+                 [:escape ["dead-state" 0] :dead-state] ;; exit dead-state
+                 [:delete_or_backspace ["dead-state" 0] :dead-state] ;; exit dead-state
                  [:spacebar [:comma :spacebar ["dead-state" 0]] :dead-state]]}
 
         {:des "swap : and ;"
