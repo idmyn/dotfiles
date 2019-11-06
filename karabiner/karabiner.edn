@@ -37,7 +37,7 @@
          :rules [[:right_command :right_command nil {:alone :f13}]]}
 
         {:des   "everywhere: tab to opt/meta as modifier"
-         :rules [[:##tab :left_alt nil {:alone :tab}]]}
+         :rules [[:#Ttab :left_alt nil {:alone :tab}]]}
 
         {:des   "in vim (and emulators): caps_lock to esc when pressed alone, to ctrl as modifier"
          :rules [[:condi :Vim] [:##caps_lock :left_control nil {:alone :escape}]]}
