@@ -133,10 +133,10 @@
 
   (global-display-line-numbers-mode)
   (setq-default display-line-numbers-type 'relative)
-  (use-package avy
-    :straight t
-    :defer 1
-    :config (setq avy-timeout-seconds 0.3))
+  ;; (use-package avy
+  ;;   :straight t
+  ;;   :defer 1
+  ;;   :config (setq avy-timeout-seconds 0.3)) ; I have ace-jump now
 
   (show-paren-mode 1)
   (electric-pair-mode 1)
@@ -419,6 +419,12 @@
       (interactive)
       (xah-paste-or-paste-previous)
       (call-interactively 'indent-region))
+
+    (setq set-mark-command-repeat-pop t)
+
+    (use-package ace-jump-mode
+      :straight (ace-jump-mode :host github :repo "winterTTr/ace-jump-mode")
+      :bind ("C-." . ace-jump-mode))
 
     ;; global bindings
     (general-define-key
