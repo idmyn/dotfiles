@@ -645,9 +645,9 @@
     (general-def
       :keymaps '(ivy-mode-map swiper-map counsel-ag-map)
       ;; "C-j" (kbd "DEL")
-      ;; "C-k" 'ivy-next-line
-      ;; "C-l" 'ivy-previous-line
-      ;; "C-;" 'ivy-alt-done
+      "C-k" 'ivy-next-line
+      "C-l" 'ivy-previous-line
+      "C-;" 'ivy-alt-done
 
       ;; commented because they override my windmove keybinds?
       ;; "M-k" 'ivy-next-line-and-call
