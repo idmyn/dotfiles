@@ -362,6 +362,11 @@
   (setq initial-buffer-choice 'xah-new-empty-buffer)
   (setq initial-scratch-message "")
 
+  (use-package balanced-windows
+    :straight (balanced-windows
+               :host github :repo "wbolster/emacs-balanced-windows")
+    :config (balanced-windows-mode))
+
   ;; Emojis
   (use-package emojify
     :straight t
