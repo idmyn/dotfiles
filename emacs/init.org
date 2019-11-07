@@ -450,9 +450,19 @@
      "s-r" 'browser-refresh
      "s-f" 'switch-to-buffer
      "s-b" 'counsel-bookmark
-     "s-j" 'avy-goto-word-1
+     ;; "s-j" 'avy-goto-word-1
 
      "C-o" 'vi-open-line-above
+
+     "M-j" 'windmove-left
+     "M-k" 'windmove-down
+     "M-l" 'windmove-up
+     "M-;" 'windmove-right
+
+     "M-u" 'move-border-left
+     "M-o" 'move-border-down
+     "M-i" 'move-border-up
+     "M-p" 'move-border-right
 
      ;; https://sites.google.com/site/steveyegge2/effective-emacs
      ;; "C-w" 'backward-kill-word
@@ -467,18 +477,8 @@
 
      "C-c p" 'projectile-command-map
 
-     "C-RET" 'insert-line-below
-
      "M-SPC" 'ivy-yasnippet)
 
-    (defun insert-line-below ()
-      "Insert an empty line below the current line."
-      (interactive)
-      (save-excursion
-        (end-of-line)
-        (open-line 1)))
-
-    ;; (general-define-key (kbd "<C-return>") 'insert-line-below)
     (general-define-key (kbd "<C-return>") 'xah-run-current-file)
 
     (general-create-definer global-leader
@@ -549,16 +549,6 @@
       "k" 'evil-next-line
       "l" 'evil-previous-line
       ":" 'evil-forward-char
-
-     "M-j" 'windmove-left
-     "M-k" 'windmove-down
-     "M-l" 'windmove-up
-     "M-;" 'windmove-right
-
-     "M-u" 'move-border-left
-     "M-o" 'move-border-down
-     "M-i" 'move-border-up
-     "M-p" 'move-border-right
 
 
       "h" 'evil-paste-after
