@@ -898,18 +898,6 @@
     (let ((inhibit-read-only t))
       (erase-buffer)))
   (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
-  (add-hook 'eshell-mode-hook (lambda ()
-                                (eshell/alias "e" "find-file $1")
-                                (eshell/alias "ff" "find-file $1")
-                                (eshell/alias "emacs" "find-file $1")
-                                (eshell/alias "ee" "find-file-other-window $1")
-
-                                (eshell/alias "la" "ls -A")
-                                (eshell/alias "ll" "ls -hopA")
-
-                                (eshell/alias "gd" "magit-diff-unstaged")
-                                (eshell/alias "gds" "magit-diff-staged")
-                                (eshell/alias "d" "dired $1")
 
   (defun eshell/clear ()
     "Clear the eshell buffer."
