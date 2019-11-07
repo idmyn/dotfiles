@@ -82,7 +82,7 @@
     (add-hook 'deft-mode-hook 'input-mono)
     (add-hook 'ranger-mode-hook 'input-mono))
 
-  (global-hl-line-mode t)
+  ;; (global-hl-line-mode 1)
 
   (setq inhibit-startup-screen t)
   (toggle-scroll-bar -1)
@@ -147,7 +147,7 @@
     :config
     (setq whitespace-line-column 80
           whitespace-style '(face tabs tab-mark lines-tail trailing)))
-  (require 'whitespace)
+  ;; (require 'whitespace)
 
   (global-whitespace-mode t)
   (defun my-inhibit-global-whitespace-mode () ;; https://stackoverflow.com/a/6839968
@@ -207,7 +207,7 @@
       (interactive)
       (kill-new (simpleclip-get-contents))
       (vterm-yank))
-    ;; (simpleclip-mode 1)
+    (simpleclip-mode 1)
     )
 
   (defun crux-rename-file-and-buffer () ; https://github.com/bbatsov/crux
@@ -232,12 +232,12 @@
     "Run learn tests asynchronously."
     (interactive)
     (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
-      (async-shell-command "learn")))
+      (shell-command "learn")))
   (defun my/learn--f-f ()
     "Run learn --f-f asynchronously."
     (interactive)
     (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
-      (async-shell-command "learn --f-f")))
+      (shell-command "learn --f-f")))
 
   (defun xah-run-current-go-file ()
     "Run or build current golang file.
@@ -384,9 +384,9 @@
     ;; (general-swap-key nil 'motion
     ;;   ";" ":")
 
-    (use-package ace-window
-      :straight t
-      :bind ("M-o" . ace-window))
+    ;; (use-package ace-window
+    ;;   :straight t
+    ;;   :bind ("M-o" . ace-window))
 
     ;; https://stackoverflow.com/a/2173393
     (defun vi-open-line-above ()
@@ -435,7 +435,12 @@
     (general-define-key
      "C-y" 'yank-and-indent
 
+     "C-'" 'backward-kill-word
+
      "C-c g" 'magit-status
+     "C-c l" 'my/learn-tests
+
+     "C-j" 'newline
 
      "s-=" 'text-scale-increase
      "s--" 'text-scale-decrease
@@ -473,8 +478,8 @@
         (end-of-line)
         (open-line 1)))
 
-    (general-define-key (kbd "<C-return>") 'insert-line-below)
-    (general-define-key (kbd "<M-return>") 'xah-run-current-file)
+    ;; (general-define-key (kbd "<C-return>") 'insert-line-below)
+    (general-define-key (kbd "<C-return>") 'xah-run-current-file)
 
     (general-create-definer global-leader
       :prefix "SPC")
@@ -642,16 +647,15 @@
       :straight t
       :config (counsel-mode 1))
 
-    (general-def
-      :keymaps '(ivy-mode-map swiper-map counsel-ag-map)
-      ;; "C-j" (kbd "DEL")
-      ;; "C-k" 'ivy-next-line ; messes up regular emacs insert bind
-      ;; "C-l" 'ivy-previous-line
-      ;; "C-;" 'ivy-alt-done
+    (general-define-key
+      :keymaps '(ivy-minibuffer-map ivy-switch-buffer-map)
+      "C-j" (kbd "DEL")
+      "C-k" 'ivy-next-line
+      "C-l" 'ivy-previous-line
+      "C-;" 'ivy-alt-done
 
-      :; commented because they override my windmove keybinds?
-      ;; "M-k" 'ivy-next-line-and-call
-      ;; "M-l" 'ivy-previous-line-and-call
+      "M-k" 'ivy-next-line-and-call
+      "M-l" 'ivy-previous-line-and-call
       ))
 
   (use-package ivy-posframe
