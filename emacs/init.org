@@ -428,16 +428,6 @@
 
     ;; global bindings
     (general-define-key
-     ;; "M-j" 'windmove-left
-     ;; "M-k" 'windmove-down
-     ;; "M-l" 'windmove-up
-     ;; "M-;" 'windmove-right
-
-     ;; "M-u" 'move-border-left
-     ;; "M-o" 'move-border-down
-     ;; "M-i" 'move-border-up
-     ;; "M-p" 'move-border-right
-
      "C-y" 'yank-and-indent
 
      "C-c g" 'magit-status
@@ -518,7 +508,8 @@
     ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
 
     (general-def 'normal
-      "s" 'avy-goto-word-1
+      ;; "C-r" 'isearch-backward
+      "s" 'ace-jump-mode
       "J" nil ; unbind from evil-join
       "p" nil ; unbind from evil-paste-after
       ">" 'evil-shift-right-line
@@ -549,6 +540,17 @@
       "l" 'evil-previous-line
       ":" 'evil-forward-char
 
+     "M-j" 'windmove-left
+     "M-k" 'windmove-down
+     "M-l" 'windmove-up
+     "M-;" 'windmove-right
+
+     "M-u" 'move-border-left
+     "M-o" 'move-border-down
+     "M-i" 'move-border-up
+     "M-p" 'move-border-right
+
+
       "h" 'evil-paste-after
       "H" 'evil-paste-before
       ;; "p" 'evil-ex
@@ -567,8 +569,6 @@
       "C-;" 'evil-multiedit-match-all
       ;; "I" 'evil-mc-make-cursor-in-visual-selection-beg
       ;; "A" 'evil-mc-make-cursor-in-visual-selection-end
-
-      ;; ")" 'evil-beginning-of-line
 
       ;; easier motion around lines and paragraphs
       "J" 'evil-first-non-blank
@@ -593,18 +593,19 @@
     :straight t
     :init
     (setq evil-want-C-u-scroll t)
-    ;; (use-package undo-tree
-    ;;   :straight t
-    ;;   :config
-    ;;   ;; (setq undo-tree-auto-save-history t)
-    ;;   ;; (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
-    ;;   ;; (use-package undohist
-    ;;   ;;   :straight t
-    ;;   ;;   :config
-    ;;   ;;   (undohist-initialize)
-    ;;   ;;   (setq undohist-ignored-files (list "COMMIT_EDITMSG")))
-    ;;   (global-undo-tree-mode))
-    (setq global-undo-tree-mode -1)
+    (use-package undo-tree
+      :straight t
+      :config
+      ;; (setq undo-tree-auto-save-history t)
+      ;; (setq undo-tree-history-directory-alist '(("." . "~/.saves/")))
+      ;; (use-package undohist
+      ;;   :straight t
+      ;;   :config
+      ;;   (undohist-initialize)
+      ;;   (setq undohist-ignored-files (list "COMMIT_EDITMSG")))
+      (setq undo-tree-enable-undo-in-region nil)
+      (global-undo-tree-mode))
+
     (use-package expand-region
       :straight t)
 
