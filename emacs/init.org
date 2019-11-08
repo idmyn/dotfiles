@@ -17,6 +17,7 @@
   ;; collection.  The default is 800 kilobytes.  Measured in bytes.
   ;; The final line of this file decreases the threashold.
   (setq gc-cons-threshold (* 50 1000 1000))
+    (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold (* 2 1000 1000))))
 
   ;; straight.el
   (defvar bootstrap-version)
@@ -1183,5 +1184,5 @@
         '((t . ivy--regex-fuzzy)))
 
   ;; Make gc pauses faster by decreasing the threshold.
-  (setq gc-cons-threshold (* 2 1000 1000))
+  ;; (setq gc-cons-threshold (* 2 1000 1000))
 #+END_SRC
