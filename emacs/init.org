@@ -83,8 +83,6 @@
     (add-hook 'deft-mode-hook 'input-mono)
     (add-hook 'ranger-mode-hook 'input-mono))
 
-  ;; (global-hl-line-mode 1)
-
   (setq inhibit-startup-screen t)
   (toggle-scroll-bar -1)
   (tool-bar-mode -1)
@@ -159,7 +157,6 @@
     :config
     (setq whitespace-line-column 80
           whitespace-style '(face tabs tab-mark lines-tail trailing)))
-  ;; (require 'whitespace)
 
   (global-whitespace-mode t)
   (defun my-inhibit-global-whitespace-mode () ;; https://stackoverflow.com/a/6839968
@@ -210,7 +207,6 @@
       (comment-or-uncomment-region beg end)))
 
   ;; Separate evil clipboard from system clipboard
-  ;; https://github.com/rolandwalker/simpleclip
   (use-package simpleclip
     :straight (simpleclip :host github :repo "rolandwalker/simpleclip")
     :defer 1
@@ -219,8 +215,7 @@
       (interactive)
       (kill-new (simpleclip-get-contents))
       (vterm-yank))
-    (simpleclip-mode 1)
-    )
+    (simpleclip-mode 1))
 
   (defun crux-rename-file-and-buffer () ; https://github.com/bbatsov/crux
     "Rename current buffer and if the buffer is visiting a file, rename it too."
@@ -476,11 +471,6 @@
      "M-i" 'move-border-up
      "M-p" 'move-border-right
 
-     ;; https://sites.google.com/site/steveyegge2/effective-emacs
-     ;; "C-w" 'backward-kill-word
-     ;; "C-x C-k" 'kill-region
-     ;; "C-c C-k" 'kill-region
-
      "C-x C-;" 'comment-or-uncomment-region-or-line
      "C-x C-i" 'counsel-imenu
 
@@ -496,13 +486,10 @@
     (general-create-definer global-leader
       :prefix "SPC")
     (global-leader 'motion 'override
-      ;; "f" 'swiper
-      ;; "x" 'counsel-M-x
       "f" 'switch-to-buffer
       "d" 'dumb-jump-go
       "b" 'counsel-bookmark
       "n" 'deer
-      ;; "s" 'switch-to-scratch-and-back ; causing trouble with flycheck
       "s" 'counsel-ag
       "w" 'save-buffer
       "e" 'eshell
@@ -564,7 +551,6 @@
 
       "h" 'evil-paste-after
       "H" 'evil-paste-before
-      ;; "p" 'evil-ex
       "p" 'projectile-command-map
 
       "RET" 'other-window
@@ -629,7 +615,6 @@
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
-    ;; (global-set-key "\C-s" 'swiper)
 
     (use-package counsel
       :straight t
@@ -657,14 +642,10 @@
     :config
     (use-package ivy-prescient
       :straight t)
-    ;; (use-package company-prescient
-    ;;   :straight t)
 
     (ivy-prescient-mode)
-    ;; (company-prescient-mode)
     (prescient-persist-mode))
 
-  ;; imenu-anywhere
   (use-package imenu-anywhere
     :straight t)
 
@@ -767,21 +748,7 @@
     (setq dumb-jump-selector 'ivy)
     (setq dumb-jump-force-searcher 'rg))
 
-  ;; Company
-  ;; (use-package company
-  ;;   :config
-  ;;   (company-tng-configure-default) ; tab 'n' go
-  ;;   (setq company-selection-wrap-around t)
-  ;;   (setq company-minimum-prefix-length 2)
-  ;;   (setq company-idle-delay 0.3)
-  ;;   ;; (global-company-mode nil)
-  ;;  )
-  ;; (use-package company-lsp
-  ;;   :straight t
-  ;;   :config
-  ;;   (push 'company-lsp company-backends))
-
-  ;; ;; Hippie expand
+  ;; Hippie expand
   (general-define-key
     "M-/" 'hippie-expand)
   (setq hippie-expand-try-functions-list '(try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-complete-file-name-partially try-complete-file-name try-expand-all-abbrevs try-expand-list try-expand-line try-complete-lisp-symbol-partially try-complete-lisp-symbol))
@@ -843,32 +810,6 @@
           (add-hook 'git-commit-mode-hook 'evil-insert-state)
           (evil-set-initial-state 'magit-log-edit-mode 'insert)))
       (global-auto-revert-mode t) ; buffers should change when branch changes
-
-      ;; libvterm
-      ;; (add-to-list 'load-path "~/.emacs.d/libvterm")
-      ;; (use-package vterm
-      ;;   :init
-      ;;   ;; (setq shell-file-name "zsh")
-      ;;   ;; (setenv "SHELL" shell-file-name)
-      ;;   ;; :defer 1 ; not sure why but if I defer then vterm decides to use bash
-      ;;   :config
-      ;;   ;; (require 'vterm-toggle)
-      ;;   (use-package vterm-toggle
-      ;;     :straight (vterm-toggle :host github :repo "jixiuf/vterm-toggle")
-      ;;     :general
-      ;;     (global-leader 'motion 'override
-      ;;       "t" 'vterm-toggle))
-      ;;   (define-key vterm-mode-map (kbd "<escape>") 'evil-escape) ;; couldn't get general to work here
-      ;;   (general-def 'motion vterm-mode-map
-      ;;     "h" 'vterm-yank)
-      ;;   (general-def 'insert vterm-mode-map
-      ;;     "s-v" 'my-vterm-yank-from-simpleclip
-      ;;     "C-k" 'vterm-send-down
-      ;;     "C-l" 'vterm-send-up
-      ;;     "C-u" 'vterm--self-insert
-      ;;     )
-      ;;   ;; fix paste via simpleclip?
-      ;;   (add-hook 'vterm-mode-hook 'my-inhibit-global-whitespace-mode))
 
       ;; Eshell
       ; good inspo: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
@@ -1009,7 +950,6 @@
 
       ;; Sass
       (use-package sass-mode
-        ;; https://github.com/nex3/sass-mode
         :straight (sass-mode :host github :repo "nex3/sass-mode")
         :mode "\\.scss\\'")
 
@@ -1023,7 +963,6 @@
         :mode "\\.js\\'"
         :config
         (setq-default js2-basic-offset 2)
-        ;; (setq js2-mode-show-parse-errors t)
         (setq js2-strict-missing-semi-warning nil)
         (setq-default flycheck-disabled-checkers
                       (append flycheck-disabled-checkers
@@ -1119,8 +1058,6 @@
         :mode "\\.go\\'"
         :config
         (add-hook 'go-mode 'gofmt-before-save))
-      ;; (add-to-list 'load-path "~/go/src/golang.org/x/lint/misc/emacs/" t)
-      ;; (require 'golint)
 
       (use-package flycheck-golangci-lint
         :straight t
