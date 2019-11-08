@@ -141,6 +141,17 @@
   (show-paren-mode 1)
   (electric-pair-mode 1)
 
+  (use-package visible-mark
+    :straight (visible-mark :host gitlab :repo "iankelling/visible-mark")
+    :init
+    (defface visible-mark-active ;; put this before (require 'visible-mark)
+     '((((type tty) (class mono)))
+       (t (:background "magenta"))) "")
+    (setq visible-mark-max 2)
+    (setq visible-mark-faces `(visible-mark-face1 visible-mark-face2))
+    :config
+    (global-visible-mark-mode 1))
+
   ;; Eighty Column Rule
   (use-package whitespace
     :defer 2
