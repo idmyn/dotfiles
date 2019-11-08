@@ -530,7 +530,7 @@
     ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
 
     (general-def 'normal
-      ;; "C-r" 'isearch-backward
+      "C-r" 'isearch-backward
       "s" 'ace-jump-mode
       "J" nil ; unbind from evil-join
       "p" nil ; unbind from evil-paste-after
@@ -552,9 +552,9 @@
     (use-package move-border
       :straight (move-border :host github :repo "ramnes/move-border"))
 
-    (defun my/evil-or-dumb-jump-backward()
+    (defun my/pop-mark-or-dumb-jump-backward()
       (interactive)
-      (if (equal last-command 'dumb-jump-go) (dumb-jump-back) (evil-jump-backward)))
+      (if (equal last-command 'dumb-jump-go) (dumb-jump-back) (set-mark-command t)))
 
     (general-def 'motion
       "j" 'evil-backward-char
@@ -572,15 +572,13 @@
 
       "C-e" 'er/expand-region
 
-      "C-i" 'my/evil-or-dumb-jump-backward
+      "C-i" 'my/pop-mark-or-dumb-jump-backward
       "C-o" 'evil-jump-forward
 
       ;; multiple-cursors
       "C-k" 'evil-multiedit-match-symbol-and-next
       "C-l" 'evil-multiedit-match-symbol-and-prev
       "C-;" 'evil-multiedit-match-all
-      ;; "I" 'evil-mc-make-cursor-in-visual-selection-beg
-      ;; "A" 'evil-mc-make-cursor-in-visual-selection-end
 
       ;; easier motion around lines and paragraphs
       "J" 'evil-first-non-blank
