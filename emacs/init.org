@@ -51,7 +51,6 @@
                                 (time-subtract after-init-time before-init-time)))
                        gcs-done)))
 #+END_SRC
-
 * Editor appearance and quality of life tweaks
 #+BEGIN_SRC emacs-lisp
   ;; Keep emacs Custom-settings in separate file
@@ -271,7 +270,6 @@
         (message "running %s" $fname)
         (message "%s" $cmd-str)
         (shell-command $cmd-str $outputb )
-        ;;
         )))
 
   (defun xah-run-current-file ()
@@ -387,9 +385,6 @@
     :straight t
     :after evil
     :config
-    ;; (general-swap-key nil 'motion
-    ;;   ";" ":")
-
     ;; (use-package ace-window
     ;;   :straight t
     ;;   :bind ("M-o" . ace-window))
@@ -448,6 +443,8 @@
 
      "C-j" 'newline
 
+     "s-e" 'er/expand-region
+
      "s-=" 'text-scale-increase
      "s--" 'text-scale-decrease
 
@@ -477,8 +474,6 @@
      "C-c e" 'eshell
 
      "C-c p" 'projectile-command-map
-
-     ;; "M-SPC" 'ivy-yasnippet
      )
 
     (general-define-key (kbd "<C-return>") 'xah-run-current-file)
@@ -527,14 +522,6 @@
       ">" 'evil-shift-right
       "<" 'evil-shift-left)
 
-    (general-def 'insert global-map
-      "s-e" 'er/expand-region
-      ;; "C-j" 'left-char
-      ;; "C-k" 'next-line
-      ;; "C-l" 'previous-line
-      ;; "C-;" 'right-char
-      )
-
     (use-package move-border
       :straight (move-border :host github :repo "ramnes/move-border"))
 
@@ -548,6 +535,7 @@
       "l" 'evil-previous-line
       ":" 'evil-forward-char
 
+      "s-e" 'er/expand-region
 
       "h" 'evil-paste-after
       "H" 'evil-paste-before
