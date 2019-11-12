@@ -511,6 +511,7 @@
     ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
 
     (general-def 'normal
+      "C-." 'ace-jump-mode
       "C-r" 'isearch-backward
       "s" 'ace-jump-mode
       "J" nil ; unbind from evil-join
