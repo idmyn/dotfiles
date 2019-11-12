@@ -13,7 +13,7 @@ alias kittyrc='e ~/.config/kitty/kitty.conf'
 alias vimrc='e ~/.vimrc'
 alias nvimrc='e ~/.config/nvim/init.vim'
 
-alias dt='/Users/david/MEGA/System/Desktop'
+alias dt='/Users/david/Dropbox/System/Desktop'
 alias dl='/Users/david/Downloads'
 alias projects='/Users/david/Documents/Local\ Projects'
 alias dots='/Users/david/GitHub/Active/dotfiles'
