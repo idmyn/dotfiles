@@ -604,6 +604,7 @@
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
+    (setq ivy-use-selectable-prompt t)
 
     ;; after-init-hook because something overrides it otherwise
     (add-hook 'after-init-hook (lambda () (setq ivy-re-builders-alist
@@ -804,6 +805,12 @@
         (evil-set-initial-state 'magit-log-edit-mode 'insert)))
     (global-auto-revert-mode t) ; buffers should change when branch changes
 
+  (use-package diff-hl
+    :straight t
+    :config
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+    (global-diff-hl-mode))
+
     ;; Eshell
     ; good inspo: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
     (setenv "PAGER" "cat")
@@ -960,7 +967,8 @@
                     (append flycheck-disabled-checkers
                             '(javascript-jshint)))
       (use-package rjsx-mode
-        :straight t))
+        :straight t
+        :mode "components\\/.*\\.js\\'"))
     (use-package json-mode
       :straight t
       :mode "\\.json\\'")
