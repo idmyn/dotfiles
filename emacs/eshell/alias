@@ -1,9 +1,27 @@
-alias d dired $1
-alias gds magit-diff-staged
-alias gd magit-diff-unstaged
-alias ll ls -hopA
-alias la ls -A
-alias ee find-file-other-window $1
-alias emacs find-file $1
-alias ff find-file $1
+alias vault /Volumes/THE\ VAULT
+alias m4 /Users/david/Development/flatiron/mod-4
+alias code /Users/david/Development/flatiron
+alias exR /Users/david/Exercism/ruby
+alias exP /Users/david/Exercism/python
+alias ghTest /Users/david/GitHub/Active/test
+alias dots /Users/david/GitHub/Active/dotfiles
+alias projects /Users/david/Documents/Local\ Projects
+alias dl /Users/david/Downloads
+alias dt /Users/david/Dropbox/System/Desktop
+alias nvimrc e ~/.config/nvim/init.vim
+alias vimrc e ~/.vimrc
+alias kittyrc e ~/.config/kitty/kitty.conf
+alias zshrc e ~/.zshrc
+alias be bundle exec
+alias ip ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
+alias rpgtodo python /Users/david/Development/personal/rpgtodo/rpgtodo/rpgtodo.py
+alias goku /usr/local/bin/goku
+alias borg /usr/local/bin/borg
+alias groff /usr/local/Cellar/groff/1.22.3/bin/groff
+alias otp pass otp
 alias e find-file $1
+alias ee find-file-other-window $1
+alias la ls -A
+alias ll ls -hopA
+alias gd magit-diff-unstaged
+alias gds magit-diff-staged
