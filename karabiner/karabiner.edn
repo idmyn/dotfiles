@@ -19,6 +19,7 @@
                            "^com\\.google\\.Chrome$"]
                 :Vim      ["^org\\.gnu\\.Emacs$"
                            "^org\\.vim\\.MacVim$"
+                           "^com\\.googlecode\\.iterm2$"
                            "^com\\.apple\\.Terminal$"]
                 :uk       ["^com\\.apple\\.Mail$"
                            "^org\\.gnu\\.Emacs$"
@@ -26,12 +27,12 @@
                            "^com\\.apple\\.Terminal$"
                            "^ru.keepcoder.Telegram$"]}
 
- :simlayers {:f-mode {:key :f}
-             :j-mode {:key :j}
-             :a-mode {:key :a}
-             :w-mode {:key :w}
-             :m-mode {:key :m}
-             :t-mode {:key :t}}
+ ;; :simlayers {:f-mode {:key :f}
+ ;;             :j-mode {:key :j}
+ ;;             :a-mode {:key :a}
+ ;;             :w-mode {:key :w}
+ ;;             :m-mode {:key :m}
+ ;;             :t-mode {:key :t}}
 
  :main [{:des   "everywhere: right cmd alone to f13 (alfred)"
          :rules [[:right_command :right_command nil {:alone :f13}]]}
