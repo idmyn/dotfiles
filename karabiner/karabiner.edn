@@ -46,6 +46,15 @@
         {:des   "outside vim (and emulators): caps_lock to f13 when pressed alone, to ctrl as modifier"
          :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
 
+        {:des "left-cmd + shift for window management"
+         :rules [[:!CSf :!!f] ;; fullscreen
+                 [:!CSo :!!o] ;; maximise window on other monitor
+                 [:!CSj :!!j] ;; split left
+                 [:!CSk :!!k] ;; split down
+                 [:!CSl :!!l] ;; split up
+                 [:!CSsemicolon :!!semicolon] ;; split right
+                 ]}
+
         {:des "tkey (todoist)"
          :rules [:t-mode
                  [:o :!!1] ; open todoist
