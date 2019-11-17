@@ -37,7 +37,6 @@ function chpwd() {
 }
 setopt autocd
 alias ls='ls -GF'
-alias e='emacsclient -c -a emacs &'
 
 eval "$(pyenv init -)"
 
@@ -45,6 +44,7 @@ source $HOME/.aliases
 
 # Function for killing servers running at particular ports
 function kp { kill $(sudo lsof -t -i:"$1"); }
+function e { emacsclient -a '' -c $1 &; }
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 RUBIES+=(~/.rvm/rubies/*)
