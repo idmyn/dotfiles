@@ -794,306 +794,307 @@
 #+END_SRC
 * Languages and other major modes
 #+BEGIN_SRC emacs-lisp
-      ;; Git
-      (use-package magit
-        :straight t
-        :defer t
-        :config
-        (with-eval-after-load 'evil
-          (add-to-list 'evil-insert-state-modes 'magit-status-mode)
-          (add-hook 'git-commit-mode-hook 'evil-insert-state)
-          (evil-set-initial-state 'magit-log-edit-mode 'insert)))
-      (global-auto-revert-mode t) ; buffers should change when branch changes
+    ;; Git
+    (use-package magit
+      :straight t
+      :defer t
+      :config
+      (with-eval-after-load 'evil
+        (add-to-list 'evil-insert-state-modes 'magit-status-mode)
+        (add-hook 'git-commit-mode-hook 'evil-insert-state)
+        (evil-set-initial-state 'magit-log-edit-mode 'insert)))
+    (global-auto-revert-mode t) ; buffers should change when branch changes
 
-    (use-package diff-hl
+  (use-package diff-hl
+    :straight t
+    :config
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+    (global-diff-hl-mode))
+
+    ;; Eshell
+    ; good inspo: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
+    (setenv "PAGER" "cat")
+    ;; (eval-after-load 'eshell ; https://www.emacswiki.org/emacs/EshellAutojump
+  ;;   '(require 'eshell-autojump nil t))
+  (use-package eshell-z
+    :straight t
+    :config
+    (add-hook 'eshell-mode-hook
+              (defun my-eshell-mode-hook ()
+                (require 'eshell-z))))
+
+    (setq eshell-last-dir-ring-size 500)
+    (defun eshell-new() ; https://www.emacswiki.org/emacs/EshellMultipleEshellBuffers
+      "Open a new instance of eshell."
+      (interactive)
+      (eshell 'N))
+    (defun eshell-setup-keys() ; implementation inspired by evil-collection
+      "Set up `evil' bindings for `eshell'."
+      (general-def eshell-mode-map
+        "s-n" 'eshell-new)
+      (define-key eshell-mode-map (kbd "<s-backspace>") 'eshell-kill-input)
+      (general-def 'insert eshell-mode-map
+        "C-k" 'eshell-next-matching-input-from-input
+        "C-l" 'eshell-previous-matching-input-from-input))
+  (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
+
+  (defun eshell/clear ()
+    "Clear the eshell buffer."
+    (let ((inhibit-read-only t))
+      (erase-buffer)))
+  (add-hook 'eshell-directory-change-hook (lambda ()
+                                            (concat (eshell/ls) " -A")))
+
+  (defun tidy-learn-buffer ()
+    (interactive)
+    (flush-lines "^[[:space:]]*# "))
+
+  (defun eshell/gst (&rest args)
+      (magit-status (pop args) nil)
+      (eshell/echo))   ;; The echo command suppresses output
+
+  (defun pwd-replace-home (pwd)
+    "Replace home in PWD with tilde (~) character."
+    (interactive)
+    (let* ((home (expand-file-name (getenv "HOME")))
+           (home-len (length home)))
+      (if (and
+           (>= (length pwd) home-len)
+           (equal home (substring pwd 0 home-len)))
+          (concat "~" (substring pwd home-len))
+        pwd)))
+  (defun with-face (str &rest face-plist) ; https://www.emacswiki.org/emacs/EshellPrompt#toc3
+    (propertize str 'face face-plist))
+  (defun git-prompt-branch-name () ; https://superuser.com/a/1265169
+    "Get current git branch name"
+    (let ((args '("symbolic-ref" "HEAD" "--short")))
+      (with-temp-buffer
+        (apply #'process-file "git" nil (list t nil) nil args)
+        (unless (bobp)
+          (goto-char (point-min))
+          (buffer-substring-no-properties (point) (line-end-position))))))
+
+  (setq eshell-prompt-function
+        (lambda nil
+          (let ((branch-name (git-prompt-branch-name)))
+            (concat
+             "\n" (pwd-replace-home(eshell/pwd)) "\n "
+             (if branch-name (with-face branch-name :foreground "gray") )
+             " $ "))))
+
+    (use-package load-bash-alias
       :straight t
       :config
-      (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-      (global-diff-hl-mode))
+      (setq load-bash-alias-bashrc-file "~/.aliases"))
 
-      ;; Eshell
-      ; good inspo: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
-      (setenv "PAGER" "cat")
-      ;; (eval-after-load 'eshell ; https://www.emacswiki.org/emacs/EshellAutojump
-    ;;   '(require 'eshell-autojump nil t))
-    (use-package eshell-z
-      :straight t
-      :config
-      (add-hook 'eshell-mode-hook
-                (defun my-eshell-mode-hook ()
-                  (require 'eshell-z))))
-      (setq eshell-last-dir-ring-size 500)
-      (defun eshell-new() ; https://www.emacswiki.org/emacs/EshellMultipleEshellBuffers
-        "Open a new instance of eshell."
-        (interactive)
-        (eshell 'N))
-      (defun eshell-setup-keys() ; implementation inspired by evil-collection
-        "Set up `evil' bindings for `eshell'."
-        (general-def eshell-mode-map
-          "s-n" 'eshell-new)
-        (define-key eshell-mode-map (kbd "<s-backspace>") 'eshell-kill-input)
-        (general-def 'insert eshell-mode-map
-          "C-k" 'eshell-next-matching-input-from-input
-          "C-l" 'eshell-previous-matching-input-from-input))
-    (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
-
-    (defun eshell/clear ()
-      "Clear the eshell buffer."
-      (let ((inhibit-read-only t))
-        (erase-buffer)))
-    (add-hook 'eshell-directory-change-hook (lambda ()
-                                              (concat (eshell/ls) " -A")))
-
-    (defun tidy-learn-buffer ()
-      (interactive)
-      (flush-lines "^[[:space:]]*# "))
-
-    (defun eshell/gst (&rest args)
-        (magit-status (pop args) nil)
-        (eshell/echo))   ;; The echo command suppresses output
-
-    (defun pwd-replace-home (pwd)
-      "Replace home in PWD with tilde (~) character."
-      (interactive)
-      (let* ((home (expand-file-name (getenv "HOME")))
-             (home-len (length home)))
-        (if (and
-             (>= (length pwd) home-len)
-             (equal home (substring pwd 0 home-len)))
-            (concat "~" (substring pwd home-len))
-          pwd)))
-    (defun with-face (str &rest face-plist) ; https://www.emacswiki.org/emacs/EshellPrompt#toc3
-      (propertize str 'face face-plist))
-    (defun git-prompt-branch-name () ; https://superuser.com/a/1265169
-      "Get current git branch name"
-      (let ((args '("symbolic-ref" "HEAD" "--short")))
-        (with-temp-buffer
-          (apply #'process-file "git" nil (list t nil) nil args)
-          (unless (bobp)
-            (goto-char (point-min))
-            (buffer-substring-no-properties (point) (line-end-position))))))
-
-    (setq eshell-prompt-function
-          (lambda nil
-            (let ((branch-name (git-prompt-branch-name)))
-              (concat
-               "\n" (pwd-replace-home(eshell/pwd)) "\n "
-               (if branch-name (with-face branch-name :foreground "gray") )
-               " $ "))))
-
-      (use-package load-bash-alias
-        :straight t
-        :config
-        (setq load-bash-alias-bashrc-file "~/.aliases"))
-
-      (setq eshell-history-size 1000000)
-      (setq shell-file-name "bash") ; for cases where I can't use eshell
-      (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-      (general-def 'insert shell-mode-map
-          "C-k" 'comint-next-input
-          "C-l" 'comint-previous-input
-          ;; "C-;" 'comint-send-input
-          )
-      (general-def 'normal shell-mode-map
-        "C-d" 'evil-scroll-down)
-
-      ;; TXT/ORG
-      (setq-default fill-column 80)
-      (add-hook 'text-mode-hook 'turn-on-auto-fill)
-      (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
-      (use-package org
-        :straight t
-        :interpreter "org"
-        :config
-        (general-def 'insert org-mode-map
-          "C-j" 'org-metaleft
-          "C-;" 'org-metaright)
-        (general-def 'motion org-mode-map
-          "C-k" 'org-metadown
-          "C-l" 'org-metaup)
-        ;; couldn’t get the following bindings working with general.el unfortunately
-        (define-key org-mode-map (kbd "<C-return>") 'org-meta-return)
-        (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-respect-content))
-
-      (use-package toc-org
-        :straight t
-        :hook (org-mode . toc-org-mode))
-
-      ;; HTML/CSS
-      (use-package web-mode
-        :straight t
-        :mode "\\.html?\\'"
-        :config
-        (general-def 'web-mode-map
-          "M-;" nil)
-        (setq web-mode-enable-current-element-highlight t)
-        (setq web-mode-markup-indent-offset 2)
-        (setq web-mode-code-indent-offset 2)
-        ;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    (setq eshell-history-size 1000000)
+    (setq shell-file-name "bash") ; for cases where I can't use eshell
+    (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+    (general-def 'insert shell-mode-map
+        "C-k" 'comint-next-input
+        "C-l" 'comint-previous-input
+        ;; "C-;" 'comint-send-input
         )
-      (use-package emmet-mode
+    (general-def 'normal shell-mode-map
+      "C-d" 'evil-scroll-down)
+
+    ;; TXT/ORG
+    (setq-default fill-column 80)
+    (add-hook 'text-mode-hook 'turn-on-auto-fill)
+    (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
+    (use-package org
+      :straight t
+      :interpreter "org"
+      :config
+      (general-def 'insert org-mode-map
+        "C-j" 'org-metaleft
+        "C-;" 'org-metaright)
+      (general-def 'motion org-mode-map
+        "C-k" 'org-metadown
+        "C-l" 'org-metaup)
+      ;; couldn’t get the following bindings working with general.el unfortunately
+      (define-key org-mode-map (kbd "<C-return>") 'org-meta-return)
+      (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-respect-content))
+
+    (use-package toc-org
+      :straight t
+      :hook (org-mode . toc-org-mode))
+
+    ;; HTML/CSS
+    (use-package web-mode
+      :straight t
+      :mode "\\.html?\\'"
+      :config
+      (general-def 'web-mode-map
+        "M-;" nil)
+      (setq web-mode-enable-current-element-highlight t)
+      (setq web-mode-markup-indent-offset 2)
+      (setq web-mode-code-indent-offset 2)
+      ;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+      )
+    (use-package emmet-mode
+      :straight t
+      :config
+      (add-hook 'web-mode-hook 'emmet-mode) ; auto-start on any markup modes
+      (add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
+      (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
+      (general-def 'insert web-mode-map
+        "M-SPC" 'emmet-expand-line))
+    (use-package evil-matchit
+      :straight t
+      :config (global-evil-matchit-mode 1))
+
+    (use-package browser-refresh
+      :straight (browser-refresh :host github :repo "syohex/emacs-browser-refresh"
+                          :fork (:host github
+                                       :repo "idmyn/emacs-browser-refresh"))
+      :defer
+      :config
+      (setq browser-refresh-default-browser 'brave)
+      (setq browser-refresh-save-buffer nil)
+      (setq browser-refresh-activate nil))
+
+    ;; Sass
+    (use-package sass-mode
+      :straight (sass-mode :host github :repo "nex3/sass-mode")
+      :mode "\\.scss\\'")
+
+    (use-package haml-mode
+      :straight t
+      :mode "\\.haml\\'")
+
+    ;; Javascript
+    (use-package js2-mode
+      :straight t
+      :mode "\\.js\\'"
+      :config
+      (setq-default js2-basic-offset 2)
+      (setq js2-strict-missing-semi-warning nil)
+      (setq-default flycheck-disabled-checkers
+                    (append flycheck-disabled-checkers
+                            '(javascript-jshint)))
+      (use-package rjsx-mode
         :straight t
-        :config
-        (add-hook 'web-mode-hook 'emmet-mode) ; auto-start on any markup modes
-        (add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
-        (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
-        (general-def 'insert web-mode-map
-          "M-SPC" 'emmet-expand-line))
-      (use-package evil-matchit
-        :straight t
-        :config (global-evil-matchit-mode 1))
+        :mode "components\\/.*\\.js\\'"))
+    (use-package json-mode
+      :straight t
+      :mode "\\.json\\'")
 
-      (use-package browser-refresh
-        :straight (browser-refresh :host github :repo "syohex/emacs-browser-refresh"
-                            :fork (:host github
-                                         :repo "idmyn/emacs-browser-refresh"))
-        :defer
-        :config
-        (setq browser-refresh-default-browser 'brave)
-        (setq browser-refresh-save-buffer nil)
-        (setq browser-refresh-activate nil))
+    (use-package nodejs-repl
+      :straight (nodejs-repl :host github :repo "abicky/nodejs-repl.el")
+      :defer t)
 
-      ;; Sass
-      (use-package sass-mode
-        :straight (sass-mode :host github :repo "nex3/sass-mode")
-        :mode "\\.scss\\'")
+    (use-package prettier-js
+      :straight t
+      :defer t
+      :config
+      (setq prettier-js-args '(
+                               "--no-semi" "false"
+                               )))
 
-      (use-package haml-mode
-        :straight t
-        :mode "\\.haml\\'")
+    (use-package eglot
+      :straight (eglot :host github :repo "joaotavora/eglot")
+      :hook ((ruby-mode js2-mode) . eglot-ensure))
 
-      ;; Javascript
-      (use-package js2-mode
-        :straight t
-        :mode "\\.js\\'"
-        :config
-        (setq-default js2-basic-offset 2)
-        (setq js2-strict-missing-semi-warning nil)
-        (setq-default flycheck-disabled-checkers
-                      (append flycheck-disabled-checkers
-                              '(javascript-jshint)))
-        (use-package rjsx-mode
-          :straight t
-          :mode "components\\/.*\\.js\\'"))
-      (use-package json-mode
-        :straight t
-        :mode "\\.json\\'")
+    ;; Ruby
+    (use-package rspec-mode
+      :straight t
+      :mode "\\.rspec\\'"
+      :config
+      (setq rspec-use-rvm t)
+      (defadvice rspec-compile (around rspec-compile-around)
+        "Use BASH shell for running the specs because of ZSH issues."
+        (let ((shell-file-name "/bin/bash"))
+          ad-do-it))
 
-      (use-package nodejs-repl
-        :straight (nodejs-repl :host github :repo "abicky/nodejs-repl.el")
-        :defer t)
+      (ad-activate 'rspec-compile))
 
-      (use-package prettier-js
-        :straight t
-        :defer t
-        :config
-        (setq prettier-js-args '(
-                                 "--no-semi" "false"
-                                 )))
+    ;; M-x my/learn-tests won’t run without this rvm package
+    (use-package rvm
+      :straight t
+      :config (rvm-use-default))
 
-      (use-package eglot
-        :straight (eglot :host github :repo "joaotavora/eglot")
-        :hook ((ruby-mode js2-mode) . eglot-ensure))
+    (use-package inf-ruby
+      :straight t
+      :interpreter "ruby"
+      :config
+      ;; https://github.com/dgutov/robe#integration-with-rvmel
+      (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+        (rvm-activate-corresponding-ruby))
+      (general-def 'insert inf-ruby-mode-map
+        "C-k" 'comint-next-input
+        "C-l" 'comint-previous-input
+        "C-;" 'comint-send-input))
 
-      ;; Ruby
-      (use-package rspec-mode
-        :straight t
-        :mode "\\.rspec\\'"
-        :config
-        (setq rspec-use-rvm t)
-        (defadvice rspec-compile (around rspec-compile-around)
-          "Use BASH shell for running the specs because of ZSH issues."
-          (let ((shell-file-name "/bin/bash"))
-            ad-do-it))
+    (use-package rubocop
+      :straight t
+      :interpreter "ruby")
 
-        (ad-activate 'rspec-compile))
+    (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 
-      ;; M-x my/learn-tests won’t run without this rvm package
-      (use-package rvm
-        :straight t
-        :config (rvm-use-default))
+    ;; Python
+    ;; https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
+    (use-package elpy
+      :straight t
+      :interpreter "python"
+      :init
+      (with-eval-after-load 'python (elpy-enable))
+      (setq python-indent-offset 4)
+      :config
+      (when (require 'flycheck nil t)
+      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+      (add-hook 'elpy-mode-hook 'flycheck-mode)))
 
-      (use-package inf-ruby
-        :straight t
-        :interpreter "ruby"
-        :config
-        ;; https://github.com/dgutov/robe#integration-with-rvmel
-        (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-          (rvm-activate-corresponding-ruby))
-        (general-def 'insert inf-ruby-mode-map
-          "C-k" 'comint-next-input
-          "C-l" 'comint-previous-input
-          "C-;" 'comint-send-input))
+    ;; SQL
+    (use-package sqlup-mode
+      :straight t
+      :interpreter "sql"
+      :config
+      (add-to-list 'sqlup-blacklist "name")
 
-      (use-package rubocop
-        :straight t
-        :interpreter "ruby")
+      (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
+      (add-hook 'sql-mode-hook 'sqlup-mode))
+    (use-package sql-indent
+      :straight t
+      :interpreter "sql"
+      :config (add-hook 'sql-mode-hook 'sqlind-minor-mode))
 
-      (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+    ;; Go
+    (use-package go-mode
+      :straight t
+      :mode "\\.go\\'"
+      :config
+      (add-hook 'go-mode 'gofmt-before-save))
 
-      ;; Python
-      ;; https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
-      (use-package elpy
-        :straight t
-        :interpreter "python"
-        :init
-        (with-eval-after-load 'python (elpy-enable))
-        (setq python-indent-offset 4)
-        :config
-        (when (require 'flycheck nil t)
-        (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-        (add-hook 'elpy-mode-hook 'flycheck-mode)))
+    (use-package flycheck-golangci-lint
+      :straight t
+      :hook (go-mode . flycheck-golangci-lint-setup))
 
-      ;; SQL
-      (use-package sqlup-mode
-        :straight t
-        :interpreter "sql"
-        :config
-        (add-to-list 'sqlup-blacklist "name")
+    ;; HTTP
+    (use-package restclient
+      :straight t
+      ;; :defer 2
+      :config
+      ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
+      (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
-        (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
-        (add-hook 'sql-mode-hook 'sqlup-mode))
-      (use-package sql-indent
-        :straight t
-        :interpreter "sql"
-        :config (add-hook 'sql-mode-hook 'sqlind-minor-mode))
+    ;; Clojure
+    (use-package clojure-mode
+      :straight t
+      :interpreter "clojure")
 
-      ;; Go
-      (use-package go-mode
-        :straight t
-        :mode "\\.go\\'"
-        :config
-        (add-hook 'go-mode 'gofmt-before-save))
+    ;; YAML
+    (use-package yaml-mode
+      :straight (yaml-mode :host github :repo "yoshiki/yaml-mode")
+      :mode "\\.yaml\\'")
 
-      (use-package flycheck-golangci-lint
-        :straight t
-        :hook (go-mode . flycheck-golangci-lint-setup))
-
-      ;; HTTP
-      (use-package restclient
-        :straight t
-        ;; :defer 2
-        :config
-        ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
-        (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-
-      ;; Clojure
-      (use-package clojure-mode
-        :straight t
-        :interpreter "clojure")
-
-      ;; YAML
-      (use-package yaml-mode
-        :straight (yaml-mode :host github :repo "yoshiki/yaml-mode")
-        :mode "\\.yaml\\'")
-
-      ;; Deft
-      (use-package deft
-        :straight t
-        :config
-        (setq deft-directory "~/Dropbox/notes"
-              deft-use-filter-string-for-filename t)
-        (add-to-list 'evil-insert-state-modes 'deft-mode))
+    ;; Deft
+    (use-package deft
+      :straight t
+      :config
+      (setq deft-directory "~/Dropbox/notes"
+            deft-use-filter-string-for-filename t)
+      (add-to-list 'evil-insert-state-modes 'deft-mode))
 #+END_SRC
 * macOS specific
 #+BEGIN_SRC emacs-lisp
