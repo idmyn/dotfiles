@@ -496,7 +496,7 @@
       "d" 'dumb-jump-go
       "b" 'counsel-bookmark
       "n" 'deer
-      "s" 'counsel-ag
+      "s" 'counsel-rg
       "w" 'save-buffer
       "e" 'eshell
       "g" 'magit-status
