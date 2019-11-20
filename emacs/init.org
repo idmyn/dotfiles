@@ -375,8 +375,7 @@
       (switch-to-buffer $buf)
       (funcall initial-major-mode)
       (setq buffer-offer-save t)
-      $buf
-      ))
+      $buf))
   (setq initial-major-mode (quote restclient-mode))
   (setq initial-buffer-choice 'xah-new-empty-buffer)
   (setq initial-scratch-message "")
@@ -1165,5 +1164,6 @@
         (exec-path-from-shell-initialize))
 
       ;; Fix "#" input on UK MacBook keyboard
-      (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))))
+      (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+      )))
 #+END_SRC
