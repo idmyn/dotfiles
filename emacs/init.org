@@ -5,7 +5,21 @@
   - [[#theme][Theme]]
   - [[#fonts][Fonts]]
 - [[#editor-navigation-and-interaction][Editor navigation and interaction]]
-- [[#languages-and-other-major-modes][Languages and other major modes]]
+- [[#language-specific-packages-and-other-major-modes][Language-specific packages and other major modes]]
+  - [[#git][Git]]
+  - [[#emacs-shell][Emacs Shell]]
+  - [[#org-mode][Org Mode]]
+  - [[#htmlhamlcsssass][HTML/HAML/CSS/Sass]]
+  - [[#javascript][JavaScript]]
+  - [[#eglot][Eglot??]]
+  - [[#ruby][Ruby]]
+  - [[#python][Python]]
+  - [[#sql][SQL]]
+  - [[#go][Go]]
+  - [[#httprest][HTTP/REST]]
+  - [[#clojure][Clojure]]
+  - [[#yaml][YAML]]
+  - [[#deft][Deft]]
 - [[#macos-specific][macOS specific]]
 
 * Initialization
@@ -461,7 +475,7 @@
 
      "s-n" 'xah-new-empty-buffer
      "s-i" 'complete-symbol
-     "s-r" 'browser-refresh
+     ;; "s-r" 'browser-refresh
      "s-f" 'switch-to-buffer
      "s-b" 'counsel-bookmark
      ;; "s-j" 'avy-goto-word-1
@@ -803,17 +817,17 @@
     (setq flycheck-global-modes '(not emacs-lisp-mode)
           flycheck-check-syntax-automatically '(mode-enabled save)))
 #+END_SRC
-* Languages and other major modes
+* Language-specific packages and other major modes
+** Git
 #+BEGIN_SRC emacs-lisp
-    ;; Git
-    (use-package magit
-      :straight t
-      :defer t
-      :config
-      (with-eval-after-load 'evil
-        (add-to-list 'evil-insert-state-modes 'magit-status-mode)
-        (add-hook 'git-commit-mode-hook 'evil-insert-state)
-        (evil-set-initial-state 'magit-log-edit-mode 'insert)))
+  (use-package magit
+    :straight t
+    :defer t
+    :config
+    (with-eval-after-load 'evil
+      (add-to-list 'evil-insert-state-modes 'magit-status-mode)
+      (add-hook 'git-commit-mode-hook 'evil-insert-state)
+      (evil-set-initial-state 'magit-log-edit-mode 'insert)))
     (global-auto-revert-mode t) ; buffers should change when branch changes
 
   (use-package diff-hl
@@ -821,11 +835,12 @@
     :config
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
     (global-diff-hl-mode))
-
-    ;; Eshell
-    ; good inspo: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
-    (setenv "PAGER" "cat")
-    ;; (eval-after-load 'eshell ; https://www.emacswiki.org/emacs/EshellAutojump
+#+END_SRC
+** Emacs Shell
+#+BEGIN_SRC emacs-lisp
+  ; good inspo: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
+  (setenv "PAGER" "cat")
+  ;; (eval-after-load 'eshell ; https://www.emacswiki.org/emacs/EshellAutojump
   ;;   '(require 'eshell-autojump nil t))
   (use-package eshell-z
     :straight t
@@ -835,19 +850,19 @@
                 (require 'eshell-z)
                 (exec-path-from-shell-initialize))))
 
-    (setq eshell-last-dir-ring-size 500)
-    (defun eshell-new() ; https://www.emacswiki.org/emacs/EshellMultipleEshellBuffers
-      "Open a new instance of eshell."
-      (interactive)
-      (eshell 'N))
-    (defun eshell-setup-keys() ; implementation inspired by evil-collection
-      "Set up `evil' bindings for `eshell'."
-      (general-def eshell-mode-map
-        "s-n" 'eshell-new)
-      (define-key eshell-mode-map (kbd "<s-backspace>") 'eshell-kill-input)
-      (general-def 'insert eshell-mode-map
-        "C-k" 'eshell-next-matching-input-from-input
-        "C-l" 'eshell-previous-matching-input-from-input))
+  (setq eshell-last-dir-ring-size 500)
+  (defun eshell-new() ; https://www.emacswiki.org/emacs/EshellMultipleEshellBuffers
+    "Open a new instance of eshell."
+    (interactive)
+    (eshell 'N))
+  (defun eshell-setup-keys() ; implementation inspired by evil-collection
+    "Set up `evil' bindings for `eshell'."
+    (general-def eshell-mode-map
+      "s-n" 'eshell-new)
+    (define-key eshell-mode-map (kbd "<s-backspace>") 'eshell-kill-input)
+    (general-def 'insert eshell-mode-map
+      "C-k" 'eshell-next-matching-input-from-input
+      "C-l" 'eshell-previous-matching-input-from-input))
   (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
 
   (defun eshell/clear ()
@@ -909,8 +924,9 @@
     )
   (general-def 'normal shell-mode-map
     "C-d" 'evil-scroll-down)
-
-  ;; TXT/ORG
+#+END_SRC
+** Org Mode
+#+BEGIN_SRC emacs-lisp
   (setq-default fill-column 80)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
@@ -931,8 +947,9 @@
   (use-package toc-org
     :straight t
     :hook (org-mode . toc-org-mode))
-
-  ;; HTML/CSS
+#+END_SRC
+** HTML/HAML/CSS/Sass
+#+BEGIN_SRC emacs-lisp
   (use-package web-mode
     :straight t
     :mode "\\.html?\\'"
@@ -941,22 +958,24 @@
       "M-;" nil)
     (setq web-mode-enable-current-element-highlight t)
     (setq web-mode-markup-indent-offset 2)
-    (setq web-mode-code-indent-offset 2)
-    ;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-    )
+    (setq web-mode-code-indent-offset 2))
+
+    (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+
   (use-package emmet-mode
     :straight t
     :config
-    (add-hook 'web-mode-hook 'emmet-mode) ; auto-start on any markup modes
-    (add-hook 'rjsx-mode-hook 'emmet-mode) ; auto-start on any markup modes
-    (add-hook 'sgml-mode-hook 'emmet-mode) ; auto-start on any markup modes
-    (add-hook 'css-mode-hook  'emmet-mode) ; enable Emmet's css abbreviation.
+    (add-hook 'web-mode-hook 'emmet-mode)
+    (add-hook 'rjsx-mode-hook 'emmet-mode)
+    (add-hook 'sgml-mode-hook 'emmet-mode)
+    (add-hook 'css-mode-hook  'emmet-mode)
     (general-define-key
      :states 'insert
      :keymaps '(web-mode-map rjsx-mode-map)
      "C-j" 'newline
      "M-SPC" 'emmet-expand-line))
-  (use-package evil-matchit
+
+  (use-package evil-matchit ; to jump between HTML tags with %
     :straight t
     :config (global-evil-matchit-mode 1))
 
@@ -964,13 +983,12 @@
     :straight (browser-refresh :host github :repo "syohex/emacs-browser-refresh"
                                :fork (:host github
                                             :repo "idmyn/emacs-browser-refresh"))
-    :defer
+    :bind ("s-r" . browser-refresh)
     :config
     (setq browser-refresh-default-browser 'brave)
     (setq browser-refresh-save-buffer nil)
     (setq browser-refresh-activate nil))
 
-  ;; Sass
   (use-package sass-mode
     :straight (sass-mode :host github :repo "nex3/sass-mode")
     :mode "\\.scss\\'")
@@ -978,8 +996,9 @@
   (use-package haml-mode
     :straight t
     :mode "\\.haml\\'")
-
-  ;; Javascript
+#+END_SRC
+** JavaScript
+#+BEGIN_SRC emacs-lisp
   (use-package js2-mode
     :straight t
     :mode "\\.js\\'"
@@ -991,8 +1010,8 @@
                           '(javascript-jshint)))
     (setq flycheck-javascript-eslint-executable "eslint_d")
     (use-package rjsx-mode
-      :straight t
-      :mode "mod-4\\/.*\\.js\\'"))
+      :straight t))
+
   (use-package json-mode
     :straight t
     :mode "\\.json\\'")
@@ -1011,48 +1030,49 @@
                              "--no-semi" "false"
                              "--single-quote" "true"
                              )))
-
+#+END_SRC
+** Eglot??
+#+BEGIN_SRC emacs-lisp
   (use-package eglot
     :straight (eglot :host github :repo "joaotavora/eglot")
     :hook ((ruby-mode js2-mode) . eglot-ensure))
-
-  ;; Ruby
-  (use-package rspec-mode
+#+END_SRC
+** Ruby
+#+BEGIN_SRC emacs-lisp
+  (use-package rubocop
     :straight t
-    :mode "\\.rspec\\'"
-    :config
-    (setq rspec-use-rvm t)
-    (defadvice rspec-compile (around rspec-compile-around)
-      "Use BASH shell for running the specs because of ZSH issues."
-      (let ((shell-file-name "/bin/bash"))
-        ad-do-it))
-
-    (ad-activate 'rspec-compile))
-
-  ;; M-x my/learn-tests won’t run without this rvm package
-  (use-package rvm
-    :straight t
-    :config (rvm-use-default))
+    :interpreter "ruby")
 
   (use-package inf-ruby
     :straight t
     :interpreter "ruby"
     :config
     ;; https://github.com/dgutov/robe#integration-with-rvmel
-    (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-      (rvm-activate-corresponding-ruby))
+    ;; (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+      ;; (rvm-activate-corresponding-ruby))
     (general-def 'insert inf-ruby-mode-map
       "C-k" 'comint-next-input
       "C-l" 'comint-previous-input
       "C-;" 'comint-send-input))
 
-  (use-package rubocop
+  (use-package rspec-mode
     :straight t
-    :interpreter "ruby")
+    :mode "\\.rspec\\'"
+    :config
+    (setq rspec-use-rvm t)
+    (defadvice rspec-compile (around rspec-compile-around)
+      "Use bash to run the specs because of ZSH issues."
+      (let ((shell-file-name "/bin/bash"))
+        ad-do-it))
+    (ad-activate 'rspec-compile))
 
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-
-  ;; Python
+  ;; M-x my/learn-tests won’t run without this rvm package
+  (use-package rvm
+    :straight t
+    :config (rvm-use-default))
+#+END_SRC
+** Python
+#+BEGIN_SRC emacs-lisp
   ;; https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
   (use-package elpy
     :straight t
@@ -1064,8 +1084,9 @@
     (when (require 'flycheck nil t)
       (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
       (add-hook 'elpy-mode-hook 'flycheck-mode)))
-
-  ;; SQL
+#+END_SRC
+** SQL
+#+BEGIN_SRC emacs-lisp
   (use-package sqlup-mode
     :straight t
     :interpreter "sql"
@@ -1078,8 +1099,9 @@
     :straight t
     :interpreter "sql"
     :config (add-hook 'sql-mode-hook 'sqlind-minor-mode))
-
-  ;; Go
+#+END_SRC
+** Go
+#+BEGIN_SRC emacs-lisp
   (use-package go-mode
     :straight t
     :mode "\\.go\\'"
@@ -1089,26 +1111,28 @@
   (use-package flycheck-golangci-lint
     :straight t
     :hook (go-mode . flycheck-golangci-lint-setup))
-
-  ;; HTTP
+#+END_SRC
+** HTTP/REST
+#+BEGIN_SRC emacs-lisp
   (use-package restclient
     :straight t
-    ;; :defer 2
-    :config
-                                          ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
+    :config ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-
-  ;; Clojure
+#+END_SRC
+** Clojure
+#+BEGIN_SRC emacs-lisp
   (use-package clojure-mode
     :straight t
     :interpreter "clojure")
-
-  ;; YAML
+#+END_SRC
+** YAML
+#+BEGIN_SRC emacs-lisp
   (use-package yaml-mode
     :straight (yaml-mode :host github :repo "yoshiki/yaml-mode")
     :mode "\\.yaml\\'")
-
-  ;; Deft
+#+END_SRC
+** Deft
+#+BEGIN_SRC emacs-lisp
   (use-package deft
     :straight t
     :config
@@ -1120,7 +1144,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
        :straight t
-       ;; :defer 0.1
+       :defer 0.1
        :config
        (exec-path-from-shell-initialize))
 
