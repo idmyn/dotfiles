@@ -1003,10 +1003,13 @@
 
   (use-package prettier-js
     :straight t
-    :defer t
+    ;; :defer t
+    ;; :hook rjsx-mode
     :config
+    (add-hook 'rjsx-mode-hook 'prettier-js-mode)
     (setq prettier-js-args '(
                              "--no-semi" "false"
+                             "--single-quote" "true"
                              )))
 
   (use-package eglot
