@@ -122,6 +122,11 @@ how it /works/.
 #+BEGIN_SRC emacs-lisp
   (global-display-line-numbers-mode)
   (setq-default display-line-numbers-type 'relative)
+  (defun my/toggle-relative-line-numbers ()
+    (interactive)
+    (setq display-line-numbers-type
+          (if (equal display-line-numbers-type 'relative) t 'relative))
+    (global-display-line-numbers-mode))
 
   (setq inhibit-startup-screen t)
   (toggle-scroll-bar -1)
@@ -627,8 +632,7 @@ how it /works/.
      "C-;" 'ivy-alt-done
 
      "M-k" 'ivy-next-line-and-call
-     "M-l" 'ivy-previous-line-and-call
-     ))
+     "M-l" 'ivy-previous-line-and-call))
 
   (use-package ivy-posframe
     :straight t
@@ -656,7 +660,6 @@ how it /works/.
     :config
     (setq projectile-project-search-path '("~/Development/"))
     (setq projectile-completion-system 'ivy)
-    ;; (setq projectile-indexing-method 'native) ; seems to run quicker than 'alien'
     (setq projectile-enable-caching t)
 
     ;; https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-projectile.el
