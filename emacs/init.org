@@ -4,6 +4,7 @@
 - [[#appearance][Appearance]]
   - [[#theme][Theme]]
   - [[#fonts][Fonts]]
+  - [[#additional-common-modifications][Additional common modifications]]
 - [[#stuff][Stuff]]
 - [[#editor-navigation-and-interaction][Editor navigation and interaction]]
 - [[#language-specific-packages-and-other-major-modes][Language-specific packages and other major modes]]
@@ -108,17 +109,36 @@ how it /works/.
   (add-hook 'deft-mode-hook 'input-mono)
   (add-hook 'ranger-mode-hook 'input-mono)
 #+END_SRC
-* Stuff
+** Additional common modifications
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen t)
   (toggle-scroll-bar -1)
   (tool-bar-mode -1)
 
+  ;; File path in title bar
+  ;; https://stackoverflow.com/a/29821453
+  (setq frame-title-format
+        '(buffer-file-name "%b - %f" ; File buffer
+                           (dired-directory dired-directory ; Dired buffer
+                                            (revert-buffer-function "%b" ; Buffer Menu
+                                                                    ("%b - Dir: " default-directory))))) ; Plain buffer
+
+  (global-display-line-numbers-mode)
+  (setq-default display-line-numbers-type 'relative)
+
+  ;; Emojis
+  (use-package emojify
+    :straight t
+    :defer 2
+    :config
+    (add-hook 'after-init-hook #'global-emojify-mode))
+#+END_SRC
+* Stuff
+#+BEGIN_SRC emacs-lisp
   ;; Prefer vertical split
   ; (setq split-height-threshold nil)
   ; (setq split-width-threshold 0)
 
-  (display-time-mode 1)
   ;; Minimal modeline
   ;; https://gitlab.com/mark.feller/emacs.d/blob/master/modules/module-solarized.el
   (set-face-attribute 'mode-line nil
@@ -149,16 +169,6 @@ how it /works/.
               (throw 'done t)))
           mode-line-modes))
 
-  ;; File path in title bar
-  ;; https://stackoverflow.com/a/29821453
-  (setq frame-title-format
-        '(buffer-file-name "%b - %f" ; File buffer
-                           (dired-directory dired-directory ; Dired buffer
-                                            (revert-buffer-function "%b" ; Buffer Menu
-                                                                    ("%b - Dir: " default-directory))))) ; Plain buffer
-
-  (global-display-line-numbers-mode)
-  (setq-default display-line-numbers-type 'relative)
   ;; (use-package avy
   ;;   :straight t
   ;;   :defer 1
@@ -400,12 +410,6 @@ how it /works/.
                :host github :repo "wbolster/emacs-balanced-windows")
     :config (balanced-windows-mode))
 
-  ;; Emojis
-  (use-package emojify
-    :straight t
-    :defer 2
-    :config
-    (add-hook 'after-init-hook #'global-emojify-mode))
 #+END_SRC
 * Editor navigation and interaction
 #+BEGIN_SRC emacs-lisp
