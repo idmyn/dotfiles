@@ -9,6 +9,7 @@
 - [[#stuff][Stuff]]
 - [[#editor-interaction][Editor interaction]]
   - [[#evil-vim-emulation][Evil (Vim emulation)]]
+  - [[#other-interaction-stuff][Other interaction stuff]]
   - [[#general-keybindings][General (keybindings)]]
 - [[#language-specific-packages-and-other-major-modes][Language-specific packages and other major modes]]
   - [[#git][Git]]
@@ -405,6 +406,7 @@
 
     (evil-mode 1))
 #+END_SRC
+** Other interaction stuff
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :straight t)
