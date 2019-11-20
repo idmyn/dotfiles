@@ -1,5 +1,5 @@
 * My Emacs Config                                                  :noexport:
-** Table of Contents                                                    :TOC:
+** Table of Contents                                              :TOC_3:
 - [[#initialization][Initialization]]
 - [[#editor-appearance][Editor Appearance]]
   - [[#theme][Theme]]
@@ -10,6 +10,8 @@
 - [[#editor-interaction][Editor interaction]]
   - [[#keybindings-generalel][Keybindings (general.el)]]
   - [[#editing-text][Editing text]]
+    - [[#evil-vim-emulation][Evil (Vim emulation)]]
+    - [[#everything-else][Everything else]]
   - [[#visual-cues][Visual cues]]
   - [[#fileproject-management][File/project management]]
   - [[#candidate-selection][Candidate selection]]
