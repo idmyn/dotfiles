@@ -8,6 +8,7 @@
   - [[#additional-common-modifications][Additional common modifications]]
 - [[#stuff][Stuff]]
 - [[#editor-interaction][Editor interaction]]
+  - [[#evil][Evil]]
 - [[#language-specific-packages-and-other-major-modes][Language-specific packages and other major modes]]
   - [[#git][Git]]
   - [[#emacs-shell][Emacs Shell]]
@@ -385,6 +386,30 @@
     :config (balanced-windows-mode))
 #+END_SRC
 * Editor interaction
+** Evil
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :straight t
+    :init
+    (setq evil-want-C-u-scroll t)
+
+    (use-package expand-region
+      :straight t)
+
+    :config
+    (evil-mode 1)
+    (add-hook 'after-init-hook (lambda () (global-undo-tree-mode -1)))
+    (setq-default evil-shift-width 2)
+
+    (use-package evil-surround
+      :straight t
+      :config (global-evil-surround-mode 1)))
+
+  ;; Multiple cursors
+  (use-package evil-multiedit
+    :straight t
+    :defer 2)
+#+END_SRC
 #+BEGIN_SRC emacs-lisp
   ;; General (keybindings)
   (use-package general
@@ -578,29 +603,6 @@
       :config
       (evil-escape-mode)
       (global-set-key (kbd "<escape>") 'evil-escape)))
-
-  ;; Evil
-  (use-package evil
-    :straight t
-    :init
-    (setq evil-want-C-u-scroll t)
-
-    (use-package expand-region
-      :straight t)
-
-    :config
-    (evil-mode 1)
-    (add-hook 'after-init-hook (lambda () (global-undo-tree-mode -1)))
-    (setq-default evil-shift-width 2)
-
-    (use-package evil-surround
-      :straight t
-      :config (global-evil-surround-mode 1)))
-
-  ;; Multiple cursors
-  (use-package evil-multiedit
-    :straight t
-    :defer 2)
 
   ;; Ivy
   (use-package ivy
