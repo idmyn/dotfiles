@@ -139,35 +139,8 @@ how it /works/.
   ; (setq split-height-threshold nil)
   ; (setq split-width-threshold 0)
 
-  ;; Minimal modeline
-  ;; https://gitlab.com/mark.feller/emacs.d/blob/master/modules/module-solarized.el
-  (set-face-attribute 'mode-line nil
-                      :background "#e6e6e1"
-                      :foreground "#323232"
-                      :box '(:line-width 4 :color "#e6e6e1")
-                      :overline nil
-                      :underline nil)
-
-  (set-face-attribute 'mode-line-inactive nil
-                      :background "#f7f7ef"
-                      :foreground "#8a8a8a"
-                      :box '(:line-width 4 :color "#f7f7ef")
-                      :overline nil
-                      :underline nil)
-
-  (define-minor-mode minor-mode-blackout-mode
-    "Hides minor modes from the mode line."
-    t)
-
-  (catch 'done
-    (mapc (lambda (x)
-            (when (and (consp x)
-                       (equal (cadr x) '("" minor-mode-alist)))
-              (let ((original (copy-sequence x)))
-                (setcar x 'minor-mode-blackout-mode)
-                (setcdr x (list "" original)))
-              (throw 'done t)))
-          mode-line-modes))
+  (use-package diminish
+    :straight t)
 
   ;; (use-package avy
   ;;   :straight t
@@ -190,6 +163,7 @@ how it /works/.
 
   ;; Eighty Column Rule
   (use-package whitespace
+    :diminish global-whitespace-mode
     :defer 2
     :config
     (setq whitespace-line-column 80
@@ -409,7 +383,6 @@ how it /works/.
     :straight (balanced-windows
                :host github :repo "wbolster/emacs-balanced-windows")
     :config (balanced-windows-mode))
-
 #+END_SRC
 * Editor navigation and interaction
 #+BEGIN_SRC emacs-lisp
@@ -601,6 +574,7 @@ how it /works/.
     ;; fix escape key
     (use-package evil-escape
       :straight t
+      :diminish
       :config
       (evil-escape-mode)
       (global-set-key (kbd "<escape>") 'evil-escape)))
@@ -631,6 +605,7 @@ how it /works/.
   ;; Ivy
   (use-package ivy
     :straight t
+    :diminish
     :init ;; use flx if ivy--regex-fuzzy
     (use-package flx
       :straight t)
@@ -645,6 +620,7 @@ how it /works/.
 
     (use-package counsel
       :straight t
+      :diminish
       :config (counsel-mode 1))
 
     (general-define-key
@@ -660,6 +636,7 @@ how it /works/.
 
   (use-package ivy-posframe
     :straight t
+    :diminish
     :config
     (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
     (ivy-posframe-mode 1))
@@ -783,6 +760,7 @@ how it /works/.
   ;; YASnippet
   (use-package yasnippet
     :straight t
+    :diminish yas-minor-mode
     :defer 2
     :config
     (use-package yasnippet-snippets
@@ -823,6 +801,7 @@ how it /works/.
   ;; Flycheck
   (use-package flycheck
     :straight t
+    :diminish
     :config
     (global-flycheck-mode)
     (setq flycheck-global-modes '(not emacs-lisp-mode)
