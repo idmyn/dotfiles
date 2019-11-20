@@ -81,7 +81,7 @@
 #+END_SRC
 ** Fonts
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "Input Sans Narrow-13"))
+  (add-to-list 'default-frame-alist '(font . "Input Sans Narrow-15"))
 
   (defun input-sans ()
     "Set font to Input Sans Narrow in current buffer"
@@ -111,8 +111,8 @@
   (tool-bar-mode -1)
 
   ;; Prefer vertical split
-  (setq split-height-threshold nil)
-  (setq split-width-threshold 0)
+  ; (setq split-height-threshold nil)
+  ; (setq split-width-threshold 0)
 
   (display-time-mode 1)
   ;; Minimal modeline
@@ -829,6 +829,16 @@
       (add-hook 'git-commit-mode-hook 'evil-insert-state)
       (evil-set-initial-state 'magit-log-edit-mode 'insert)))
     (global-auto-revert-mode t) ; buffers should change when branch changes
+
+  (use-package git-timemachine
+    :straight (git-timemachine :host github :repo "emacsmirror/git-timemachine")
+    :config
+    ;; https://emacs.stackexchange.com/a/10588
+    (eval-after-load 'git-timemachine
+    '(progn
+       (evil-make-overriding-map git-timemachine-mode-map 'normal)
+       ;; force update evil keymaps after git-timemachine-mode loaded
+       (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))))
 
   (use-package diff-hl
     :straight t
