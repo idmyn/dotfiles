@@ -5,12 +5,14 @@
   - [[#theme][Theme]]
   - [[#fonts][Fonts]]
   - [[#emojis][Emojis]]
-  - [[#additional-common-modifications][Additional common modifications]]
-- [[#stuff][Stuff]]
+  - [[#other][Other]]
+- [[#handy-functions][Handy functions]]
 - [[#editor-interaction][Editor interaction]]
-  - [[#evil-vim-emulation][Evil (Vim emulation)]]
-  - [[#general-keybindings][General (keybindings)]]
-  - [[#other-interaction-stuff][Other interaction stuff]]
+  - [[#keybindings-generalel][Keybindings (general.el)]]
+  - [[#editing-text][Editing text]]
+  - [[#visual-cues][Visual cues]]
+  - [[#fileproject-management][File/project management]]
+  - [[#candidate-selection][Candidate selection]]
 - [[#language-specific-packages-and-other-major-modes][Language-specific packages and other major modes]]
   - [[#git][Git]]
   - [[#emacs-shell][Emacs Shell]]
@@ -125,7 +127,7 @@
     :config
     (add-hook 'after-init-hook #'global-emojify-mode))
 #+END_SRC
-** Additional common modifications
+** Other
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen t)
   (toggle-scroll-bar -1)
@@ -147,108 +149,8 @@
           (if (equal display-line-numbers-type 'relative) t 'relative))
     (global-display-line-numbers-mode))
 #+END_SRC
-* Stuff
+* Handy functions
 #+BEGIN_SRC emacs-lisp
-  ;; Prefer vertical split
-  ; (setq split-height-threshold nil)
-  ; (setq split-width-threshold 0)
-
-  (show-paren-mode 1)
-  (electric-pair-mode 1)
-
-  (use-package visible-mark
-    :straight (visible-mark :host gitlab :repo "iankelling/visible-mark")
-    :init
-    (defface visible-mark-active
-     '((((type tty) (class mono)))
-       (t (:background "magenta"))) "")
-    (setq visible-mark-max 2)
-    (setq visible-mark-faces `(visible-mark-face1 visible-mark-face2))
-    :config
-    (global-visible-mark-mode 1))
-
-  ;; Eighty Column Rule
-  (use-package whitespace
-    :diminish global-whitespace-mode
-    :defer 2
-    :config
-    (setq whitespace-line-column 80
-          whitespace-style '(face tabs tab-mark lines-tail trailing)))
-
-  (global-whitespace-mode t)
-  (defun my-inhibit-global-whitespace-mode () ;; https://stackoverflow.com/a/6839968
-    "Counter-act `global-whitespace-mode'."
-    (add-hook 'after-change-major-mode-hook
-              (lambda () (whitespace-mode 0))
-              :append :local))
-
-  ;; while we're at it...
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-  ;; Indentation
-  (use-package aggressive-indent
-    :straight t)
-  (setq-default tab-width 4)
-  (setq-default indent-tabs-mode nil)
-  (setq backward-delete-char-untabify-method nil)
-  (setq-default electric-indent-inhibit nil)
-
-  ;; https://github.com/antonj/Highlight-Indentation-for-Emacs
-  (use-package highlight-indentation
-    :straight (highlight-indentation :host github :repo "antonj/Highlight-Indentation-for-Emacs")
-    :defer 2
-    :config
-    (set-face-background 'highlight-indentation-face "#f7f7ef")
-    (add-hook 'web-mode-hook 'highlight-indentation-mode)
-    (add-hook 'ruby-mode-hook 'highlight-indentation-mode))
-
-  ;; Filesystem hygiene
-  ;; https://www.emacswiki.org/emacs/BackupFiles
-  (setq
-   backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist
-   '(("." . "~/.saves/"))    ; don't litter my fs tree
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t)       ; use versioned backups
-
-  ;; Function for commenting line/region
-  ;; https://stackoverflow.com/a/9697222
-  (defun comment-or-uncomment-region-or-line ()
-    (interactive)
-    (let (beg end)
-      (if (region-active-p)
-          (setq beg (region-beginning) end (region-end))
-        (setq beg (line-beginning-position) end (line-end-position)))
-      (comment-or-uncomment-region beg end)))
-
-  ;; Separate evil clipboard from system clipboard
-  (use-package simpleclip
-    :straight (simpleclip :host github :repo "rolandwalker/simpleclip")
-    :defer 1
-    :config
-    (defun my-vterm-yank-from-simpleclip ()
-      (interactive)
-      (kill-new (simpleclip-get-contents))
-      (vterm-yank))
-    (simpleclip-mode 1))
-
-  (defun crux-rename-file-and-buffer () ; https://github.com/bbatsov/crux
-    "Rename current buffer and if the buffer is visiting a file, rename it too."
-    (interactive)
-    (let ((filename (buffer-file-name)))
-      (if (not (and filename (file-exists-p filename)))
-          (rename-buffer (read-from-minibuffer "New name: " (buffer-name)))
-        (let* ((new-name (read-from-minibuffer "New name: " filename))
-               (containing-dir (file-name-directory new-name)))
-          (make-directory containing-dir t)
-          (cond
-           ((vc-backend filename) (vc-rename-file filename new-name))
-           (t
-            (rename-file filename new-name t)
-            (set-visited-file-name new-name t t)))))))
-
   ;; Flatiron School niceties
   ;; (setq shell-file-name "zsh")
   ;; (setenv "SHELL" shell-file-name)
@@ -388,28 +290,10 @@
     :straight (balanced-windows
                :host github :repo "wbolster/emacs-balanced-windows")
     :config (balanced-windows-mode))
+
 #+END_SRC
 * Editor interaction
-** Evil (Vim emulation)
-#+BEGIN_SRC emacs-lisp
-  (use-package evil
-    :straight t
-    :init (setq evil-want-C-u-scroll t)
-    :config
-    (setq-default evil-shift-width 2)
-    (add-hook 'after-init-hook (lambda () (global-undo-tree-mode -1)))
-
-    (use-package evil-multiedit
-      :straight t
-      :defer 2)
-
-    (use-package evil-surround
-      :straight t
-      :config (global-evil-surround-mode 1))
-
-    (evil-mode 1))
-#+END_SRC
-** General (keybindings)
+** Keybindings (general.el)
 #+BEGIN_SRC emacs-lisp
   (use-package general
     :straight t
@@ -603,57 +487,167 @@
       (evil-escape-mode)
       (global-set-key (kbd "<escape>") 'evil-escape)))
 #+END_SRC
-** Other interaction stuff
+** Editing text
+*** Evil (Vim emulation)
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :straight t
+    :init (setq evil-want-C-u-scroll t)
+    :config
+    (setq-default evil-shift-width 2)
+    (add-hook 'after-init-hook (lambda () (global-undo-tree-mode -1)))
+
+    (use-package evil-multiedit
+      :straight t
+      :defer 2)
+
+    (use-package evil-surround
+      :straight t
+      :config (global-evil-surround-mode 1))
+
+    (evil-mode 1))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (electric-pair-mode 1)
+  (show-paren-mode 1)
+
+  ;; Indentation
+  (use-package aggressive-indent
+    :straight t)
+  (setq-default tab-width 4)
+  (setq-default indent-tabs-mode nil)
+  (setq backward-delete-char-untabify-method nil)
+  (setq-default electric-indent-inhibit nil)
+
+  ;; Function for commenting line/region
+  ;; https://stackoverflow.com/a/9697222
+  (defun comment-or-uncomment-region-or-line ()
+    (interactive)
+    (let (beg end)
+      (if (region-active-p)
+          (setq beg (region-beginning) end (region-end))
+        (setq beg (line-beginning-position) end (line-end-position)))
+      (comment-or-uncomment-region beg end)))
+
+  ;; Hippie expand
+  (general-define-key
+   "M-/" 'hippie-expand)
+  (setq hippie-expand-try-functions-list '(try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-complete-file-name-partially try-complete-file-name try-expand-all-abbrevs try-expand-list try-expand-line try-complete-lisp-symbol-partially try-complete-lisp-symbol))
+
+  ;; YASnippet
+  (use-package yasnippet
+    :straight t
+    :diminish yas-minor-mode
+    :defer 2
+    :config
+    (use-package yasnippet-snippets
+      :straight (yasnippet-snippets :host github :repo "AndreaCrotti/yasnippet-snippets"
+                                    :fork (:host github
+                                                 :repo "idmyn/yasnippet-snippets")))
+    (use-package ivy-yasnippet
+      :straight t
+      :init
+      (use-package dash
+        :straight t))
+    (yas-global-mode 1)
+    :config
+    ;; (general-def 'insert yas-minor-mode-map
+    ;;   "M-RET" 'yas-expand)
+    )
+#+END_SRC
+*** Everything else
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :straight t)
+#+END_SRC
+** Visual cues
+#+BEGIN_SRC emacs-lisp
+  (use-package visible-mark
+    :straight (visible-mark :host gitlab :repo "iankelling/visible-mark")
+    :init
+    (defface visible-mark-active
+     '((((type tty) (class mono)))
+       (t (:background "magenta"))) "")
+    (setq visible-mark-max 2)
+    (setq visible-mark-faces `(visible-mark-face1 visible-mark-face2))
+    :config
+    (global-visible-mark-mode 1))
 
-  ;; Ivy
-  (use-package ivy
+  ;; Eighty Column Rule
+  (use-package whitespace
+    :diminish global-whitespace-mode
+    :defer 2
+    :config
+    (setq whitespace-line-column 80
+          whitespace-style '(face tabs tab-mark lines-tail trailing)))
+
+  (global-whitespace-mode t)
+  (defun my-inhibit-global-whitespace-mode () ;; https://stackoverflow.com/a/6839968
+    "Counter-act `global-whitespace-mode'."
+    (add-hook 'after-change-major-mode-hook
+              (lambda () (whitespace-mode 0))
+              :append :local))
+
+  ;; while we're at it...
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+  ;; https://github.com/antonj/Highlight-Indentation-for-Emacs
+  (use-package highlight-indentation
+    :straight (highlight-indentation :host github :repo "antonj/Highlight-Indentation-for-Emacs")
+    :defer 2
+    :config
+    (set-face-background 'highlight-indentation-face "#f7f7ef")
+    (add-hook 'web-mode-hook 'highlight-indentation-mode)
+    (add-hook 'ruby-mode-hook 'highlight-indentation-mode))
+
+  ;; Flycheck
+  (use-package flycheck
     :straight t
     :diminish
-    :init ;; use flx if ivy--regex-fuzzy
-    (use-package flx
-      :straight t)
     :config
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-use-selectable-prompt t)
+    (global-flycheck-mode)
+    (setq flycheck-global-modes '(not emacs-lisp-mode)
+          flycheck-check-syntax-automatically '(mode-enabled save)))
+#+END_SRC
+** File/project management
+#+BEGIN_SRC emacs-lisp
+  ;; Filesystem hygiene
+  ;; https://www.emacswiki.org/emacs/BackupFiles
+  (setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+   '(("." . "~/.saves/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
 
-    ;; after-init-hook because something overrides it otherwise
-    (add-hook 'after-init-hook (lambda () (setq ivy-re-builders-alist
-                                                '((t . ivy--regex-fuzzy)))))
-
-    (use-package counsel
-      :straight t
-      :diminish
-      :config (counsel-mode 1))
-
-    (general-define-key
-     :keymaps '(ivy-minibuffer-map ivy-switch-buffer-map)
-     "C-j" (kbd "DEL")
-     "C-k" 'ivy-next-line
-     "C-l" 'ivy-previous-line
-     "C-;" 'ivy-alt-done
-
-     "M-k" 'ivy-next-line-and-call
-     "M-l" 'ivy-previous-line-and-call))
-
-  (use-package ivy-posframe
-    :straight t
-    :diminish
+  ;; Separate evil clipboard from system clipboard
+  (use-package simpleclip
+    :straight (simpleclip :host github :repo "rolandwalker/simpleclip")
+    :defer 1
     :config
-    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
-    (ivy-posframe-mode 1))
+    (defun my-vterm-yank-from-simpleclip ()
+      (interactive)
+      (kill-new (simpleclip-get-contents))
+      (vterm-yank))
+    (simpleclip-mode 1))
 
-  (use-package prescient
-    :straight t
-    :config
-    (use-package ivy-prescient
-      :straight t)
-
-    (ivy-prescient-mode)
-    (prescient-persist-mode))
+  (defun crux-rename-file-and-buffer () ; https://github.com/bbatsov/crux
+    "Rename current buffer and if the buffer is visiting a file, rename it too."
+    (interactive)
+    (let ((filename (buffer-file-name)))
+      (if (not (and filename (file-exists-p filename)))
+          (rename-buffer (read-from-minibuffer "New name: " (buffer-name)))
+        (let* ((new-name (read-from-minibuffer "New name: " filename))
+               (containing-dir (file-name-directory new-name)))
+          (make-directory containing-dir t)
+          (cond
+           ((vc-backend filename) (vc-rename-file filename new-name))
+           (t
+            (rename-file filename new-name t)
+            (set-visited-file-name new-name t t)))))))
 
   (use-package imenu-anywhere
     :straight t)
@@ -756,32 +750,6 @@
     (setq dumb-jump-selector 'ivy)
     (setq dumb-jump-force-searcher 'rg))
 
-  ;; Hippie expand
-  (general-define-key
-   "M-/" 'hippie-expand)
-  (setq hippie-expand-try-functions-list '(try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-complete-file-name-partially try-complete-file-name try-expand-all-abbrevs try-expand-list try-expand-line try-complete-lisp-symbol-partially try-complete-lisp-symbol))
-
-  ;; YASnippet
-  (use-package yasnippet
-    :straight t
-    :diminish yas-minor-mode
-    :defer 2
-    :config
-    (use-package yasnippet-snippets
-      :straight (yasnippet-snippets :host github :repo "AndreaCrotti/yasnippet-snippets"
-                                    :fork (:host github
-                                                 :repo "idmyn/yasnippet-snippets")))
-    (use-package ivy-yasnippet
-      :straight t
-      :init
-      (use-package dash
-        :straight t))
-    (yas-global-mode 1)
-    :config
-    ;; (general-def 'insert yas-minor-mode-map
-    ;;   "M-RET" 'yas-expand)
-    )
-
   ;; Ranger
   (use-package ranger
     :straight t
@@ -801,15 +769,56 @@
       "k" 'ranger-next-file
       "l" 'ranger-prev-file
       ":" 'ranger-find-file))
+#+END_SRC
+** Candidate selection
+#+BEGIN_SRC emacs-lisp
+  ;; Ivy
+  (use-package ivy
+    :straight t
+    :diminish
+    :init ;; use flx if ivy--regex-fuzzy
+    (use-package flx
+      :straight t)
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-use-selectable-prompt t)
 
-  ;; Flycheck
-  (use-package flycheck
+    ;; after-init-hook because something overrides it otherwise
+    (add-hook 'after-init-hook (lambda () (setq ivy-re-builders-alist
+                                                '((t . ivy--regex-fuzzy)))))
+
+    (use-package counsel
+      :straight t
+      :diminish
+      :config (counsel-mode 1))
+
+    (general-define-key
+     :keymaps '(ivy-minibuffer-map ivy-switch-buffer-map)
+     "C-j" (kbd "DEL")
+     "C-k" 'ivy-next-line
+     "C-l" 'ivy-previous-line
+     "C-;" 'ivy-alt-done
+
+     "M-k" 'ivy-next-line-and-call
+     "M-l" 'ivy-previous-line-and-call))
+
+  (use-package ivy-posframe
     :straight t
     :diminish
     :config
-    (global-flycheck-mode)
-    (setq flycheck-global-modes '(not emacs-lisp-mode)
-          flycheck-check-syntax-automatically '(mode-enabled save)))
+    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
+    (ivy-posframe-mode 1))
+
+  (use-package prescient
+    :straight t
+    :config
+    (use-package ivy-prescient
+      :straight t)
+
+    (ivy-prescient-mode)
+    (prescient-persist-mode))
+
 #+END_SRC
 * Language-specific packages and other major modes
 ** Git
