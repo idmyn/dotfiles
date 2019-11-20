@@ -301,9 +301,6 @@
     :straight t
     :after evil
     :config
-    ;; (use-package ace-window
-    ;;   :straight t
-    ;;   :bind ("M-o" . ace-window))
 
     ;; https://stackoverflow.com/a/2173393
     (defun vi-open-line-above ()
@@ -509,8 +506,11 @@
 
     (evil-mode 1))
 #+END_SRC
-
+*** Everything else
 #+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :straight t)
+
   (electric-pair-mode 1)
   (show-paren-mode 1)
 
@@ -522,7 +522,6 @@
   (setq backward-delete-char-untabify-method nil)
   (setq-default electric-indent-inhibit nil)
 
-  ;; Function for commenting line/region
   ;; https://stackoverflow.com/a/9697222
   (defun comment-or-uncomment-region-or-line ()
     (interactive)
@@ -552,16 +551,7 @@
       :init
       (use-package dash
         :straight t))
-    (yas-global-mode 1)
-    :config
-    ;; (general-def 'insert yas-minor-mode-map
-    ;;   "M-RET" 'yas-expand)
-    )
-#+END_SRC
-*** Everything else
-#+BEGIN_SRC emacs-lisp
-  (use-package expand-region
-    :straight t)
+    (yas-global-mode 1))
 #+END_SRC
 ** Visual cues
 #+BEGIN_SRC emacs-lisp
@@ -594,7 +584,6 @@
   ;; while we're at it...
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-  ;; https://github.com/antonj/Highlight-Indentation-for-Emacs
   (use-package highlight-indentation
     :straight (highlight-indentation :host github :repo "antonj/Highlight-Indentation-for-Emacs")
     :defer 2
@@ -714,14 +703,12 @@
       (when (executable-find "ag")
         (advice-remove 'projectile-get-ext-command #'modi/advice-projectile-use-rg)
         (advice-add 'projectile-get-ext-command :override #'modi/advice-projectile-use-ag)))
+
+    (projectile-register-project-type 'python '("RPGtodo.py"))
+    (projectile-register-project-type 'jekyll '(".jekyll-metadata"))
     (projectile-register-project-type 'learn '(".learn")
                                       :test-dir "test/"
                                       :test-suffix "test.js")
-
-    (projectile-register-project-type 'python '("RPGtodo.py"))
-
-    (projectile-register-project-type 'jekyll '(".jekyll-metadata"))
-
     (projectile-mode +1))
 
   ;; Neotree
@@ -729,7 +716,6 @@
     :straight t
     :defer t
     :config
-    ;; (setq projectile-switch-project-action 'neotree-projectile-action)
     (defun neotree-project-dir ()
       "Open NeoTree using the git root."
       (interactive)
@@ -763,7 +749,6 @@
     (general-def 'motion ranger-mode-map
       "." 'ranger-toggle-dotfiles
       "r" 'wdired-change-to-wdired-mode
-
       "h" 'ranger-paste
 
       "j" 'ranger-up-directory
@@ -778,7 +763,7 @@
   (use-package ivy
     :straight t
     :diminish
-    :init ;; use flx if ivy--regex-fuzzy
+    :init ;; flx required for ivy--regex-fuzzy
     (use-package flx
       :straight t)
     :config
@@ -852,11 +837,9 @@
     (global-diff-hl-mode))
 #+END_SRC
 ** Emacs Shell
+   Heavily inspired by https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
 #+BEGIN_SRC emacs-lisp
-  ; good inspo: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
   (setenv "PAGER" "cat")
-  ;; (eval-after-load 'eshell ; https://www.emacswiki.org/emacs/EshellAutojump
-  ;;   '(require 'eshell-autojump nil t))
   (use-package eshell-z
     :straight t
     :config
@@ -935,8 +918,7 @@
   (general-def 'insert shell-mode-map
     "C-k" 'comint-next-input
     "C-l" 'comint-previous-input
-    ;; "C-;" 'comint-send-input
-    )
+    "C-;" 'comint-send-input)
   (general-def 'normal shell-mode-map
     "C-d" 'evil-scroll-down)
 #+END_SRC
@@ -1017,7 +999,6 @@
 #+BEGIN_SRC emacs-lisp
   (use-package js2-mode
     :straight t
-    ;; :mode "\\.js\\'"
     :defer t
     :config
     (setq-default js2-basic-offset 2)
@@ -1025,8 +1006,8 @@
     (setq-default flycheck-disabled-checkers
                   (append flycheck-disabled-checkers
                           '(javascript-jshint)))
-    (setq flycheck-javascript-eslint-executable "eslint_d")
-    )
+    (setq flycheck-javascript-eslint-executable "eslint_d"))
+
   (use-package rjsx-mode
     :straight t
     :mode "\\.js\\'")
