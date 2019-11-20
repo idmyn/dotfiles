@@ -8,7 +8,8 @@
   - [[#additional-common-modifications][Additional common modifications]]
 - [[#stuff][Stuff]]
 - [[#editor-interaction][Editor interaction]]
-  - [[#evil][Evil]]
+  - [[#evil-vim-emulation][Evil (Vim emulation)]]
+  - [[#general-keybindings][General (keybindings)]]
 - [[#language-specific-packages-and-other-major-modes][Language-specific packages and other major modes]]
   - [[#git][Git]]
   - [[#emacs-shell][Emacs Shell]]
@@ -386,7 +387,7 @@
     :config (balanced-windows-mode))
 #+END_SRC
 * Editor interaction
-** Evil
+** Evil (Vim emulation)
 #+BEGIN_SRC emacs-lisp
   (use-package evil
     :straight t
@@ -805,6 +806,7 @@
     (setq flycheck-global-modes '(not emacs-lisp-mode)
           flycheck-check-syntax-automatically '(mode-enabled save)))
 #+END_SRC
+** General (keybindings)
 * Language-specific packages and other major modes
 ** Git
 #+BEGIN_SRC emacs-lisp
