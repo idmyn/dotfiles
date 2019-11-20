@@ -90,17 +90,22 @@
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Input Sans Narrow-15"))
 
+  (use-package diminish
+    :straight t)
+
   (defun input-sans ()
     "Set font to Input Sans Narrow in current buffer"
     (interactive)
     (setq buffer-face-mode-face '(:family "Input Sans Narrow"))
-    (buffer-face-mode))
+    (buffer-face-mode)
+    (diminish 'buffer-face-mode))
 
   (defun input-mono ()
     "Set font to Input Mono Narrow in current buffer"
     (interactive)
     (setq buffer-face-mode-face '(:family "Input Mono Narrow"))
-    (buffer-face-mode))
+    (buffer-face-mode)
+    (diminish 'buffer-face-mode))
 
   (add-hook 'prog-mode-hook 'input-sans)
 
@@ -133,8 +138,6 @@
   (setq inhibit-startup-screen t)
   (toggle-scroll-bar -1)
   (tool-bar-mode -1)
-  (use-package diminish
-    :straight t)
 
   ;; File path in title bar
   ;; https://stackoverflow.com/a/29821453
@@ -965,6 +968,7 @@
 
   (use-package emmet-mode
     :straight t
+    :diminish
     :config
     (add-hook 'web-mode-hook 'emmet-mode)
     (add-hook 'rjsx-mode-hook 'emmet-mode)
@@ -1032,14 +1036,16 @@
     (add-hook 'rjsx-mode-hook 'prettier-js-mode)
     (setq prettier-js-args '(
                              "--no-semi" "false"
-                             "--single-quote" "true"
                              )))
 #+END_SRC
 ** Eglot??
 #+BEGIN_SRC emacs-lisp
-  (use-package eglot
-    :straight (eglot :host github :repo "joaotavora/eglot")
-    :hook ((ruby-mode js2-mode) . eglot-ensure))
+    (use-package eglot
+      :straight (eglot :host github :repo "joaotavora/eglot")
+      :hook ((ruby-mode js2-mode) . eglot-ensure)
+      :config
+      (diminish 'flymake-mode)
+      (diminish 'eldoc-mode))
 #+END_SRC
 ** Ruby
 #+BEGIN_SRC emacs-lisp
