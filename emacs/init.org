@@ -67,7 +67,7 @@
   ;; Enable use-package
   (straight-use-package 'use-package)
 
-  ;; tool to figure out what’s taking time at startup
+  ;; Tool to figure out what’s taking time at startup
   (use-package esup
     :straight t
     :defer t)
@@ -127,14 +127,6 @@
 #+END_SRC
 ** Additional common modifications
 #+BEGIN_SRC emacs-lisp
-  (global-display-line-numbers-mode)
-  (setq-default display-line-numbers-type 'relative)
-  (defun my/toggle-relative-line-numbers ()
-    (interactive)
-    (setq display-line-numbers-type
-          (if (equal display-line-numbers-type 'relative) t 'relative))
-    (global-display-line-numbers-mode))
-
   (setq inhibit-startup-screen t)
   (toggle-scroll-bar -1)
   (tool-bar-mode -1)
@@ -146,6 +138,14 @@
                            (dired-directory dired-directory ; Dired buffer
                                             (revert-buffer-function "%b" ; Buffer Menu
                                                                     ("%b - Dir: " default-directory))))) ; Plain buffer
+
+  (global-display-line-numbers-mode)
+  (setq-default display-line-numbers-type 'relative)
+  (defun my/toggle-relative-line-numbers ()
+    (interactive)
+    (setq display-line-numbers-type
+          (if (equal display-line-numbers-type 'relative) t 'relative))
+    (global-display-line-numbers-mode))
 #+END_SRC
 * Stuff
 #+BEGIN_SRC emacs-lisp
