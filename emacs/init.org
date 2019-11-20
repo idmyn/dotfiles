@@ -406,201 +406,8 @@
     (evil-mode 1))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-    (use-package expand-region
-      :straight t)
-
-  ;; General (keybindings)
-  (use-package general
-    :straight t
-    :after evil
-    :config
-    ;; (use-package ace-window
-    ;;   :straight t
-    ;;   :bind ("M-o" . ace-window))
-
-    ;; https://stackoverflow.com/a/2173393
-    (defun vi-open-line-above ()
-      "Insert a newline above the current line and put point at beginning."
-      (interactive)
-      (unless (bolp)
-        (beginning-of-line))
-      (newline)
-      (forward-line -1)
-      (indent-according-to-mode))
-
-    (defun xah-paste-or-paste-previous ()
-      "Paste. When called repeatedly, paste previous.
-    This command calls `yank', and if repeated, call `yank-pop'.
-
-    When `universal-argument' is called first with a number arg, paste that many times.
-
-    URL `http://ergoemacs.org/emacs/emacs_paste_or_paste_previous.html'
-    Version 2017-07-25"
-      (interactive)
-      (progn
-        (when (and delete-selection-mode (region-active-p))
-          (delete-region (region-beginning) (region-end)))
-        (if current-prefix-arg
-            (progn
-              (dotimes ($i (prefix-numeric-value current-prefix-arg))
-                (yank)))
-          (if (eq real-last-command this-command)
-              (yank-pop 1)
-            (yank)))))
-
-    ;; https://www.emacswiki.org/emacs/AutoIndentation
-    (defun yank-and-indent ()
-      "Yank and then indent the newly formed region according to mode."
-      (interactive)
-      (xah-paste-or-paste-previous)
-      (call-interactively 'indent-region))
-
-    (setq set-mark-command-repeat-pop t)
-
-    (use-package ace-jump-mode
-      :straight (ace-jump-mode :host github :repo "winterTTr/ace-jump-mode")
-      :bind ("C-." . ace-jump-mode))
-
-    ;; global bindings
-    (general-define-key
-     "C-y" 'yank-and-indent
-
-     "C-'" 'backward-kill-word
-
-     "C-c g" 'magit-status
-     "C-c l" 'my/learn-tests
-
-     "C-j" 'newline
-
-     "s-e" 'er/expand-region
-
-     "s-=" 'text-scale-increase
-     "s--" 'text-scale-decrease
-
-     "s-n" 'xah-new-empty-buffer
-     "s-i" 'complete-symbol
-     ;; "s-r" 'browser-refresh
-     "s-f" 'switch-to-buffer
-     "s-b" 'counsel-bookmark
-     ;; "s-j" 'avy-goto-word-1
-
-     "C-o" 'vi-open-line-above
-
-     "M-j" 'windmove-left
-     "M-k" 'windmove-down
-     "M-l" 'windmove-up
-     "M-;" 'windmove-right
-
-     "M-u" 'move-border-left
-     "M-o" 'move-border-down
-     "M-i" 'move-border-up
-     "M-p" 'move-border-right
-
-     "C-x C-;" 'comment-or-uncomment-region-or-line
-     "C-x C-i" 'counsel-imenu
-
-     "C-c k" 'deft
-     "C-c e" 'eshell
-
-     "C-c p" 'projectile-command-map
-     )
-
-    (general-define-key (kbd "<C-return>") 'xah-run-current-file)
-
-    (general-create-definer global-leader
-      :prefix "SPC")
-    (global-leader 'motion 'override
-      "f" 'switch-to-buffer
-      "d" 'dumb-jump-go
-      "b" 'counsel-bookmark
-      "n" 'deer
-      "s" 'counsel-rg
-      "w" 'save-buffer
-      "e" 'eshell
-      "g" 'magit-status
-      "i" 'aggressive-indent-indent-defun
-      "h" 'highlight-indentation-mode
-      "c" 'comment-or-uncomment-region-or-line
-      "q" 'evil-quit
-      "v" (lambda () (interactive)(split-window-right) (other-window 1))
-      "x" (lambda () (interactive)(split-window-below) (other-window 1))
-      "L" 'my/learn-tests
-      "l" 'my/learn--f-f
-      "a" 'async-shell-command
-      "t" 'git-timemachine-toggle
-      "p" 'neotree-project-dir
-      "k" 'deft ; k for KNOWLEDGE
-      "m" 'counsel-imenu
-      "M" 'ivy-imenu-anywhere
-      "R" 'crux-rename-file-and-buffer
-      "r" 'query-replace)
-
-    (general-create-definer local-leader
-      :prefix "m")
-    ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
-
-    (general-def 'normal
-      "C-." 'ace-jump-mode
-      "C-r" 'isearch-backward
-      "s" 'ace-jump-mode
-      "J" nil ; unbind from evil-join
-      "p" nil ; unbind from evil-paste-after
-      ">" 'evil-shift-right-line
-      "<" 'evil-shift-left-line)
-
-    (general-def 'visual
-      ">" 'evil-shift-right
-      "<" 'evil-shift-left)
-
-    (use-package move-border
-      :straight (move-border :host github :repo "ramnes/move-border"))
-
-    (defun my/pop-mark-or-dumb-jump-backward()
-      (interactive)
-      (if (equal last-command 'dumb-jump-go) (dumb-jump-back) (set-mark-command t)))
-
-    (general-def 'motion
-      "j" 'evil-backward-char
-      "k" 'evil-next-line
-      "l" 'evil-previous-line
-      ":" 'evil-forward-char
-
-      "s-e" 'er/expand-region
-
-      "h" 'evil-paste-after
-      "H" 'evil-paste-before
-      "p" 'projectile-command-map
-
-      "RET" 'other-window
-
-      "C-e" 'er/expand-region
-
-      "C-i" 'my/pop-mark-or-dumb-jump-backward
-      "C-o" 'evil-jump-forward
-
-      ;; multiple-cursors
-      "C-k" 'evil-multiedit-match-symbol-and-next
-      "C-l" 'evil-multiedit-match-symbol-and-prev
-      "C-;" 'evil-multiedit-match-all
-
-      ;; easier motion around lines and paragraphs
-      "J" 'evil-first-non-blank
-      "K" 'forward-paragraph
-      "L" 'backward-paragraph
-      ";" 'evil-last-non-blank)
-
-    ;; emacs bindings in insert mode
-    ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
-    (setcdr evil-insert-state-map nil)
-    (define-key evil-insert-state-map
-      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
-    ;; fix escape key
-    (use-package evil-escape
-      :straight t
-      :diminish
-      :config
-      (evil-escape-mode)
-      (global-set-key (kbd "<escape>") 'evil-escape)))
+  (use-package expand-region
+    :straight t)
 
   ;; Ivy
   (use-package ivy
@@ -806,6 +613,199 @@
           flycheck-check-syntax-automatically '(mode-enabled save)))
 #+END_SRC
 ** General (keybindings)
+#+BEGIN_SRC emacs-lisp
+  (use-package general
+    :straight t
+    :after evil
+    :config
+    ;; (use-package ace-window
+    ;;   :straight t
+    ;;   :bind ("M-o" . ace-window))
+
+    ;; https://stackoverflow.com/a/2173393
+    (defun vi-open-line-above ()
+      "Insert a newline above the current line and put point at beginning."
+      (interactive)
+      (unless (bolp)
+        (beginning-of-line))
+      (newline)
+      (forward-line -1)
+      (indent-according-to-mode))
+
+    (defun xah-paste-or-paste-previous ()
+      "Paste. When called repeatedly, paste previous.
+    This command calls `yank', and if repeated, call `yank-pop'.
+
+    When `universal-argument' is called first with a number arg, paste that many times.
+
+    URL `http://ergoemacs.org/emacs/emacs_paste_or_paste_previous.html'
+    Version 2017-07-25"
+      (interactive)
+      (progn
+        (when (and delete-selection-mode (region-active-p))
+          (delete-region (region-beginning) (region-end)))
+        (if current-prefix-arg
+            (progn
+              (dotimes ($i (prefix-numeric-value current-prefix-arg))
+                (yank)))
+          (if (eq real-last-command this-command)
+              (yank-pop 1)
+            (yank)))))
+
+    ;; https://www.emacswiki.org/emacs/AutoIndentation
+    (defun yank-and-indent ()
+      "Yank and then indent the newly formed region according to mode."
+      (interactive)
+      (xah-paste-or-paste-previous)
+      (call-interactively 'indent-region))
+
+    (setq set-mark-command-repeat-pop t)
+
+    (use-package ace-jump-mode
+      :straight (ace-jump-mode :host github :repo "winterTTr/ace-jump-mode")
+      :bind ("C-." . ace-jump-mode))
+
+    ;; global bindings
+    (general-define-key
+     "C-y" 'yank-and-indent
+
+     "C-'" 'backward-kill-word
+
+     "C-c g" 'magit-status
+     "C-c l" 'my/learn-tests
+
+     "C-j" 'newline
+
+     "s-e" 'er/expand-region
+
+     "s-=" 'text-scale-increase
+     "s--" 'text-scale-decrease
+
+     "s-n" 'xah-new-empty-buffer
+     "s-i" 'complete-symbol
+     ;; "s-r" 'browser-refresh
+     "s-f" 'switch-to-buffer
+     "s-b" 'counsel-bookmark
+     ;; "s-j" 'avy-goto-word-1
+
+     "C-o" 'vi-open-line-above
+
+     "M-j" 'windmove-left
+     "M-k" 'windmove-down
+     "M-l" 'windmove-up
+     "M-;" 'windmove-right
+
+     "M-u" 'move-border-left
+     "M-o" 'move-border-down
+     "M-i" 'move-border-up
+     "M-p" 'move-border-right
+
+     "C-x C-;" 'comment-or-uncomment-region-or-line
+     "C-x C-i" 'counsel-imenu
+
+     "C-c k" 'deft
+     "C-c e" 'eshell
+
+     "C-c p" 'projectile-command-map
+     )
+
+    (general-define-key (kbd "<C-return>") 'xah-run-current-file)
+
+    (general-create-definer global-leader
+      :prefix "SPC")
+    (global-leader 'motion 'override
+      "f" 'switch-to-buffer
+      "d" 'dumb-jump-go
+      "b" 'counsel-bookmark
+      "n" 'deer
+      "s" 'counsel-rg
+      "w" 'save-buffer
+      "e" 'eshell
+      "g" 'magit-status
+      "i" 'aggressive-indent-indent-defun
+      "h" 'highlight-indentation-mode
+      "c" 'comment-or-uncomment-region-or-line
+      "q" 'evil-quit
+      "v" (lambda () (interactive)(split-window-right) (other-window 1))
+      "x" (lambda () (interactive)(split-window-below) (other-window 1))
+      "L" 'my/learn-tests
+      "l" 'my/learn--f-f
+      "a" 'async-shell-command
+      "t" 'git-timemachine-toggle
+      "p" 'neotree-project-dir
+      "k" 'deft ; k for KNOWLEDGE
+      "m" 'counsel-imenu
+      "M" 'ivy-imenu-anywhere
+      "R" 'crux-rename-file-and-buffer
+      "r" 'query-replace)
+
+    (general-create-definer local-leader
+      :prefix "m")
+    ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
+
+    (general-def 'normal
+      "C-." 'ace-jump-mode
+      "C-r" 'isearch-backward
+      "s" 'ace-jump-mode
+      "J" nil ; unbind from evil-join
+      "p" nil ; unbind from evil-paste-after
+      ">" 'evil-shift-right-line
+      "<" 'evil-shift-left-line)
+
+    (general-def 'visual
+      ">" 'evil-shift-right
+      "<" 'evil-shift-left)
+
+    (use-package move-border
+      :straight (move-border :host github :repo "ramnes/move-border"))
+
+    (defun my/pop-mark-or-dumb-jump-backward()
+      (interactive)
+      (if (equal last-command 'dumb-jump-go) (dumb-jump-back) (set-mark-command t)))
+
+    (general-def 'motion
+      "j" 'evil-backward-char
+      "k" 'evil-next-line
+      "l" 'evil-previous-line
+      ":" 'evil-forward-char
+
+      "s-e" 'er/expand-region
+
+      "h" 'evil-paste-after
+      "H" 'evil-paste-before
+      "p" 'projectile-command-map
+
+      "RET" 'other-window
+
+      "C-e" 'er/expand-region
+
+      "C-i" 'my/pop-mark-or-dumb-jump-backward
+      "C-o" 'evil-jump-forward
+
+      ;; multiple-cursors
+      "C-k" 'evil-multiedit-match-symbol-and-next
+      "C-l" 'evil-multiedit-match-symbol-and-prev
+      "C-;" 'evil-multiedit-match-all
+
+      ;; easier motion around lines and paragraphs
+      "J" 'evil-first-non-blank
+      "K" 'forward-paragraph
+      "L" 'backward-paragraph
+      ";" 'evil-last-non-blank)
+
+    ;; emacs bindings in insert mode
+    ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
+    (setcdr evil-insert-state-map nil)
+    (define-key evil-insert-state-map
+      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+    ;; fix escape key
+    (use-package evil-escape
+      :straight t
+      :diminish
+      :config
+      (evil-escape-mode)
+      (global-set-key (kbd "<escape>") 'evil-escape)))
+#+END_SRC
 * Language-specific packages and other major modes
 ** Git
 #+BEGIN_SRC emacs-lisp
