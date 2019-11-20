@@ -523,7 +523,7 @@
       "L" 'my/learn-tests
       "l" 'my/learn--f-f
       "a" 'async-shell-command
-      "t" 'term
+      "t" 'git-timemachine-toggle
       "p" 'neotree-project-dir
       "k" 'deft ; k for KNOWLEDGE
       "m" 'counsel-imenu
