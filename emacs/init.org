@@ -804,6 +804,9 @@
       "." 'ranger-toggle-dotfiles
       "r" 'wdired-change-to-wdired-mode
 
+      "h" 'ranger-paste
+
+      "j" 'ranger-up-directory
       "j" 'ranger-up-directory
       "k" 'ranger-next-file
       "l" 'ranger-prev-file
@@ -1011,7 +1014,8 @@
 #+BEGIN_SRC emacs-lisp
   (use-package js2-mode
     :straight t
-    :mode "\\.js\\'"
+    ;; :mode "\\.js\\'"
+    :defer t
     :config
     (setq-default js2-basic-offset 2)
     (setq js2-strict-missing-semi-warning nil)
@@ -1019,8 +1023,10 @@
                   (append flycheck-disabled-checkers
                           '(javascript-jshint)))
     (setq flycheck-javascript-eslint-executable "eslint_d")
-    (use-package rjsx-mode
-      :straight t))
+    )
+  (use-package rjsx-mode
+    :straight t
+    :mode "\\.js\\'")
 
   (use-package json-mode
     :straight t
