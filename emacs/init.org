@@ -1,13 +1,13 @@
 * My Emacs Config                                                  :noexport:
 ** Table of Contents                                                    :TOC:
 - [[#initialization][Initialization]]
-- [[#appearance][Appearance]]
+- [[#editor-appearance][Editor Appearance]]
   - [[#theme][Theme]]
   - [[#fonts][Fonts]]
   - [[#emojis][Emojis]]
   - [[#additional-common-modifications][Additional common modifications]]
 - [[#stuff][Stuff]]
-- [[#editor-navigation-and-interaction][Editor navigation and interaction]]
+- [[#editor-interaction][Editor interaction]]
 - [[#language-specific-packages-and-other-major-modes][Language-specific packages and other major modes]]
   - [[#git][Git]]
   - [[#emacs-shell][Emacs Shell]]
@@ -33,7 +33,6 @@
   ;; Borrowed from https://blog.d46.us/advanced-emacs-startup/
   ;; Make startup faster by reducing the frequency of garbage
   ;; collection.  The default is 800 kilobytes.  Measured in bytes.
-  ;; The final line of this file decreases the threashold.
   (setq gc-cons-threshold (* 50 1000 1000))
   (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold (* 2 1000 1000))))
 
@@ -70,7 +69,7 @@
     :straight t
     :defer t)
 #+END_SRC
-* Appearance
+* Editor Appearance
   This section is for modifications that change how the editor /looks/, but not
   how it /works/.
 #+BEGIN_SRC emacs-lisp
@@ -385,7 +384,7 @@
                :host github :repo "wbolster/emacs-balanced-windows")
     :config (balanced-windows-mode))
 #+END_SRC
-* Editor navigation and interaction
+* Editor interaction
 #+BEGIN_SRC emacs-lisp
   ;; General (keybindings)
   (use-package general
