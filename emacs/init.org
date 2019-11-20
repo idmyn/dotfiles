@@ -1167,11 +1167,11 @@
   (cond
    ((string-equal system-type "windows-nt")
     (progn
-      ; config
+      ;; config
       ))
    ((string-equal system-type "gnu/linux")
     (progn
-      ; config
+      ;; config
       ))
 
    ((string-equal system-type "darwin") ; macOS
@@ -1183,6 +1183,5 @@
         (exec-path-from-shell-initialize))
 
       ;; Fix "#" input on UK MacBook keyboard
-      (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
-      )))
+      (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))))
 #+END_SRC
