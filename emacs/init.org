@@ -1068,9 +1068,6 @@
     :straight t
     :interpreter "ruby"
     :config
-    ;; https://github.com/dgutov/robe#integration-with-rvmel
-    ;; (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-      ;; (rvm-activate-corresponding-ruby))
     (general-def 'insert inf-ruby-mode-map
       "C-k" 'comint-next-input
       "C-l" 'comint-previous-input
@@ -1093,8 +1090,8 @@
     :config (rvm-use-default))
 #+END_SRC
 ** Python
+  https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
 #+BEGIN_SRC emacs-lisp
-  ;; https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
   (use-package elpy
     :straight t
     :interpreter "python"
