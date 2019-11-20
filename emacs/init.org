@@ -23,7 +23,7 @@
   - [[#clojure][Clojure]]
   - [[#yaml][YAML]]
   - [[#deft][Deft]]
-- [[#macos-specific][macOS specific]]
+- [[#macos-specific][(mac)OS specific]]
 
 * Initialization
 #+BEGIN_SRC emacs-lisp
@@ -71,8 +71,8 @@
     :defer t)
 #+END_SRC
 * Appearance
-This section is for modifications that change how the editor /looks/, but not
-how it /works/.
+  This section is for modifications that change how the editor /looks/, but not
+  how it /works/.
 #+BEGIN_SRC emacs-lisp
   ;; Keep emacs Custom-settings in separate file
   ;; pinched this from https://github.com/magnars/.emacs.d/blob/master/init.el
@@ -1142,14 +1142,27 @@ how it /works/.
           deft-use-filter-string-for-filename t)
     (add-to-list 'evil-insert-state-modes 'deft-mode))
 #+END_SRC
-* macOS specific
+* (mac)OS specific
+  https://www.johndcook.com/blog/2016/11/30/setting-up-emacs-shell-on-a-mac/
 #+BEGIN_SRC emacs-lisp
-  (use-package exec-path-from-shell
-       :straight t
-       :defer 0.1
-       :config
-       (exec-path-from-shell-initialize))
+  (cond
+   ((string-equal system-type "windows-nt")
+    (progn
+      ; config
+      ))
+   ((string-equal system-type "gnu/linux")
+    (progn
+      ; config
+      ))
 
-  ;; Allow hash to be entered on UK macbook keyboard layout
-  (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+   ((string-equal system-type "darwin") ; macOS
+    (progn
+      (use-package exec-path-from-shell
+        :straight t
+        :defer 0.1
+        :config
+        (exec-path-from-shell-initialize))
+
+      ;; Fix "#" input on UK MacBook keyboard
+      (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))))
 #+END_SRC
