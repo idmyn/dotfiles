@@ -143,11 +143,6 @@ how it /works/.
   ; (setq split-height-threshold nil)
   ; (setq split-width-threshold 0)
 
-  ;; (use-package avy
-  ;;   :straight t
-  ;;   :defer 1
-  ;;   :config (setq avy-timeout-seconds 0.3)) ; I have ace-jump now
-
   (show-paren-mode 1)
   (electric-pair-mode 1)
 
