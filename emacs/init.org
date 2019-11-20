@@ -1,9 +1,10 @@
 * My Emacs Config                                                  :noexport:
 ** Table of Contents                                                    :TOC:
 - [[#initialization][Initialization]]
-- [[#appearance-and-quality-of-life-tweaks][Appearance and quality of life tweaks]]
+- [[#appearance][Appearance]]
   - [[#theme][Theme]]
   - [[#fonts][Fonts]]
+- [[#stuff][Stuff]]
 - [[#editor-navigation-and-interaction][Editor navigation and interaction]]
 - [[#language-specific-packages-and-other-major-modes][Language-specific packages and other major modes]]
   - [[#git][Git]]
@@ -67,7 +68,9 @@
     :straight t
     :defer t)
 #+END_SRC
-* Appearance and quality of life tweaks
+* Appearance
+This section is for modifications that change how the editor /looks/, but not
+how it /works/.
 #+BEGIN_SRC emacs-lisp
   ;; Keep emacs Custom-settings in separate file
   ;; pinched this from https://github.com/magnars/.emacs.d/blob/master/init.el
@@ -105,6 +108,7 @@
   (add-hook 'deft-mode-hook 'input-mono)
   (add-hook 'ranger-mode-hook 'input-mono)
 #+END_SRC
+* Stuff
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen t)
   (toggle-scroll-bar -1)
