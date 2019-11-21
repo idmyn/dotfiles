@@ -1024,7 +1024,7 @@
     :straight t
     :config
     ;; using :hook only applies prettier-js once on file open...
-    (add-hook 'rjsx-mode-hook 'prettier-js-mode)
+    ;; (add-hook 'rjsx-mode-hook 'prettier-js-mode)
     (setq prettier-js-args '(
                              "--no-semi" "false"
                              )))
