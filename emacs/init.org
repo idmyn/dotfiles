@@ -1159,6 +1159,8 @@
         :config
         (exec-path-from-shell-initialize))
 
+      (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+
       ;; Fix "#" input on UK MacBook keyboard
       (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))))
 #+END_SRC
