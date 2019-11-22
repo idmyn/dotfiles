@@ -413,7 +413,8 @@
       "a" 'async-shell-command
       "t" 'git-timemachine-toggle
       "p" 'neotree-project-dir
-      "k" 'deft ; k for KNOWLEDGE
+      "k" 'deft-find-file ; k for KNOWLEDGE
+      "K" 'deft
       "m" 'counsel-imenu
       "M" 'ivy-imenu-anywhere
       "R" 'crux-rename-file-and-buffer
@@ -1031,12 +1032,13 @@
 #+END_SRC
 ** Eglot??
 #+BEGIN_SRC emacs-lisp
-    (use-package eglot
-      :straight (eglot :host github :repo "joaotavora/eglot")
-      :hook ((ruby-mode js2-mode) . eglot-ensure)
-      :config
-      (diminish 'flymake-mode)
-      (diminish 'eldoc-mode))
+  (use-package eglot
+    :straight (eglot :host github :repo "joaotavora/eglot")
+    ;; :hook ((ruby-mode js2-mode) . eglot-ensure)
+    :config
+    ;; (add-hook 'rjsx-mode-hook 'eglot-ensure)
+    (diminish 'flymake-mode)
+    (diminish 'eldoc-mode))
 #+END_SRC
 ** Ruby
 #+BEGIN_SRC emacs-lisp
