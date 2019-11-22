@@ -132,8 +132,10 @@
 ** Other
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen t)
-  (toggle-scroll-bar -1)
   (tool-bar-mode -1)
+  (toggle-scroll-bar -1)
+  ;; nconc takes two lists and pushes the second onto the end of the first
+  (nconc after-make-frame-functions (list (lambda (x) (toggle-scroll-bar -1))))
 
   ;; File path in title bar
   ;; https://stackoverflow.com/a/29821453
