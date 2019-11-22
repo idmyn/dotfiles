@@ -156,15 +156,13 @@
 * Handy functions
 #+BEGIN_SRC emacs-lisp
   ;; Flatiron School niceties
-  ;; (setq shell-file-name "zsh")
-  ;; (setenv "SHELL" shell-file-name)
   (defun my/learn-tests ()
-    "Run learn tests asynchronously."
+    "Run learn tests"
     (interactive)
     (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
       (shell-command "learn")))
   (defun my/learn--f-f ()
-    "Run learn --f-f asynchronously."
+    "Run learn --f-f"
     (interactive)
     (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
       (shell-command "learn --f-f")))
