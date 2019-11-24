@@ -587,6 +587,7 @@
 
   (use-package highlight-indentation
     :straight (highlight-indentation :host github :repo "antonj/Highlight-Indentation-for-Emacs")
+    :diminish
     :defer 2
     :config
     (set-face-background 'highlight-indentation-face "#f7f7ef")
@@ -1028,6 +1029,7 @@
     ;; (add-hook 'rjsx-mode-hook 'prettier-js-mode)
     (setq prettier-js-args '(
                              "--no-semi" "false"
+                             "--single-quote" "true"
                              )))
 #+END_SRC
 ** Eglot??
