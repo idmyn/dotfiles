@@ -19,6 +19,7 @@
   - [[#git][Git]]
   - [[#emacs-shell][Emacs Shell]]
   - [[#org-mode][Org Mode]]
+  - [[#latex][LaTeX]]
   - [[#htmlhamlcsssass][HTML/HAML/CSS/Sass]]
   - [[#javascript][JavaScript]]
   - [[#eglot][Eglot??]]
@@ -947,6 +948,12 @@
     :straight t
     :hook (org-mode . toc-org-mode))
 #+END_SRC
+** LaTeX
+#+BEGIN_SRC emacs-lisp
+  (use-package tex
+    :straight auctex
+    :defer t)
+#+END_SRC
 ** HTML/HAML/CSS/Sass
 #+BEGIN_SRC emacs-lisp
   (use-package web-mode
@@ -991,7 +998,7 @@
 
   (use-package sass-mode
     :straight (sass-mode :host github :repo "nex3/sass-mode")
-    :mode "\\.scss\\'")
+    :mode "\\.sass\\'")
 
   (use-package haml-mode
     :straight t
@@ -1029,7 +1036,6 @@
     ;; (add-hook 'rjsx-mode-hook 'prettier-js-mode)
     (setq prettier-js-args '(
                              "--no-semi" "false"
-                             "--single-quote" "true"
                              )))
 #+END_SRC
 ** Eglot??
