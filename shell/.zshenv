@@ -4,3 +4,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 ENHANCD_COMPLETION_BEHAVIOR=history; export ENHANCD_COMPLETION_BEHAVIOR
 ENHANCD_COMMAND=d; export ENHANCD_COMMAND
+if [ -e /Users/david/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/david/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
