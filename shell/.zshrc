@@ -48,8 +48,4 @@ function e { emacsclient -a '' -c $1 &; }
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 RUBIES+=(~/.rvm/rubies/*)
-chruby ruby-2.6.1
-
-# not sure how to get nix-profile to the front of $PATH otherwise
-path=('/Users/david/.nix-profile/bin' $path)
-export PATH
+chruby ruby-2.6.3

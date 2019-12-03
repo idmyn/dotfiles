@@ -5,3 +5,7 @@ export NVM_DIR="$HOME/.nvm"
 ENHANCD_COMPLETION_BEHAVIOR=history; export ENHANCD_COMPLETION_BEHAVIOR
 ENHANCD_COMMAND=d; export ENHANCD_COMMAND
 if [ -e /Users/david/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/david/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if test -e /etc/static/zshenv; then . /etc/static/zshenv; fi
+NIX_IGNORE_SYMLINK_STORE=1; export NIX_IGNORE_SYMLINK_STORE # https://github.com/LnL7/nix-darwin/issues/166#issuecomment-558813578
+path=('/Users/david/.nix-profile/bin' $path)
+export PATH
