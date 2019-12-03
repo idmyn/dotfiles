@@ -31,6 +31,8 @@
   - [[#clojure][Clojure]]
   - [[#yaml][YAML]]
   - [[#deft][Deft]]
+  - [[#nix][Nix]]
+  - [[#lua][Lua]]
 - [[#macos-specific][(mac)OS specific]]
 
 * Initialization
@@ -1036,6 +1038,7 @@
     ;; (add-hook 'rjsx-mode-hook 'prettier-js-mode)
     (setq prettier-js-args '(
                              "--no-semi" "false"
+                             "--single-quote" "true"
                              )))
 #+END_SRC
 ** Eglot??
@@ -1147,6 +1150,18 @@
     (setq deft-directory "~/Dropbox/notes"
           deft-use-filter-string-for-filename t)
     (add-to-list 'evil-insert-state-modes 'deft-mode))
+#+END_SRC
+** Nix
+#+BEGIN_SRC emacs-lisp
+  (use-package nix-mode
+    :straight t
+    :mode "\\.nix\\'")
+#+END_SRC
+** Lua
+#+BEGIN_SRC emacs-lisp
+  (use-package lua-mode
+    :straight t
+    :mode "\\.lua\\'")
 #+END_SRC
 * (mac)OS specific
   https://www.johndcook.com/blog/2016/11/30/setting-up-emacs-shell-on-a-mac/
