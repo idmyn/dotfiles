@@ -9,6 +9,7 @@
   - [git submodule update --init --recursive, Installing submodules]
 
 - link:
+    ~/.nixpkgs/darwin-configuration.nix: nix/darwin-configuration.nix
     ~/.emacs.d/init.el: emacs/init.el
     ~/.emacs.d/init.org: emacs/init.org
     ~/.emacs.d/custom.el: emacs/custom.el
