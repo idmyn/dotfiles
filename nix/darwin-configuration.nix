@@ -21,7 +21,7 @@
   programs.zsh.enable = true;
   # programs.fish.enable = true;
 
-  # programs.zsh.promptInit = "";
+  programs.zsh.promptInit = "";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
