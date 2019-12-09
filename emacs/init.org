@@ -20,6 +20,7 @@
   - [[#emacs-shell][Emacs Shell]]
   - [[#org-mode][Org Mode]]
   - [[#latex][LaTeX]]
+  - [[#markdown][Markdown]]
   - [[#htmlhamlcsssass][HTML/HAML/CSS/Sass]]
   - [[#javascript][JavaScript]]
   - [[#eglot][Eglot??]]
@@ -955,6 +956,12 @@
   (use-package tex
     :straight auctex
     :defer t)
+#+END_SRC
+** Markdown
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :straight t
+    :mode "\\.md\\'")
 #+END_SRC
 ** HTML/HAML/CSS/Sass
 #+BEGIN_SRC emacs-lisp
