@@ -1045,7 +1045,6 @@
     ;; (add-hook 'rjsx-mode-hook 'prettier-js-mode)
     (setq prettier-js-args '(
                              "--no-semi" "false"
-                             "--single-quote" "true"
                              )))
 #+END_SRC
 ** Eglot??
@@ -1060,6 +1059,11 @@
 #+END_SRC
 ** Ruby
 #+BEGIN_SRC emacs-lisp
+  (use-package ruby-mode
+    :config
+    (setq ruby-insert-encoding-magic-comment nil)
+    (setq ruby-indent-level 2))
+
   (use-package rubocop
     :straight t
     :interpreter "ruby")
