@@ -433,7 +433,7 @@
 
     (general-def 'normal
       "C-." 'ace-jump-mode
-      "C-r" 'isearch-backward
+      ;; "C-r" 'isearch-backward
       "s" 'ace-jump-mode
       "J" nil ; unbind from evil-join
       "p" nil ; unbind from evil-paste-after
@@ -503,6 +503,13 @@
     :config
     (setq-default evil-shift-width 2)
     (add-hook 'after-init-hook (lambda () (global-undo-tree-mode -1)))
+
+    (use-package undo-fu
+      :straight (undo-fu :host gitlab :repo "ideasman42/emacs-undo-fu")
+      :config
+      (general-def 'normal
+       "u" 'undo-fu-only-undo
+       "C-r" 'undo-fu-only-redo))
 
     (use-package evil-multiedit
       :straight t
