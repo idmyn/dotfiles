@@ -351,6 +351,8 @@
 
     ;; global bindings
     (general-define-key
+     "C-x C-c" 'save-buffers-kill-emacs
+
      "C-y" 'yank-and-indent
 
      "C-'" 'backward-kill-word
@@ -400,6 +402,7 @@
     (global-leader 'motion 'override
       "f" 'switch-to-buffer
       "d" 'dumb-jump-go
+      "D" 'dumb-jump-back
       "b" 'counsel-bookmark
       "n" 'deer
       "s" 'counsel-rg
