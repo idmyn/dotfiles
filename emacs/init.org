@@ -1154,6 +1154,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package restclient
     :straight t
+    :mode ("\\.rest\\'" . restclient-mode)
     :config ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 #+END_SRC
