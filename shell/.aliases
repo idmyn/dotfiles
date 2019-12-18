@@ -8,6 +8,8 @@ alias ip="ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]
 
 alias be="bundle exec"
 
+alias b='buku --suggest'
+
 alias zshrc='e ~/.zshrc'
 alias kittyrc='e ~/.config/kitty/kitty.conf'
 alias vimrc='e ~/.vimrc'
