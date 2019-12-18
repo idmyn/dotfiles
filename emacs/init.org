@@ -34,6 +34,7 @@
   - [[#deft][Deft]]
   - [[#nix][Nix]]
   - [[#lua][Lua]]
+  - [[#ebuku][EBuku]]
 - [[#macos-specific][(mac)OS specific]]
 
 * Initialization
@@ -1190,6 +1191,13 @@
   (use-package lua-mode
     :straight t
     :mode "\\.lua\\'")
+#+END_SRC
+** EBuku
+#+BEGIN_SRC emacs-lisp
+    (use-package ebuku
+      :straight (ebuku :host github :repo "flexibeast/ebuku")
+      :config
+      (setq ebuku-buku-path "~/.nix-profile/bin/buku"))
 #+END_SRC
 * (mac)OS specific
   https://www.johndcook.com/blog/2016/11/30/setting-up-emacs-shell-on-a-mac/
