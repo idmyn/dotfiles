@@ -480,20 +480,7 @@
       "J" 'evil-first-non-blank
       "K" 'forward-paragraph
       "L" 'backward-paragraph
-      ";" 'evil-last-non-blank)
-
-    ;; emacs bindings in insert mode
-    ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
-    (setcdr evil-insert-state-map nil)
-    (define-key evil-insert-state-map
-      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
-    ;; fix escape key
-    (use-package evil-escape
-      :straight t
-      :diminish
-      :config
-      (evil-escape-mode)
-      (global-set-key (kbd "<escape>") 'evil-escape)))
+      ";" 'evil-last-non-blank))
 #+END_SRC
 ** Editing text
 *** Evil (Vim emulation)
@@ -519,6 +506,19 @@
     (use-package evil-surround
       :straight t
       :config (global-evil-surround-mode 1))
+
+    ;; emacs bindings in insert mode
+    ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
+    (setcdr evil-insert-state-map nil)
+    (define-key evil-insert-state-map
+      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+    ;; fix escape key
+    (use-package evil-escape
+      :straight t
+      :diminish
+      :config
+      (evil-escape-mode)
+      (global-set-key (kbd "<escape>") 'evil-escape))
 
     (evil-mode 1))
 #+END_SRC
