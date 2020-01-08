@@ -26,6 +26,8 @@ PS1='
  ${vcs_info_msg_0_} $ '
 
 bindkey -e
+bindkey -M emacs '^L' history-substring-search-up
+bindkey -M emacs '^K' history-substring-search-down
 
 # colors via https://geoff.greer.fm/lscolors/
 export LSCOLORS=AxexcxdxbxegfhabagacEx
