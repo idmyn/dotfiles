@@ -64,6 +64,8 @@ const showOrOpenBrowser = new Key('w', ['cmd', 'ctrl'], () => {
     App.get('Safari').focus()
   } else if (App.get('Brave Browser')) {
     App.get('Brave Browser').focus()
+  } else {
+    App.launch('Safari')
   }
 })
 /* eslint-enable no-unused-vars */
