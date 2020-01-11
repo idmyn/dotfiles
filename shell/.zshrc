@@ -9,8 +9,6 @@ fi
 
 source ~/.zsh_plugins.sh
 
-ENHANCD_FILTER=fzy; export ENHANCD_FILTER
-
 # https://arjanvandergaag.nl/blog/customize-zsh-prompt-with-vcs-info.html
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
