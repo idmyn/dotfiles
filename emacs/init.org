@@ -669,10 +669,11 @@
   (use-package projectile
     :straight t
     :defer 1
+    :custom
+    (projectile-project-search-path '("~/Development/"))
+    (projectile-completion-system 'ivy)
+    (projectile-enable-caching t)
     :config
-    (setq projectile-project-search-path '("~/Development/"))
-    (setq projectile-completion-system 'ivy)
-    (setq projectile-enable-caching t)
 
     ;; https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-projectile.el
     ;;; Default rg arguments
@@ -756,9 +757,9 @@
   (use-package dumb-jump
     :straight t
     :defer t
-    :config
-    (setq dumb-jump-selector 'ivy)
-    (setq dumb-jump-force-searcher 'rg))
+    :custom
+    (dumb-jump-selector 'ivy)
+    (dumb-jump-force-searcher 'rg))
 
   ;; Ranger
   (use-package ranger
@@ -931,8 +932,7 @@
 
   (use-package load-bash-alias
     :straight t
-    :config
-    (setq load-bash-alias-bashrc-file "~/.aliases"))
+    :custom (load-bash-alias-bashrc-file "~/.aliases"))
 
   (setq eshell-history-size 1000000)
   (setq shell-file-name "bash") ; for cases where I can't use eshell
@@ -983,7 +983,7 @@
 
   (use-package grip-mode
     :straight t
-    :config (setq grip-binary-path "~/.pyenv/shims/grip"))
+    :custom (grip-binary-path "~/.pyenv/shims/grip"))
 #+END_SRC
 ** HTML/HAML/CSS/Sass
 #+BEGIN_SRC emacs-lisp
@@ -1022,10 +1022,10 @@
                                :fork (:host github
                                             :repo "idmyn/emacs-browser-refresh"))
     :bind ("s-r" . browser-refresh)
-    :config
-    (setq browser-refresh-default-browser 'brave)
-    (setq browser-refresh-save-buffer nil)
-    (setq browser-refresh-activate nil))
+    :custom
+    (browser-refresh-default-browser 'brave)
+    (browser-refresh-save-buffer nil)
+    (browser-refresh-activate nil))
 
   (use-package sass-mode
     :straight (sass-mode :host github :repo "nex3/sass-mode")
@@ -1062,10 +1062,10 @@
 
   (use-package prettier-js
     :straight t
-    :config
+    :custom
     ;; using :hook only applies prettier-js once on file open...
     ;; (add-hook 'rjsx-mode-hook 'prettier-js-mode)
-    (setq prettier-js-args '(
+    (prettier-js-args '(
                              "--no-semi" "false"
                              )))
 #+END_SRC
@@ -1082,9 +1082,9 @@
 ** Ruby
 #+BEGIN_SRC emacs-lisp
   (use-package ruby-mode
-    :config
-    (setq ruby-insert-encoding-magic-comment nil)
-    (setq ruby-indent-level 2))
+    :custom
+    (ruby-insert-encoding-magic-comment nil)
+    (ruby-indent-level 2))
 
   (use-package rubocop
     :straight t
@@ -1161,8 +1161,8 @@
   (use-package restclient
     :straight t
     :mode ("\\.http\\'" . restclient-mode)
-    :config ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+    :custom ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
+    (gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 #+END_SRC
 ** Clojure
 #+BEGIN_SRC emacs-lisp
@@ -1208,8 +1208,7 @@
 #+BEGIN_SRC emacs-lisp
     (use-package ebuku
       :straight (ebuku :host github :repo "flexibeast/ebuku")
-      :config
-      (setq ebuku-buku-path "~/.nix-profile/bin/buku"))
+      :custom (ebuku-buku-path "~/.nix-profile/bin/buku"))
 #+END_SRC
 * (mac)OS specific
   https://www.johndcook.com/blog/2016/11/30/setting-up-emacs-shell-on-a-mac/
