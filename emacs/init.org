@@ -68,6 +68,7 @@
   ;; Garbage Collector Magic Hack
   (use-package gcmh
     :straight t
+    :diminish
     :init (gcmh-mode 1))
 
   (add-hook 'emacs-startup-hook
@@ -619,6 +620,10 @@
     (global-flycheck-mode)
     (setq flycheck-global-modes '(not emacs-lisp-mode)
           flycheck-check-syntax-automatically '(mode-enabled save)))
+
+  (use-package hl-todo
+    :straight t
+    :config (global-hl-todo-mode 1))
 #+END_SRC
 ** File/project management
 #+BEGIN_SRC emacs-lisp
@@ -822,7 +827,6 @@
 
     (ivy-prescient-mode)
     (prescient-persist-mode))
-
 #+END_SRC
 * Language-specific packages and other major modes
 ** Git
