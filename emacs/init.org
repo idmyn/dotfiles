@@ -42,20 +42,6 @@
   (setq user-full-name "David Mynors"
         user-mail-address "hello@davidmyno.rs")
 
-  ;; Borrowed from https://blog.d46.us/advanced-emacs-startup/
-  ;; Make startup faster by reducing the frequency of garbage
-  ;; collection.  The default is 800 kilobytes.  Measured in bytes.
-  (setq gc-cons-threshold (* 50 1000 1000))
-  (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold (* 2 1000 1000))))
-
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (message "Emacs ready in %s with %d garbage collections."
-                       (format "%.2f seconds"
-                               (float-time
-                                (time-subtract after-init-time before-init-time)))
-                       gcs-done)))
-
   ;; straight.el
   (defvar bootstrap-version)
   (let ((bootstrap-file
@@ -77,8 +63,22 @@
   (straight-use-package 'use-package)
 
   ;; Load secrets (encrypted with git-crypt)
-  (use-package load-relative)
+  (use-package load-relative
+    :straight t)
   (load-relative "secrets.el")
+
+  ;; Garbage Collector Magic Hack
+  (use-package gcmh
+    :straight t
+    :init (gcmh-mode 1))
+
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (message "Emacs ready in %s with %d garbage collections."
+                       (format "%.2f seconds"
+                               (float-time
+                                (time-subtract after-init-time before-init-time)))
+                       gcs-done)))
 
   ;; Tool to figure out what’s taking time at startup
   (use-package esup
