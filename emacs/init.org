@@ -73,9 +73,8 @@
   ;; http://irreal.org/blog/?p=5916
   (setq use-package-enable-imenu-support t)
 
-  ;; Enable use-package and install packages by default
+  ;; Enable use-package
   (straight-use-package 'use-package)
-  (setq straight-use-package-by-default t)
 
   ;; Load secrets (encrypted with git-crypt)
   (use-package load-relative)
@@ -83,6 +82,7 @@
 
   ;; Tool to figure out what’s taking time at startup
   (use-package esup
+    :straight t
     :defer t)
 #+END_SRC
 * Editor Appearance
@@ -96,13 +96,15 @@
 #+END_SRC
 ** Theme
 #+BEGIN_SRC emacs-lisp
-  (use-package eink-theme)
+  (use-package eink-theme
+    :straight t)
 #+END_SRC
 ** Fonts
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Input Sans Narrow-15"))
 
-  (use-package diminish)
+  (use-package diminish
+    :straight t)
 
   (defun input-sans ()
     "Set font to Input Sans Narrow in current buffer"
@@ -131,6 +133,7 @@
 ** Emojis
 #+BEGIN_SRC emacs-lisp
   (use-package emojify
+    :straight t
     :defer 2
     :config
     (add-hook 'after-init-hook #'global-emojify-mode))
@@ -305,6 +308,7 @@
 ** Keybindings (general.el)
 #+BEGIN_SRC emacs-lisp
   (use-package general
+    :straight t
     :after evil
     :config
 
@@ -487,6 +491,7 @@
 *** Evil (Vim emulation)
 #+BEGIN_SRC emacs-lisp
   (use-package evil
+    :straight t
     :init (setq evil-want-C-u-scroll t)
     :config
     (setq-default evil-shift-width 2)
@@ -500,9 +505,11 @@
        "U" 'undo-fu-only-redo))
 
     (use-package evil-multiedit
+      :straight t
       :defer 2)
 
     (use-package evil-surround
+      :straight t
       :config (global-evil-surround-mode 1))
 
     ;; emacs bindings in insert mode
@@ -512,6 +519,7 @@
       (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
     ;; fix escape key
     (use-package evil-escape
+      :straight t
       :diminish
       :config
       (evil-escape-mode)
@@ -521,13 +529,15 @@
 #+END_SRC
 *** Everything else
 #+BEGIN_SRC emacs-lisp
-  (use-package expand-region)
+  (use-package expand-region
+    :straight t)
 
   (electric-pair-mode 1)
   (show-paren-mode 1)
 
   ;; Indentation
-  (use-package aggressive-indent)
+  (use-package aggressive-indent
+    :straight t)
   (setq-default tab-width 4)
   (setq-default indent-tabs-mode nil)
   (setq backward-delete-char-untabify-method nil)
@@ -549,6 +559,7 @@
 
   ;; YASnippet
   (use-package yasnippet
+    :straight t
     :diminish yas-minor-mode
     :defer 2
     :config
@@ -557,8 +568,10 @@
                                     :fork (:host github
                                                  :repo "idmyn/yasnippet-snippets")))
     (use-package ivy-yasnippet
+      :straight t
       :init
-      (use-package dash))
+      (use-package dash
+        :straight t))
     (yas-global-mode 1))
 #+END_SRC
 ** Visual cues
@@ -603,6 +616,7 @@
 
   ;; Flycheck
   (use-package flycheck
+    :straight t
     :diminish
     :config
     (global-flycheck-mode)
@@ -648,10 +662,12 @@
             (rename-file filename new-name t)
             (set-visited-file-name new-name t t)))))))
 
-  (use-package imenu-anywhere)
+  (use-package imenu-anywhere
+    :straight t)
 
   ;; Projectile
   (use-package projectile
+    :straight t
     :defer 1
     :config
     (setq projectile-project-search-path '("~/Development/"))
@@ -719,6 +735,7 @@
 
   ;; Neotree
   (use-package neotree
+    :straight t
     :defer t
     :config
     (defun neotree-project-dir ()
@@ -737,6 +754,7 @@
 
   ;; Dumb-jump
   (use-package dumb-jump
+    :straight t
     :defer t
     :config
     (setq dumb-jump-selector 'ivy)
@@ -744,6 +762,7 @@
 
   ;; Ranger
   (use-package ranger
+    :straight t
     :defer t
     :config
     (ranger-override-dired-mode t)
@@ -764,9 +783,11 @@
 #+BEGIN_SRC emacs-lisp
   ;; Ivy
   (use-package ivy
+    :straight t
     :diminish
     :init ;; flx required for ivy--regex-fuzzy
-    (use-package flx)
+    (use-package flx
+      :straight t)
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
@@ -777,6 +798,7 @@
                                                 '((t . ivy--regex-fuzzy)))))
 
     (use-package counsel
+      :straight t
       :diminish
       :config (counsel-mode 1))
 
@@ -791,14 +813,17 @@
      "M-l" 'ivy-previous-line-and-call))
 
   (use-package ivy-posframe
+    :straight t
     :diminish
     :config
     (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
     (ivy-posframe-mode 1))
 
   (use-package prescient
+    :straight t
     :config
-    (use-package ivy-prescient)
+    (use-package ivy-prescient
+      :straight t)
 
     (ivy-prescient-mode)
     (prescient-persist-mode))
@@ -808,6 +833,7 @@
 ** Git
 #+BEGIN_SRC emacs-lisp
   (use-package magit
+    :straight t
     :defer t
     :config
     (with-eval-after-load 'evil
@@ -827,6 +853,7 @@
        (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))))
 
   (use-package diff-hl
+    :straight t
     :config
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
     (global-diff-hl-mode))
@@ -836,6 +863,7 @@
 #+BEGIN_SRC emacs-lisp
   (setenv "PAGER" "cat")
   (use-package eshell-z
+    :straight t
     :config
     (add-hook 'eshell-mode-hook
               (defun my-eshell-mode-hook ()
@@ -902,6 +930,7 @@
              " $ "))))
 
   (use-package load-bash-alias
+    :straight t
     :config
     (setq load-bash-alias-bashrc-file "~/.aliases"))
 
@@ -921,6 +950,7 @@
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
   (use-package org
+    :straight t
     :interpreter "org"
     :config
     (general-def 'insert org-mode-map
@@ -934,6 +964,7 @@
     (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-respect-content))
 
   (use-package toc-org
+    :straight t
     :hook (org-mode . toc-org-mode))
 #+END_SRC
 ** LaTeX
@@ -945,16 +976,19 @@
 ** Markdown
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
+    :straight t
     :mode "\\.md\\'"
     :bind (:map markdown-mode-command-map
            ("g" . grip-mode)))
 
   (use-package grip-mode
+    :straight t
     :config (setq grip-binary-path "~/.pyenv/shims/grip"))
 #+END_SRC
 ** HTML/HAML/CSS/Sass
 #+BEGIN_SRC emacs-lisp
   (use-package web-mode
+    :straight t
     :mode "\\.html?\\'"
     :config
     (general-def 'web-mode-map
@@ -966,6 +1000,7 @@
     (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 
   (use-package emmet-mode
+    :straight t
     :diminish
     :config
     (add-hook 'web-mode-hook 'emmet-mode)
@@ -979,6 +1014,7 @@
      "M-SPC" 'emmet-expand-line))
 
   (use-package evil-matchit ; to jump between HTML tags with %
+    :straight t
     :config (global-evil-matchit-mode 1))
 
   (use-package browser-refresh
@@ -996,11 +1032,13 @@
     :mode "\\.sass\\'")
 
   (use-package haml-mode
+    :straight t
     :mode "\\.haml\\'")
 #+END_SRC
 ** JavaScript
 #+BEGIN_SRC emacs-lisp
   (use-package js2-mode
+    :straight t
     :defer t
     :config
     (setq-default js2-basic-offset 2)
@@ -1011,9 +1049,11 @@
     (setq flycheck-javascript-eslint-executable "eslint_d"))
 
   (use-package rjsx-mode
+    :straight t
     :mode "\\.js\\'")
 
   (use-package json-mode
+    :straight t
     :mode "\\.json\\'")
 
   (use-package nodejs-repl
@@ -1021,6 +1061,7 @@
     :defer t)
 
   (use-package prettier-js
+    :straight t
     :config
     ;; using :hook only applies prettier-js once on file open...
     ;; (add-hook 'rjsx-mode-hook 'prettier-js-mode)
@@ -1046,9 +1087,11 @@
     (setq ruby-indent-level 2))
 
   (use-package rubocop
+    :straight t
     :interpreter "ruby")
 
   (use-package inf-ruby
+    :straight t
     :interpreter "ruby"
     :config
     (general-def 'insert inf-ruby-mode-map
@@ -1057,6 +1100,7 @@
       "C-;" 'comint-send-input))
 
   (use-package rspec-mode
+    :straight t
     :mode "\\.rspec\\'"
     :config
     (setq rspec-use-rvm t)
@@ -1068,12 +1112,14 @@
 
   ;; M-x my/learn-tests won’t run without this rvm package
   (use-package rvm
+    :straight t
     :config (rvm-use-default))
 #+END_SRC
 ** Python
   https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
+    :straight t
     :interpreter "python"
     :init
     (with-eval-after-load 'python (elpy-enable))
@@ -1086,6 +1132,7 @@
 ** SQL
 #+BEGIN_SRC emacs-lisp
   (use-package sqlup-mode
+    :straight t
     :interpreter "sql"
     :config
     (add-to-list 'sqlup-blacklist "name")
@@ -1093,22 +1140,26 @@
     (add-hook 'sql-mode-hook 'sqlup-mode))
 
   (use-package sql-indent
+    :straight t
     :interpreter "sql"
     :config (add-hook 'sql-mode-hook 'sqlind-minor-mode))
 #+END_SRC
 ** Go
 #+BEGIN_SRC emacs-lisp
   (use-package go-mode
+    :straight t
     :mode "\\.go\\'"
     :config
     (add-hook 'go-mode 'gofmt-before-save))
 
   (use-package flycheck-golangci-lint
+    :straight t
     :hook (go-mode . flycheck-golangci-lint-setup))
 #+END_SRC
 ** HTTP
 #+BEGIN_SRC emacs-lisp
   (use-package restclient
+    :straight t
     :mode ("\\.http\\'" . restclient-mode)
     :config ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
@@ -1116,9 +1167,11 @@
 ** Clojure
 #+BEGIN_SRC emacs-lisp
   (use-package clojure-mode
+    :straight t
     :interpreter "clojure")
 
   (use-package cider
+    :straight t
     :general
     (cider-repl-mode-map
      "C-l" 'cider-repl-previous-input
@@ -1133,6 +1186,7 @@
 ** Deft
 #+BEGIN_SRC emacs-lisp
   (use-package deft
+    :straight t
     :config
     (setq deft-directory "~/Dropbox/notes"
           deft-use-filter-string-for-filename t)
@@ -1141,11 +1195,13 @@
 ** Nix
 #+BEGIN_SRC emacs-lisp
   (use-package nix-mode
+    :straight t
     :mode "\\.nix\\'")
 #+END_SRC
 ** Lua
 #+BEGIN_SRC emacs-lisp
   (use-package lua-mode
+    :straight t
     :mode "\\.lua\\'")
 #+END_SRC
 ** EBuku
@@ -1171,6 +1227,7 @@
    ((string-equal system-type "darwin") ; macOS
     (progn
       (use-package exec-path-from-shell
+        :straight t
         :defer 0.1
         :config
         (exec-path-from-shell-initialize))
