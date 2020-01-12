@@ -62,10 +62,8 @@
   ;; Enable use-package
   (straight-use-package 'use-package)
 
-  ;; Load secrets (encrypted with git-crypt)
-  (use-package load-relative
-    :straight t)
-  (load-relative "secrets.el")
+  ;; Sometimes I want to try packages without installing them
+  (use-package try :straight t)
 
   ;; Garbage Collector Magic Hack
   (use-package gcmh
@@ -84,6 +82,10 @@
   (use-package esup
     :straight t
     :defer t)
+
+  ;; Load secrets (encrypted with git-crypt)
+  (use-package load-relative :straight t)
+  (load-relative "secrets.el")
 #+END_SRC
 * Editor Appearance
   This section is for modifications that change how the editor /looks/, but not
@@ -96,15 +98,13 @@
 #+END_SRC
 ** Theme
 #+BEGIN_SRC emacs-lisp
-  (use-package eink-theme
-    :straight t)
+  (use-package eink-theme :straight t)
 #+END_SRC
 ** Fonts
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Input Sans Narrow-15"))
 
-  (use-package diminish
-    :straight t)
+  (use-package diminish :straight t)
 
   (defun input-sans ()
     "Set font to Input Sans Narrow in current buffer"
@@ -529,15 +529,13 @@
 #+END_SRC
 *** Everything else
 #+BEGIN_SRC emacs-lisp
-  (use-package expand-region
-    :straight t)
+  (use-package expand-region :straight t)
 
   (electric-pair-mode 1)
   (show-paren-mode 1)
 
   ;; Indentation
-  (use-package aggressive-indent
-    :straight t)
+  (use-package aggressive-indent :straight t)
   (setq-default tab-width 4)
   (setq-default indent-tabs-mode nil)
   (setq backward-delete-char-untabify-method nil)
@@ -570,8 +568,7 @@
     (use-package ivy-yasnippet
       :straight t
       :init
-      (use-package dash
-        :straight t))
+      (use-package dash :straight t))
     (yas-global-mode 1))
 #+END_SRC
 ** Visual cues
@@ -662,8 +659,7 @@
             (rename-file filename new-name t)
             (set-visited-file-name new-name t t)))))))
 
-  (use-package imenu-anywhere
-    :straight t)
+  (use-package imenu-anywhere :straight t)
 
   ;; Projectile
   (use-package projectile
@@ -787,8 +783,7 @@
     :straight t
     :diminish
     :init ;; flx required for ivy--regex-fuzzy
-    (use-package flx
-      :straight t)
+    (use-package flx :straight t)
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
@@ -823,8 +818,7 @@
   (use-package prescient
     :straight t
     :config
-    (use-package ivy-prescient
-      :straight t)
+    (use-package ivy-prescient :straight t)
 
     (ivy-prescient-mode)
     (prescient-persist-mode))
