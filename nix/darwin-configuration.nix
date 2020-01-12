@@ -7,6 +7,8 @@
       vim
       sass
       postgresql
+      leiningen
+      git-crypt
   ];
 
   # Use a custom configuration.nix location.
