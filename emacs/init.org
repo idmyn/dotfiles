@@ -78,7 +78,8 @@
   (setq straight-use-package-by-default t)
 
   ;; Load secrets (encrypted with git-crypt)
-  (load-file "secrets.el")
+  (use-package load-relative)
+  (load-relative "secrets.el")
 
   ;; Tool to figure out what’s taking time at startup
   (use-package esup
@@ -977,12 +978,12 @@
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
     :straight t
-    :mode "\\.md\\'")
+    :mode "\\.md\\'"
+    :bind (:map markdown-mode-command-map
+           ("g" . grip-mode)))
 
   (use-package grip-mode
     :straight t
-    :bind (:map markdown-mode-command-map
-           ("g" . grip-mode))
     :config (setq grip-binary-path "~/.pyenv/shims/grip"))
 #+END_SRC
 ** HTML/HAML/CSS/Sass
