@@ -73,8 +73,12 @@
   ;; http://irreal.org/blog/?p=5916
   (setq use-package-enable-imenu-support t)
 
-  ;; Enable use-package
+  ;; Enable use-package and install packages by default
   (straight-use-package 'use-package)
+  (setq straight-use-package-by-default t)
+
+  ;; Load secrets (encrypted with git-crypt)
+  (load-file "secrets.el")
 
   ;; Tool to figure out what’s taking time at startup
   (use-package esup

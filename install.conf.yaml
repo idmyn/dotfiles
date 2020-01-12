@@ -13,6 +13,7 @@
     ~/.emacs.d/init.el: emacs/init.el
     ~/.emacs.d/init.org: emacs/init.org
     ~/.emacs.d/custom.el: emacs/custom.el
+    ~/.emacs.d/secrets.el: emacs/secrets.el
     ~/.emacs.d/eshell/alias: emacs/eshell/alias
     ~/.config/phoenix/phoenix.js: phoenix/phoenix.js
     ~/.config/karabiner.edn: karabiner/karabiner.edn
