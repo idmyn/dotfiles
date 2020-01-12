@@ -28,7 +28,7 @@
   - [[#python][Python]]
   - [[#sql][SQL]]
   - [[#go][Go]]
-  - [[#httprest][HTTP/REST]]
+  - [[#http][HTTP]]
   - [[#clojure][Clojure]]
   - [[#yaml][YAML]]
   - [[#deft][Deft]]
@@ -1152,11 +1152,11 @@
     :straight t
     :hook (go-mode . flycheck-golangci-lint-setup))
 #+END_SRC
-** HTTP/REST
+** HTTP
 #+BEGIN_SRC emacs-lisp
   (use-package restclient
     :straight t
-    :mode ("\\.rest\\'" . restclient-mode)
+    :mode ("\\.http\\'" . restclient-mode)
     :config ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 #+END_SRC
@@ -1165,6 +1165,13 @@
   (use-package clojure-mode
     :straight t
     :interpreter "clojure")
+
+  (use-package cider
+    :straight t
+    :general
+    (cider-repl-mode-map
+     "C-l" 'cider-repl-previous-input
+     "C-k" 'cider-repl-next-input))
 #+END_SRC
 ** YAML
 #+BEGIN_SRC emacs-lisp
