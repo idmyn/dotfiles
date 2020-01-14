@@ -22,3 +22,8 @@
    functions which move windows around your screen(s). I used [[https://github.com/koekeishiya/chunkwm][chunkwm]] for a long
    while, but ended up moving away from it because I found myself fighting
    against its automatic window placement.
+
+** Honourable Mentions
+   Haven’t tried it out just yet, but [[https://github.com/johnste/finicky][Finicky]] looks really sweet. It’s a macOS
+   application allowing you to set up rules specifying which browser to use when
+   opening specific url patterns (among other things).
