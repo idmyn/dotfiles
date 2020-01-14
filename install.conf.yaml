@@ -16,6 +16,7 @@
     ~/.emacs.d/secrets.el: emacs/secrets.el
     ~/.emacs.d/eshell/alias: emacs/eshell/alias
     ~/.doom.d: emacs/doom
+    ~/.emacs-profiles.el: emacs/.emacs-profiles.el
     ~/.config/phoenix/phoenix.js: phoenix/phoenix.js
     ~/.config/karabiner.edn: karabiner/karabiner.edn
     ~/.aliases: shell/.aliases
