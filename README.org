@@ -1,5 +1,22 @@
-* dotfiles
+* my dots
   These dotfiles are bootstrapped with
   [[https://github.com/anishathalye/dotbot][dotbot]] and can be installed by
   cloning this repo and running ~./install~ inside it. Much inspiration taken
   from [[https://github.com/nikitavoloboev/dotfiles][here]].
+
+** Emacs
+   My current emacs setup consists of a base emacs install from [[https://emacsformacosx.com][emacsformacosx]]
+   configured with my [[https://en.wikipedia.org/wiki/Literate_programming][literate]] [[https://github.com/idmyn/dotfiles/blob/master/emacs/init.org][init.org]] file. Emacs still looks for
+   ~~/.emacs.d/init.el~ at startup, though, so I use that file to instruct emacs
+   to configure itself with the elisp code-blocks in ~~/.emacs.d/init.org~. My
+   config currently takes around 4-5 (painfully slow) seconds to load, which I
+   mitigate by [[https://www.emacswiki.org/emacs/EmacsAsDaemon][running emacs as a daemon]] (I followed [[https://web.archive.org/web/20190407092503/https://east.fm/posts/emacs-26-and-macos-mojave/index.html][handy macOS-specific
+   instructions for this]]), but I’m looking into building my config on top of
+   [[https://github.com/hlissner/doom-emacs][doom]] to speed things up.
+
+** Phoenix
+   [[https://github.com/kasper/phoenix][Phoenix]] is great! It’s a window-manager for macOS which you can configure
+   with JavaScript. In other words, it allows you to bind keyboard shortcuts to
+   functions which move windows around your screen(s). I used [[https://github.com/koekeishiya/chunkwm][chunkwm]] for a long
+   while, but ended up moving away from it because I found myself fighting
+   against its automatic window placement.
