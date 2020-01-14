@@ -2,6 +2,10 @@
   These dotfiles are bootstrapped with [[https://github.com/anishathalye/dotbot][dotbot]] and can be installed by cloning
   this repo and running ~./install~ inside it. Much inspiration taken from [[https://github.com/nikitavoloboev/dotfiles][here]].
 
+  Note: I’ve initialised [[https://github.com/AGWA/git-crypt][git-crypt]] in this repo to encrypt secrets.el (where I
+  keep secrets that emacs needs access to), but it’s currently [[https://github.com/idmyn/dotfiles/blob/master/.gitattributes][configured]] to
+  encrypt any file named ~secrets~ (with any file extension).
+
 ** Emacs
    My current emacs setup consists of a base emacs install from [[https://emacsformacosx.com][emacsformacosx]]
    configured with my [[https://en.wikipedia.org/wiki/Literate_programming][literate]] [[https://github.com/idmyn/dotfiles/blob/master/emacs/init.org][init.org]] file. Emacs still looks for
