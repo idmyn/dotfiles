@@ -1,3 +1,8 @@
+* My Doom Config
+    This literate config file is tangled into =~/.doom.d/config.el= when doom is
+    run and it notices changes. To achieve this behaviour, I had to [[https://github.com/idmyn/dotfiles/commit/42ea6a64575565c1e9c9807e359d80161ab8fb91][enable the
+    literate config module]] in =~/.doom.d/init.el=.
+
 #+BEGIN_SRC emacs-lisp
   ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
