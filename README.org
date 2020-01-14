@@ -13,8 +13,9 @@
    to configure itself with the elisp code-blocks in ~~/.emacs.d/init.org~. My
    config currently takes around 4-5 (painfully slow) seconds to load, which I
    mitigate by [[https://www.emacswiki.org/emacs/EmacsAsDaemon][running emacs as a daemon]] (I followed [[https://web.archive.org/web/20190407092503/https://east.fm/posts/emacs-26-and-macos-mojave/index.html][handy macOS-specific
-   instructions for this]]), but I’m looking into building my config on top of
-   [[https://github.com/hlissner/doom-emacs][doom]] to speed things up.
+   instructions for this]]), but I’m [[https://github.com/idmyn/dotfiles/tree/master/emacs/doom][working on]] porting my config to [[https://github.com/hlissner/doom-emacs][doom]] to speed
+   things up. Managing multiple emacs configs is surprisingly simple with
+   [[https://github.com/plexus/chemacs][Chemacs]]!
 
 ** Phoenix
    [[https://github.com/kasper/phoenix][Phoenix]] is great! It’s a window-manager for macOS which you can configure
