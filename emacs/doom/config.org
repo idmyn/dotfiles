@@ -14,10 +14,13 @@
 
 (setq doom-theme 'eink)
 
-;; If you intend to use org, it is recommended you change this!
+;; I'm told it's worth changing this if I want to make the most of org-mode
 (setq org-directory "~/org/")
 
 (setq display-line-numbers-type 'relative)
+
+;; when I open emacs I want it to fill my screen
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+END_SRC
 
 ** Keybindings
