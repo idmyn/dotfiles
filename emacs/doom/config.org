@@ -105,5 +105,8 @@ show ivy in posframe right under cursor
 #+BEGIN_SRC emacs-lisp
 (after! deft
   (setq deft-directory "~/Dropbox/notes"
-        deft-use-filter-string-for-filename t))
+        deft-use-filter-string-for-filename t)
+  (map! :leader
+        :prefix "n"
+        :desc "Open deft" "d" #'deft-find-file))
 #+END_SRC
