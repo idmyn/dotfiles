@@ -52,5 +52,14 @@ easier movement between windows (taken from [[https://github.com/Brettm12345/doo
 
  (:after evil-org
    :map evil-org-mode-map
-   :n "C-j" #'evil-window-left))
+   :n "C-j"   #'evil-window-left
+   :n "C-k"   #'evil-window-down))
+#+END_SRC
+
+** Ivy
+use fuzzy regex matching for candidate selection
+#+BEGIN_SRC emacs-lisp
+(after! ivy
+         (setq ivy-re-builders-alist
+               '((t . ivy--regex-fuzzy))))
 #+END_SRC
