@@ -45,15 +45,16 @@ easier movement between windows (taken from [[https://github.com/Brettm12345/doo
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after evil
-   :n "C-j"   #'evil-window-left
-   :n "C-k"   #'evil-window-down
-   :n "C-l"   #'evil-window-up
-   :n "C-;"   #'evil-window-right)
+   :ni "M-j"   #'evil-window-left
+   :ni "M-k"   #'evil-window-down
+   :ni "M-l"   #'evil-window-up
+   :ni "M-;"   #'evil-window-right)
 
  (:after evil-org
    :map evil-org-mode-map
-   :n "C-j"   #'evil-window-left
-   :n "C-k"   #'evil-window-down))
+   :ni "M-j"   #'evil-window-left
+   :ni "M-k"   #'evil-window-down
+   :ni "M-l"   #'evil-window-up))
 #+END_SRC
 
 ** Ivy
