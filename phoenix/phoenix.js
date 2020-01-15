@@ -50,12 +50,10 @@ const windowToRight = new Key(';', ['cmd', 'ctrl'], () => {
 })
 
 const showOrOpenEmacs = new Key('e', ['cmd', 'ctrl'], () => {
-  if (App.get('Emacs').windows().length === 0) {
-    App.launch('Emacs Client')
-    // 'Emacs Client' as an App is a bit tricky because windows go to 'Emacs'
-    setTimeout(() => Window.focused().setFrame(windowLocations.full), 600)
-  } else {
+  if (App.get('Emacs')) {
     App.get('Emacs').focus()
+  } else {
+    App.launch('Emacs')
   }
 })
 
@@ -66,6 +64,7 @@ const showOrOpenBrowser = new Key('w', ['cmd', 'ctrl'], () => {
     App.get('Brave Browser').focus()
   } else {
     App.launch('Safari')
+    setTimeout(() => App.get('Safari').focus(), 500)
   }
 })
 /* eslint-enable no-unused-vars */
