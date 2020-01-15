@@ -4,29 +4,29 @@
     literate config module]] in =~/.doom.d/init.el=.
 
 #+BEGIN_SRC emacs-lisp
-  ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-  (setq user-full-name "David Mynors"
-        user-mail-address "hello@davidmyno.rs")
+(setq user-full-name "David Mynors"
+      user-mail-address "hello@davidmyno.rs")
 
-  (setq doom-font (font-spec :family "Input Mono" :size 15))
-  (setq doom-variable-pitch-font (font-spec :family "Input Sans Narrow"))
+(setq doom-font (font-spec :family "Input Mono" :size 15))
+(setq doom-variable-pitch-font (font-spec :family "Input Sans Narrow"))
 
-  (setq doom-theme 'eink)
+(setq doom-theme 'eink)
 
-  ;; If you intend to use org, it is recommended you change this!
-  (setq org-directory "~/org/")
+;; If you intend to use org, it is recommended you change this!
+(setq org-directory "~/org/")
 
-  (setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type 'relative)
 #+END_SRC
 
 ** Keybindings
 #+BEGIN_SRC emacs-lisp
-  (map! :nv "j" 'evil-backward-char
-        :nv "k" 'evil-next-line
-        :nv "l" 'evil-previous-line
-        :nv ":" 'evil-forward-char
+(map! :nv "j" 'evil-backward-char
+      :nv "k" 'evil-next-line
+      :nv "l" 'evil-previous-line
+      :nv ":" 'evil-forward-char
 
-        :nv "h" 'evil-paste-after
-        :nv "H" 'evil-paste-before)
+      :nv "h" 'evil-paste-after
+      :nv "H" 'evil-paste-before)
 #+END_SRC
