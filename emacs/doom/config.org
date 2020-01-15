@@ -22,8 +22,10 @@
   (setq org-directory "~/org/")
 
   (setq display-line-numbers-type 'relative)
+#+END_SRC
 
-  ;; keybinds
+** Keybindings
+#+BEGIN_SRC emacs-lisp
   (map! :nv "j" 'evil-backward-char
         :nv "k" 'evil-next-line
         :nv "l" 'evil-previous-line
@@ -31,7 +33,9 @@
 
         :nv "h" 'evil-paste-after
         :nv "H" 'evil-paste-before)
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
   ;; Here are some additional functions/macros that could help you configure Doom:
   ;;
   ;; - `load!' for loading external *.el files relative to this one
