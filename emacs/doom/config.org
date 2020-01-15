@@ -33,6 +33,14 @@ change vimkeys from hjkl to jkl: (I use karabiner to swap my ; and : keys)
    :nv "h" 'evil-paste-after
    :nv "H" 'evil-paste-before))
 #+END_SRC
+adjust magit vimkeys accordingly
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after magit
+   :map magit-mode-map
+   :nv "k" 'evil-next-line
+   :nv "l" 'evil-previous-line))
+#+END_SRC
 easier movement between windows (taken from [[https://github.com/Brettm12345/doom-emacs-literate-config/blob/master/config.org#easy-window-navigation][here]])
 #+BEGIN_SRC emacs-lisp
 (map!
