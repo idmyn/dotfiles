@@ -14,6 +14,8 @@
 
 (setq doom-theme 'eink)
 
+(show-smartparens-global-mode 1)
+
 ;; I'm told it's worth changing this if I want to make the most of org-mode
 (setq org-directory "~/org/")
 
@@ -52,7 +54,7 @@ adjust ivy minibuffer vimkeys accordindly
    "C-j" 'ivy-backward-delete-char
    "C-k" 'ivy-next-line
    "C-l" 'ivy-previous-line
-   "C-;" 'ivy-partial-or-done))
+   "C-;" 'ivy-done))
 #+END_SRC
 easier motion around lines and paragraphs
 #+BEGIN_SRC emacs-lisp
