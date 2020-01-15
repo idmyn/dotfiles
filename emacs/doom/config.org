@@ -97,5 +97,13 @@ show ivy in posframe right under cursor
 
 ** Flycheck
 #+BEGIN_SRC emacs-lisp
-(setq-default flycheck-disabled-checkers '(javascript-jshint))
+(after! flycheck
+  (setq-default flycheck-disabled-checkers '(javascript-jshint)))
+#+END_SRC
+
+** Deft
+#+BEGIN_SRC emacs-lisp
+(after! deft
+  (setq deft-directory "~/Dropbox/notes"
+        deft-use-filter-string-for-filename t))
 #+END_SRC
