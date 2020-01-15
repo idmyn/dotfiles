@@ -38,8 +38,8 @@ adjust magit vimkeys accordingly
 (map!
  (:after magit
    :map magit-mode-map
-   :nv "k" 'evil-next-line
-   :nv "l" 'evil-previous-line))
+   :nv "k" 'magit-section-forward
+   :nv "l" 'magit-section-backward))
 #+END_SRC
 easier motion around lines and paragraphs
 #+BEGIN_SRC emacs-lisp
