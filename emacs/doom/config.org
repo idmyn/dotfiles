@@ -21,12 +21,28 @@
 #+END_SRC
 
 ** Keybindings
+change vimkeys from hjkl to jkl: (I use karabiner to swap my ; and : keys)
 #+BEGIN_SRC emacs-lisp
-(map! :nv "j" 'evil-backward-char
-      :nv "k" 'evil-next-line
-      :nv "l" 'evil-previous-line
-      :nv ":" 'evil-forward-char
+(map!
+ (:after evil
+   :nv "j" 'evil-backward-char
+   :nv "k" 'evil-next-line
+   :nv "l" 'evil-previous-line
+   :nv ":" 'evil-forward-char
 
-      :nv "h" 'evil-paste-after
-      :nv "H" 'evil-paste-before)
+   :nv "h" 'evil-paste-after
+   :nv "H" 'evil-paste-before))
+#+END_SRC
+easier movement between windows (taken from [[https://github.com/Brettm12345/doom-emacs-literate-config/blob/master/config.org#easy-window-navigation][here]])
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after evil
+   :n "C-j"   #'evil-window-left
+   :n "C-k"   #'evil-window-down
+   :n "C-l"   #'evil-window-up
+   :n "C-;"   #'evil-window-right)
+
+ (:after evil-org
+   :map evil-org-mode-map
+   :n "C-j" #'evil-window-left))
 #+END_SRC
