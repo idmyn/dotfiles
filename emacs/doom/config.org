@@ -41,6 +41,15 @@ adjust magit vimkeys accordingly
    :nv "k" 'evil-next-line
    :nv "l" 'evil-previous-line))
 #+END_SRC
+easier motion around lines and paragraphs
+#+BEGIN_SRC emacs-lisp
+(map!
+ :after evil
+ :nv "J" 'evil-first-non-blank
+ :nv "K" 'forward-paragraph
+ :nv "L" 'backward-paragraph
+ :nv ";" 'evil-last-non-blank)
+#+END_SRC
 easier movement between windows (taken from [[https://github.com/Brettm12345/doom-emacs-literate-config/blob/master/config.org#easy-window-navigation][here]])
 #+BEGIN_SRC emacs-lisp
 (map!
