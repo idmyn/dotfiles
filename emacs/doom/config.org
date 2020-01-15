@@ -49,8 +49,10 @@ adjust ivy minibuffer vimkeys accordindly
 (map!
  (:after ivy
    :map ivy-minibuffer-map
+   "C-j" 'ivy-backward-delete-char
    "C-k" 'ivy-next-line
-   "C-l" 'ivy-previous-line))
+   "C-l" 'ivy-previous-line
+   "C-;" 'ivy-partial-or-done))
 #+END_SRC
 easier motion around lines and paragraphs
 #+BEGIN_SRC emacs-lisp
