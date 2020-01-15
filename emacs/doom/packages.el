@@ -2,8 +2,10 @@
 ;;; $DOOMDIR/packages.el
 
 (package! eink-theme)
+(package! ivy-posframe)
 
 (package! evil-snipe :disable t)
+(package! ivy-rich :disable t)
 
 ;; This is where you install packages, by declaring them with the `package!'
 ;; macro, then running 'doom refresh' on the command line. You'll need to

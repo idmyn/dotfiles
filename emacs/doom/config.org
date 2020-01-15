@@ -84,3 +84,14 @@ use fuzzy regex matching for candidate selection
          (setq ivy-re-builders-alist
                '((t . ivy--regex-fuzzy))))
 #+END_SRC
+show ivy in posframe right under cursor
+#+BEGIN_SRC emacs-lisp
+(after! ivy
+  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
+  (ivy-posframe-mode 1))
+#+END_SRC
+
+** Flycheck
+#+BEGIN_SRC emacs-lisp
+(setq-default flycheck-disabled-checkers '(javascript-jshint))
+#+END_SRC
