@@ -44,6 +44,14 @@ adjust magit vimkeys accordingly
    :nv "k" 'magit-section-forward
    :nv "l" 'magit-section-backward))
 #+END_SRC
+adjust ivy minibuffer vimkeys accordindly
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after ivy
+   :map ivy-minibuffer-map
+   "C-k" 'ivy-next-line
+   "C-l" 'ivy-previous-line))
+#+END_SRC
 easier motion around lines and paragraphs
 #+BEGIN_SRC emacs-lisp
 (map!
