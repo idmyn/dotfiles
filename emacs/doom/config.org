@@ -80,6 +80,15 @@ easier movement between windows (taken from [[https://github.com/Brettm12345/doo
    :ni "M-k"   #'evil-window-down
    :ni "M-l"   #'evil-window-up))
 #+END_SRC
+Fix "#" input on UK MacBook keyboard
+#+BEGIN_SRC emacs-lisp
+(cond
+ ((string-equal system-type "darwin")
+  (progn
+    (map!
+     :i "M-3" (lambda () (interactive) (insert "#")))
+    )))
+#+END_SRC
 
 ** Ivy
 use fuzzy regex matching for candidate selection
