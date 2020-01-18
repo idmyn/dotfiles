@@ -51,7 +51,9 @@ adjust magit vimkeys accordingly
    :nv "k" 'magit-section-forward
    :nv "l" 'magit-section-backward))
 #+END_SRC
-adjust ivy minibuffer vimkeys accordindly
+adjust ivy minibuffer vimkeys accordingly
+(although when I hit C-k in the minibuffer created by
+ivy/switch-workspace-buffer it runs ivy-previous-line)
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after ivy
@@ -137,4 +139,32 @@ show ivy in posframe right under cursor
 (after! deft
   (setq deft-directory "~/Dropbox/notes"
         deft-use-filter-string-for-filename t))
+#+END_SRC
+
+** Ranger (deer)
+#+BEGIN_SRC emacs-lisp
+(use-package! ranger
+  :commands deer
+  :init
+  (map!
+   :leader
+   :prefix "f"
+   :desc "Browse files with deer" "d" #'deer)
+  :config
+  (define-key! 'motion ranger-mode-map
+    "." 'ranger-toggle-dotfiles
+    "r" 'wdired-change-to-wdired-mode
+    "h" 'ranger-paste
+
+    "j" 'ranger-up-directory
+    "k" 'ranger-next-file
+    "l" 'ranger-prev-file
+    ":" 'ranger-find-file))
+#+END_SRC
+
+** JavaScript
+Use two spaces for indentation
+#+BEGIN_SRC emacs-lisp
+(after! js2-mode
+  (setq-default js2-basic-offset 2))
 #+END_SRC
