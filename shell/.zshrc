@@ -43,7 +43,9 @@ source $HOME/.aliases
 
 # Function for killing servers running at particular ports
 function kp { kill $(sudo lsof -t -i:"$1"); }
-function e { emacsclient -a '' -c $1 &; }
+
+# function e { emacsclient -a '' -c $1 &; }
+alias e='emacs'
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 RUBIES+=(~/.rvm/rubies/*)
