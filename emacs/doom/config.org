@@ -51,13 +51,13 @@ adjust magit vimkeys accordingly
    :nv "k" 'magit-section-forward
    :nv "l" 'magit-section-backward))
 #+END_SRC
-adjust ivy minibuffer vimkeys accordingly
-(although when I hit C-k in the minibuffer created by
-ivy/switch-workspace-buffer it runs ivy-previous-line)
+adjust ivy minibuffer vimkeys accordingly (I was having issues with this but
+found out through `M-x which-key-show-keymap` that there is an
+`ivy-posframe-mode-map`, which turned out to be the missing link!)
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after ivy
-   :map ivy-minibuffer-map
+   :map (ivy-minibuffer-map ivy-posframe-mode-map)
    "C-j" 'ivy-backward-delete-char
    "C-k" 'ivy-next-line
    "C-l" 'ivy-previous-line
@@ -87,7 +87,13 @@ easier movement between windows (taken from [[https://github.com/Brettm12345/doo
    :ni "M-k"   #'evil-window-down
    :ni "M-l"   #'evil-window-up))
 #+END_SRC
-Fix "#" input on UK MacBook keyboard
+restore original emacs binding for `save-buffer`
+#+BEGIN_SRC emacs-lisp
+(map!
+ :after evil
+ :i "C-x C-s" 'save-buffer)
+#+END_SRC
+fix "#" input on UK MacBook keyboard
 #+BEGIN_SRC emacs-lisp
 (cond
  ((string-equal system-type "darwin")
