@@ -167,7 +167,9 @@ show ivy in posframe right under cursor
    :prefix "f"
    :desc "Browse files with deer" "d" #'deer)
   :config
+  ;; define-key! because map! wouldn't play nice
   (define-key! 'motion ranger-mode-map
+    "C-h k" 'describe-key
     "." 'ranger-toggle-dotfiles
     "r" 'wdired-change-to-wdired-mode
     "h" 'ranger-paste
