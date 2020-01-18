@@ -86,16 +86,16 @@ easier movement between windows (taken from [[https://github.com/Brettm12345/doo
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after evil
-   :ni "M-j"   #'evil-window-left
-   :ni "M-k"   #'evil-window-down
-   :ni "M-l"   #'evil-window-up
-   :ni "M-;"   #'evil-window-right)
+   :ni "M-j"   'evil-window-left
+   :ni "M-k"   'evil-window-down
+   :ni "M-l"   'evil-window-up
+   :ni "M-;"   'evil-window-right)
 
  (:after evil-org
    :map evil-org-mode-map
-   :ni "M-j"   #'evil-window-left
-   :ni "M-k"   #'evil-window-down
-   :ni "M-l"   #'evil-window-up))
+   :ni "M-j"   'evil-window-left
+   :ni "M-k"   'evil-window-down
+   :ni "M-l"   'evil-window-up))
 #+END_SRC
 restore original emacs binding for `save-buffer`
 #+BEGIN_SRC emacs-lisp
@@ -151,7 +151,7 @@ show ivy in posframe right under cursor
 #+BEGIN_SRC emacs-lisp
 (map! :leader
         :prefix "n"
-        :desc "Open deft" "d" #'deft-find-file)
+        :desc "Open deft" "d" 'deft-find-file)
 (after! deft
   (setq deft-directory "~/Dropbox/notes"
         deft-use-filter-string-for-filename t))
@@ -165,7 +165,7 @@ show ivy in posframe right under cursor
   (map!
    :leader
    :prefix "f"
-   :desc "Browse files with deer" "d" #'deer)
+   :desc "Browse files with deer" "d" 'deer)
   :config
   ;; define-key! because map! wouldn't play nice
   (define-key! 'motion ranger-mode-map
@@ -184,5 +184,5 @@ show ivy in posframe right under cursor
 Use two spaces for indentation
 #+BEGIN_SRC emacs-lisp
 (after! js2-mode
-  (setq-default js2-basic-offset 2))
+  (setq js2-basic-offset 2))
 #+END_SRC
