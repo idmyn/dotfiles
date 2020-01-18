@@ -109,6 +109,20 @@ show ivy in posframe right under cursor
   (ivy-posframe-mode 1))
 #+END_SRC
 
+** Org
+#+BEGIN_SRC emacs-lisp
+(setq org-directory "~/Dropbox/org")
+#+END_SRC
+
+*** Agenda
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after evil-org-agenda
+   :map evil-org-agenda-mode-map
+   :m "k" 'org-agenda-next-line
+   :m "l" 'org-agenda-previous-line))
+#+END_SRC
+
 ** Flycheck
 #+BEGIN_SRC emacs-lisp
 (after! flycheck
