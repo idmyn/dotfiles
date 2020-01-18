@@ -9,25 +9,35 @@ literate config module]] in =~/.doom.d/init.el=.
 (setq user-full-name "David Mynors"
       user-mail-address "hello@davidmyno.rs")
 
-(setq doom-theme 'eink)
-
 (show-smartparens-global-mode 1)
 
 (setq display-line-numbers-type 'relative)
+
+;; load secrets (encrypted with git-crypt)
+(load "~/.emacs.d/secrets.el")
 
 ;; when I open emacs I want it to fill my screen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+END_SRC
 
-** Fonts
-I'm a fan of the [[https://input.fontbureau.com/][Input]] font family.
+** Theme
+I use an [[https://github.com/maio/eink-emacs][eink theme]] and the [[https://input.fontbureau.com][Input font family]]. My use of the `:custom` and
+`:custom-face` keywords is inspired by [[https://github.com/a13/emacs.d][a13's literate emacs config]]. I think it's
+pretty neat! I struggled at first to figure out how to change faces without `M-x
+customize-face`, but with this method I first use `M-x customize-face` to see
+what attributes I need to change (and whether the specific face inherits from
+any others) and then I add those details as below.
 #+BEGIN_SRC emacs-lisp
-(setq doom-font (font-spec :family "Input Mono Narrow" :size 15))
-(setq doom-variable-pitch-font (font-spec :family "Input Sans Narrow"))
-#+END_SRC
-disable italics
-#+BEGIN_SRC emacs-lisp
-(set-face-italic-p 'italic nil)
+(use-package! eink-theme
+  :custom
+  (doom-theme 'eink)
+  (doom-font (font-spec :family "Input Mono Narrow" :size 15))
+  (doom-variable-pitch-font (font-spec :family "Input Sans Narrow"))
+  :config
+  (hl-line-mode)
+  (set-face-italic-p 'italic nil)
+  :custom-face
+  (hl-line ((t (:inherit highlight :background "lavender")))))
 #+END_SRC
 
 ** Keybindings
