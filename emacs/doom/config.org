@@ -73,6 +73,17 @@ found out through `M-x which-key-show-keymap` that there is an
    "C-l" 'ivy-previous-line
    "C-;" 'ivy-done))
 #+END_SRC
+adjust eshell vimkeys accordingly
+#+BEGIN_SRC emacs-lisp
+(defun eshell-setup-keys() ; implementation inspired by evil-collection
+  "Set up `evil' bindings for `eshell'."
+  (map!
+   :map eshell-mode-map
+   :i "C-l" 'eshell-previous-matching-input-from-input
+   :i "C-k" 'eshell-next-matching-input-from-input
+   :i "C-;" 'eshell-send-input))
+(add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
+#+END_SRC
 easier motion around lines and paragraphs
 #+BEGIN_SRC emacs-lisp
 (map!
