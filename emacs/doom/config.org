@@ -86,16 +86,16 @@ easier movement between windows (taken from [[https://github.com/Brettm12345/doo
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after evil
-   :ni "M-j"   'evil-window-left
-   :ni "M-k"   'evil-window-down
-   :ni "M-l"   'evil-window-up
-   :ni "M-;"   'evil-window-right)
+   :ni "M-j" 'evil-window-left
+   :ni "M-k" 'evil-window-down
+   :ni "M-l" 'evil-window-up
+   :ni "M-;" 'evil-window-right)
 
  (:after evil-org
    :map evil-org-mode-map
-   :ni "M-j"   'evil-window-left
-   :ni "M-k"   'evil-window-down
-   :ni "M-l"   'evil-window-up))
+   :ni "M-j" 'evil-window-left
+   :ni "M-k" 'evil-window-down
+   :ni "M-l" 'evil-window-up))
 #+END_SRC
 restore original emacs binding for `save-buffer`
 #+BEGIN_SRC emacs-lisp
