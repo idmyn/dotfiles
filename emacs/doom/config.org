@@ -200,3 +200,11 @@ Use two spaces for indentation
 (after! js2-mode
   (setq js2-basic-offset 2))
 #+END_SRC
+configure flycheck to use eslint
+#+BEGIN_SRC emacs-lisp
+(after! flycheck
+  (add-to-list 'flycheck-disabled-checkers 'javascript-jshint)
+  ;; remove lsp-ui from flycheck--automatically-enabled-checkers
+  (add-to-list 'flycheck-disabled-checkers 'lsp-ui)
+  (setq flycheck-javascript-eslint-executable "eslint_d"))
+#+END_SRC
