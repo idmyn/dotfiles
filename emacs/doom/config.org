@@ -97,10 +97,22 @@ easier movement between windows (taken from [[https://github.com/Brettm12345/doo
    :ni "M-k" 'evil-window-down
    :ni "M-l" 'evil-window-up))
 #+END_SRC
-restore original emacs binding for `save-buffer`
+bind jump-backward and jump-forward to more intuitive keys
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after evil
+   :n "C-i" 'better-jumper-jump-backward
+   :n "C-o" 'better-jumper-jump-forward)
+
+ (:after evil-org
+   :map evil-org-mode-map
+   :n "C-i" 'better-jumper-jump-backward))
+#+END_SRC
+restore original emacs binding for paste and `save-buffer`
 #+BEGIN_SRC emacs-lisp
 (map!
  :after evil
+ :i "C-y" 'evil-paste-after
  :i "C-x C-s" 'save-buffer)
 #+END_SRC
 fix "#" input on UK MacBook keyboard
