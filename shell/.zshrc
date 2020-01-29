@@ -7,6 +7,9 @@ else
   compinit -C
 fi
 
+. $(brew --prefix asdf)/asdf.sh
+. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
+
 source ~/.zsh_plugins.sh
 
 # https://arjanvandergaag.nl/blog/customize-zsh-prompt-with-vcs-info.html
@@ -46,7 +49,3 @@ function kp { kill $(sudo lsof -t -i:"$1"); }
 
 # function e { emacsclient -a '' -c $1 &; }
 alias e='emacs'
-
-source /usr/local/opt/chruby/share/chruby/chruby.sh
-RUBIES+=(~/.rvm/rubies/*)
-chruby ruby-2.6.3

@@ -54,7 +54,7 @@ const showOrOpenEmacs = new Key('e', ['cmd', 'ctrl'], () => {
     App.get('Emacs').focus()
   } else {
     App.launch('Emacs')
-    setTimeout(() => App.get('Emacs').focus(), 500)
+    setTimeout(() => App.get('Emacs').focus(), 100)
   }
 })
 
