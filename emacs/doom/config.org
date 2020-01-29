@@ -153,6 +153,21 @@ show ivy in posframe right under cursor
    :m "l" 'org-agenda-previous-line))
 #+END_SRC
 
+*** HTML export
+#+BEGIN_SRC emacs-lisp
+(defun toggle-html-export-on-save ()
+  "Enable or disable export HTML when saving current buffer."
+  (interactive)
+  (when (not (eq major-mode 'org-mode))
+    (error "Not an org-mode file!"))
+  (if (memq 'org-html-export-to-html after-save-hook)
+      (progn (remove-hook 'after-save-hook 'org-html-export-to-html t)
+             (message "Disabled org html export on save"))
+    (add-hook 'after-save-hook 'org-html-export-to-html nil t)
+    (set-buffer-modified-p t)
+    (message "Enabled org html export on save")))
+#+END_SRC
+
 ** Eshell
 *** Keybindings
 adjust history navigation bindings to match my adjusted vimkeys, and add
@@ -171,6 +186,17 @@ bindings to move between windows
    :ni "M-l" 'evil-window-up
    :ni "M-;" 'evil-window-right))
 (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
+#+END_SRC
+*** eshell-z
+[[https://github.com/xuchunyang/eshell-z][eshell-z]] is an emacs port of [[https://github.com/rupa/z][z]], which "keeps track of where you’ve been and how
+many commands you invoke there, and provides a convenient way to jump to the
+directories you actually use". I also have [[https://github.com/idmyn/dotfiles/blob/53fc9e60f8b9eeafce3fa36df88dfd3424d30198/shell/.zsh_plugins.txt#L1][it]] [[https://github.com/idmyn/dotfiles/blob/53fc9e60f8b9eeafce3fa36df88dfd3424d30198/shell/.zshrc#L10][installed]] in my zsh config (via
+[[https://getantibody.github.io][antibody]]) and both installations share the same data file, which is pretty
+sweet.
+#+BEGIN_SRC emacs-lisp
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (require 'eshell-z)))
 #+END_SRC
 
 ** Deft
