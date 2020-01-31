@@ -153,21 +153,6 @@ show ivy in posframe right under cursor
    :m "l" 'org-agenda-previous-line))
 #+END_SRC
 
-*** HTML export
-#+BEGIN_SRC emacs-lisp
-(defun toggle-html-export-on-save ()
-  "Enable or disable export HTML when saving current buffer."
-  (interactive)
-  (when (not (eq major-mode 'org-mode))
-    (error "Not an org-mode file!"))
-  (if (memq 'org-html-export-to-html after-save-hook)
-      (progn (remove-hook 'after-save-hook 'org-html-export-to-html t)
-             (message "Disabled org html export on save"))
-    (add-hook 'after-save-hook 'org-html-export-to-html nil t)
-    (set-buffer-modified-p t)
-    (message "Enabled org html export on save")))
-#+END_SRC
-
 ** Eshell
 *** Keybindings
 adjust history navigation bindings to match my adjusted vimkeys, and add
@@ -192,11 +177,12 @@ bindings to move between windows
 many commands you invoke there, and provides a convenient way to jump to the
 directories you actually use". I also have [[https://github.com/idmyn/dotfiles/blob/53fc9e60f8b9eeafce3fa36df88dfd3424d30198/shell/.zsh_plugins.txt#L1][it]] [[https://github.com/idmyn/dotfiles/blob/53fc9e60f8b9eeafce3fa36df88dfd3424d30198/shell/.zshrc#L10][installed]] in my zsh config (via
 [[https://getantibody.github.io][antibody]]) and both installations share the same data file, which is pretty
-sweet.
+sweet. I had it configured here but later found out that it's already [[https://github.com/hlissner/doom-emacs/blob/f3a75004e07b847c7d0efc8b38885297a081a828/modules/term/eshell/config.el#L172][included
+in doom]] by default!
+*** Other settings
+tell CLI applications that it's ok to dump really long output into the buffer
 #+BEGIN_SRC emacs-lisp
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (require 'eshell-z)))
+(setenv "PAGER" "cat")
 #+END_SRC
 
 ** Deft

@@ -3,7 +3,6 @@
 
 (package! eink-theme)
 (package! ivy-posframe)
-(package! eshell-z)
 
 (package! evil-snipe :disable t)
 (package! ivy-rich :disable t)
