@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: React Functional Component
+# key: rfc
+# condition: t                    
+# --
+
+import React from "react";
+
+const $1 = () => {
+  return (
+    <div>
+      $0
+    </div>
+  );
+};
+
+export default $2;

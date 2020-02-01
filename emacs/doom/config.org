@@ -11,13 +11,16 @@ literate config module]] in =~/.doom.d/init.el=.
 
 (show-smartparens-global-mode 1)
 
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type nil)
 
 ;; load secrets (encrypted with git-crypt)
 (load "~/.emacs.d/secrets.el")
 
 ;; when I open emacs I want it to fill my screen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; instruct scratch buffer to inherit major mode it is summoned from
+(setq doom-scratch-buffer-major-mode t)
 #+END_SRC
 
 ** Theme
@@ -283,4 +286,16 @@ configure flycheck to use eslint
   ;; remove lsp-ui from flycheck--automatically-enabled-checkers
   (add-to-list 'flycheck-disabled-checkers 'lsp-ui)
   (setq flycheck-javascript-eslint-executable "eslint_d"))
+#+END_SRC
+** Web (& Svelte)
+some web-mode config
+#+BEGIN_SRC emacs-lisp
+(use-package! web-mode
+  :mode "\\.svelte\\'"
+  :config
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-style-padding 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-script-padding 2))
 #+END_SRC
