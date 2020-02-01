@@ -172,6 +172,13 @@ bindings to move between windows
    :ni "M-;" 'evil-window-right))
 (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
 #+END_SRC
+*** Aliases
+#+BEGIN_SRC emacs-lisp
+(set-eshell-alias!
+ "e" "find-file $1"
+ "git" "hub $*"
+ "doom" "~/doom-emacs/bin/doom $1")
+#+END_SRC
 *** eshell-z
 [[https://github.com/xuchunyang/eshell-z][eshell-z]] is an emacs port of [[https://github.com/rupa/z][z]], which "keeps track of where you’ve been and how
 many commands you invoke there, and provides a convenient way to jump to the
