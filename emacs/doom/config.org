@@ -35,9 +35,34 @@ any others) and then I add those details as below.
   (doom-variable-pitch-font (font-spec :family "Input Sans Narrow"))
   :config
   (hl-line-mode)
-  (set-face-italic-p 'italic nil)
+  ;(set-face-italic-p 'italic nil)
   :custom-face
   (hl-line ((t (:inherit highlight :background "lavender")))))
+#+END_SRC
+
+** Nifty functions
+I expect this section will gradually grow over time, but at the moment it only
+contains [[http://xahlee.info][Xah Lee's]] excellent paste-or-paste-previous function.
+#+BEGIN_SRC emacs-lisp
+(defun xah-paste-or-paste-previous ()
+"Paste. When called repeatedly, paste previous.
+This command calls `yank', and if repeated, call `yank-pop'.
+
+When `universal-argument' is called first with a number arg, paste that many times.
+
+URL `http://ergoemacs.org/emacs/emacs_paste_or_paste_previous.html'
+Version 2017-07-25"
+(interactive)
+(progn
+    (when (and delete-selection-mode (region-active-p))
+    (delete-region (region-beginning) (region-end)))
+    (if current-prefix-arg
+        (progn
+        (dotimes ($i (prefix-numeric-value current-prefix-arg))
+            (yank)))
+    (if (eq real-last-command this-command)
+        (yank-pop 1)
+        (yank)))))
 #+END_SRC
 
 ** Keybindings
@@ -101,19 +126,32 @@ bind jump-backward and jump-forward to more intuitive keys
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after evil
-   :n "C-i" 'better-jumper-jump-backward
+   ;; :n "C-i" 'better-jumper-jump-backward ;; this binding causes weird issue with source blocks in org mode
    :n "C-o" 'better-jumper-jump-forward)
 
  (:after evil-org
    :map evil-org-mode-map
    :n "C-i" 'better-jumper-jump-backward))
 #+END_SRC
-restore original emacs binding for paste and `save-buffer`
+restore original emacs binding for paste, `save-buffer`, `delete-char`
 #+BEGIN_SRC emacs-lisp
 (map!
- :after evil
- :i "C-y" 'evil-paste-after
- :i "C-x C-s" 'save-buffer)
+ (:after evil
+   :i "C-y" 'xah-paste-or-paste-previous
+   :i "C-d" 'delete-char
+   :i "C-x C-s" 'save-buffer)
+
+ (:after evil-org
+   :map evil-org-mode-map
+   :i "C-d" 'delete-char))
+#+END_SRC
+only use text-scale-increase and text-scale-decrease to change font size (bound by default
+to C-- and C-=)
+#+BEGIN_SRC
+(map!
+ (:after evil
+  "s--" 'text-scale-decrease
+  "s-=" 'text-scale-increase))
 #+END_SRC
 fix "#" input on UK MacBook keyboard
 #+BEGIN_SRC emacs-lisp
@@ -143,7 +181,14 @@ show ivy in posframe right under cursor
 #+BEGIN_SRC emacs-lisp
 (setq org-directory "~/Dropbox/org")
 #+END_SRC
-
+*** Keybindings
+#+BEGIN_SRC emacs-lisp
+(map!
+ :after evil-org
+ :map evil-org-mode-map
+ :ni "C-j" 'org-metaleft
+ :ni "C-;" 'org-metaright)
+#+END_SRC
 *** Agenda
 #+BEGIN_SRC emacs-lisp
 (map!
