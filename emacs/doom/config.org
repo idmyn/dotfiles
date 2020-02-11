@@ -163,12 +163,17 @@ bind jump-backward and jump-forward to more intuitive keys
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after evil
-   ;; :n "C-i" 'better-jumper-jump-backward ;; this binding causes weird issue with source blocks in org mode
-   :n "C-o" 'better-jumper-jump-forward)
-
- (:after evil-org
-   :map evil-org-mode-map
-   :n "C-i" 'better-jumper-jump-backward))
+   :n "C-k" 'better-jumper-jump-backward
+   :n "C-l" 'better-jumper-jump-forward)
+ (:after org
+   :map org-mode-map
+   :n "C-k" 'better-jumper-jump-backward))
+#+END_SRC
+handy to have an insert-mode binding to jump to a new line above
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after evil
+   :i "C-o" '+default/newline-above))
 #+END_SRC
 restore original emacs binding for paste, `save-buffer`, `delete-char`
 #+BEGIN_SRC emacs-lisp
