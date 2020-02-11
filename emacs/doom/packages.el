@@ -2,7 +2,9 @@
 ;;; $DOOMDIR/packages.el
 
 (package! eink-theme)
-(package! ivy-posframe)
+(package! mini-modeline)
+(package! eldoc-box)
+(package! zetteldeft)
 
 (package! evil-snipe :disable t)
 (package! ivy-rich :disable t)

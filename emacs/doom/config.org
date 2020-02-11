@@ -37,6 +37,7 @@ any others) and then I add those details as below.
   (doom-font (font-spec :family "Input Mono Narrow" :size 15))
   (doom-variable-pitch-font (font-spec :family "Input Sans Narrow"))
   :config
+  (mini-modeline-mode t)
   (hl-line-mode)
   ;(set-face-italic-p 'italic nil)
   :custom-face
@@ -292,4 +293,17 @@ some web-mode config
   (setq web-mode-style-padding 2)
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-script-padding 2))
+#+END_SRC
+** Markdown & Org
+set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-mode]]
+#+BEGIN_SRC emacs-lisp
+(setq grip-binary-path "~/.pyenv/shims/grip")
+#+END_SRC
+** Common Lisp
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after sly
+   :map sly-mrepl-mode-map
+   :i "C-k" 'sly-mrepl-next-input-or-button
+   :i "C-l" 'sly-mrepl-previous-input-or-button))
 #+END_SRC
