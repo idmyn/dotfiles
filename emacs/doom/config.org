@@ -167,17 +167,11 @@ fix "#" input on UK MacBook keyboard
 #+END_SRC
 
 ** Ivy
-use fuzzy regex matching for candidate selection
-#+BEGIN_SRC emacs-lisp
-(after! ivy
-         (setq ivy-re-builders-alist
-               '((t . ivy--regex-fuzzy))))
-#+END_SRC
-show ivy in posframe right under cursor
+instruct ivy-posframe to appear right under cursor with no border
 #+BEGIN_SRC emacs-lisp
 (after! ivy
   (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
-  (ivy-posframe-mode 1))
+  (setq ivy-posframe-border-width 0))
 #+END_SRC
 
 ** Org
