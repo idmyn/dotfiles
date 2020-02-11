@@ -237,12 +237,31 @@ tell CLI applications that it's ok to dump really long output into the buffer
 
 ** Deft
 #+BEGIN_SRC emacs-lisp
-(map! :leader
-        :prefix "n"
-        :desc "Open deft" "d" 'deft-find-file)
-(after! deft
-  (setq deft-directory "~/Dropbox/notes"
-        deft-use-filter-string-for-filename t))
+;; (map! :leader
+;;         :prefix "n"
+;;         :desc "Open deft" "d" 'deft-find-file)
+;; (after! deft
+;;   (setq deft-directory "~/Dropbox/notes"
+;;         deft-use-filter-string-for-filename t))
+#+END_SRC
+*** Zetteldeft
+#+BEGIN_SRC emacs-lisp
+(use-package! zetteldeft
+  :custom
+  (deft-directory "~/Dropbox/zettelkasten")
+  :config
+  (map!
+   :leader
+   :prefix "d"
+   :desc "Create new note and open" "n" 'zetteldeft-new-file
+   :desc "Create new note and insert link" "N" 'zetteldeft-new-file-and-link
+   :desc "Pick a note and insert a link" "i" 'zetteldeft-find-file-id-insert
+   :desc "Follow a link" "f" 'zetteldeft-follow-link
+   :desc "Select and search a link’s ID" "l" 'zetteldeft-avy-link-search
+   :desc "Select a tag and search for it" "t" 'zetteldeft-avy-tag-search
+   :desc "Search for a note" "s" 'deft-find-file
+   :desc "Search for thing at point" "S" 'zetteldeft-search-at-point
+   :desc "Search for id of current file" "c" 'zetteldeft-search-current-id))
 #+END_SRC
 
 ** Ranger (deer)
@@ -285,6 +304,8 @@ configure flycheck to use eslint
 ** Web (& Svelte)
 some web-mode config
 #+BEGIN_SRC emacs-lisp
+(setq css-indent-offset 2)
+
 (use-package! web-mode
   :mode "\\.svelte\\'"
   :config
