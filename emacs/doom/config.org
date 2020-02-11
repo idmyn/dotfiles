@@ -43,6 +43,22 @@ any others) and then I add those details as below.
   :custom-face
   (hl-line ((t (:inherit highlight :background "lavender")))))
 #+END_SRC
+remove minor modes from the mode line
+#+BEGIN_SRC emacs-lisp
+(define-minor-mode minor-mode-blackout-mode
+  "Hides minor modes from the mode line."
+  t)
+
+(catch 'done
+  (mapc (lambda (x)
+          (when (and (consp x)
+                     (equal (cadr x) '("" minor-mode-alist)))
+            (let ((original (copy-sequence x)))
+              (setcar x 'minor-mode-blackout-mode)
+              (setcdr x (list "" original)))
+            (throw 'done t)))
+        mode-line-modes))
+#+END_SRC
 
 ** Nifty functions
 #+BEGIN_SRC emacs-lisp
