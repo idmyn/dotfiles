@@ -45,8 +45,6 @@ any others) and then I add those details as below.
 #+END_SRC
 
 ** Nifty functions
-I expect this section will gradually grow over time, but at the moment it only
-contains [[http://xahlee.info][Xah Lee's]] excellent paste-or-paste-previous function.
 #+BEGIN_SRC emacs-lisp
 (defun xah-paste-or-paste-previous ()
 "Paste. When called repeatedly, paste previous.
@@ -67,6 +65,25 @@ Version 2017-07-25"
     (if (eq real-last-command this-command)
         (yank-pop 1)
         (yank)))))
+
+(defun my/zetteldeft-find-file (file)
+  "Find FILE interactively using the minibuffer.
+FILE must exist and be a relative or absolute path, with extension.
+If FILE is not inside `deft-directory', create it with zetteldeft rules."
+  (interactive
+   (list (completing-read "Deft find file: " (deft-find-all-files-no-prefix))))
+  (let* ((dir (expand-file-name deft-directory))
+         (zdId (zetteldeft-generate-id))
+         (zdName (concat zdId " " file)))
+    (if (string-match (rx (seq ".org" eol)) file)
+        (progn ; if the string ends in ".org" then I've chosen an existing file
+          (setq file (concat dir "/" file))
+          (deft-open-file file))
+      (progn ; else I want to feed input into deft-new-file func
+        (deft-new-file-named zdName)
+        (kill-new zdName)
+        (save-buffer)
+        (when (featurep 'evil) (evil-insert-state))))))
 #+END_SRC
 
 ** Keybindings
@@ -248,7 +265,7 @@ tell CLI applications that it's ok to dump really long output into the buffer
 #+BEGIN_SRC emacs-lisp
 (use-package! zetteldeft
   :custom
-  (deft-directory "~/Dropbox/zettelkasten")
+  (deft-directory "~/Dropbox/org/zettelkasten")
   :config
   (map!
    :leader
@@ -259,7 +276,7 @@ tell CLI applications that it's ok to dump really long output into the buffer
    :desc "Follow a link" "f" 'zetteldeft-follow-link
    :desc "Select and search a link’s ID" "l" 'zetteldeft-avy-link-search
    :desc "Select a tag and search for it" "t" 'zetteldeft-avy-tag-search
-   :desc "Search for a note" "s" 'deft-find-file
+   :desc "Search for a note" "s" 'my/zetteldeft-find-file
    :desc "Search for thing at point" "S" 'zetteldeft-search-at-point
    :desc "Search for id of current file" "c" 'zetteldeft-search-current-id))
 #+END_SRC
