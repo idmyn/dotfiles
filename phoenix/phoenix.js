@@ -4,31 +4,9 @@
 // https://github.com/Jaredk3nt/phoenix-padding
 // https://github.com/mafredri/phoenix-config/blob/5f4d7083d3e6dbc8956e63c2e010a05333e3af24/src/phoenix.ts#L29-L47
 
-const scr = Screen.main().flippedVisibleFrame()
-
-const windowLocations = {
-  full: {
-    y: 0,
-    x: 0,
-    width: scr.width,
-    height: scr.height
-  },
-  left: {
-    y: 0,
-    x: 0,
-    width: scr.width / 2,
-    height: scr.height
-  },
-  right: {
-    y: 0,
-    x: scr.width / 2,
-    width: scr.width / 2,
-    height: scr.height
-  }
-}
+const currentScreen = () => Screen.main().flippedVisibleFrame()
 
 const nextScreen = () => {
-  // work in progress
   const index =
     Screen.all().indexOf(Screen.main()) + 1 === Screen.all().length
       ? 0
@@ -36,17 +14,42 @@ const nextScreen = () => {
   return Screen.all()[index].flippedVisibleFrame()
 }
 
+const windowLocations = {
+  full: (scr) => ({
+    y: scr.y,
+    x: scr.x,
+    width: scr.width,
+    height: scr.height
+  }),
+  left: (scr) => ({
+    y: scr.y,
+    x: scr.x,
+    width: scr.width / 2,
+    height: scr.height
+  }),
+  right: (scr) => ({
+    y: scr.y,
+    x: scr.x + scr.width / 2,
+    width: scr.width / 2,
+    height: scr.height
+  })
+}
+
 /* eslint-disable no-unused-vars */
 const windowToFull = new Key('f', ['cmd', 'ctrl'], () => {
-  Window.focused().setFrame(windowLocations.full)
+  Window.focused().setFrame(windowLocations.full(currentScreen()))
 })
 
 const windowToLeft = new Key('j', ['cmd', 'ctrl'], () => {
-  Window.focused().setFrame(windowLocations.left)
+  Window.focused().setFrame(windowLocations.left(currentScreen()))
 })
 
 const windowToRight = new Key(';', ['cmd', 'ctrl'], () => {
-  Window.focused().setFrame(windowLocations.right)
+  Window.focused().setFrame(windowLocations.right(currentScreen()))
+})
+
+const windowToFullNextScreen = new Key('o', ['cmd', 'ctrl'], () => {
+  Window.focused().setFrame(windowLocations.full(nextScreen()))
 })
 
 const showOrOpenEmacs = new Key('e', ['cmd', 'ctrl'], () => {
