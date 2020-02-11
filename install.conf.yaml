@@ -19,6 +19,8 @@
     ~/.emacs-profiles.el: emacs/.emacs-profiles.el
     ~/.config/phoenix/phoenix.js: phoenix/phoenix.js
     ~/.config/karabiner.edn: karabiner/karabiner.edn
+    ~/.config/fish/config.fish: shell/fish/config.fish
+    ~/.config/fish/fishfile: shell/fish/fishfile
     ~/.aliases: shell/.aliases
     ~/.zshenv: shell/.zshenv
     ~/.zshrc: shell/.zshrc
