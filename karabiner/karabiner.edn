@@ -36,7 +36,7 @@
  ;;             :t-mode {:key :t}}
 
  :main [{:des   "everywhere: right cmd alone to f13 (alfred), and to ctrl as modifier"
-         :rules [[:right_command :left_control nil {:alone :f13}]]}
+         :rules [[:right_command :!Tleft_alt nil {:alone :f13}]]}
 
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt nil {:alone :tab}]]}

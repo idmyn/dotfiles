@@ -36,23 +36,23 @@ const windowLocations = {
 }
 
 /* eslint-disable no-unused-vars */
-const windowToFull = new Key('f', ['cmd', 'ctrl'], () => {
+const windowToFull = new Key('f', ['alt', 'ctrl'], () => {
   Window.focused().setFrame(windowLocations.full(currentScreen()))
 })
 
-const windowToLeft = new Key('j', ['cmd', 'ctrl'], () => {
+const windowToLeft = new Key('j', ['alt', 'ctrl'], () => {
   Window.focused().setFrame(windowLocations.left(currentScreen()))
 })
 
-const windowToRight = new Key(';', ['cmd', 'ctrl'], () => {
+const windowToRight = new Key(';', ['alt', 'ctrl'], () => {
   Window.focused().setFrame(windowLocations.right(currentScreen()))
 })
 
-const windowToFullNextScreen = new Key('o', ['cmd', 'ctrl'], () => {
+const windowToFullNextScreen = new Key('o', ['alt', 'ctrl'], () => {
   Window.focused().setFrame(windowLocations.full(nextScreen()))
 })
 
-const showOrOpenEmacs = new Key('e', ['cmd', 'ctrl'], () => {
+const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
   if (App.get('Emacs')) {
     App.get('Emacs').focus()
   } else {
@@ -61,14 +61,24 @@ const showOrOpenEmacs = new Key('e', ['cmd', 'ctrl'], () => {
   }
 })
 
-const showOrOpenBrowser = new Key('w', ['cmd', 'ctrl'], () => {
+const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
   if (App.get('Safari')) {
     App.get('Safari').focus()
-  } else if (App.get('Brave Browser')) {
-    App.get('Brave Browser').focus()
+  } else if (App.get('Vivaldi')) {
+    App.get('Vivaldi').focus()
   } else {
     App.launch('Safari')
     setTimeout(() => App.get('Safari').focus(), 500)
   }
 })
+
+const showOrOpenTerminal = new Key('s', ['alt', 'ctrl'], () => {
+  if (App.get('iTerm2')) {
+    App.get('iTerm2').focus()
+  } else {
+    App.launch('iTerm')
+  }
+})
+
+Phoenix.log("App.all", App.all().map(app => app.name()).filter(appName => /term/gi.test(appName)))
 /* eslint-enable no-unused-vars */
