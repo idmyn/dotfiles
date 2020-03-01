@@ -5,6 +5,7 @@
 (package! mini-modeline)
 (package! eldoc-box)
 (package! zetteldeft)
+(package! fish-mode)
 
 (package! evil-snipe :disable t)
 (package! ivy-rich :disable t)
