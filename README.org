@@ -9,8 +9,8 @@
 ** Emacs
    My current emacs setup consists of a base emacs install from [[https://emacsformacosx.com][emacsformacosx]]
    configured with my [[https://en.wikipedia.org/wiki/Literate_programming][literate]] [[https://github.com/idmyn/dotfiles/blob/master/emacs/init.org][init.org]] file. Emacs still looks for
-   ~~/.emacs.d/init.el~ at startup, though, so I use that file to instruct emacs
-   to configure itself with the elisp code-blocks in ~~/.emacs.d/init.org~. My
+   =~/.emacs.d/init.el= at startup, though, so I use that file to instruct emacs
+   to configure itself with the elisp code-blocks in =~/.emacs.d/init.org=. My
    config currently takes around 4-5 (painfully slow) seconds to load, which I
    mitigate by [[https://www.emacswiki.org/emacs/EmacsAsDaemon][running emacs as a daemon]] (I followed [[https://web.archive.org/web/20190407092503/https://east.fm/posts/emacs-26-and-macos-mojave/index.html][handy macOS-specific
    instructions for this]]), but I’m [[https://github.com/idmyn/dotfiles/tree/master/emacs/doom][working on]] porting my config to [[https://github.com/hlissner/doom-emacs][doom]] to speed

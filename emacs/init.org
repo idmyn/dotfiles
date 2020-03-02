@@ -671,7 +671,7 @@
     :straight t
     :defer 1
     :custom
-    (projectile-project-search-path '("~/Development/"))
+    (projectile-project-search-path '("~/src/"))
     (projectile-completion-system 'ivy)
     (projectile-enable-caching t)
     :config
