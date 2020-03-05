@@ -63,26 +63,26 @@ remove minor modes from the mode line
 ** Nifty functions
 #+BEGIN_SRC emacs-lisp
 (defun xah-paste-or-paste-previous ()
-"Paste. When called repeatedly, paste previous.
+  "Paste. When called repeatedly, paste previous.
 This command calls `yank', and if repeated, call `yank-pop'.
 
 When `universal-argument' is called first with a number arg, paste that many times.
 
 URL `http://ergoemacs.org/emacs/emacs_paste_or_paste_previous.html'
 Version 2017-07-25"
-(interactive)
-(progn
+  (interactive)
+  (progn
     (when (and delete-selection-mode (region-active-p))
-    (delete-region (region-beginning) (region-end)))
+      (delete-region (region-beginning) (region-end)))
     (if current-prefix-arg
         (progn
-        (dotimes ($i (prefix-numeric-value current-prefix-arg))
+          (dotimes ($i (prefix-numeric-value current-prefix-arg))
             (yank)))
-    (if (eq real-last-command this-command)
-        (yank-pop 1)
+      (if (eq real-last-command this-command)
+          (yank-pop 1)
         (yank)))))
 
-(defun my/zetteldeft-find-file (file)
+(defun my/zetteldeft-find-file (file &optional empty)
   "Find FILE interactively using the minibuffer.
 FILE must exist and be a relative or absolute path, with extension.
 If FILE is not inside `deft-directory', create it with zetteldeft rules."
@@ -97,9 +97,48 @@ If FILE is not inside `deft-directory', create it with zetteldeft rules."
           (deft-open-file file))
       (progn ; else I want to feed input into deft-new-file func
         (deft-new-file-named zdName)
-        (kill-new zdName)
+        (unless empty (zetteldeft--insert-title))
         (save-buffer)
         (when (featurep 'evil) (evil-insert-state))))))
+
+(require 'edit-indirect)
+(defun md/narrow-dwim (p)
+  "Widen if buffer is narrowed, narrow-dwim otherwise.
+  Dwim means: region, org-src-block, org-subtree, or
+  defun, whichever applies first. Narrowing to
+  org-src-block actually calls `org-edit-src-code'.
+  With prefix P, don't widen, just narrow even if buffer
+  is already narrowed."
+  (interactive "P")
+  (declare (interactive-only))
+  (cond ((and (buffer-narrowed-p) (not p)) (widen))
+        ((region-active-p)
+         (edit-indirect-region (region-beginning)
+                               (region-end)
+                               t))
+        (edit-indirect--overlay
+         (edit-indirect-commit))
+        (org-src-mode
+         (org-edit-src-exit))
+        ((derived-mode-p 'org-mode)
+         ;; `org-edit-src-code' is not a real narrowing
+         ;; command. Remove this first conditional if
+         ;; you don't want it.
+         (cond ((ignore-errors (org-edit-src-code) t))
+               ((ignore-errors (org-narrow-to-block) t))
+               (t (org-narrow-to-subtree))))
+        ((derived-mode-p 'latex-mode)
+         (LaTeX-narrow-to-environment))
+        ((derived-mode-p 'restclient-mode)
+         (restclient-narrow-to-current))
+        (t (narrow-to-defun))))
+;; Don't ask for confirmation on narrow-to-region
+(put 'narrow-to-region 'disabled nil)
+
+(map!
+ :leader
+ :prefix "t"
+ :desc "Toggle narrowing" "n" 'md/narrow-dwim)
 #+END_SRC
 
 ** Keybindings
@@ -212,6 +251,13 @@ instruct ivy-posframe to appear right under cursor with no border
   (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
   (setq ivy-posframe-border-width 0))
 #+END_SRC
+exceptions to the fuzzy search rule set in init.el
+#+BEGIN_SRC emacs-lisp
+(after! ivy
+  (setq ivy-re-builders-alist
+        '((counsel-imenu . ivy--regex-plus)
+          (t . ivy--regex-fuzzy))))
+#+END_SRC
 
 ** Company
 I tend to find the company auto-complete popup quite intrusive, so I disable it
@@ -231,6 +277,7 @@ globally. I do occasionaly find it useful, though, so I have a toggle mapped to
 ** Org
 #+BEGIN_SRC emacs-lisp
 (setq org-directory "~/Dropbox/org")
+(setq org-imenu-depth 10)
 #+END_SRC
 *** Keybindings
 #+BEGIN_SRC emacs-lisp
@@ -248,7 +295,6 @@ globally. I do occasionaly find it useful, though, so I have a toggle mapped to
    :m "k" 'org-agenda-next-line
    :m "l" 'org-agenda-previous-line))
 #+END_SRC
-
 ** Eshell
 *** Keybindings
 adjust history navigation bindings to match my adjusted vimkeys, and add
@@ -369,9 +415,15 @@ some web-mode config
   (setq web-mode-script-padding 2))
 #+END_SRC
 ** Markdown & Org
-set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-mode]]
+set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-mode]], fix some keybinds
 #+BEGIN_SRC emacs-lisp
 (setq grip-binary-path "/usr/local/bin/grip")
+
+(map!
+ (:after markdown-mode
+   :map evil-markdown-mode-map
+   :i "C-d" 'delete-char
+   :ni "C-;" 'self-insert-command))
 #+END_SRC
 ** Common Lisp
 #+BEGIN_SRC emacs-lisp
