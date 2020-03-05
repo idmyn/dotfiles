@@ -7,6 +7,7 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+  - [set -Ua fish_user_paths ~/bin, Setting $PATH]
 
 - link:
     ~/.nixpkgs/darwin-configuration.nix: nix/darwin-configuration.nix
@@ -25,3 +26,4 @@
     ~/.zshenv: shell/.zshenv
     ~/.zshrc: shell/.zshrc
     ~/.zsh_plugins.txt: shell/.zsh_plugins.txt
+    ~/bin: bin
