@@ -174,6 +174,13 @@ found out through `M-x which-key-show-keymap` that there is an
    "C-l" 'ivy-previous-line
    "C-;" 'ivy-done))
 #+END_SRC
+same thing for comint mode
+#+BEGIN_SRC emacs-lisp
+(map!
+ :map comint-mode-map
+ :i "C-k" 'comint-next-matching-input-from-input
+ :i "C-l" 'comint-previous-matching-input-from-input)
+#+END_SRC
 easier motion around lines and paragraphs
 #+BEGIN_SRC emacs-lisp
 (map!
@@ -244,6 +251,16 @@ fix "#" input on UK MacBook keyboard
     )))
 #+END_SRC
 
+** Evil
+tweak a couple of evil behaviours
+#+BEGIN_SRC emacs-lisp
+(after! evil
+  (setq evil-insert-state-message nil))
+
+(after! evil
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t))
+#+END_SRC
 ** Ivy
 instruct ivy-posframe to appear right under cursor with no border
 #+BEGIN_SRC emacs-lisp
@@ -273,6 +290,12 @@ globally. I do occasionaly find it useful, though, so I have a toggle mapped to
 (map! :leader
         :prefix "t"
         :desc "Toggle company mode" "c" 'company-mode)
+#+END_SRC
+** Eldoc
+I want to eldoc disabled in most modes
+#+BEGIN_SRC emacs-lisp
+(global-eldoc-mode -1)
+(remove-hook 'org-mode-hook #'org-eldoc-load)
 #+END_SRC
 ** Org
 #+BEGIN_SRC emacs-lisp
@@ -404,6 +427,7 @@ configure flycheck to use eslint
 some web-mode config
 #+BEGIN_SRC emacs-lisp
 (setq css-indent-offset 2)
+(add-hook 'css-mode-hook (lambda () (flycheck-mode -1)))
 
 (use-package! web-mode
   :mode "\\.svelte\\'"
