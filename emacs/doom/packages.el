@@ -7,6 +7,7 @@
 (package! zetteldeft)
 (package! fish-mode)
 (package! suggest)
+(package! dash-at-point)
 
 (package! edit-indirect
   :recipe (:host github :repo "Fanael/edit-indirect"))

@@ -209,8 +209,8 @@ bind jump-backward and jump-forward to more intuitive keys
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after evil
-   :n "C-k" 'better-jumper-jump-backward
-   :n "C-l" 'better-jumper-jump-forward)
+   :n "C-j" 'better-jumper-jump-backward
+   :n "C-:" 'better-jumper-jump-forward)
  (:after org
    :map org-mode-map
    :n "C-k" 'better-jumper-jump-backward))
@@ -247,10 +247,14 @@ fix "#" input on UK MacBook keyboard
  ((string-equal system-type "darwin")
   (progn
     (map!
-     :i "M-3" (lambda () (interactive) (insert "#")))
+     "M-3" (lambda () (interactive) (insert "#")))
     )))
 #+END_SRC
 
+** Dash
+#+BEGIN_SRC emacs-lisp
+(map! :n "D" 'dash-at-point)
+#+END_SRC
 ** Evil
 tweak a couple of evil behaviours
 #+BEGIN_SRC emacs-lisp
