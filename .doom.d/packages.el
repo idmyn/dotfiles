@@ -2,7 +2,6 @@
 ;;; $DOOMDIR/packages.el
 
 (package! eink-theme)
-(package! mini-modeline)
 (package! eldoc-box)
 (package! zetteldeft)
 (package! fish-mode)

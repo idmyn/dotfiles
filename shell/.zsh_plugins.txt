@@ -1,5 +1,0 @@
-rupa/z
-junegunn/fzf
-zsh-users/zsh-completions
-zsh-users/zsh-autosuggestions
-zsh-users/zsh-history-substring-search

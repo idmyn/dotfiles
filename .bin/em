@@ -1,5 +1,6 @@
 #!/bin/sh
-#
+
+# https://posts.michaelks.org/simple-emacs-aliases-macos/
 # This is a convenience wrapper to launch or reuse a GUI Emacs instance to open
 # a given file. It doesn't wait for it to exit, so can't be used as an $EDITOR.
 set -o errexit -o nounset

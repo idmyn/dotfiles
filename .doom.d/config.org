@@ -14,7 +14,7 @@ literate config module]] in =~/.doom.d/init.el=.
 (setq display-line-numbers-type nil)
 
 ;; load secrets (encrypted with git-crypt)
-(load "~/.emacs.d/secrets.el")
+(load "~/.doom.d/secrets.el")
 
 ;; when I open emacs I want it to fill my screen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -37,9 +37,7 @@ any others) and then I add those details as below.
   (doom-font (font-spec :family "Input Mono Narrow" :size 15))
   (doom-variable-pitch-font (font-spec :family "Input Sans Narrow"))
   :config
-  (mini-modeline-mode t)
   (hl-line-mode)
-  ;(set-face-italic-p 'italic nil)
   :custom-face
   (hl-line ((t (:inherit highlight :background "lavender")))))
 #+END_SRC
