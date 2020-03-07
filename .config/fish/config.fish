@@ -5,7 +5,8 @@ alias git="hub"
 alias b="buku"
 alias e="open -a emacs"
 alias otp="pass otp -c"
-alias doom="~/doom-emacs/bin/doom"
+alias doom="~/.emacs.d/bin/doom"
+set -Ua fish_user_paths ~/.bin
 
 # for compatibility with eshell-z
 set -Ux Z_DATA ~/.z

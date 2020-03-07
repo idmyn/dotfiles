@@ -1,4 +1,2 @@
-.DS_Store
-.config/fish/fish_variables
-emacs/doom/config.el
-dotbot
+Brewfile.lock.json
+.doom.d/config.el
