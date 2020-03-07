@@ -9,3 +9,7 @@ brew "yqrashawn/goku/goku"
 
 tap "d12frosted/emacs-plus"
 brew "emacs-plus", args: ["without-spacemacs-icon"]
+
+brew "hub"
+brew "grip"
+brew "trash"
