@@ -260,7 +260,8 @@ tweak a couple of evil behaviours
   (setq evil-split-window-below t)
   (setq evil-vsplit-window-right t)
   (setq evil-insert-state-message nil)
-  (setq +evil-want-o/O-to-continue-comments nil))
+  (setq +evil-want-o/O-to-continue-comments nil)
+  (advice-remove #'newline-and-indent #'+default--newline-indent-and-continue-comments-a))
 #+END_SRC
 ** Ivy
 instruct ivy-posframe to appear right under cursor with no border
