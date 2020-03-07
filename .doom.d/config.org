@@ -257,11 +257,10 @@ fix "#" input on UK MacBook keyboard
 tweak a couple of evil behaviours
 #+BEGIN_SRC emacs-lisp
 (after! evil
-  (setq evil-insert-state-message nil))
-
-(after! evil
+  (setq evil-split-window-below t)
   (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t))
+  (setq evil-insert-state-message nil)
+  (setq +evil-want-o/O-to-continue-comments nil))
 #+END_SRC
 ** Ivy
 instruct ivy-posframe to appear right under cursor with no border
