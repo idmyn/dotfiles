@@ -9,6 +9,8 @@ brew bundle
 
 stow . --target="$HOME"
 
+git config --global core.excludesfile ~/.gitignore_global
+
 fish --command="fisher"
 fish --command="set -Ua fish_user_paths ~/.bin"
 
