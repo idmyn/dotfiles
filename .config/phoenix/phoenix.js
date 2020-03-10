@@ -8,9 +8,9 @@ const currentScreen = () => Screen.main().flippedVisibleFrame()
 
 const nextScreen = () => {
   const index =
-    Screen.all().indexOf(Screen.main()) + 1 === Screen.all().length
-      ? 0
-      : Screen.all().indexOf(Screen.main()) + 1
+    Screen.all().indexOf(Screen.main()) - 1 < 0
+      ? Screen.all().length - 1
+      : Screen.all().indexOf(Screen.main()) - 1
   return Screen.all()[index].flippedVisibleFrame()
 }
 
@@ -64,8 +64,8 @@ const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
 const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
   if (App.get('Safari')) {
     App.get('Safari').focus()
-  } else if (App.get('Vivaldi')) {
-    App.get('Vivaldi').focus()
+  } else if (App.get('Brave Browser')) {
+    App.get('Brave Browser').focus()
   } else {
     App.launch('Safari')
     setTimeout(() => App.get('Safari').focus(), 500)
@@ -80,5 +80,22 @@ const showOrOpenTerminal = new Key('s', ['alt', 'ctrl'], () => {
   }
 })
 
-Phoenix.log("App.all", App.all().map(app => app.name()).filter(appName => /term/gi.test(appName)))
+const showOrOpenSlack = new Key('l', ['alt', 'ctrl'], () => {
+  if (App.get('Slack')) {
+    App.get('Slack').focus()
+  } else {
+    App.launch('Slack')
+  }
+})
+
+const showOrOpenMail = new Key('m', ['alt', 'ctrl'], () => {
+  if (App.get('Microsoft Outlook')) {
+    App.get('Microsoft Outlook').focus()
+  } else {
+    App.launch('Microsoft Outlook')
+    setTimeout(() => App.get('Microsoft Outlook').focus(), 100)
+  }
+})
+
+Phoenix.log("App.all", App.all().map(app => app.name()).filter(appName => /Brave Browser/gi.test(appName)))
 /* eslint-enable no-unused-vars */
