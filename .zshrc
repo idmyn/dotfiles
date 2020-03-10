@@ -20,10 +20,6 @@ precmd() {
 setopt prompt_subst
 zstyle ':vcs_info:git*' formats "%{$fg[blue]%}%b%{$reset_color%}%m%u%c%{$reset_color%}"
 
-PS1='
-%~
- ${vcs_info_msg_0_} $ '
-
 bindkey -e
 bindkey -M emacs '^L' history-substring-search-up
 bindkey -M emacs '^K' history-substring-search-down
@@ -41,3 +37,5 @@ alias ls='ls -GF'
 
 # Function for killing servers running at particular ports
 function kp { kill $(sudo lsof -t -i:"$1"); }
+
+alias otp="pass otp -c"
