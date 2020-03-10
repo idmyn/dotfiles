@@ -1,3 +1,5 @@
+mafredri/zsh-async
+sindresorhus/pure
 rupa/z
 zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
