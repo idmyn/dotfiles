@@ -5,3 +5,4 @@ Brewfile.lock.json
 .config/fish/fish_variables
 .config/fish/functions
 .config/karabiner
+.config/gtk-2.0
