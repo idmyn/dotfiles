@@ -188,8 +188,10 @@ easier motion around lines and paragraphs
  :nvm "L" 'backward-paragraph
  :nvm ";" 'evil-last-non-blank)
 #+END_SRC
-easier movement between windows (taken from [[https://github.com/Brettm12345/doom-emacs-literate-config/blob/master/config.org#easy-window-navigation][here]])
+easier movement between windows and frames (taken from [[https://github.com/Brettm12345/doom-emacs-literate-config/blob/master/config.org#easy-window-navigation][here]])
 #+BEGIN_SRC emacs-lisp
+(use-package! framemove
+  :custom (framemove-hook-into-windmove t))
 (map!
  (:after evil
    :ni "M-j" 'evil-window-left
@@ -236,6 +238,7 @@ to C-- and C-=)
 #+BEGIN_SRC
 (map!
  (:after evil
+  :map global-map
   "s--" 'text-scale-decrease
   "s-=" 'text-scale-increase))
 #+END_SRC
@@ -344,7 +347,7 @@ bindings to move between windows
 (set-eshell-alias!
  "e" "find-file $1"
  "git" "hub $*"
- "doom" "~/doom-emacs/bin/doom $1")
+ "doom" "~/.emacs.d/bin/doom $1")
 #+END_SRC
 *** eshell-z
 [[https://github.com/xuchunyang/eshell-z][eshell-z]] is an emacs port of [[https://github.com/rupa/z][z]], which "keeps track of where you’ve been and how

@@ -8,6 +8,9 @@
 (package! suggest)
 (package! dash-at-point)
 
+(package! framemove
+  :recipe (:host github :repo "emacsmirror/framemove"))
+
 (package! edit-indirect
   :recipe (:host github :repo "Fanael/edit-indirect"))
 
