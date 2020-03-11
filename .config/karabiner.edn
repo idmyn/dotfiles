@@ -43,7 +43,7 @@
          :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
 
         {:des   "in Brave, C-k and C-l are bound to down and up"
-         :rules [[:condi :Browsers] [:!Tk :down_arrow] [:!Tl :up_arrow]]}
+         :rules [[:condi :Browsers] [:!Tk :down_arrow] [:!Tl :up_arrow] [:!Tg :escape]]}
 
         {:des "workman dead state"
          :rules [[:comma ["dead-state" 1] :!dead-state]
