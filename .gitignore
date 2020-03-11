@@ -6,3 +6,4 @@ Brewfile.lock.json
 .config/fish/functions
 .config/karabiner
 .config/gtk-2.0
+.config/configstore

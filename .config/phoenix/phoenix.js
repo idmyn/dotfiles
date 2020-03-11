@@ -97,5 +97,13 @@ const showOrOpenMail = new Key('m', ['alt', 'ctrl'], () => {
   }
 })
 
+const showOrOpenDash = new Key('d', ['alt', 'ctrl'], () => {
+  if (App.get('Dash')) {
+    App.get('Dash').focus()
+  } else {
+    App.launch('Dash')
+  }
+})
+
 Phoenix.log("App.all", App.all().map(app => app.name()).filter(appName => /Brave Browser/gi.test(appName)))
 /* eslint-enable no-unused-vars */

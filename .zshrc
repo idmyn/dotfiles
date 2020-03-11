@@ -7,6 +7,8 @@ else
   compinit -C
 fi
 
+source ~/.aliases
+
 . $(brew --prefix asdf)/asdf.sh
 
 source ~/.zsh_plugins.sh
@@ -37,5 +39,3 @@ alias ls='ls -GF'
 
 # Function for killing servers running at particular ports
 function kp { kill $(sudo lsof -t -i:"$1"); }
-
-alias otp="pass otp -c"

@@ -1,0 +1,2 @@
+alias otp="pass otp -c"
+alias doom="~/.emacs.d/bin/doom"
