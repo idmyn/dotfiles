@@ -26,14 +26,9 @@
                            "^org\\.gnu\\.Emacs$"
                            "^org\\.vim\\.MacVim$"
                            "^com\\.apple\\.Terminal$"
-                           "^ru.keepcoder.Telegram$"]}
-
- ;; :simlayers {:f-mode {:key :f}
- ;;             :j-mode {:key :j}
- ;;             :a-mode {:key :a}
- ;;             :w-mode {:key :w}
- ;;             :m-mode {:key :m}
- ;;             :t-mode {:key :t}}
+                           "^ru\\.keepcoder\\.Telegram$"]
+                :Browsers ["^com\\.brave\\.Browser$"
+                           "^com\\.apple\\.Safari$"]}
 
  :main [{:des   "everywhere: right cmd alone to f13 (alfred), and to ctrl as modifier"
          :rules [[:right_command :!Tleft_alt nil {:alone :f13}]]}
@@ -47,60 +42,8 @@
         {:des   "outside vim (and emulators): caps_lock to f13 when pressed alone, to ctrl as modifier"
          :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
 
-        {:des "left-cmd + shift for window management"
-         :rules [[:!CSf :!!f] ;; fullscreen
-                 [:!CSo :!!o] ;; maximise window on other monitor
-                 [:!CSj :!!j] ;; split left
-                 [:!CSk :!!k] ;; split down
-                 [:!CSl :!!l] ;; split up
-                 [:!CSsemicolon :!!semicolon] ;; split right
-                 [:!CSe [:km "open: Emacs"]]
-                 [:!CSw [:km "open: Brave"]]
-                 [:!CSh [:hs "someAlert"]]
-                 ]}
-
-        {:des "tkey (todoist)"
-         :rules [:t-mode
-                 [:o :!!1] ; open todoist
-                 [:a :!!2] ; new todoist task
-                 [:n :!!2]]} ; new todoist task
-
-        {:des "wkey (window management via BTT)"
-         :rules [:w-mode
-                 [:j :!!j] ; split left
-                 [:k :!!k] ; split down
-                 [:l :!!l] ; split up
-                 [:semicolon :!!semicolon] ; split right
-                 [:d [:km "wm: Hide all"]]
-                 [:o :!!o] ; maximise window on other monitor
-                 [:f :!!f]]} ; fullscreen
-
-        {:des "akey (alfred)"
-         :rules [:a-mode
-                 [:s :f13]]} ; search alfred
-
-        {:des "jkey (open apps)"
-         :rules [:j-mode
-                 [:e [:km "open: Emacs"]]
-                 [:w [:km "open: Brave"]]
-                 [:s [:km "open: Terminal"]]
-                 [:c [:km "open: Calendar"]]
-                 [:k [:km "open: KM"]]
-                 [:t [:km "open: Tidal"]]]}
-
-        {:des "mkey (open messaging apps)"
-         :rules [:m-mode
-                 [:s [:km "open: Slack"]]
-                 [:e [:km "open: Mail"]]
-                 [:t [:km "open: Telegram"]]]}
-
-        {:des "fkey (open apps)"
-         :rules [:f-mode
-                 [:e [:km "open: Emacs"]]
-                 [:w [:km "open: Brave"]]
-                 [:s [:km "open: Terminal"]]
-                 [:k [:km "open: KM"]]
-                 [:n :!!n]]} ; open nvALT
+        {:des   "in Brave, C-k and C-l are bound to down and up"
+         :rules [[:condi :Browsers] [:!Tk :down_arrow] [:!Tl :up_arrow]]}
 
         {:des "workman dead state"
          :rules [[:comma ["dead-state" 1] :!dead-state]
