@@ -8,9 +8,9 @@ const currentScreen = () => Screen.main().flippedVisibleFrame()
 
 const nextScreen = () => {
   const index =
-    Screen.all().indexOf(Screen.main()) - 1 < 0
-      ? Screen.all().length - 1
-      : Screen.all().indexOf(Screen.main()) - 1
+    Screen.all().indexOf(Screen.main()) + 1 === Screen.all().length
+      ? 0
+      : Screen.all().indexOf(Screen.main()) + 1
   return Screen.all()[index].flippedVisibleFrame()
 }
 
