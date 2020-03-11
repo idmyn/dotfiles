@@ -39,3 +39,9 @@ alias ls='ls -GF'
 
 # Function for killing servers running at particular ports
 function kp { kill $(sudo lsof -t -i:"$1"); }
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/davidmy/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/davidmy/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/davidmy/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/davidmy/google-cloud-sdk/completion.zsh.inc'; fi

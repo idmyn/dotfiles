@@ -1,6 +1,6 @@
 mafredri/zsh-async
-sindresorhus/pure
 rupa/z
+denysdovhan/spaceship-prompt
 zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-history-substring-search

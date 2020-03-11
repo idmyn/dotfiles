@@ -7,3 +7,4 @@ Brewfile.lock.json
 .config/karabiner
 .config/gtk-2.0
 .config/configstore
+.config/gcloud
