@@ -1,6 +1,7 @@
 brew "stow"
 
 cask "iterm2"
+cask "hyper"
 
 brew "fish"
 cask "phoenix"
