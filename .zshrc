@@ -8,6 +8,7 @@ else
 fi
 
 source ~/.aliases
+source ~/.secret-aliases
 
 . $(brew --prefix asdf)/asdf.sh
 
