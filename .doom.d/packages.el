@@ -7,6 +7,7 @@
 (package! fish-mode)
 (package! suggest)
 (package! dash-at-point)
+(package! deadgrep)
 
 (package! framemove
   :recipe (:host github :repo "emacsmirror/framemove"))

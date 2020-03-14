@@ -1,6 +1,5 @@
 brew "stow"
 
-cask "iterm2"
 cask "hyper"
 
 brew "fish"
@@ -16,6 +15,7 @@ brew "emacs-plus", args: ["without-spacemacs-icon"]
 brew "pass"
 brew "pass-otp"
 
+brew "git"
 brew "hub"
 brew "asdf"
 brew "grip"
