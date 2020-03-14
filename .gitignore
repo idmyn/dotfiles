@@ -1,10 +1,2 @@
 Brewfile.lock.json
 emacs/.doom.d/config.el
-.config/fish/completions
-.config/fish/conf.d
-.config/fish/fish_variables
-.config/fish/functions
-.config/karabiner
-.config/gtk-2.0
-.config/configstore
-.config/gcloud
