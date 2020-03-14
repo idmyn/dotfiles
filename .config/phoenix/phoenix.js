@@ -73,18 +73,10 @@ const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenTerminal = new Key('s', ['alt', 'ctrl'], () => {
-  if (App.get('iTerm2')) {
-    App.get('iTerm2').focus()
+  if (App.get('Hyper') && App.get('Hyper').windows().length) {
+    App.get('Hyper').focus()
   } else {
-    App.launch('iTerm')
-  }
-})
-
-const showOrOpenSlack = new Key('l', ['alt', 'ctrl'], () => {
-  if (App.get('Slack')) {
-    App.get('Slack').focus()
-  } else {
-    App.launch('Slack')
+    App.launch('Hyper')
   }
 })
 
