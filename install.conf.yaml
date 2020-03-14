@@ -1,0 +1,26 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~']
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+
+- link:
+    ~/.doom.d: emacs/.doom.d
+    ~/.config/phoenix/phoenix.js: phoenix/phoenix.js
+    ~/.config/karabiner.edn: karabiner/karabiner.edn
+    ~/.config/fish/config.fish: shell/fish/config.fish
+    ~/.config/fish/fishfile: shell/fish/fishfile
+    ~/.profile: shell/.profile
+    ~/.aliases: shell/.aliases
+    ~/.secret-aliases: shell/.secret-aliases
+    ~/.zshrc: shell/.zshrc
+    ~/.zshenv: shell/.zshenv
+    ~/.zsh_plugins.txt: shell/.zsh_plugins.txt
+    ~/.hyper.js: hyper/.hyper.js
+    ~/.bin: bin
+    ~/.gitconfig: git/.gitconfig
+    ~/.gitignore_global: git/.gitignore_global

@@ -1,5 +1,5 @@
 Brewfile.lock.json
-.doom.d/config.el
+emacs/.doom.d/config.el
 .config/fish/completions
 .config/fish/conf.d
 .config/fish/fish_variables
