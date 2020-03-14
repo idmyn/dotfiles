@@ -7,18 +7,11 @@ fi
 
 brew bundle
 
-stow . --target="$HOME"
-
+# use commands for git config, rather than version controlling ~/.gitconfig?
 git config --global core.excludesfile ~/.gitignore_global
 
 fish --command="fisher"
 fish --command="set -Ua fish_user_paths ~/.bin"
-
-# change default shell to fish if it's just been installed
-if ! grep -Fxq "/usr/local/bin/fish" /etc/shells; then
-  echo /usr/local/bin/fish | sudo tee -a /etc/shells
-  chsh -s /usr/local/bin/fish
-fi
 
 # install doom emacs if it isn't installed already
 if [ ! -f "$HOME/.emacs.d/bin/doom" ]; then
