@@ -27,8 +27,8 @@ bindkey -e
 bindkey -M emacs '^L' history-substring-search-up
 bindkey -M emacs '^K' history-substring-search-down
 
-# colors via https://geoff.greer.fm/lscolors/
-export LSCOLORS=AxexcxdxbxegfhabagacEx
+# colors via https://geoff.greer.fm/lscolors/ based on exa defaults
+export LSCOLORS=ExgxcxdxbxegfhabagacEx
 
 function chpwd() {
     emulate -L zsh
