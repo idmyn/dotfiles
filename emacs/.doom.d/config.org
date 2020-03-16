@@ -16,6 +16,10 @@ literate config module]] in =~/.doom.d/init.el=.
 ;; load secrets (encrypted with git-crypt)
 (load "~/.doom.d/secrets.el")
 
+;; use direnv for environment variables
+(use-package! direnv
+  :config (direnv-mode))
+
 ;; when I open emacs I want it to fill my screen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -265,6 +269,16 @@ tweak a couple of evil behaviours
   (setq evil-insert-state-message nil)
   (setq +evil-want-o/O-to-continue-comments nil)
   (advice-remove #'newline-and-indent #'+default--newline-indent-and-continue-comments-a))
+#+END_SRC
+undo-tree bindings
+#+BEGIN_SRC emacs-lisp
+(map!
+ :after undo-tree
+ :map undo-tree-visualizer-mode-map
+ :m "k" 'undo-tree-visualize-redo
+ :m "l" 'undo-tree-visualize-undo
+ :m ":" 'undo-tree-visualize-switch-branch-right
+ :m "j" 'undo-tree-visualize-switch-branch-left)
 #+END_SRC
 ** Ivy
 instruct ivy-posframe to appear right under cursor with no border
