@@ -16,15 +16,8 @@ literate config module]] in =~/.doom.d/init.el=.
 ;; load secrets (encrypted with git-crypt)
 (load "~/.doom.d/secrets.el")
 
-;; use direnv for environment variables
-(use-package! direnv
-  :config (direnv-mode))
-
 ;; when I open emacs I want it to fill my screen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; instruct scratch buffer to inherit major mode it is summoned from
-(setq doom-scratch-buffer-major-mode t)
 #+END_SRC
 
 ** Theme

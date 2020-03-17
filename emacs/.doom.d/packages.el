@@ -8,8 +8,7 @@
 (package! suggest)
 (package! dash-at-point)
 (package! deadgrep)
-(package! direnv)
-(package! dockerfile-mode)
+(package! vue-mode)
 
 (package! framemove
   :recipe (:host github :repo "emacsmirror/framemove"))
