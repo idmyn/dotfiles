@@ -157,6 +157,18 @@ adjust magit vimkeys accordingly
    :nv "k" 'magit-section-forward
    :nv "l" 'magit-section-backward))
 #+END_SRC
+adjust treemacs vimkeys accordingly
+#+BEGIN_SRC emacs-lisp
+(after! treemacs
+ (general-def 'treemacs treemacs-mode-map
+   ":" 'treemacs-RET-action
+   "k" 'treemacs-next-line
+   "l" 'treemacs-previous-line
+   "M-j" 'evil-window-left
+   "M-k" 'evil-window-down
+   "M-l" 'evil-window-up
+   "M-;" 'evil-window-right))
+#+END_SRC
 adjust ivy minibuffer vimkeys accordingly (I was having issues with this but
 found out through `M-x which-key-show-keymap` that there is an
 `ivy-posframe-mode-map`, which turned out to be the missing link!)
@@ -207,7 +219,7 @@ bind jump-backward and jump-forward to more intuitive keys
 (map!
  (:after evil
    :n "C-j" 'better-jumper-jump-backward
-   :n "C-:" 'better-jumper-jump-forward)
+   :n "C-;" 'better-jumper-jump-forward)
  (:after org
    :map org-mode-map
    :n "C-k" 'better-jumper-jump-backward))
@@ -249,10 +261,6 @@ fix "#" input on UK MacBook keyboard
     )))
 #+END_SRC
 
-** Dash
-#+BEGIN_SRC emacs-lisp
-(map! :n "D" 'dash-at-point)
-#+END_SRC
 ** Evil
 tweak a couple of evil behaviours
 #+BEGIN_SRC emacs-lisp
@@ -273,7 +281,8 @@ undo-tree bindings
  :m ":" 'undo-tree-visualize-switch-branch-right
  :m "j" 'undo-tree-visualize-switch-branch-left)
 #+END_SRC
-** Ivy
+** Search
+*** Ivy
 instruct ivy-posframe to appear right under cursor with no border
 #+BEGIN_SRC emacs-lisp
 (after! ivy
@@ -287,7 +296,19 @@ exceptions to the fuzzy search rule set in init.el
         '((counsel-imenu . ivy--regex-plus)
           (t . ivy--regex-fuzzy))))
 #+END_SRC
-
+*** Deadgrep
+adjust the size of the deadgrep buffer, and give it a sensible keybinding
+#+BEGIN_SRC emacs-lisp
+(set-popup-rule! "^\\*deadgrep" :size 0.4)
+(map!
+   :leader
+   :prefix "s"
+   :desc "Search project" "p" 'deadgrep)
+#+END_SRC
+*** Dash
+#+BEGIN_SRC emacs-lisp
+(map! :n "D" 'dash-at-point)
+#+END_SRC
 ** Company
 I tend to find the company auto-complete popup quite intrusive, so I disable it
 globally. I do occasionaly find it useful, though, so I have a toggle mapped to
@@ -421,7 +442,7 @@ tell CLI applications that it's ok to dump really long output into the buffer
     ":" 'ranger-find-file))
 #+END_SRC
 
-** JavaScript
+** JavaScript (& Vue)
 Use two spaces for indentation
 #+BEGIN_SRC emacs-lisp
 (after! js2-mode
@@ -434,6 +455,14 @@ configure flycheck to use eslint
   ;; remove lsp-ui from flycheck--automatically-enabled-checkers
   (add-to-list 'flycheck-disabled-checkers 'lsp-ui)
   (setq flycheck-javascript-eslint-executable "eslint_d"))
+#+END_SRC
+disable background colour in =mmm-mode= (enabled by =vue-mode=)
+#+BEGIN_SRC emacs-lisp
+(after! flycheck (flycheck-add-mode 'javascript-eslint 'vue-mode))
+(add-hook 'vue-mode-hook #'lsp-vue-mmm-enable)
+(add-hook 'mmm-mode-hook
+          (lambda ()
+            (set-face-background 'mmm-default-submode-face nil)))
 #+END_SRC
 ** Web (& Svelte)
 some web-mode config
