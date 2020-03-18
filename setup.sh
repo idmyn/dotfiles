@@ -9,6 +9,8 @@ brew bundle
 
 # use commands for git config, rather than version controlling ~/.gitconfig?
 git config --global core.excludesfile ~/.gitignore_global
+git config --global alias.co checkout
+git config --global alias.sc sparse-checkout
 
 fish --command="fisher"
 fish --command="set -Ua fish_user_paths ~/.bin"
