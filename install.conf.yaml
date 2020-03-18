@@ -2,11 +2,15 @@
     link:
       create: true
       relink: true
+    shell:
+      stdout: true
+      stderr: true
 
 - clean: ['~']
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+  - [bash ./setup.sh, Running setup script]
 
 - link:
     ~/.doom.d: emacs/.doom.d
@@ -22,5 +26,4 @@
     ~/.zsh_plugins.txt: shell/.zsh_plugins.txt
     ~/.hyper.js: hyper/.hyper.js
     ~/.bin: bin
-    ~/.gitconfig: git/.gitconfig
     ~/.gitignore_global: git/.gitignore_global
