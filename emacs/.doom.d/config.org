@@ -219,10 +219,7 @@ bind jump-backward and jump-forward to more intuitive keys
 (map!
  (:after evil
    :n "C-j" 'better-jumper-jump-backward
-   :n "C-;" 'better-jumper-jump-forward)
- (:after org
-   :map org-mode-map
-   :n "C-k" 'better-jumper-jump-backward))
+   :n "C-;" 'better-jumper-jump-forward))
 #+END_SRC
 handy to have an insert-mode binding to jump to a new line above
 #+BEGIN_SRC emacs-lisp
@@ -280,6 +277,13 @@ undo-tree bindings
  :m "l" 'undo-tree-visualize-undo
  :m ":" 'undo-tree-visualize-switch-branch-right
  :m "j" 'undo-tree-visualize-switch-branch-left)
+#+END_SRC
+evil-multiedit bindings
+#+BEGIN_SRC emacs-lisp
+(map!
+ :after evil
+ :n "C-k" 'evil-multiedit-match-symbol-and-next
+ :n "C-l" 'evil-multiedit-match-symbol-and-prev)
 #+END_SRC
 ** Search
 *** Ivy
