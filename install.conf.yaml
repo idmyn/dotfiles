@@ -11,6 +11,7 @@
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
   - [bash ./setup.sh, Running setup script]
+  - [cd macOS && bash homebrew.sh, Installing packages from homebrew]
 
 - link:
     ~/.doom.d: emacs/.doom.d
