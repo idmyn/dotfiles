@@ -484,6 +484,16 @@ some web-mode config
   (web-mode-code-indent-offset 2)
   (web-mode-script-padding 2))
 #+END_SRC
+browser-refresh
+#+BEGIN_SRC emacs-lisp
+(use-package! browser-refresh
+  :bind ("s-r" . browser-refresh)
+  :custom
+  (browser-refresh-default-browser 'brave)
+  (browser-refresh-save-buffer nil)
+  (browser-refresh-activate nil))
+#+END_SRC
+
 ** Markdown & Org
 set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-mode]], fix some keybinds
 #+BEGIN_SRC emacs-lisp

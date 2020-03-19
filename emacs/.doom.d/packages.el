@@ -10,6 +10,10 @@
 (package! deadgrep)
 (package! vue-mode)
 
+(package! browser-refresh
+  :recipe (:host github :repo "syohex/emacs-browser-refresh"
+                        :fork "idmyn/emacs-browser-refresh"))
+
 (package! framemove
   :recipe (:host github :repo "emacsmirror/framemove"))
 
