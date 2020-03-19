@@ -8,13 +8,8 @@
 
 - clean: ['~']
 
-- shell:
-  - [git submodule update --init --recursive, Installing submodules]
-  - [bash ./setup.sh, Running setup script]
-  - [cd macOS && bash homebrew.sh, Installing packages from homebrew]
-  - [bash ./shell/install-plugins.sh, Installing zsh and fish plugins]
-
 - link:
+    ~/.emacs.d: emacs/doom-emacs
     ~/.doom.d: emacs/.doom.d
     ~/.config/phoenix/phoenix.js: phoenix/phoenix.js
     ~/.config/karabiner.edn: karabiner/karabiner.edn
@@ -35,3 +30,9 @@
     ~/src/nandos/.gitconfig:
       if: '[ -d ~/src/nandos ]'
       path: git/.gitconfig-work
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+  - [bash ./setup.sh, Running setup script]
+  - [cd macOS && bash homebrew.sh, Installing packages from homebrew]
+  - [bash ./shell/install-plugins.sh, Installing zsh and fish plugins]
