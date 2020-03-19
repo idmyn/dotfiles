@@ -1,7 +1,7 @@
-* My Doom Config
-This [[https://en.wikipedia.org/wiki/Literate_programming][literate]] config file is [[https://orgmode.org/manual/Extracting-source-code.html][tangled]] into =~/.doom.d/config.el= when doom is
-run and it notices changes. To achieve this behaviour, I had to [[https://github.com/idmyn/dotfiles/commit/42ea6a64575565c1e9c9807e359d80161ab8fb91][enable the
-literate config module]] in =~/.doom.d/init.el=.
+* My [[https://github.com/hlissner/doom-emacs][Doom]] Config
+This [[https://en.wikipedia.org/wiki/Literate_programming][literate]] config file is [[https://orgmode.org/manual/Extracting-source-code.html][tangled]] into =~/.doom.d/config.el= when the file is
+saved. To achieve this behaviour, I had to [[https://github.com/idmyn/dotfiles/commit/42ea6a64575565c1e9c9807e359d80161ab8fb91][enable the literate config module]] in
+=~/.doom.d/init.el=.
 
 #+BEGIN_SRC emacs-lisp
 ;;; -*- lexical-binding: t; -*-
