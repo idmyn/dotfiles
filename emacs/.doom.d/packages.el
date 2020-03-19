@@ -20,8 +20,6 @@
 (package! edit-indirect
   :recipe (:host github :repo "Fanael/edit-indirect"))
 
-(package! spotify
-  :recipe (:host github :repo "danielfm/spotify.el"))
 (package! counsel-spotify
   :recipe (:host github :repo "Lautaro-Garcia/counsel-spotify"))
 
