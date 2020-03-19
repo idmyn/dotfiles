@@ -1,0 +1,1236 @@
+* My Emacs Config                                                  :noexport:
+** Table of Contents                                              :TOC_3:
+- [[#initialization][Initialization]]
+- [[#editor-appearance][Editor Appearance]]
+  - [[#theme][Theme]]
+  - [[#fonts][Fonts]]
+  - [[#emojis][Emojis]]
+  - [[#other][Other]]
+- [[#handy-functions][Handy functions]]
+- [[#editor-interaction][Editor interaction]]
+  - [[#keybindings-generalel][Keybindings (general.el)]]
+  - [[#editing-text][Editing text]]
+    - [[#evil-vim-emulation][Evil (Vim emulation)]]
+    - [[#everything-else][Everything else]]
+  - [[#visual-cues][Visual cues]]
+  - [[#fileproject-management][File/project management]]
+  - [[#candidate-selection][Candidate selection]]
+- [[#language-specific-packages-and-other-major-modes][Language-specific packages and other major modes]]
+  - [[#git][Git]]
+  - [[#emacs-shell][Emacs Shell]]
+  - [[#org-mode][Org Mode]]
+  - [[#latex][LaTeX]]
+  - [[#markdown][Markdown]]
+  - [[#htmlhamlcsssass][HTML/HAML/CSS/Sass]]
+  - [[#javascript][JavaScript]]
+  - [[#eglot][Eglot??]]
+  - [[#ruby][Ruby]]
+  - [[#python][Python]]
+  - [[#sql][SQL]]
+  - [[#go][Go]]
+  - [[#http][HTTP]]
+  - [[#clojure][Clojure]]
+  - [[#yaml][YAML]]
+  - [[#deft][Deft]]
+  - [[#nix][Nix]]
+  - [[#lua][Lua]]
+  - [[#ebuku][EBuku]]
+- [[#macos-specific][(mac)OS specific]]
+
+* Initialization
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "David Mynors"
+        user-mail-address "hello@davidmyno.rs")
+
+  ;; straight.el
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+  ;; http://irreal.org/blog/?p=5916
+  (setq use-package-enable-imenu-support t)
+
+  ;; Enable use-package
+  (straight-use-package 'use-package)
+
+  ;; Sometimes I want to try packages without installing them
+  (use-package try :straight t)
+
+  ;; Garbage Collector Magic Hack
+  (use-package gcmh
+    :straight t
+    :diminish
+    :init (gcmh-mode 1))
+
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (message "Emacs ready in %s with %d garbage collections."
+                       (format "%.2f seconds"
+                               (float-time
+                                (time-subtract after-init-time before-init-time)))
+                       gcs-done)))
+
+  ;; Tool to figure out what’s taking time at startup
+  (use-package esup
+    :straight t
+    :defer t)
+
+  ;; Load secrets (encrypted with git-crypt)
+  (use-package load-relative :straight t)
+  (load-relative "secrets.el")
+#+END_SRC
+* Editor Appearance
+  This section is for modifications that change how the editor /looks/, but not
+  how it /works/.
+#+BEGIN_SRC emacs-lisp
+  ;; Keep emacs Custom-settings in separate file
+  ;; pinched this from https://github.com/magnars/.emacs.d/blob/master/init.el
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file)
+#+END_SRC
+** Theme
+#+BEGIN_SRC emacs-lisp
+  (use-package eink-theme :straight t)
+#+END_SRC
+** Fonts
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist '(font . "Input Sans Narrow-15"))
+
+  (use-package diminish :straight t)
+
+  (defun input-sans ()
+    "Set font to Input Sans Narrow in current buffer"
+    (interactive)
+    (setq buffer-face-mode-face '(:family "Input Sans Narrow"))
+    (buffer-face-mode)
+    (diminish 'buffer-face-mode))
+
+  (defun input-mono ()
+    "Set font to Input Mono Narrow in current buffer"
+    (interactive)
+    (setq buffer-face-mode-face '(:family "Input Mono Narrow"))
+    (buffer-face-mode)
+    (diminish 'buffer-face-mode))
+
+  (add-hook 'prog-mode-hook 'input-sans)
+
+  (add-hook 'sql-mode-hook 'input-mono)
+  (add-hook 'clojure-mode-hook 'input-mono)
+  (add-hook 'vterm-mode-hook 'input-mono)
+  (add-hook 'shell-mode-hook 'input-mono)
+  (add-hook 'eshell-mode-hook 'input-mono)
+  (add-hook 'deft-mode-hook 'input-mono)
+  (add-hook 'ranger-mode-hook 'input-mono)
+#+END_SRC
+** Emojis
+#+BEGIN_SRC emacs-lisp
+  (use-package emojify
+    :straight t
+    :defer 2
+    :config
+    (add-hook 'after-init-hook #'global-emojify-mode))
+#+END_SRC
+** Other
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-screen t)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (toggle-scroll-bar -1)
+  ;; nconc takes two lists and pushes the second onto the end of the first
+  (nconc after-make-frame-functions (list (lambda (x) (toggle-scroll-bar -1))))
+
+  ;; File path in title bar
+  ;; https://stackoverflow.com/a/29821453
+  (setq frame-title-format
+        '(buffer-file-name "%b - %f" ; File buffer
+                           (dired-directory dired-directory ; Dired buffer
+                                            (revert-buffer-function "%b" ; Buffer Menu
+                                                                    ("%b - Dir: " default-directory))))) ; Plain buffer
+
+  (global-display-line-numbers-mode)
+  (setq-default display-line-numbers-type 'relative)
+  (defun my/toggle-relative-line-numbers ()
+    (interactive)
+    (setq display-line-numbers-type
+          (if (equal display-line-numbers-type 'relative) t 'relative))
+    (global-display-line-numbers-mode))
+#+END_SRC
+* Handy functions
+#+BEGIN_SRC emacs-lisp
+  ;; Flatiron School niceties
+  (defun my/learn-tests ()
+    "Run learn tests"
+    (interactive)
+    (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
+      (shell-command "learn")))
+  (defun my/learn--f-f ()
+    "Run learn --f-f"
+    (interactive)
+    (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
+      (shell-command "learn --f-f")))
+
+  (defun xah-run-current-go-file ()
+    "Run or build current golang file.
+
+    To build, call `universal-argument' first.
+
+    Version 2018-10-12"
+    (interactive)
+    (when (not (buffer-file-name)) (save-buffer))
+    (when (buffer-modified-p) (save-buffer))
+    (let* (
+           ($outputb "*xah-run output*")
+           (resize-mini-windows nil)
+           ($fname (buffer-file-name))
+           ($fSuffix (file-name-extension $fname))
+           ($prog-name "go")
+           $cmd-str)
+      (setq $cmd-str (concat $prog-name " \""   $fname "\" &"))
+      (if current-prefix-arg
+          (progn
+            (setq $cmd-str (format "%s build \"%s\" " $prog-name $fname)))
+        (progn
+          (setq $cmd-str (format "%s run \"%s\" &" $prog-name $fname))))
+      (progn
+        (message "running %s" $fname)
+        (message "%s" $cmd-str)
+        (shell-command $cmd-str $outputb )
+        )))
+
+  (defun xah-run-current-file ()
+    "Execute the current file.
+    For example, if the current buffer is x.py, then it'll call 「python x.py」 in a shell.
+    Output is printed to buffer “*xah-run output*”.
+
+    The file can be Emacs Lisp, PHP, Perl, Python, Ruby, JavaScript, TypeScript, golang, Bash, Ocaml, Visual Basic, TeX, Java, Clojure.
+    File suffix is used to determine what program to run.
+
+    If the file is modified or not saved, save it automatically before run.
+
+    URL `http://ergoemacs.org/emacs/elisp_run_current_file.html'
+    Version 2018-10-12"
+    (interactive)
+    (let (
+          ($outputb "*xah-run output*")
+          (resize-mini-windows nil)
+          ($suffix-map
+           ;; (‹extension› . ‹shell program name›)
+           `(
+             ("php" . "php")
+             ("pl" . "perl")
+             ("py" . "python")
+             ("py3" . ,(if (string-equal system-type "windows-nt") "c:/Python32/python.exe" "python3"))
+             ("rb" . "ruby")
+             ("go" . "go run")
+             ("hs" . "runhaskell")
+             ("js" . "node")
+             ("mjs" . "node --experimental-modules ")
+             ("ts" . "tsc") ; TypeScript
+             ("tsx" . "tsc")
+             ("sh" . "bash")
+             ("clj" . "java -cp ~/apps/clojure-1.6.0/clojure-1.6.0.jar clojure.main")
+             ("rkt" . "racket")
+             ("ml" . "ocaml")
+             ("vbs" . "cscript")
+             ("tex" . "pdflatex")
+             ("latex" . "pdflatex")
+             ("java" . "javac")
+             ;; ("pov" . "/usr/local/bin/povray +R2 +A0.1 +J1.2 +Am2 +Q9 +H480 +W640")
+             ))
+          $fname
+          $fSuffix
+          $prog-name
+          $cmd-str)
+      (when (not (buffer-file-name)) (save-buffer))
+      (when (buffer-modified-p) (save-buffer))
+      (setq $fname (buffer-file-name))
+      (setq $fSuffix (file-name-extension $fname))
+      (setq $prog-name (cdr (assoc $fSuffix $suffix-map)))
+      (setq $cmd-str (concat $prog-name " \""   $fname "\" &"))
+      (run-hooks 'xah-run-current-file-before-hook)
+      (cond
+       ((string-equal $fSuffix "el")
+        (load $fname))
+       ((or (string-equal $fSuffix "ts") (string-equal $fSuffix "tsx"))
+        (if (fboundp 'xah-ts-compile-file)
+            (progn
+              (xah-ts-compile-file current-prefix-arg))
+          (if $prog-name
+              (progn
+                (message "Running")
+                (shell-command $cmd-str $outputb ))
+            (error "No recognized program file suffix for this file."))))
+       ((string-equal $fSuffix "go")
+        (xah-run-current-go-file))
+       ((string-equal $fSuffix "java")
+        (progn
+          (shell-command (format "java %s" (file-name-sans-extension (file-name-nondirectory $fname))) $outputb )))
+       (t (if $prog-name
+              (progn
+                (message "Running")
+                (shell-command $cmd-str $outputb ))
+            (error "No recognized program file suffix for this file."))))
+      (run-hooks 'xah-run-current-file-after-hook)))
+
+  (defun xah-new-empty-buffer ()
+    "Create a new empty buffer.
+    New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
+
+    It returns the buffer (for elisp programing).
+
+    URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
+    Version 2017-11-01"
+    (interactive)
+    (let (($buf (generate-new-buffer "untitled")))
+      (switch-to-buffer $buf)
+      (funcall initial-major-mode)
+      (setq buffer-offer-save t)
+      $buf))
+  (setq initial-major-mode (quote restclient-mode))
+  (setq initial-buffer-choice 'xah-new-empty-buffer)
+  (setq initial-scratch-message "")
+
+  (use-package balanced-windows
+    :straight (balanced-windows
+               :host github :repo "wbolster/emacs-balanced-windows")
+    :config (balanced-windows-mode))
+
+#+END_SRC
+* Editor interaction
+** Keybindings (general.el)
+#+BEGIN_SRC emacs-lisp
+  (use-package general
+    :straight t
+    :after evil
+    :config
+
+    ;; https://stackoverflow.com/a/2173393
+    (defun vi-open-line-above ()
+      "Insert a newline above the current line and put point at beginning."
+      (interactive)
+      (unless (bolp)
+        (beginning-of-line))
+      (newline)
+      (forward-line -1)
+      (indent-according-to-mode))
+
+    (defun xah-paste-or-paste-previous ()
+      "Paste. When called repeatedly, paste previous.
+    This command calls `yank', and if repeated, call `yank-pop'.
+
+    When `universal-argument' is called first with a number arg, paste that many times.
+
+    URL `http://ergoemacs.org/emacs/emacs_paste_or_paste_previous.html'
+    Version 2017-07-25"
+      (interactive)
+      (progn
+        (when (and delete-selection-mode (region-active-p))
+          (delete-region (region-beginning) (region-end)))
+        (if current-prefix-arg
+            (progn
+              (dotimes ($i (prefix-numeric-value current-prefix-arg))
+                (yank)))
+          (if (eq real-last-command this-command)
+              (yank-pop 1)
+            (yank)))))
+
+    ;; https://www.emacswiki.org/emacs/AutoIndentation
+    (defun yank-and-indent ()
+      "Yank and then indent the newly formed region according to mode."
+      (interactive)
+      (xah-paste-or-paste-previous)
+      (call-interactively 'indent-region))
+
+    (setq set-mark-command-repeat-pop t)
+
+    (use-package ace-jump-mode
+      :straight (ace-jump-mode :host github :repo "winterTTr/ace-jump-mode")
+      :bind ("C-." . ace-jump-mode))
+
+    ;; global bindings
+    (general-define-key
+     "C-x C-c" 'save-buffers-kill-emacs
+
+     "C-y" 'yank-and-indent
+
+     "C-'" 'backward-kill-word
+
+     "C-c g" 'magit-status
+     "C-c l" 'my/learn-tests
+
+     "C-j" 'newline
+
+     "s-e" 'er/expand-region
+
+     "s-=" 'text-scale-increase
+     "s--" 'text-scale-decrease
+
+     "s-n" 'xah-new-empty-buffer
+     "s-i" 'complete-symbol
+     ;; "s-r" 'browser-refresh
+     "s-f" 'switch-to-buffer
+     "s-b" 'counsel-bookmark
+     ;; "s-j" 'avy-goto-word-1
+
+     "C-o" 'vi-open-line-above
+
+     "M-j" 'windmove-left
+     "M-k" 'windmove-down
+     "M-l" 'windmove-up
+     "M-;" 'windmove-right
+
+     "M-u" 'move-border-left
+     "M-o" 'move-border-down
+     "M-i" 'move-border-up
+     "M-p" 'move-border-right
+
+     "C-x C-;" 'comment-or-uncomment-region-or-line
+     "C-x C-i" 'counsel-imenu
+
+     "C-c k" 'deft
+     "C-c e" 'eshell
+
+     "C-c p" 'projectile-command-map
+     )
+
+    (general-define-key (kbd "<C-return>") 'xah-run-current-file)
+
+    (general-create-definer global-leader
+      :prefix "SPC")
+    (global-leader 'motion 'override
+      "f" 'switch-to-buffer
+      "d" 'dumb-jump-go
+      "D" 'dumb-jump-back
+      "b" 'counsel-bookmark
+      "n" 'deer
+      "s" 'counsel-rg
+      "w" 'save-buffer
+      "e" 'eshell
+      "g" 'magit-status
+      "i" 'aggressive-indent-indent-defun
+      "h" 'highlight-indentation-mode
+      "c" 'comment-or-uncomment-region-or-line
+      "q" 'evil-quit
+      "v" (lambda () (interactive)(split-window-right) (other-window 1))
+      "x" (lambda () (interactive)(split-window-below) (other-window 1))
+      "L" 'my/learn-tests
+      "l" 'my/learn--f-f
+      "a" 'async-shell-command
+      "t" 'git-timemachine-toggle
+      "p" 'neotree-project-dir
+      "k" 'deft-find-file ; k for KNOWLEDGE
+      "K" 'deft
+      "m" 'counsel-imenu
+      "M" 'ivy-imenu-anywhere
+      "R" 'crux-rename-file-and-buffer
+      "r" 'query-replace)
+
+    (general-create-definer local-leader
+      :prefix "m")
+    ;; "l" for lookup, "b" for breakpoint, "d" for debug, "e" for evaluate
+
+    (general-def 'normal
+      "C-." 'ace-jump-mode
+      "C-r" 'isearch-backward
+      "s" 'ace-jump-mode
+      "J" nil ; unbind from evil-join
+      "p" nil ; unbind from evil-paste-after
+      ">" 'evil-shift-right-line
+      "<" 'evil-shift-left-line)
+
+    (general-def 'visual
+      ">" 'evil-shift-right
+      "<" 'evil-shift-left)
+
+    (use-package move-border
+      :straight (move-border :host github :repo "ramnes/move-border"))
+
+    (defun my/pop-mark-or-dumb-jump-backward()
+      (interactive)
+      (if (equal last-command 'dumb-jump-go) (dumb-jump-back) (set-mark-command t)))
+
+    (general-def 'motion
+      "j" 'evil-backward-char
+      "k" 'evil-next-line
+      "l" 'evil-previous-line
+      ":" 'evil-forward-char
+
+      "s-e" 'er/expand-region
+
+      "h" 'evil-paste-after
+      "H" 'evil-paste-before
+      "p" 'projectile-command-map
+
+      "RET" 'other-window
+
+      "C-e" 'er/expand-region
+
+      "C-i" 'my/pop-mark-or-dumb-jump-backward
+      "C-o" 'evil-jump-forward
+
+      ;; multiple-cursors
+      "C-k" 'evil-multiedit-match-symbol-and-next
+      "C-l" 'evil-multiedit-match-symbol-and-prev
+      "C-;" 'evil-multiedit-match-all
+
+      ;; easier motion around lines and paragraphs
+      "J" 'evil-first-non-blank
+      "K" 'forward-paragraph
+      "L" 'backward-paragraph
+      ";" 'evil-last-non-blank))
+#+END_SRC
+** Editing text
+*** Evil (Vim emulation)
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :straight t
+    :init (setq evil-want-C-u-scroll t)
+    :config
+    (setq-default evil-shift-width 2)
+    (add-hook 'after-init-hook (lambda () (global-undo-tree-mode -1)))
+
+    (use-package undo-fu
+      :straight (undo-fu :host gitlab :repo "ideasman42/emacs-undo-fu")
+      :config
+      (general-def 'normal
+       "u" 'undo-fu-only-undo
+       "U" 'undo-fu-only-redo))
+
+    (use-package evil-multiedit
+      :straight t
+      :defer 2)
+
+    (use-package evil-surround
+      :straight t
+      :config (global-evil-surround-mode 1))
+
+    ;; emacs bindings in insert mode
+    ;; https://github.com/warchiefx/dotemacs/blob/master/site-wcx/wcx-evil.el
+    (setcdr evil-insert-state-map nil)
+    (define-key evil-insert-state-map
+      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+    ;; fix escape key
+    (use-package evil-escape
+      :straight t
+      :diminish
+      :config
+      (evil-escape-mode)
+      (global-set-key (kbd "<escape>") 'evil-escape))
+
+    (evil-mode 1))
+#+END_SRC
+*** Everything else
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region :straight t)
+
+  (electric-pair-mode 1)
+  (show-paren-mode 1)
+
+  ;; Indentation
+  (use-package aggressive-indent :straight t)
+  (setq-default tab-width 4)
+  (setq-default indent-tabs-mode nil)
+  (setq backward-delete-char-untabify-method nil)
+  (setq-default electric-indent-inhibit nil)
+
+  ;; https://stackoverflow.com/a/9697222
+  (defun comment-or-uncomment-region-or-line ()
+    (interactive)
+    (let (beg end)
+      (if (region-active-p)
+          (setq beg (region-beginning) end (region-end))
+        (setq beg (line-beginning-position) end (line-end-position)))
+      (comment-or-uncomment-region beg end)))
+
+  ;; Hippie expand
+  (general-define-key
+   "M-/" 'hippie-expand)
+  (setq hippie-expand-try-functions-list '(try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-complete-file-name-partially try-complete-file-name try-expand-all-abbrevs try-expand-list try-expand-line try-complete-lisp-symbol-partially try-complete-lisp-symbol))
+
+  ;; YASnippet
+  (use-package yasnippet
+    :straight t
+    :diminish yas-minor-mode
+    :defer 2
+    :config
+    (use-package yasnippet-snippets
+      :straight (yasnippet-snippets :host github :repo "AndreaCrotti/yasnippet-snippets"
+                                    :fork (:host github
+                                                 :repo "idmyn/yasnippet-snippets")))
+    (use-package ivy-yasnippet
+      :straight t
+      :init
+      (use-package dash :straight t))
+    (yas-global-mode 1))
+#+END_SRC
+** Visual cues
+#+BEGIN_SRC emacs-lisp
+  (use-package visible-mark
+    :straight (visible-mark :host gitlab :repo "iankelling/visible-mark")
+    :init
+    (defface visible-mark-active
+     '((((type tty) (class mono)))
+       (t (:background "magenta"))) "")
+    (setq visible-mark-max 2)
+    (setq visible-mark-faces `(visible-mark-face1 visible-mark-face2))
+    :config
+    (global-visible-mark-mode 1))
+
+  ;; Eighty Column Rule
+  (use-package whitespace
+    :diminish global-whitespace-mode
+    :defer 2
+    :config
+    (setq whitespace-line-column 80
+          whitespace-style '(face tabs tab-mark lines-tail trailing)))
+
+  (global-whitespace-mode t)
+  (defun my-inhibit-global-whitespace-mode () ;; https://stackoverflow.com/a/6839968
+    "Counter-act `global-whitespace-mode'."
+    (add-hook 'after-change-major-mode-hook
+              (lambda () (whitespace-mode 0))
+              :append :local))
+
+  ;; while we're at it...
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+  (use-package highlight-indentation
+    :straight (highlight-indentation :host github :repo "antonj/Highlight-Indentation-for-Emacs")
+    :diminish
+    :defer 2
+    :config
+    (set-face-background 'highlight-indentation-face "#f7f7ef")
+    (add-hook 'web-mode-hook 'highlight-indentation-mode)
+    (add-hook 'ruby-mode-hook 'highlight-indentation-mode))
+
+  ;; Flycheck
+  (use-package flycheck
+    :straight t
+    :diminish
+    :config
+    (global-flycheck-mode)
+    (setq flycheck-global-modes '(not emacs-lisp-mode)
+          flycheck-check-syntax-automatically '(mode-enabled save)))
+
+  (use-package hl-todo
+    :straight t
+    :config (global-hl-todo-mode 1))
+#+END_SRC
+** File/project management
+#+BEGIN_SRC emacs-lisp
+  ;; Filesystem hygiene
+  ;; https://www.emacswiki.org/emacs/BackupFiles
+  (setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+   '(("." . "~/.saves/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
+
+  ;; Separate evil clipboard from system clipboard
+  (use-package simpleclip
+    :straight (simpleclip :host github :repo "rolandwalker/simpleclip")
+    :defer 1
+    :config
+    (defun my-vterm-yank-from-simpleclip ()
+      (interactive)
+      (kill-new (simpleclip-get-contents))
+      (vterm-yank))
+    (simpleclip-mode 1))
+
+  (defun crux-rename-file-and-buffer () ; https://github.com/bbatsov/crux
+    "Rename current buffer and if the buffer is visiting a file, rename it too."
+    (interactive)
+    (let ((filename (buffer-file-name)))
+      (if (not (and filename (file-exists-p filename)))
+          (rename-buffer (read-from-minibuffer "New name: " (buffer-name)))
+        (let* ((new-name (read-from-minibuffer "New name: " filename))
+               (containing-dir (file-name-directory new-name)))
+          (make-directory containing-dir t)
+          (cond
+           ((vc-backend filename) (vc-rename-file filename new-name))
+           (t
+            (rename-file filename new-name t)
+            (set-visited-file-name new-name t t)))))))
+
+  (use-package imenu-anywhere :straight t)
+
+  ;; Projectile
+  (use-package projectile
+    :straight t
+    :defer 1
+    :custom
+    (projectile-project-search-path '("~/src/"))
+    (projectile-completion-system 'ivy)
+    (projectile-enable-caching t)
+    :config
+
+    ;; https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-projectile.el
+    ;;; Default rg arguments
+    ;; https://github.com/BurntSushi/ripgrep
+    (defconst modi/rg-arguments
+      `("--line-number"                     ;Line numbers
+        "--smart-case"
+        "--follow"                 ;Follow symlinks
+        "--max-columns" "150"      ;Emacs doesn't handle long line lengths very well
+        "--ignore-file" ,(expand-file-name ".ignore" (getenv "HOME")))
+      "Default rg arguments used in the functions in `counsel' and `projectile'
+    packages.")
+    (defun modi/advice-projectile-use-ag (&rest _args)
+      "Always use `ag' for getting a list of all files in the project."
+      (mapconcat #'shell-quote-argument
+                 (append '("ag")
+                         modi/ag-arguments
+                         '("-0"         ;Output null separated results
+                           "-g" ""))    ;Get file names matching "" (all files)
+                 " "))
+
+    (defun modi/advice-projectile-use-rg (&rest _args)
+      "Always use `rg' for getting a list of all files in the project."
+      (let* ((prj-user-ignore-name (expand-file-name
+                                    (concat ".ignore." user-login-name)
+                                    (projectile-project-root)))
+             (prj-user-ignore (when (file-exists-p prj-user-ignore-name)
+                                (concat "--ignore-file " prj-user-ignore-name))))
+        (mapconcat #'shell-quote-argument
+                   (if prj-user-ignore
+                       (append '("rg")
+                               modi/rg-arguments
+                               `(,prj-user-ignore)
+                               '("--null" ;Output null separated results
+                                 ;; Get names of all the to-be-searched files,
+                                 ;; same as the "-g ''" argument in ag.
+                                 "--files"))
+                     (append '("rg")
+                             modi/rg-arguments
+                             '("--null"
+                               "--files")))
+                   " ")))
+
+    ;; Use `rg' all the time if available
+    (if (executable-find "rg")
+        (progn
+          (advice-remove 'projectile-get-ext-command #'modi/advice-projectile-use-ag)
+          (advice-add 'projectile-get-ext-command :override #'modi/advice-projectile-use-rg))
+      ;; Else use `ag' if available
+      (when (executable-find "ag")
+        (advice-remove 'projectile-get-ext-command #'modi/advice-projectile-use-rg)
+        (advice-add 'projectile-get-ext-command :override #'modi/advice-projectile-use-ag)))
+
+    (projectile-register-project-type 'python '("RPGtodo.py"))
+    (projectile-register-project-type 'jekyll '(".jekyll-metadata"))
+    (projectile-register-project-type 'learn '(".learn")
+                                      :test-dir "test/"
+                                      :test-suffix "test.js")
+    (projectile-mode +1))
+
+  ;; Neotree
+  (use-package neotree
+    :straight t
+    :defer t
+    :config
+    (defun neotree-project-dir ()
+      "Open NeoTree using the git root."
+      (interactive)
+      (let ((project-dir (projectile-project-root))
+            (file-name (buffer-file-name)))
+        (neotree-toggle)
+        (if project-dir
+            (if (neo-global--window-exists-p)
+                (progn
+                  (neotree-dir project-dir)
+                  (neotree-find file-name)))
+          (message "Could not find git project root."))))
+    (setq neo-theme 'nerd))
+
+  ;; Dumb-jump
+  (use-package dumb-jump
+    :straight t
+    :defer t
+    :custom
+    (dumb-jump-selector 'ivy)
+    (dumb-jump-force-searcher 'rg))
+
+  ;; Ranger
+  (use-package ranger
+    :straight t
+    :defer t
+    :config
+    (ranger-override-dired-mode t)
+    (setq ranger-hide-cursor nil)
+    (add-hook 'ranger-mode-hook 'ranger-toggle-dotfiles)
+    (general-def 'motion ranger-mode-map
+      "." 'ranger-toggle-dotfiles
+      "r" 'wdired-change-to-wdired-mode
+      "h" 'ranger-paste
+
+      "j" 'ranger-up-directory
+      "j" 'ranger-up-directory
+      "k" 'ranger-next-file
+      "l" 'ranger-prev-file
+      ":" 'ranger-find-file))
+#+END_SRC
+** Candidate selection
+#+BEGIN_SRC emacs-lisp
+  ;; Ivy
+  (use-package ivy
+    :straight t
+    :diminish
+    :init ;; flx required for ivy--regex-fuzzy
+    (use-package flx :straight t)
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-use-selectable-prompt t)
+
+    ;; after-init-hook because something overrides it otherwise
+    (add-hook 'after-init-hook (lambda () (setq ivy-re-builders-alist
+                                                '((t . ivy--regex-fuzzy)))))
+
+    (use-package counsel
+      :straight t
+      :diminish
+      :config (counsel-mode 1))
+
+    (general-define-key
+     :keymaps '(ivy-minibuffer-map ivy-switch-buffer-map)
+     "C-j" (kbd "DEL")
+     "C-k" 'ivy-next-line
+     "C-l" 'ivy-previous-line
+     "C-;" 'ivy-alt-done
+
+     "M-k" 'ivy-next-line-and-call
+     "M-l" 'ivy-previous-line-and-call))
+
+  (use-package ivy-posframe
+    :straight t
+    :diminish
+    :config
+    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
+    (ivy-posframe-mode 1))
+
+  (use-package prescient
+    :straight t
+    :config
+    (use-package ivy-prescient :straight t)
+
+    (ivy-prescient-mode)
+    (prescient-persist-mode))
+#+END_SRC
+* Language-specific packages and other major modes
+** Git
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :straight t
+    :defer t
+    :config
+    (with-eval-after-load 'evil
+      (add-to-list 'evil-insert-state-modes 'magit-status-mode)
+      (add-hook 'git-commit-mode-hook 'evil-insert-state)
+      (evil-set-initial-state 'magit-log-edit-mode 'insert)))
+    (global-auto-revert-mode t) ; buffers should change when branch changes
+
+  (use-package git-timemachine
+    :straight (git-timemachine :host github :repo "emacsmirror/git-timemachine")
+    :config
+    ;; https://emacs.stackexchange.com/a/10588
+    (eval-after-load 'git-timemachine
+    '(progn
+       (evil-make-overriding-map git-timemachine-mode-map 'normal)
+       ;; force update evil keymaps after git-timemachine-mode loaded
+       (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))))
+
+  (use-package diff-hl
+    :straight t
+    :config
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+    (global-diff-hl-mode))
+#+END_SRC
+** Emacs Shell
+   Heavily inspired by https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
+#+BEGIN_SRC emacs-lisp
+  (setenv "PAGER" "cat")
+  (use-package eshell-z
+    :straight t
+    :config
+    (add-hook 'eshell-mode-hook
+              (defun my-eshell-mode-hook ()
+                (require 'eshell-z)
+                (exec-path-from-shell-initialize))))
+
+  (setq eshell-last-dir-ring-size 500)
+  (defun eshell-new() ; https://www.emacswiki.org/emacs/EshellMultipleEshellBuffers
+    "Open a new instance of eshell."
+    (interactive)
+    (eshell 'N))
+  (defun eshell-setup-keys() ; implementation inspired by evil-collection
+    "Set up `evil' bindings for `eshell'."
+    (general-def eshell-mode-map
+      "s-n" 'eshell-new)
+    (define-key eshell-mode-map (kbd "<s-backspace>") 'eshell-kill-input)
+    (general-def 'insert eshell-mode-map
+      "C-k" 'eshell-next-matching-input-from-input
+      "C-l" 'eshell-previous-matching-input-from-input))
+  (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
+
+  (defun eshell/clear ()
+    "Clear the eshell buffer."
+    (let ((inhibit-read-only t))
+      (erase-buffer)))
+  (add-hook 'eshell-directory-change-hook (lambda ()
+                                            (concat (eshell/ls) " -A")))
+
+  (defun tidy-learn-buffer ()
+    (interactive)
+    (flush-lines "^[[:space:]]*# "))
+
+  (defun eshell/gst (&rest args)
+      (magit-status (pop args) nil)
+      (eshell/echo))   ;; The echo command suppresses output
+
+  (defun pwd-replace-home (pwd)
+    "Replace home in PWD with tilde (~) character."
+    (interactive)
+    (let* ((home (expand-file-name (getenv "HOME")))
+           (home-len (length home)))
+      (if (and
+           (>= (length pwd) home-len)
+           (equal home (substring pwd 0 home-len)))
+          (concat "~" (substring pwd home-len))
+        pwd)))
+  (defun with-face (str &rest face-plist) ; https://www.emacswiki.org/emacs/EshellPrompt#toc3
+    (propertize str 'face face-plist))
+  (defun git-prompt-branch-name () ; https://superuser.com/a/1265169
+    "Get current git branch name"
+    (let ((args '("symbolic-ref" "HEAD" "--short")))
+      (with-temp-buffer
+        (apply #'process-file "git" nil (list t nil) nil args)
+        (unless (bobp)
+          (goto-char (point-min))
+          (buffer-substring-no-properties (point) (line-end-position))))))
+
+  (setq eshell-prompt-function
+        (lambda nil
+          (let ((branch-name (git-prompt-branch-name)))
+            (concat
+             "\n" (pwd-replace-home(eshell/pwd)) "\n "
+             (if branch-name (with-face branch-name :foreground "gray") )
+             " $ "))))
+
+  (use-package load-bash-alias
+    :straight t
+    :custom (load-bash-alias-bashrc-file "~/.aliases"))
+
+  (setq eshell-history-size 1000000)
+  (setq shell-file-name "bash") ; for cases where I can't use eshell
+  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+  (general-def 'insert shell-mode-map
+    "C-k" 'comint-next-input
+    "C-l" 'comint-previous-input
+    "C-;" 'comint-send-input)
+  (general-def 'normal shell-mode-map
+    "C-d" 'evil-scroll-down)
+#+END_SRC
+** Org Mode
+#+BEGIN_SRC emacs-lisp
+  (setq-default fill-column 80)
+  (add-hook 'text-mode-hook 'turn-on-auto-fill)
+  (add-hook 'org-mode-hook (lambda () (electric-quote-mode 1)))
+  (use-package org
+    :straight t
+    :interpreter "org"
+    :config
+    (general-def 'insert org-mode-map
+      "C-j" 'org-metaleft
+      "C-;" 'org-metaright)
+    (general-def 'motion org-mode-map
+      "C-k" 'org-metadown
+      "C-l" 'org-metaup)
+    ;; couldn’t get the following bindings working with general.el unfortunately
+    (define-key org-mode-map (kbd "<C-return>") 'org-meta-return)
+    (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-respect-content))
+
+  (use-package toc-org
+    :straight t
+    :hook (org-mode . toc-org-mode))
+#+END_SRC
+** LaTeX
+#+BEGIN_SRC emacs-lisp
+  (use-package tex
+    :straight auctex
+    :defer t)
+#+END_SRC
+** Markdown
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :straight t
+    :mode "\\.md\\'"
+    :bind (:map markdown-mode-command-map
+           ("g" . grip-mode)))
+
+  (use-package grip-mode
+    :straight t
+    :custom (grip-binary-path "~/.pyenv/shims/grip"))
+#+END_SRC
+** HTML/HAML/CSS/Sass
+#+BEGIN_SRC emacs-lisp
+  (use-package web-mode
+    :straight t
+    :mode "\\.html?\\'"
+    :config
+    (general-def 'web-mode-map
+      "M-;" nil)
+    (setq web-mode-enable-current-element-highlight t)
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-code-indent-offset 2))
+
+    (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+
+  (use-package emmet-mode
+    :straight t
+    :diminish
+    :config
+    (add-hook 'web-mode-hook 'emmet-mode)
+    (add-hook 'rjsx-mode-hook 'emmet-mode)
+    (add-hook 'sgml-mode-hook 'emmet-mode)
+    (add-hook 'css-mode-hook  'emmet-mode)
+    (general-define-key
+     :states 'insert
+     :keymaps '(web-mode-map rjsx-mode-map)
+     "C-j" 'newline
+     "M-SPC" 'emmet-expand-line))
+
+  (use-package evil-matchit ; to jump between HTML tags with %
+    :straight t
+    :config (global-evil-matchit-mode 1))
+
+  (use-package browser-refresh
+    :straight (browser-refresh :host github :repo "syohex/emacs-browser-refresh"
+                               :fork (:host github
+                                            :repo "idmyn/emacs-browser-refresh"))
+    :bind ("s-r" . browser-refresh)
+    :custom
+    (browser-refresh-default-browser 'brave)
+    (browser-refresh-save-buffer nil)
+    (browser-refresh-activate nil))
+
+  (use-package sass-mode
+    :straight (sass-mode :host github :repo "nex3/sass-mode")
+    :mode "\\.sass\\'")
+
+  (use-package haml-mode
+    :straight t
+    :mode "\\.haml\\'")
+#+END_SRC
+** JavaScript
+#+BEGIN_SRC emacs-lisp
+  (use-package js2-mode
+    :straight t
+    :defer t
+    :config
+    (setq-default js2-basic-offset 2)
+    (setq js2-strict-missing-semi-warning nil)
+    (setq-default flycheck-disabled-checkers
+                  (append flycheck-disabled-checkers
+                          '(javascript-jshint)))
+    (setq flycheck-javascript-eslint-executable "eslint_d"))
+
+  (use-package rjsx-mode
+    :straight t
+    :mode "\\.js\\'")
+
+  (use-package json-mode
+    :straight t
+    :mode "\\.json\\'")
+
+  (use-package nodejs-repl
+    :straight (nodejs-repl :host github :repo "abicky/nodejs-repl.el")
+    :defer t)
+
+  (use-package prettier-js
+    :straight t
+    :custom
+    ;; using :hook only applies prettier-js once on file open...
+    ;; (add-hook 'rjsx-mode-hook 'prettier-js-mode)
+    (prettier-js-args '(
+                             "--no-semi" "false"
+                             )))
+#+END_SRC
+** Eglot??
+#+BEGIN_SRC emacs-lisp
+  (use-package eglot
+    :straight (eglot :host github :repo "joaotavora/eglot")
+    ;; :hook ((ruby-mode js2-mode) . eglot-ensure)
+    :config
+    ;; (add-hook 'rjsx-mode-hook 'eglot-ensure)
+    (diminish 'flymake-mode)
+    (diminish 'eldoc-mode))
+#+END_SRC
+** Ruby
+#+BEGIN_SRC emacs-lisp
+  (use-package ruby-mode
+    :custom
+    (ruby-insert-encoding-magic-comment nil)
+    (ruby-indent-level 2))
+
+  (use-package rubocop
+    :straight t
+    :interpreter "ruby")
+
+  (use-package inf-ruby
+    :straight t
+    :interpreter "ruby"
+    :config
+    (general-def 'insert inf-ruby-mode-map
+      "C-k" 'comint-next-input
+      "C-l" 'comint-previous-input
+      "C-;" 'comint-send-input))
+
+  (use-package rspec-mode
+    :straight t
+    :mode "\\.rspec\\'"
+    :config
+    (setq rspec-use-rvm t)
+    (defadvice rspec-compile (around rspec-compile-around)
+      "Use bash to run the specs because of ZSH issues."
+      (let ((shell-file-name "/bin/bash"))
+        ad-do-it))
+    (ad-activate 'rspec-compile))
+
+  ;; M-x my/learn-tests won’t run without this rvm package
+  (use-package rvm
+    :straight t
+    :config (rvm-use-default))
+#+END_SRC
+** Python
+  https://jonathanabennett.github.io/blog/2019/06/20/python-and-emacs-pt.-1/
+#+BEGIN_SRC emacs-lisp
+  (use-package elpy
+    :straight t
+    :interpreter "python"
+    :init
+    (with-eval-after-load 'python (elpy-enable))
+    (setq python-indent-offset 4)
+    :config
+    (when (require 'flycheck nil t)
+      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+      (add-hook 'elpy-mode-hook 'flycheck-mode)))
+#+END_SRC
+** SQL
+#+BEGIN_SRC emacs-lisp
+  (use-package sqlup-mode
+    :straight t
+    :interpreter "sql"
+    :config
+    (add-to-list 'sqlup-blacklist "name")
+    (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
+    (add-hook 'sql-mode-hook 'sqlup-mode))
+
+  (use-package sql-indent
+    :straight t
+    :interpreter "sql"
+    :config (add-hook 'sql-mode-hook 'sqlind-minor-mode))
+#+END_SRC
+** Go
+#+BEGIN_SRC emacs-lisp
+  (use-package go-mode
+    :straight t
+    :mode "\\.go\\'"
+    :config
+    (add-hook 'go-mode 'gofmt-before-save))
+
+  (use-package flycheck-golangci-lint
+    :straight t
+    :hook (go-mode . flycheck-golangci-lint-setup))
+#+END_SRC
+** HTTP
+#+BEGIN_SRC emacs-lisp
+  (use-package restclient
+    :straight t
+    :mode ("\\.http\\'" . restclient-mode)
+    :custom ; https://github.com/pashky/restclient.el/issues/212#issuecomment-515759772
+    (gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+#+END_SRC
+** Clojure
+#+BEGIN_SRC emacs-lisp
+  (use-package clojure-mode
+    :straight t
+    :interpreter "clojure")
+
+  (use-package cider
+    :straight t
+    :general
+    (cider-repl-mode-map
+     "C-l" 'cider-repl-previous-input
+     "C-k" 'cider-repl-next-input))
+#+END_SRC
+** YAML
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode
+    :straight (yaml-mode :host github :repo "yoshiki/yaml-mode")
+    :mode "\\.yaml\\'")
+#+END_SRC
+** Deft
+#+BEGIN_SRC emacs-lisp
+  (use-package deft
+    :straight t
+    :config
+    (setq deft-directory "~/Dropbox/notes"
+          deft-use-filter-string-for-filename t)
+    (add-to-list 'evil-insert-state-modes 'deft-mode))
+#+END_SRC
+** Nix
+#+BEGIN_SRC emacs-lisp
+  (use-package nix-mode
+    :straight t
+    :mode "\\.nix\\'")
+#+END_SRC
+** Lua
+#+BEGIN_SRC emacs-lisp
+  (use-package lua-mode
+    :straight t
+    :mode "\\.lua\\'")
+#+END_SRC
+** EBuku
+#+BEGIN_SRC emacs-lisp
+    (use-package ebuku
+      :straight (ebuku :host github :repo "flexibeast/ebuku")
+      :custom (ebuku-buku-path "~/.nix-profile/bin/buku"))
+#+END_SRC
+* (mac)OS specific
+  https://www.johndcook.com/blog/2016/11/30/setting-up-emacs-shell-on-a-mac/
+#+BEGIN_SRC emacs-lisp
+  (cond
+   ((string-equal system-type "windows-nt")
+    (progn
+      ;; config
+      ))
+   ((string-equal system-type "gnu/linux")
+    (progn
+      ;; config
+      ))
+
+   ((string-equal system-type "darwin") ; macOS
+    (progn
+      (use-package exec-path-from-shell
+        :straight t
+        :defer 0.1
+        :config
+        (exec-path-from-shell-initialize))
+
+      (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+
+      ;; Fix "#" input on UK MacBook keyboard
+      (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))))
+#+END_SRC
