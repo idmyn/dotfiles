@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /Users/davidmy/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [user]
 	name = David Mynors
 	email = hello@davidmyno.rs
