@@ -27,3 +27,9 @@
     ~/.hyper.js: hyper/.hyper.js
     ~/.bin: bin
     ~/.gitignore_global: git/.gitignore_global
+    ~/.gitconfig:
+      force: true
+      path: git/.gitconfig
+    ~/src/nandos/.gitconfig:
+      if: '[ -d ~/src/nandos ]'
+      path: git/.gitconfig-work

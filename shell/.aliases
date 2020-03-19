@@ -1,2 +1,4 @@
+alias la="ls -a"
+alias ll="ls -lah"
 alias otp="pass otp -c"
 alias doom="~/.emacs.d/bin/doom"

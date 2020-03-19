@@ -1,0 +1,10 @@
+[core]
+	excludesfile = /Users/davidmy/.gitignore_global
+[user]
+	name = David Mynors
+	email = hello@davidmyno.rs
+[alias]
+	co = checkout
+	sc = sparse-checkout
+[includeIf "gitdir:~/src/nandos/"]
+	path = ~/src/nandos/.gitconfig
