@@ -21,9 +21,9 @@
     ~/.profile: shell/.profile
     ~/.aliases: shell/.aliases
     ~/.secret-aliases: shell/.secret-aliases
-    ~/.zshrc: shell/.zshrc
-    ~/.zshenv: shell/.zshenv
-    ~/.zsh_plugins.txt: shell/.zsh_plugins.txt
+    ~/.zshrc: shell/zsh/.zshrc
+    ~/.zshenv: shell/zsh/.zshenv
+    ~/.zsh_plugins.txt: shell/zsh/.zsh_plugins.txt
     ~/.hyper.js: hyper/.hyper.js
     ~/.bin: bin
     ~/.gitignore_global: git/.gitignore_global
