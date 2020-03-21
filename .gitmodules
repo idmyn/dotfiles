@@ -2,7 +2,3 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "emacs/doom-emacs"]
-	path = emacs/doom-emacs
-	url = https://github.com/hlissner/doom-emacs
-	ignore = dirty
