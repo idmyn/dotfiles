@@ -6,7 +6,7 @@ module.exports = {
   config: {
     updateChannel: 'stable',
 
-    fontSize: 13,
+    fontSize: 14,
 
     fontFamily: 'JetBrains Mono, Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
 
@@ -43,8 +43,7 @@ module.exports = {
     // default: `true` (without backticks and without quotes) on Windows and Linux, ignored on macOS
     showWindowControls: '',
 
-    // custom padding (CSS format, i.e.: `top right bottom left`)
-    padding: '12px 14px',
+    padding: '0px 14px 22px 14px',
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
     // if left empty, your system's login shell will be used by default
@@ -97,7 +96,9 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: [],
+  plugins: [
+    "hyper-hide-title"
+  ],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
