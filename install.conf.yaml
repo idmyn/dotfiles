@@ -9,7 +9,6 @@
 - clean: ['~']
 
 - link:
-    ~/.emacs.d: emacs/doom-emacs
     ~/.doom.d: emacs/.doom.d
     ~/.config/phoenix/phoenix.js: phoenix/phoenix.js
     ~/.config/karabiner.edn: karabiner/karabiner.edn
@@ -35,3 +34,6 @@
   - [git submodule update --init --recursive, Installing submodules]
   - [bash ./shell/install-plugins.sh, Installing zsh and fish plugins]
   - [cd macOS && bash homebrew.sh, Installing packages from homebrew]
+  - [test -d ~/.emacs.d || hub clone idmyn/doom-emacs ~/.emacs.d, Installing doom]
+  # "hub clone" because the colon in a git clone url causes pyyaml to complain
+  # https://pyyaml.org/wiki/YAMLColonInFlowContext
