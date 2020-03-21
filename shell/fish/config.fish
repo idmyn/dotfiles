@@ -2,6 +2,7 @@ bind \ck down-or-search
 bind \cl up-or-search
 
 source ~/.aliases
+source ~/.config/fish/secrets.fish
 
 # for compatibility with eshell-z
 set -Ux Z_DATA ~/.z
