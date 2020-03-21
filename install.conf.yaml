@@ -33,6 +33,5 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
-  - [bash ./setup.sh, Running setup script]
-  - [cd macOS && bash homebrew.sh, Installing packages from homebrew]
   - [bash ./shell/install-plugins.sh, Installing zsh and fish plugins]
+  - [cd macOS && bash homebrew.sh, Installing packages from homebrew]

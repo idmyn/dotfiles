@@ -1,16 +1,14 @@
 bind \ck down-or-search
 bind \cl up-or-search
 
-alias git="hub"
-alias b="buku"
-alias e="open -a emacs"
-alias otp="pass otp -c"
-alias doom="~/.emacs.d/bin/doom"
+source ~/.aliases
 
 # for compatibility with eshell-z
 set -Ux Z_DATA ~/.z
 
 source /usr/local/opt/asdf/asdf.fish
+
+eval (direnv hook fish)
 
 if not functions -q fisher
     set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
