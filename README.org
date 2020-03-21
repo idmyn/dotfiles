@@ -35,4 +35,6 @@ make in [[/shell/fish/config.fish][my config]]. As far as I can see, its only do
 ** Honourable Mentions
    Haven’t tried it out just yet, but [[https://github.com/johnste/finicky][Finicky]] looks really sweet. It’s a macOS
    application allowing you to set up rules specifying which browser to use when
-   opening specific url patterns (among other things).
+   opening specific url patterns (among other things). Similarly, [[https://github.com/moretension/duti][duti]] is a
+   ([[https://github.com/moretension/duti/pull/39#issuecomment-596996452][currently unmaintained]]) tool for "setting default applications for various
+   document types on macOS, using Apple's Uniform Type Identifiers (UTI)".

@@ -5,6 +5,8 @@ cask "karabiner-elements"
 tap "yqrashawn/goku"
 brew "yqrashawn/goku/goku"
 
+cask "bitbar"
+
 brew "fish"
 cask "hyper"
 cask "phoenix"
