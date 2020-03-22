@@ -1,3 +1,4 @@
+alias b="buku --suggest"
 alias la="ls -a"
 alias ll="ls -lah"
 alias git="hub"
