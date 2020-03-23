@@ -2,39 +2,43 @@
   These dotfiles are bootstrapped with [[https://github.com/anishathalye/dotbot][dotbot]] and can be installed by cloning
   this repo and running ~./install~ inside it. Much inspiration taken from [[https://github.com/nikitavoloboev/dotfiles][here]].
 
-  Note: I’ve initialised [[https://github.com/AGWA/git-crypt][git-crypt]] in this repo to encrypt [[https://github.com/idmyn/dotfiles/blob/master/emacs/secrets.el][secrets.el]] (where I
-  keep secrets that emacs needs access to), but it’s currently [[https://github.com/idmyn/dotfiles/blob/master/.gitattributes][configured]] to
-  encrypt any file named ~secrets~ (with any file extension).
+  Note: I’ve initialised [[https://github.com/AGWA/git-crypt][git-crypt]] in this repo to encrypt all files with the
+  word =secret= anywhere in their name.
 
 ** Emacs
-   My current emacs setup consists of a base emacs install from [[https://emacsformacosx.com][emacsformacosx]]
-   configured with my [[https://en.wikipedia.org/wiki/Literate_programming][literate]] [[https://github.com/idmyn/dotfiles/blob/master/emacs/init.org][init.org]] file. Emacs still looks for
-   =~/.emacs.d/init.el= at startup, though, so I use that file to instruct emacs
-   to configure itself with the elisp code-blocks in =~/.emacs.d/init.org=. My
-   config currently takes around 4-5 (painfully slow) seconds to load, which I
-   mitigate by [[https://www.emacswiki.org/emacs/EmacsAsDaemon][running emacs as a daemon]] (I followed [[https://web.archive.org/web/20190407092503/https://east.fm/posts/emacs-26-and-macos-mojave/index.html][handy macOS-specific
-   instructions for this]]), but I’m [[https://github.com/idmyn/dotfiles/tree/master/emacs/doom][working on]] porting my config to [[https://github.com/hlissner/doom-emacs][doom]] to speed
-   things up. Managing multiple emacs configs is surprisingly simple with
-   [[https://github.com/plexus/chemacs][Chemacs]]!
+My current emacs setup consists of a base emacs install from [[https://emacsformacosx.com][emacsformacosx]]
+configured with my [[https://en.wikipedia.org/wiki/Literate_programming][literate]] [[https://github.com/idmyn/dotfiles/blob/master/emacs/init.org][init.org]] file. Emacs still looks for
+=~/.emacs.d/init.el= at startup, though, so I use that file to instruct emacs to
+configure itself with the elisp code-blocks in =~/.emacs.d/init.org=. My config
+currently takes around 4-5 (painfully slow) seconds to load, which I mitigate by
+[[https://www.emacswiki.org/emacs/EmacsAsDaemon][running emacs as a daemon]] (I followed [[https://web.archive.org/web/20190407092503/https://east.fm/posts/emacs-26-and-macos-mojave/index.html][handy macOS-specific instructions for
+this]]), but I’m [[https://github.com/idmyn/dotfiles/tree/master/emacs/doom][working on]] porting my config to [[https://github.com/hlissner/doom-emacs][doom]] to speed things up. Managing
+multiple emacs configs is surprisingly simple with [[https://github.com/plexus/chemacs][Chemacs]]!
 
 ** Phoenix
-   [[https://github.com/kasper/phoenix][Phoenix]] is great! It’s a window-manager for macOS which you can configure
-   with JavaScript. In other words, it allows you to bind keyboard shortcuts to
-   functions which move windows around your screen(s). I used [[https://github.com/koekeishiya/chunkwm][chunkwm]] for a long
-   while, but ended up moving away from it because I found myself fighting
-   against its automatic window placement.
+[[https://github.com/kasper/phoenix][Phoenix]] is great! It’s a window-manager
+for macOS which you can configure with JavaScript. In other words, it allows you
+to bind keyboard shortcuts to functions which move windows around your
+screen(s). I used [[https://github.com/koekeishiya/chunkwm][chunkwm]] for a long
+while, but ended up moving away from it because I found myself fighting against
+its automatic window placement.
 
 ** Fish
-Nothing too out of the ordinary here. I adopted [[https://fishshell.com][fish]] as my daily-driver because
-I was finding zsh too sluggish. I pretty rarely fire up a terminal window, so I
-don't want to have to wait around for it to load when I need it! Fish also
-provides a ton of features out of the box, leaving me with very few tweaks to
-make in [[/shell/fish/config.fish][my config]]. As far as I can see, its only downside is its
-[[https://en.wikipedia.org/wiki/Friendly_interactive_shell#Syntax][POSIX-noncompliance]], but that hasn't caused me any issues just yet.
+Nothing too out of the ordinary here. I adopted [[https://fishshell.com][fish]]
+as my daily-driver because I was finding zsh too sluggish. I pretty rarely fire
+up a terminal window, so I don't want to have to wait around for it to load when
+I need it! Fish also provides a ton of features out of the box, leaving me with
+very few tweaks to make in [[/shell/fish/config.fish][my config]]. As far as I
+can see, its only downside is its
+[[https://en.wikipedia.org/wiki/Friendly_interactive_shell#Syntax][POSIX-noncompliance]],
+but that hasn't caused me any issues just yet.
 
 ** Honourable Mentions
-   Haven’t tried it out just yet, but [[https://github.com/johnste/finicky][Finicky]] looks really sweet. It’s a macOS
-   application allowing you to set up rules specifying which browser to use when
-   opening specific url patterns (among other things). Similarly, [[https://github.com/moretension/duti][duti]] is a
-   ([[https://github.com/moretension/duti/pull/39#issuecomment-596996452][currently unmaintained]]) tool for "setting default applications for various
-   document types on macOS, using Apple's Uniform Type Identifiers (UTI)".
+Haven’t tried it out just yet, but
+[[https://github.com/johnste/finicky][Finicky]] looks really sweet. It’s a macOS
+application allowing you to set up rules specifying which browser to use when
+opening specific url patterns (among other things). Similarly,
+[[https://github.com/moretension/duti][duti]] is a
+([[https://github.com/moretension/duti/pull/39#issuecomment-596996452][currently
+unmaintained]]) tool for "setting default applications for various document
+types on macOS, using Apple's Uniform Type Identifiers (UTI)".
