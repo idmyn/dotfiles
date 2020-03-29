@@ -457,7 +457,7 @@ configure flycheck to use eslint
 #+BEGIN_SRC emacs-lisp
 (after! flycheck
   (add-to-list 'flycheck-disabled-checkers 'javascript-jshint)
-  ;; remove lsp-ui from flycheck--automatically-enabled-checkers
+  (add-to-list 'flycheck-disabled-checkers 'javascript-standard)
   (add-to-list 'flycheck-disabled-checkers 'lsp-ui)
   (setq flycheck-javascript-eslint-executable "eslint_d"))
 #+END_SRC
