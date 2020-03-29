@@ -447,6 +447,11 @@ tell CLI applications that it's ok to dump really long output into the buffer
     ":" 'ranger-find-file))
 #+END_SRC
 
+** Ebuku
+set the path to my [[https://github.com/jarun/buku][buku]] bookmarks
+#+BEGIN_SRC emacs-lisp
+(setq ebuku-db-path "~/Dropbox/System/bookmarks.db")
+#+END_SRC
 ** JavaScript (& Vue)
 Use two spaces for indentation
 #+BEGIN_SRC emacs-lisp

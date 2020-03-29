@@ -9,7 +9,9 @@
 (package! dash-at-point)
 (package! deadgrep)
 (package! vue-mode)
-(package! ebuku)
+(package! ebuku
+  :recipe (:host github :repo "flexibeast/ebuku"
+                        :fork "idmyn/ebuku"))
 
 (package! browser-refresh
   :recipe (:host github :repo "syohex/emacs-browser-refresh"
