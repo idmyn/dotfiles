@@ -21,6 +21,7 @@
                 :Vim      ["^org\\.gnu\\.Emacs$"
                            "^org\\.vim\\.MacVim$"
                            "^com\\.googlecode\\.iterm2$"
+                           "^co\\.zeit\\.hyper$"
                            "^com\\.apple\\.Terminal$"]
                 :uk       ["^com\\.apple\\.Mail$"
                            "^org\\.gnu\\.Emacs$"
