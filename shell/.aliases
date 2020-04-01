@@ -1,4 +1,4 @@
-alias b="buku --suggest"
+alias b="buku --suggest --db ~/Dropbox/System/bookmarks.db"
 alias la="ls -a"
 alias ll="ls -lah"
 alias git="hub"
