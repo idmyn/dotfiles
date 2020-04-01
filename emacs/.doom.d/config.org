@@ -35,6 +35,7 @@ any others) and then I add those details as below.
   (doom-variable-pitch-font (font-spec :family "Input Sans Narrow"))
   :config
   (hl-line-mode)
+  (column-number-mode)
   :custom-face
   (hl-line ((t (:inherit highlight :background "lavender")))))
 #+END_SRC
