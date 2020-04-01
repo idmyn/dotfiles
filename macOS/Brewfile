@@ -5,11 +5,11 @@ cask "karabiner-elements"
 tap "yqrashawn/goku"
 brew "yqrashawn/goku/goku"
 
-cask "bitbar"
-
 brew "fish"
 cask "hyper"
+cask "bitbar"
 cask "phoenix"
+cask "finicky"
 
 brew "pass"
 brew "pass-otp"

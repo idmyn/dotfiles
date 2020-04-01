@@ -10,6 +10,7 @@
 
 - link:
     ~/.doom.d: emacs/.doom.d
+    ~/.finicky.js: finicky/.finicky.js
     ~/.config/phoenix/phoenix.js: phoenix/phoenix.js
     ~/.config/karabiner.edn: karabiner/karabiner.edn
     ~/.config/fish/config.fish: shell/fish/config.fish
