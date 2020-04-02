@@ -10,8 +10,7 @@
 (package! deadgrep)
 (package! vue-mode)
 (package! ebuku
-  :recipe (:host github :repo "flexibeast/ebuku"
-                        :fork "idmyn/ebuku"))
+  :recipe (:host github :repo "flexibeast/ebuku"))
 
 (package! browser-refresh
   :recipe (:host github :repo "syohex/emacs-browser-refresh"
