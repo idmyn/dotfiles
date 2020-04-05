@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+URL="$1"
+DATE=$(date "+%Y-%m-%d")
+FILENAME=$(echo "$URL" | sed -E "s/^http(s?):\/\///; s/$/.pdf/")
+FILEPATH="${ARCHIVE_DIR:-.}/$DATE-$FILENAME"
+
+wkhtmltopdf "$URL" "$FILEPATH"
