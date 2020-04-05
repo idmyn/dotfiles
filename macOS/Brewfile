@@ -16,6 +16,7 @@ brew "pass-otp"
 
 brew "git"
 brew "hub"
+brew "rga"
 brew "asdf"
 brew "grip"
 brew "buku"
