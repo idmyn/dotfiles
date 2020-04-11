@@ -425,27 +425,19 @@ tell CLI applications that it's ok to dump really long output into the buffer
    :desc "Search for id of current file" "c" 'zetteldeft-search-current-id))
 #+END_SRC
 
-** Ranger (deer)
+** Dired
 #+BEGIN_SRC emacs-lisp
-(use-package! ranger
-  :commands deer
-  :init
+(after! dired
   (map!
-   :leader
-   :prefix "f"
-   :desc "Browse files with deer" "d" 'deer)
-  :config
-  ;; define-key! because map! wouldn't play nice
-  (define-key! 'motion ranger-mode-map
-    "C-h k" 'describe-key
-    "." 'ranger-toggle-dotfiles
-    "r" 'wdired-change-to-wdired-mode
-    "h" 'ranger-paste
+   :map dired-mode-map
+   :n "j" 'dired-up-directory
+   :n "k" 'dired-next-line
+   :n "l" 'dired-previous-line
+   :n ":" 'dired-find-file
 
-    "j" 'ranger-up-directory
-    "k" 'ranger-next-file
-    "l" 'ranger-prev-file
-    ":" 'ranger-find-file))
+   :n "W" 'wdired-change-to-wdired-mode)
+
+  (add-hook 'dired-mode-hook #'dired-show-readme-mode))
 #+END_SRC
 
 ** Ebuku

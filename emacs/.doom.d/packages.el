@@ -9,6 +9,10 @@
 (package! dash-at-point)
 (package! deadgrep)
 (package! vue-mode)
+
+(package! dired-show-readme
+  :recipe (:host gitlab :repo "kisaragi-hiu/dired-show-readme"))
+
 (package! ebuku
   :recipe (:host github :repo "flexibeast/ebuku"))
 
