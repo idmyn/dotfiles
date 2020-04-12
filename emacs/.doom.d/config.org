@@ -37,7 +37,22 @@ any others) and then I add those details as below.
   (hl-line-mode)
   (column-number-mode)
   :custom-face
-  (hl-line ((t (:inherit highlight :background "lavender")))))
+  (hl-line ((t (:inherit highlight :background "lavender"))))
+  (diredfl-file-name ((t)))
+  (diredfl-file-suffix ((t)))
+  (diredfl-symlink ((t)))
+  (diredfl-date-time ((t)))
+  (diredfl-number ((t)))
+  (diredfl-dir-heading ((t)))
+  (diredfl-no-priv ((t)))
+  (diredfl-dir-priv ((t)))
+  (diredfl-read-priv ((t)))
+  (diredfl-write-priv ((t)))
+  (diredfl-exec-priv ((t)))
+  (diredfl-rare-priv ((t)))
+  (diredfl-ignored-file-name ((t)))
+  (diredfl-compressed-file-suffix ((t)))
+  (diredfl-dir-name ((t (:weight bold)))))
 #+END_SRC
 remove minor modes from the mode line
 #+BEGIN_SRC emacs-lisp
