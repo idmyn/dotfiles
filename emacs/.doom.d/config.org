@@ -225,7 +225,14 @@ easier movement between windows and frames (taken from [[https://github.com/Bret
    :ni "M-;" 'evil-window-right)
 
  (:after evil-org
-   :map (evil-org-mode-map evil-markdown-mode-map)
+   :map evil-org-mode-map
+   :ni "M-j" 'evil-window-left
+   :ni "M-k" 'evil-window-down
+   :ni "M-l" 'evil-window-up
+   :ni "M-;" 'evil-window-right)
+
+ (:after evil-markdown
+   :map evil-markdown-mode-map
    :ni "M-j" 'evil-window-left
    :ni "M-k" 'evil-window-down
    :ni "M-l" 'evil-window-up
