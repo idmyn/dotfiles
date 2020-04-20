@@ -451,17 +451,21 @@ tell CLI applications that it's ok to dump really long output into the buffer
 
 ** Dired
 #+BEGIN_SRC emacs-lisp
-(after! dired
-  (map!
+(map!
+ :leader
+ :prefix "f"
+ :desc "Browse files" "d" 'dired-jump
+
+ (:after dired
    :map dired-mode-map
    :n "j" 'dired-up-directory
    :n "k" 'dired-next-line
    :n "l" 'dired-previous-line
    :n ":" 'dired-find-file
 
-   :n "W" 'wdired-change-to-wdired-mode)
+   :n "W" 'wdired-change-to-wdired-mode))
 
-  (add-hook 'dired-mode-hook #'dired-show-readme-mode))
+(add-hook 'dired-mode-hook #'dired-show-readme-mode)
 #+END_SRC
 
 ** Ebuku
