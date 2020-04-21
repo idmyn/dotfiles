@@ -454,9 +454,12 @@ tell CLI applications that it's ok to dump really long output into the buffer
 (map!
  :leader
  :prefix "f"
- :desc "Browse files" "d" 'dired-jump
+ :desc "Browse files" "d" 'dired-jump)
 
- (:after dired
+(after! dired
+  (add-hook 'dired-mode-hook #'dired-show-readme-mode)
+
+  (map!
    :map dired-mode-map
    :n "j" 'dired-up-directory
    :n "k" 'dired-next-line
@@ -464,8 +467,6 @@ tell CLI applications that it's ok to dump really long output into the buffer
    :n ":" 'dired-find-file
 
    :n "W" 'wdired-change-to-wdired-mode))
-
-(add-hook 'dired-mode-hook #'dired-show-readme-mode)
 #+END_SRC
 
 ** Ebuku
