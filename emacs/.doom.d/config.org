@@ -265,12 +265,10 @@ restore original emacs binding for paste, `save-buffer`, `delete-char`
 #+END_SRC
 only use text-scale-increase and text-scale-decrease to change font size (bound by default
 to C-- and C-=)
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 (map!
- (:after evil
-  :map global-map
-  "s--" 'text-scale-decrease
-  "s-=" 'text-scale-increase))
+ "s--" 'text-scale-decrease
+ "s-=" 'text-scale-increase)
 #+END_SRC
 fix "#" input on UK MacBook keyboard
 #+BEGIN_SRC emacs-lisp
