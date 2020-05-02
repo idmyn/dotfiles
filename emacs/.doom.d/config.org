@@ -236,6 +236,13 @@ easier movement between windows and frames (taken from [[https://github.com/Bret
    :ni "M-j" 'evil-window-left
    :ni "M-k" 'evil-window-down
    :ni "M-l" 'evil-window-up
+   :ni "M-;" 'evil-window-right)
+
+ (:after vterm
+   :map vterm-mode-map
+   :ni "M-j" 'evil-window-left
+   :ni "M-k" 'evil-window-down
+   :ni "M-l" 'evil-window-up
    :ni "M-;" 'evil-window-right))
 #+END_SRC
 bind jump-backward and jump-forward to more intuitive keys

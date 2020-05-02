@@ -1,3 +1,4 @@
+alias q="exit"
 alias a="archive"
 alias b="buku --suggest --db ~/Dropbox/System/bookmarks.db"
 alias la="ls -a"
