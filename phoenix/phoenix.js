@@ -64,6 +64,8 @@ const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
 const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
   if (App.get('Safari')) {
     App.get('Safari').focus()
+  } else if (App.get('Firefox Developer Edition')) {
+    App.get('Firefox Developer Edition').focus()
   } else if (App.get('Brave Browser')) {
     App.get('Brave Browser').focus()
   } else {
