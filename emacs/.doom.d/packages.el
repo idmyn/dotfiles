@@ -30,6 +30,9 @@
 (package! counsel-spotify
   :recipe (:host github :repo "Lautaro-Garcia/counsel-spotify"))
 
+(package! mode-line-timer
+  :recipe (:host github :repo "syohex/emacs-mode-line-timer"))
+
 
 (package! evil-snipe :disable t)
 (package! ivy-rich :disable t)

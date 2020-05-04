@@ -29,6 +29,7 @@
                            "^com\\.apple\\.Terminal$"
                            "^ru\\.keepcoder\\.Telegram$"]
                 :Browsers ["^com\\.brave\\.Browser$"
+                           "^org\\.mozilla\\.firefoxdeveloperedition$"
                            "^com\\.apple\\.Safari$"]}
 
  :main [{:des   "everywhere: right cmd alone to f13 (alfred), and to ctrl as modifier"
