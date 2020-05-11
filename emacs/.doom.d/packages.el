@@ -10,6 +10,8 @@
 (package! deadgrep)
 (package! vue-mode)
 (package! feature-mode)
+(package! yaml-mode)
+(package! yaml-imenu)
 
 (package! dired-show-readme
   :recipe (:host gitlab :repo "kisaragi-hiu/dired-show-readme"))
