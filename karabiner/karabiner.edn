@@ -63,7 +63,7 @@
                  [:i [:open_bracket ["dead-state" 0]] :dead-state] ;; [
                  [:o [:close_bracket ["dead-state" 0]] :dead-state] ;; ]
                  [:p [:!S1 ["dead-state" 0]] :dead-state] ;; !
-                 [:a [:hyphen ["dead-state" 0]] :dead-state] ;; -
+                 [:semicolon [:hyphen ["dead-state" 0]] :dead-state] ;; -
                  [:s [:!S9 ["dead-state" 0]] :dead-state] ;; (
                  [:d [:equal_sign ["dead-state" 0]] :dead-state] ;; =
                  [:f [:!O3 ["dead-state" 0]] :dead-state] ;; # (used to be "0")
@@ -72,7 +72,7 @@
                  [:j [:!Shyphen ["dead-state" 0]] :dead-state] ;; _ (used to be '1')
                  [:k [:!S8 ["dead-state" 0]] :dead-state] ;; *
                  [:l [:!S0 ["dead-state" 0]] :dead-state] ;; )
-                 [:semicolon [:!S4 ["dead-state" 0]] :dead-state] ;; $
+                 [:a [:!S4 ["dead-state" 0]] :dead-state] ;; $
                  [:z [:6 ["dead-state" 0]] :dead-state] ;; 6
                  [:x [:7 ["dead-state" 0]] :dead-state] ;; 7
                  [:c [:8 ["dead-state" 0]] :dead-state] ;; 8
