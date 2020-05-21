@@ -35,6 +35,9 @@
 (package! mode-line-timer
   :recipe (:host github :repo "syohex/emacs-mode-line-timer"))
 
+(package! js-doc
+  :recipe (:host github :repo "mooz/js-doc"))
+
 
 (package! evil-snipe :disable t)
 (package! ivy-rich :disable t)

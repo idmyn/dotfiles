@@ -99,5 +99,13 @@ const showOrOpenDash = new Key('d', ['alt', 'ctrl'], () => {
   }
 })
 
+const showOrOpenNotion = new Key('n', ['alt', 'ctrl'], () => {
+  if (App.get('Notion')) {
+    App.get('Notion').focus()
+  } else {
+    App.launch('Notion')
+  }
+})
+
 Phoenix.log("App.all", App.all().map(app => app.name()).filter(appName => /Brave Browser/gi.test(appName)))
 /* eslint-enable no-unused-vars */
