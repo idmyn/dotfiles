@@ -31,6 +31,10 @@ function vterm_printf;
     end
 end
 
+contains $fish_user_paths ~/.ghcup/env; or set -Ua fish_user_paths ~/.ghcup/bin
+contains $fish_user_paths ~/.local/bin; or set -Ua fish_user_paths ~/.local/bin
+contains $fish_user_paths ~/.bin; or set -Ua fish_user_paths ~/.bin
+
 test -f ~/google-cloud-sdk/path.fish.inc && source ~/google-cloud-sdk/path.fish.inc
 test -f ~/google-cloud-sdk/completion.fish.inc && source ~/google-cloud-sdk/completion.fish.inc
 
