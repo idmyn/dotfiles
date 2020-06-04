@@ -484,6 +484,7 @@ Use two spaces for indentation
 #+BEGIN_SRC emacs-lisp
 (after! js2-mode
   (setq js2-basic-offset 2)
+  (require 'prettier-js)
 
   (map!
    :map js2-mode-map

@@ -79,3 +79,9 @@ flycheck_*.el
 
 # JavaScript
 node_modules
+
+# Secrets
+.envrc
+
+# asdf version manager
+.tool-versions

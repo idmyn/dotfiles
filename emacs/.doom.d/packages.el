@@ -12,6 +12,7 @@
 (package! feature-mode)
 (package! yaml-mode)
 (package! yaml-imenu)
+(package! prettier-js)
 
 (package! dired-show-readme
   :recipe (:host gitlab :repo "kisaragi-hiu/dired-show-readme"))
