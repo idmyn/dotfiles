@@ -38,6 +38,7 @@ any others) and then I add those details as below.
   (column-number-mode)
   :custom-face
   (hl-line ((t (:inherit highlight :background "lavender"))))
+  (lsp-ui-sideline-code-action ((t (:foreground "limegreen"))))
   (diredfl-file-name ((t)))
   (diredfl-file-suffix ((t)))
   (diredfl-symlink ((t)))

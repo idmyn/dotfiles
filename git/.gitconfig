@@ -9,3 +9,5 @@
 	recent = branch --sort=-committerdate -v
 [includeIf "gitdir:~/src/nandos/"]
 	path = ~/src/nandos/.gitconfig
+[pull]
+	rebase = true
