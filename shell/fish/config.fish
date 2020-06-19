@@ -31,7 +31,6 @@ function vterm_printf;
     end
 end
 
-contains $fish_user_paths ~/.ghcup/env; or set -Ua fish_user_paths ~/.ghcup/bin
 contains $fish_user_paths ~/.local/bin; or set -Ua fish_user_paths ~/.local/bin
 contains $fish_user_paths ~/.bin; or set -Ua fish_user_paths ~/.bin
 
