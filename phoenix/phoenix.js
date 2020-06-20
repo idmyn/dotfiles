@@ -66,6 +66,8 @@ const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
     App.get('Safari').focus()
   } else if (App.get('Firefox Developer Edition')) {
     App.get('Firefox Developer Edition').focus()
+  } else if (App.get('Firefox')) {
+    App.get('Firefox').focus()
   } else if (App.get('Brave Browser')) {
     App.get('Brave Browser').focus()
   } else {
