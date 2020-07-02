@@ -1,2 +1,5 @@
 [user]
     email = davidmy@nandos.co.uk
+    signingkey = 5D19892B36442916
+[commit]
+    gpgsign = true

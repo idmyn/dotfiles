@@ -7,6 +7,9 @@ source ~/.config/fish/secrets.fish
 # for compatibility with eshell-z
 set -Ux Z_DATA ~/.z
 
+# for gpg signing git commits
+set -Ux GPG_TTY (tty)
+
 source /usr/local/opt/asdf/asdf.fish
 
 eval (direnv hook fish)
