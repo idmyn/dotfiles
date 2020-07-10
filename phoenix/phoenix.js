@@ -101,11 +101,11 @@ const showOrOpenDash = new Key('d', ['alt', 'ctrl'], () => {
   }
 })
 
-const showOrOpenNotion = new Key('n', ['alt', 'ctrl'], () => {
-  if (App.get('Notion')) {
-    App.get('Notion').focus()
+const showOrOpenNotes = new Key('n', ['alt', 'ctrl'], () => {
+  if (App.get('WorkFlowy')) {
+    App.get('WorkFlowy').focus()
   } else {
-    App.launch('Notion')
+    App.launch('WorkFlowy')
   }
 })
 
