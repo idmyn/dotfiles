@@ -77,10 +77,11 @@ const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenTerminal = new Key('s', ['alt', 'ctrl'], () => {
-  if (App.get('Hyper') && App.get('Hyper').windows().length) {
-    App.get('Hyper').focus()
+  if (App.get('kitty') && App.get('kitty').windows().length) {
+    App.get('kitty').focus()
   } else {
-    App.launch('Hyper')
+    Task.run('/bin/sh', ['-c', 'open -a kitty'])
+    // not sure why "App.launch('kitty')" doesn't work
   }
 })
 

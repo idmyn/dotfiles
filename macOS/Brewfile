@@ -1,12 +1,9 @@
-tap "d12frosted/emacs-plus"
-brew "emacs-plus", args: ["without-spacemacs-icon"]
-
 cask "karabiner-elements"
 tap "yqrashawn/goku"
 brew "yqrashawn/goku/goku"
 
 brew "fish"
-cask "hyper"
+cask "kitty"
 cask "bitbar"
 cask "phoenix"
 cask "finicky"
@@ -24,7 +21,6 @@ brew "buku"
 brew "tldr"
 brew "entr"
 brew "trash"
-brew "gnupg"
 brew "direnv"
 brew "ripgrep"
 cask "wkhtmltopdf"

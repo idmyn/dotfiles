@@ -23,6 +23,10 @@
                            "^com\\.googlecode\\.iterm2$"
                            "^co\\.zeit\\.hyper$"
                            "^com\\.apple\\.Terminal$"]
+                :Terminals ["^com\\.googlecode\\.iterm2$"
+                            "^co\\.zeit\\.hyper$"
+                            "^com\\.apple\\.Terminal$"
+                            "^net\\.kovidgoyal\\.kitty$"]
                 :uk       ["^com\\.apple\\.Mail$"
                            "^org\\.gnu\\.Emacs$"
                            "^org\\.vim\\.MacVim$"
@@ -46,6 +50,9 @@
 
         {:des   "in Brave, C-k and C-l are bound to down and up"
          :rules [[:condi :Browsers] [:!Tk :down_arrow] [:!Tl :up_arrow] [:!Tg :escape]]}
+
+        {:des   "in Terminals, C-k and C-l are bound to down and up, Cmd-l is bound to C-l"
+         :rules [[:condi :Terminals] [:!Tk :down_arrow] [:!Tl :up_arrow] [:!Cl :!Tl]]}
 
         {:des "workman dead state"
          :rules [[:comma ["dead-state" 1] :!dead-state]

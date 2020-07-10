@@ -19,9 +19,11 @@
     ~/.profile: shell/.profile
     ~/.aliases: shell/.aliases
     ~/.secret-aliases: shell/.secret-aliases
+    ~/.elvish/rc.elv: shell/elvish/rc.elv
     ~/.zshrc: shell/zsh/.zshrc
     ~/.zshenv: shell/zsh/.zshenv
     ~/.zsh_plugins.txt: shell/zsh/.zsh_plugins.txt
+    ~/.config/kitty/kitty.conf: kitty/kitty.conf
     ~/.hyper.js: hyper/.hyper.js
     ~/.bin: bin
     ~/.gitignore_global: git/.gitignore_global
