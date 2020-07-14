@@ -15,3 +15,6 @@ fn ls [@a]{ e:ls -GF $@a }
 fn la [@a]{ ls -GFa $@a }
 fn ll [@a]{ ls -GFalh $@a }
 fn otp [@a]{ pass otp -c $@a }
+
+# run this once: direnv hook elvish > ~/.elvish/lib/direnv.elv
+use direnv
