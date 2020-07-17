@@ -14,6 +14,7 @@
 (package! yaml-imenu)
 (package! prettier-js)
 (package! elvish-mode)
+(package! olivetti)
 
 (package! dired-show-readme
   :recipe (:host gitlab :repo "kisaragi-hiu/dired-show-readme"))

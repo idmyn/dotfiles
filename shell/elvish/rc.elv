@@ -6,7 +6,7 @@ epm:install &silent-if-installed=$true \
 
 use github.com/zzamboni/elvish-modules/terminal-title
 
-paths = [/usr/local/opt/asdf/bin ~/.asdf/shims /usr/local/bin $@paths]
+paths = [/usr/local/opt/asdf/bin ~/.asdf/shims /usr/local/bin ~/.cargo/bin $@paths]
 
 E:EDITOR="emacs -nw"
 
