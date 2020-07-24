@@ -10,6 +10,8 @@ set -Ux Z_DATA ~/.z
 # for gpg signing git commits
 set -Ux GPG_TTY (tty)
 
+set -Ux ANDROID_HOME $HOME/Library/Android/sdk
+
 source /usr/local/opt/asdf/asdf.fish
 
 eval (direnv hook fish)
