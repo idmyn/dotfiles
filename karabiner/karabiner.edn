@@ -22,7 +22,8 @@
                            "^org\\.vim\\.MacVim$"
                            "^com\\.googlecode\\.iterm2$"
                            "^co\\.zeit\\.hyper$"
-                           "^com\\.apple\\.Terminal$"]
+                           "^com\\.apple\\.Terminal$"
+                           "^com\\.workflowy\\.desktop$"]
                 :Terminals ["^com\\.googlecode\\.iterm2$"
                             "^co\\.zeit\\.hyper$"
                             "^com\\.apple\\.Terminal$"
@@ -42,10 +43,10 @@
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt nil {:alone :tab}]]}
 
-        {:des   "in vim (and emulators): caps_lock to esc when pressed alone, to ctrl as modifier"
+        {:des   "in vim (and emulators, and WorkFlowy): caps_lock to esc when pressed alone, to ctrl as modifier"
          :rules [[:condi :Vim] [:##caps_lock :left_control nil {:alone :escape}]]}
 
-        {:des   "outside vim (and emulators): caps_lock to f13 when pressed alone, to ctrl as modifier"
+        {:des   "outside vim (and emulators, and WorkFlowy): caps_lock to f13 when pressed alone, to ctrl as modifier"
          :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
 
         {:des   "in Brave, C-k and C-l are bound to down and up"
