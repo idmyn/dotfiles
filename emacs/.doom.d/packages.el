@@ -8,7 +8,6 @@
 (package! suggest)
 (package! dash-at-point)
 (package! deadgrep)
-(package! vue-mode)
 (package! feature-mode)
 (package! yaml-mode)
 (package! yaml-imenu)
