@@ -555,3 +555,7 @@ set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-m
    :i "C-k" 'sly-mrepl-next-input-or-button
    :i "C-l" 'sly-mrepl-previous-input-or-button))
 #+END_SRC
+** Rust
+#+BEGIN_SRC emacs-lisp
+(setq rustic-lsp-server 'rust-analyzer)
+#+END_SRC
