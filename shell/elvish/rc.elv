@@ -17,6 +17,7 @@ paths = [
   $E:ANDROID_HOME/platform-tools
   ~/.cargo/bin
   ~/.asdf/shims
+  ~/.nix-profile/bin
   /usr/local/opt/asdf/bin
   /usr/local/bin
   $@paths
