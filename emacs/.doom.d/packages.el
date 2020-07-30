@@ -14,6 +14,7 @@
 (package! prettier-js)
 (package! elvish-mode)
 (package! olivetti)
+(package! flymake-diagnostic-at-point)
 
 (package! dired-show-readme
   :recipe (:host gitlab :repo "kisaragi-hiu/dired-show-readme"))
