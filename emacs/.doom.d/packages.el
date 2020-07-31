@@ -3,7 +3,6 @@
 
 (package! eink-theme)
 (package! eldoc-box)
-(package! zetteldeft)
 (package! fish-mode)
 (package! suggest)
 (package! dash-at-point)

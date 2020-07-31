@@ -95,25 +95,6 @@ Version 2017-07-25"
           (yank-pop 1)
         (yank)))))
 
-(defun my/zetteldeft-find-file (file &optional empty)
-  "Find FILE interactively using the minibuffer.
-FILE must exist and be a relative or absolute path, with extension.
-If FILE is not inside `deft-directory', create it with zetteldeft rules."
-  (interactive
-   (list (completing-read "Deft find file: " (deft-find-all-files-no-prefix))))
-  (let* ((dir (expand-file-name deft-directory))
-         (zdId (zetteldeft-generate-id))
-         (zdName (concat zdId " " file)))
-    (if (string-match (rx (seq ".org" eol)) file)
-        (progn ; if the string ends in ".org" then I've chosen an existing file
-          (setq file (concat dir "/" file))
-          (deft-open-file file))
-      (progn ; else I want to feed input into deft-new-file func
-        (deft-new-file-named zdName)
-        (unless empty (zetteldeft--insert-title))
-        (save-buffer)
-        (when (featurep 'evil) (evil-insert-state))))))
-
 (require 'edit-indirect)
 (defun md/narrow-dwim (p)
   "Widen if buffer is narrowed, narrow-dwim otherwise.
@@ -429,35 +410,6 @@ tell CLI applications that it's ok to dump really long output into the buffer
 (setenv "PAGER" "cat")
 #+END_SRC
 
-** Deft
-#+BEGIN_SRC emacs-lisp
-;; (map! :leader
-;;         :prefix "n"
-;;         :desc "Open deft" "d" 'deft-find-file)
-;; (after! deft
-;;   (setq deft-directory "~/Dropbox/notes"
-;;         deft-use-filter-string-for-filename t))
-#+END_SRC
-*** Zetteldeft
-#+BEGIN_SRC emacs-lisp
-(use-package! zetteldeft
-  :custom
-  (deft-directory "~/Dropbox/org/zettelkasten")
-  :config
-  (map!
-   :leader
-   :prefix "d"
-   :desc "Create new note and open" "n" 'zetteldeft-new-file
-   :desc "Create new note and insert link" "N" 'zetteldeft-new-file-and-link
-   :desc "Pick a note and insert a link" "i" 'zetteldeft-find-file-id-insert
-   :desc "Follow a link" "f" 'zetteldeft-follow-link
-   :desc "Select and search a link’s ID" "l" 'zetteldeft-avy-link-search
-   :desc "Select a tag and search for it" "t" 'zetteldeft-avy-tag-search
-   :desc "Search for a note" "s" 'my/zetteldeft-find-file
-   :desc "Search for thing at point" "S" 'zetteldeft-search-at-point
-   :desc "Search for id of current file" "c" 'zetteldeft-search-current-id))
-#+END_SRC
-
 ** Dired
 #+BEGIN_SRC emacs-lisp
 (map!
@@ -490,7 +442,7 @@ set the path to my [[https://github.com/jarun/buku][buku]] bookmarks
 #+BEGIN_SRC emacs-lisp
 (setq ebuku-db-path "~/Dropbox/System/bookmarks.db")
 #+END_SRC
-** JavaScript (& Vue)
+** JavaScript
 Use two spaces for indentation
 #+BEGIN_SRC emacs-lisp
 (after! js2-mode
@@ -508,14 +460,6 @@ configure flycheck to use eslint
   (add-to-list 'flycheck-disabled-checkers 'javascript-standard)
   (add-to-list 'flycheck-disabled-checkers 'lsp-ui)
   (setq flycheck-javascript-eslint-executable "eslint_d"))
-#+END_SRC
-disable background colour in =mmm-mode= (enabled by =vue-mode=)
-#+BEGIN_SRC emacs-lisp
-(after! flycheck (flycheck-add-mode 'javascript-eslint 'vue-mode))
-(add-hook 'vue-mode-hook #'lsp-vue-mmm-enable)
-(add-hook 'mmm-mode-hook
-          (lambda ()
-            (set-face-background 'mmm-default-submode-face nil)))
 #+END_SRC
 ** Web (& Svelte)
 some web-mode config
