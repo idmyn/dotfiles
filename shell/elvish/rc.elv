@@ -32,6 +32,7 @@ edit:insert:binding[Alt+Backspace]=$edit:kill-small-word-left~
 
 # aliases
 fn q { exit }
+fn k { kubectl }
 fn e [@a]{ open -a Emacs $@a }
 fn gs [@a]{ git status $@a }
 fn ls [@a]{ e:ls -GF $@a }

@@ -1,4 +1,5 @@
 alias q="exit"
+alias k="kubectl"
 alias a="archive"
 alias b="buku --suggest --db ~/Dropbox/System/bookmarks.db"
 alias la="ls -a"

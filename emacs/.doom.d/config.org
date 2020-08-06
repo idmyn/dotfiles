@@ -154,7 +154,15 @@ adjust magit vimkeys accordingly
  (:after magit
    :map magit-mode-map
    :nv "k" 'magit-section-forward
-   :nv "l" 'magit-section-backward))
+   :nv "l" 'magit-section-backward
+
+   :map git-rebase-mode-map
+   :nv "j" 'evil-backward-char
+   :nv "k" 'evil-next-line
+   :nv "l" 'evil-previous-line
+   :nv "C-k" 'git-rebase-move-line-down
+   :nv "C-l" 'git-rebase-move-line-up
+   ))
 #+END_SRC
 adjust treemacs vimkeys accordingly
 #+BEGIN_SRC emacs-lisp
@@ -223,6 +231,13 @@ easier movement between windows and frames (taken from [[https://github.com/Bret
 
  (:after vterm
    :map vterm-mode-map
+   :ni "M-j" 'evil-window-left
+   :ni "M-k" 'evil-window-down
+   :ni "M-l" 'evil-window-up
+   :ni "M-;" 'evil-window-right)
+
+ (:after magit
+   :map git-rebase-mode-map
    :ni "M-j" 'evil-window-left
    :ni "M-k" 'evil-window-down
    :ni "M-l" 'evil-window-up
