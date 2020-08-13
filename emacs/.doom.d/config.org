@@ -526,11 +526,24 @@ set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-m
 #+BEGIN_SRC emacs-lisp
 (setq rustic-lsp-server 'rust-analyzer)
 #+END_SRC
-** Eglot
-because I don't want [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]]'s bells and whistles
+
+** Frog Jump Buffer
+[[https://github.com/waymondo/frog-jump-buffer][frog-jump-buffer]] is great! You open the menu and it assigns each option to a
+keystroke so you can select your destination immediately. It's also easy to set
+filter functions so you don't see buffers that you're not interested in.
 #+BEGIN_SRC emacs-lisp
-(add-hook! eglot--managed-mode #'(flymake-mode (lambda () (eldoc-mode -1))))
-(use-package flymake-diagnostic-at-point
-  :after flymake
-  :config (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
+(map!
+ :leader
+ "j" 'frog-jump-buffer)
+
+(after! frog-jump-buffer
+  ;; I don't want to see dired or magit buffers
+  (setq frog-jump-buffer-default-filter
+        (lambda (buffer)
+          (with-current-buffer buffer
+            (not (-any? #'derived-mode-p '(dired-mode magit-mode))))))
+
+  ;; I don't want to see auxiliary buffers
+  (dolist (regexp '("^\\*"))
+    (push regexp frog-jump-buffer-ignore-buffers)))
 #+END_SRC
