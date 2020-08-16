@@ -34,6 +34,7 @@ edit:insert:binding[Alt+Backspace]=$edit:kill-small-word-left~
 fn q { exit }
 fn k { kubectl }
 fn e [@a]{ open -a Emacs $@a }
+fn b [@a]{ buku --suggest --colors aaeca --db ~/Dropbox/System/bookmarks.db $@a }
 fn gs [@a]{ git status $@a }
 fn ls [@a]{ e:ls -GF $@a }
 fn la [@a]{ ls -GFa $@a }

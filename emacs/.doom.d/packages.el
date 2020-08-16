@@ -14,6 +14,7 @@
 (package! elvish-mode)
 (package! olivetti)
 (package! flymake-diagnostic-at-point)
+(package! neuron-mode)
 (package! frog-jump-buffer)
 
 (package! dired-show-readme

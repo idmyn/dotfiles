@@ -457,6 +457,22 @@ set the path to my [[https://github.com/jarun/buku][buku]] bookmarks
 #+BEGIN_SRC emacs-lisp
 (setq ebuku-db-path "~/Dropbox/System/bookmarks.db")
 #+END_SRC
+** Zettelkasten (neuron-mode)
+https://neuron.zettel.page
+#+BEGIN_SRC emacs-lisp
+(defun search-zettelkasten ()
+  "Search zettels by content."
+  (interactive)
+  (progn
+    (+ivy-file-search :in (neuron-zettelkasten) :recursive nil :prompt "Search Zettelkasten: ")
+    (neuron-mode)))
+
+(use-package! neuron-mode
+  :custom
+  (neuron-default-zettelkasten-directory (expand-file-name "~/Dropbox/zettelkasten"))
+  :custom-face
+  (neuron-title-overlay-face ((t (:foreground "black" :underline t)))))
+#+END_SRC
 ** JavaScript
 Use two spaces for indentation
 #+BEGIN_SRC emacs-lisp
