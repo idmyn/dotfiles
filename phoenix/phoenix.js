@@ -110,5 +110,13 @@ const showOrOpenNotes = new Key('n', ['alt', 'ctrl'], () => {
   }
 })
 
+const showOrOpenSlack = new Key('c', ['alt', 'ctrl'], () => {
+  if (App.get('Slack')) {
+    App.get('Slack').focus()
+  } else {
+    App.launch('Slack')
+  }
+})
+
 Phoenix.log("App.all", App.all().map(app => app.name()).filter(appName => /Brave Browser/gi.test(appName)))
 /* eslint-enable no-unused-vars */
