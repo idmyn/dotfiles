@@ -1,7 +1,7 @@
 # inspo: https://github.com/muesli/dotfiles/blob/master/shell/rc.elv
 
 use epm
-epm:install &silent-if-installed=$true \
+epm:install &silent-if-installed=$true ^
     github.com/zzamboni/elvish-modules
 
 use github.com/zzamboni/elvish-modules/terminal-title
@@ -41,5 +41,4 @@ fn la [@a]{ ls -GFa $@a }
 fn ll [@a]{ ls -GFalh $@a }
 fn otp [@a]{ pass otp -c $@a }
 
-# run this once: direnv hook elvish > ~/.elvish/lib/direnv.elv
 use direnv
