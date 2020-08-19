@@ -53,10 +53,11 @@ const windowToFullNextScreen = new Key('o', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
-  if (App.get('Emacs')) {
+  if (App.get('Emacs').windows().length > 0) {
     App.get('Emacs').focus()
   } else {
-    App.launch('Emacs')
+    Task.run('/bin/sh', ['-c', 'emacsclient -nc -a ""'])
+    // ^ not sure why this doesn't work: https://github.com/kasper/phoenix/issues/263
     setTimeout(() => App.get('Emacs').focus(), 100)
   }
 })
@@ -118,5 +119,5 @@ const showOrOpenSlack = new Key('c', ['alt', 'ctrl'], () => {
   }
 })
 
-Phoenix.log("App.all", App.all().map(app => app.name()).filter(appName => /Brave Browser/gi.test(appName)))
+Phoenix.log("hello", App.get('Emacs').windows().length > 0)
 /* eslint-enable no-unused-vars */

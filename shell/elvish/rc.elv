@@ -6,7 +6,7 @@ epm:install &silent-if-installed=$true ^
 
 use github.com/zzamboni/elvish-modules/terminal-title
 
-E:EDITOR="emacs -nw"
+E:EDITOR="emacsclient -n -a ''"
 
 E:ANDROID_HOME=$E:HOME"/Library/Android/sdk"
 
@@ -31,9 +31,19 @@ edit:rprompt = { put "" }
 edit:insert:binding[Alt+Backspace]=$edit:kill-small-word-left~
 
 # aliases
+
+fn e [@a]{
+  if (> (osascript -e 'tell application "emacs" to get number of windows') 0) {
+    osascript -e 'tell application "emacs" to activate first window'
+    emacsclient -n $@a
+  } else {
+    emacsclient -nc -a '' $@a
+    osascript -e 'tell application "emacs" to activate first window'
+  }
+}
+
 fn q { exit }
 fn k { kubectl }
-fn e [@a]{ open -a Emacs $@a }
 fn b [@a]{ buku --suggest --colors aaeca --db ~/Dropbox/System/bookmarks.db $@a }
 fn gs [@a]{ git status $@a }
 fn ls [@a]{ e:ls -GF $@a }
