@@ -1,5 +1,6 @@
 # inspo: https://github.com/muesli/dotfiles/blob/master/shell/rc.elv
 
+use str
 use epm
 epm:install &silent-if-installed=$true ^
     github.com/zzamboni/elvish-modules
@@ -33,12 +34,16 @@ edit:insert:binding[Alt+Backspace]=$edit:kill-small-word-left~
 # aliases
 
 fn e [@a]{
-  if (> (osascript -e 'tell application "emacs" to get number of windows') 0) {
-    osascript -e 'tell application "emacs" to activate first window'
-    emacsclient -n $@a
+  if (str:contains (osascript -e 'application "emacs" is running') true) {
+    if (> (osascript -e 'tell application "emacs" to get number of windows') 0) {
+      osascript -e 'tell application "emacs" to activate first window'
+      emacsclient -n $@a
+    } else {
+      emacsclient -nc $@a
+      osascript -e 'tell application "emacs" to activate first window'
+    }
   } else {
-    emacsclient -nc -a '' $@a
-    osascript -e 'tell application "emacs" to activate first window'
+    emacs --daemon; emacsclient -nc $@a
   }
 }
 
