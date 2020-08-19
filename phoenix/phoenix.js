@@ -53,12 +53,15 @@ const windowToFullNextScreen = new Key('o', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
-  if (App.get('Emacs').windows().length > 0) {
-    App.get('Emacs').focus()
+  if (App.get('Emacs')) {
+    if (App.get('Emacs').windows().length > 0) {
+      App.get('Emacs').focus()
+    } else {
+      Task.run('/bin/sh', ['-c', '/usr/local/bin/emacsclient -nc'])
+      App.get('Emacs').focus()
+    }
   } else {
-    Task.run('/bin/sh', ['-c', 'emacsclient -nc -a ""'])
-    // ^ not sure why this doesn't work: https://github.com/kasper/phoenix/issues/263
-    setTimeout(() => App.get('Emacs').focus(), 100)
+    Task.run('/bin/sh', ['-c', '/usr/local/bin/emacs --daemon && /usr/local/bin/emacsclient -nc'])
   }
 })
 
