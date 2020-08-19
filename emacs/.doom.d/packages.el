@@ -15,6 +15,7 @@
 (package! olivetti)
 (package! flymake-diagnostic-at-point)
 (package! neuron-mode)
+(package! dired-narrow)
 (package! frog-jump-buffer)
 
 (package! dired-show-readme
