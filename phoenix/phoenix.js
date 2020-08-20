@@ -114,11 +114,15 @@ const showOrOpenNotes = new Key('n', ['alt', 'ctrl'], () => {
   }
 })
 
-const showOrOpenSlack = new Key('c', ['alt', 'ctrl'], () => {
+const showOrOpenChat = new Key('c', ['alt', 'ctrl'], () => {
   if (App.get('Slack')) {
     App.get('Slack').focus()
   } else {
-    App.launch('Slack')
+    if (App.get('Telegram')) {
+      App.get('Telegram').focus()
+    } else {
+      App.launch('Telegram')
+    }
   }
 })
 

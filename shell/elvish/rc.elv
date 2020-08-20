@@ -18,7 +18,6 @@ paths = [
   $E:ANDROID_HOME/platform-tools
   ~/.cargo/bin
   ~/.asdf/shims
-  ~/.nix-profile/bin
   /usr/local/opt/asdf/bin
   /usr/local/bin
   $@paths
@@ -55,5 +54,8 @@ fn ls [@a]{ e:ls -GF $@a }
 fn la [@a]{ ls -GFa $@a }
 fn ll [@a]{ ls -GFalh $@a }
 fn otp [@a]{ pass otp -c $@a }
+fn ssh [@a]{ kitty +kitten ssh $@a }
+fn glow [@a]{ e:glow -s light $@a }
 
 use direnv
+use nix
