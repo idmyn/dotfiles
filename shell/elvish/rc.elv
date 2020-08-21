@@ -51,8 +51,9 @@ fn k { kubectl }
 fn b [@a]{ buku --suggest --colors aaeca --db ~/Dropbox/System/bookmarks.db $@a }
 fn gs [@a]{ git status $@a }
 fn ls [@a]{ e:ls -GF $@a }
-fn la [@a]{ ls -GFa $@a }
-fn ll [@a]{ ls -GFalh $@a }
+fn la [@a]{ ls -a $@a }
+fn ll [@a]{ ls -alh $@a }
+fn cd [@a]{ cd $@a; echo; la }
 fn otp [@a]{ pass otp -c $@a }
 fn ssh [@a]{ kitty +kitten ssh $@a }
 fn glow [@a]{ e:glow -s light $@a }
