@@ -58,5 +58,7 @@ fn otp [@a]{ pass otp -c $@a }
 fn ssh [@a]{ kitty +kitten ssh $@a }
 fn glow [@a]{ e:glow -s light $@a }
 
-use direnv
 use nix
+use direnv
+use secrets
+fn crm-vpn { secrets:crm-vpn }
