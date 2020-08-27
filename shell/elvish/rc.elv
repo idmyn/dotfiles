@@ -16,6 +16,7 @@ paths = [
   $E:ANDROID_HOME/tools
   $E:ANDROID_HOME/tools/bin
   $E:ANDROID_HOME/platform-tools
+  ~/google-cloud-sdk/bin
   ~/.cargo/bin
   ~/.asdf/shims
   /usr/local/opt/asdf/bin
@@ -61,4 +62,8 @@ fn glow [@a]{ e:glow -s light $@a }
 use nix
 use direnv
 use secrets
+
 fn crm-vpn { secrets:crm-vpn }
+fn dev { secrets:dev }
+fn preprod { secrets:preprod }
+fn prod { secrets:prod }
