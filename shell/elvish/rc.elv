@@ -19,6 +19,7 @@ paths = [
   ~/google-cloud-sdk/bin
   ~/.cargo/bin
   ~/.asdf/shims
+  ~/.local/bin
   /usr/local/opt/asdf/bin
   /usr/local/bin
   $@paths
@@ -49,7 +50,7 @@ fn e [@a]{
 
 fn q { exit }
 fn k { kubectl }
-fn b [@a]{ buku --suggest --colors aaeca --db ~/Dropbox/System/bookmarks.db $@a }
+fn b [@a]{ buku --suggest --colors aaeca --db $E:HOME"/Tresors/System Config/bookmarks.db" $@a }
 fn gs [@a]{ git status $@a }
 fn ls [@a]{ e:ls -GF $@a }
 fn la [@a]{ ls -a $@a }
