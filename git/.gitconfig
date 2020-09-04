@@ -1,5 +1,6 @@
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.gitignore
+	editor = emacsclient -n -a ''
 [user]
 	name = David Mynors
 	email = hello@davidmyno.rs
@@ -8,6 +9,7 @@
 	sc = sparse-checkout
 	recent = branch --sort=-committerdate -v
 	new = !git init && git symbolic-ref HEAD refs/heads/main
+	uf = ls-files -oz --exclude-standard
 [includeIf "gitdir:~/src/nandos/"]
 	path = ~/src/nandos/.gitconfig
 [pull]

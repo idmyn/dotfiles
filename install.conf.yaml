@@ -28,8 +28,8 @@
     ~/.zsh_plugins.txt: shell/zsh/.zsh_plugins.txt
     ~/.config/kitty/kitty.conf: kitty/kitty.conf
     ~/.hyper.js: hyper/.hyper.js
-    ~/.bin: bin
-    ~/.gitignore_global: git/.gitignore_global
+    ~/.bin: shell/bin
+    ~/.gitignore: git/.gitignore
     ~/.gitconfig:
       force: true
       path: git/.gitconfig

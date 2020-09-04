@@ -7,7 +7,7 @@ epm:install &silent-if-installed=$true ^
 
 use github.com/zzamboni/elvish-modules/terminal-title
 
-E:EDITOR="emacsclient -n -a ''"
+E:EDITOR="emacsclient -q -c -a ''"
 
 E:ANDROID_HOME=$E:HOME"/Library/Android/sdk"
 
@@ -19,6 +19,7 @@ paths = [
   ~/google-cloud-sdk/bin
   ~/.cargo/bin
   ~/.asdf/shims
+  ~/.bin
   ~/.local/bin
   /usr/local/opt/asdf/bin
   /usr/local/bin
@@ -35,8 +36,8 @@ edit:insert:binding[Alt+Backspace]=$edit:kill-small-word-left~
 # aliases
 
 fn e [@a]{
-  if (str:contains (osascript -e 'application "emacs" is running') true) {
-    if (> (osascript -e 'tell application "emacs" to get number of windows') 0) {
+  if (> (ps -ax | rg -c emacs) 1) {
+    if (> (emacsclient -e '(length (frame-list))') 1) {
       osascript -e 'tell application "emacs" to activate first window'
       emacsclient -n $@a
     } else {
