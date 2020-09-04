@@ -23,6 +23,7 @@
                            "^com\\.googlecode\\.iterm2$"
                            "^co\\.zeit\\.hyper$"
                            "^com\\.apple\\.Terminal$"
+                           "^net\\.kovidgoyal\\.kitty$"
                            "^com\\.workflowy\\.desktop$"]
                 :Terminals ["^com\\.googlecode\\.iterm2$"
                             "^co\\.zeit\\.hyper$"

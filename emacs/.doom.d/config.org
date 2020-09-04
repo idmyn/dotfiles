@@ -364,7 +364,8 @@ globally. I do occasionaly find it useful, though, so I have a toggle mapped to
   (add-to-list 'company-global-modes 'sh-mode t)
   (add-to-list 'company-global-modes 'eshell-mode t)
   (add-to-list 'company-global-modes 'js2-mode t)
-  (add-to-list 'company-global-modes 'org-mode t))
+  (add-to-list 'company-global-modes 'org-mode t)
+  (add-to-list 'company-global-modes 'markdown-mode t))
 
 (setq company-idle-delay 0)
 
@@ -468,6 +469,7 @@ tell CLI applications that it's ok to dump really long output into the buffer
  :leader
  :prefix "t"
  :desc "Olivetti" "o" 'olivetti-mode)
+(setq olivetti-body-width 85)
 #+END_SRC
 ** Ebuku
 set the path to my [[https://github.com/jarun/buku][buku]] bookmarks
