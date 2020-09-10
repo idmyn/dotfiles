@@ -72,6 +72,10 @@ remove minor modes from the mode line
             (throw 'done t)))
         mode-line-modes))
 #+END_SRC
+transparent titlebars on MacOS
+#+BEGIN_SRC emacs-lisp
+(when (eq system-type 'darwin) (ns-auto-titlebar-mode))
+#+END_SRC
 
 ** Nifty functions
 #+BEGIN_SRC emacs-lisp
@@ -476,26 +480,9 @@ set the path to my [[https://github.com/jarun/buku][buku]] bookmarks
 #+BEGIN_SRC emacs-lisp
 (setq ebuku-db-path "~/Dropbox/System/bookmarks.db")
 #+END_SRC
-** Zettelkasten (neuron-mode)
-https://neuron.zettel.page
-#+BEGIN_SRC emacs-lisp
-(defun search-zettelkasten ()
-  "Search zettels by content."
-  (interactive)
-  (progn
-    (+ivy-file-search :in (neuron-zettelkasten) :recursive nil :prompt "Search Zettelkasten: ")
-    (neuron-mode)))
-
-(use-package! neuron-mode
-  :custom
-  (neuron-default-zettelkasten-directory (expand-file-name "~/Dropbox/zettelkasten"))
-  :custom-face
-  (neuron-title-overlay-face ((t (:foreground "black" :underline t)))))
-#+END_SRC
 ** JavaScript
 Use two spaces for indentation
 #+BEGIN_SRC emacs-lisp
-(add-hook 'js2-mode-hook #'subword-mode)
 (after! js2-mode
   (setq js2-basic-offset 2)
   (require 'prettier-js)
@@ -555,6 +542,10 @@ set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-m
    :i "C-d" 'delete-char
    :ni "C-;" 'self-insert-command))
 #+END_SRC
+use proportional (not monospaced) font in markdown mode
+#+BEGIN_SRC emacs-lisp
+(add-hook 'markdown-mode-hook 'variable-pitch-mode)
+#+END_SRC
 ** Common Lisp
 #+BEGIN_SRC emacs-lisp
 (map!
@@ -566,25 +557,4 @@ set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-m
 ** Rust
 #+BEGIN_SRC emacs-lisp
 (setq rustic-lsp-server 'rust-analyzer)
-#+END_SRC
-
-** Frog Jump Buffer
-[[https://github.com/waymondo/frog-jump-buffer][frog-jump-buffer]] is great! You open the menu and it assigns each option to a
-keystroke so you can select your destination immediately. It's also easy to set
-filter functions so you don't see buffers that you're not interested in.
-#+BEGIN_SRC emacs-lisp
-(map!
- :leader
- "j" 'frog-jump-buffer)
-
-(after! frog-jump-buffer
-  ;; I don't want to see dired or magit buffers
-  (setq frog-jump-buffer-default-filter
-        (lambda (buffer)
-          (with-current-buffer buffer
-            (not (-any? #'derived-mode-p '(dired-mode magit-mode))))))
-
-  ;; I don't want to see auxiliary buffers
-  (dolist (regexp '("^\\*"))
-    (push regexp frog-jump-buffer-ignore-buffers)))
 #+END_SRC

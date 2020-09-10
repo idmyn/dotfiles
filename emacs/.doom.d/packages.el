@@ -14,9 +14,8 @@
 (package! elvish-mode)
 (package! olivetti)
 (package! flymake-diagnostic-at-point)
-(package! neuron-mode)
 (package! dired-narrow)
-(package! frog-jump-buffer)
+(package! ns-auto-titlebar)
 
 (package! dired-show-readme
   :recipe (:host gitlab :repo "kisaragi-hiu/dired-show-readme"))

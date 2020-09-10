@@ -21,6 +21,7 @@ paths = [
   ~/.asdf/shims
   ~/.bin
   ~/.local/bin
+  ~/.emacs.d/bin
   /usr/local/opt/asdf/bin
   /usr/local/bin
   $@paths
