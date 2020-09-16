@@ -48,7 +48,3 @@ if [ -f '/Users/davidmy/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/davidmy
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/davidmy/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/davidmy/google-cloud-sdk/completion.zsh.inc'; fi
-
-export PHP_VERSIONS="/Applications/MAMP/bin/php"
-source $(brew --prefix php-version)/php-version.sh
-php-version 5.6
