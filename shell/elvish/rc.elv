@@ -61,6 +61,8 @@ fn cd [@a]{ cd $@a; echo; la }
 fn otp [@a]{ pass otp -c $@a }
 fn ssh [@a]{ kitty +kitten ssh $@a }
 fn glow [@a]{ e:glow -s light $@a }
+fn jjet [@a]{ jet --from json --keywordize --to edn --pretty $@a }
+fn jjetq [@a]{ jet --from json --keywordize --to edn --pretty --query $@a }
 
 use nix
 use direnv
