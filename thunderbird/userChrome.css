@@ -1,9 +1,0 @@
-/* ~/Library/Thunderbird/Profiles/XXXXX.default-release/chrome/userChrome.css */
-
-#threadTree > treechildren {
-  font-size: 14px;
-}
-
-#threadTree > treechildren::-moz-tree-row {
-  height: 35px !important;
-}

@@ -18,7 +18,7 @@
     ~/.elvish/lib/nix.elv: shell/elvish/lib/nix.elv
     ~/.elvish/lib/direnv.elv: shell/elvish/lib/direnv.elv
     ~/.elvish/lib/secrets.elv: shell/elvish/lib/secrets.elv
-    ~/.bashrc: shell/.bashrc
+    ~/.zshrc: shell/.zshrc
     ~/.config/kitty/kitty.conf: kitty/kitty.conf
     ~/.hyper.js: hyper/.hyper.js
     ~/.bin: shell/bin

@@ -1,5 +1,7 @@
 tap "homebrew/cask-fonts"
 cask "font-input"
+cask "font-iosevka-ss09"
+cask "font-iosevka-aile"
 cask "font-jetbrains-mono"
 
 cask "karabiner-elements"
@@ -23,6 +25,7 @@ cask "qlmarkdown"
 cask "sensiblesidebuttons"
 
 brew "fd"
+brew "exa"
 brew "git"
 brew "asdf"
 brew "grip"

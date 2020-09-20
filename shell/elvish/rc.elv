@@ -54,10 +54,10 @@ fn q { exit }
 fn k { kubectl }
 fn b [@a]{ buku --suggest --colors aaeca --db $E:HOME"/Tresors/System Config/bookmarks.db" $@a }
 fn gs [@a]{ git status $@a }
-fn ls [@a]{ e:ls -GF $@a }
+fn ls [@a]{ echo; exa -F -I 'Desktop|Documents|Downloads|Library|Movies|Music|Pictures|Public|Tresors' $@a }
 fn la [@a]{ ls -a $@a }
 fn ll [@a]{ ls -alh $@a }
-fn cd [@a]{ cd $@a; echo; la }
+fn cd [@a]{ cd $@a; la }
 fn otp [@a]{ pass otp -c $@a }
 fn ssh [@a]{ kitty +kitten ssh $@a }
 fn glow [@a]{ e:glow -s light $@a }
