@@ -13,13 +13,12 @@
     ~/.finicky.js: finicky/.finicky.js
     ~/.config/phoenix/phoenix.js: phoenix/phoenix.js
     ~/.config/karabiner.edn: karabiner/karabiner.edn
-    ~/.profile: shell/.profile
-    ~/.aliases: shell/.aliases
     ~/.secret-aliases: shell/.secret-aliases
     ~/.elvish/rc.elv: shell/elvish/rc.elv
     ~/.elvish/lib/nix.elv: shell/elvish/lib/nix.elv
     ~/.elvish/lib/direnv.elv: shell/elvish/lib/direnv.elv
     ~/.elvish/lib/secrets.elv: shell/elvish/lib/secrets.elv
+    ~/.bashrc: shell/.bashrc
     ~/.zshrc: shell/zsh/.zshrc
     ~/.zshenv: shell/zsh/.zshenv
     ~/.zsh_plugins.txt: shell/zsh/.zsh_plugins.txt
@@ -36,5 +35,4 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
-  - [bash ./shell/install-plugins.sh, Installing zsh plugins]
   - [cd macOS && bash homebrew.sh, Installing packages from homebrew]

@@ -126,5 +126,13 @@ const showOrOpenChat = new Key('c', ['alt', 'ctrl'], () => {
   }
 })
 
+const showOrOpenInsomnia = new Key('i', ['alt', 'ctrl'], () => {
+  if (App.get('Insomnia')) {
+    App.get('Insomnia').focus()
+  } else {
+    App.launch('Insomnia')
+  }
+})
+
 Phoenix.log("hello", App.get('Emacs').windows().length > 0)
 /* eslint-enable no-unused-vars */

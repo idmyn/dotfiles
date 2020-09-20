@@ -1,8 +1,0 @@
-alias q="exit"
-alias k="kubectl"
-alias a="archive"
-alias b="buku --suggest --db ~/Dropbox/System/bookmarks.db"
-alias la="ls -a"
-alias ll="ls -lah"
-alias otp="pass otp -c"
-alias doom="~/.emacs.d/bin/doom"
