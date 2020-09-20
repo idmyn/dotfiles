@@ -9,6 +9,7 @@
 - clean: ['~']
 
 - link:
+    ~/.backup.sh: backup.sh
     ~/.doom.d: emacs/.doom.d
     ~/.finicky.js: macOS/finicky/.finicky.js
     ~/.config/phoenix/phoenix.js: macOS/phoenix/phoenix.js

@@ -6,5 +6,6 @@ PROMPT="
 %~
  $ "
 
+setopt autocd
 alias q="exit"
 alias ls="echo; ls"
