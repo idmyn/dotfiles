@@ -19,9 +19,6 @@
     ~/.elvish/lib/direnv.elv: shell/elvish/lib/direnv.elv
     ~/.elvish/lib/secrets.elv: shell/elvish/lib/secrets.elv
     ~/.bashrc: shell/.bashrc
-    ~/.zshrc: shell/zsh/.zshrc
-    ~/.zshenv: shell/zsh/.zshenv
-    ~/.zsh_plugins.txt: shell/zsh/.zsh_plugins.txt
     ~/.config/kitty/kitty.conf: kitty/kitty.conf
     ~/.hyper.js: hyper/.hyper.js
     ~/.bin: shell/bin
