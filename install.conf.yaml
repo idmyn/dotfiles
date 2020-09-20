@@ -20,7 +20,6 @@
     ~/.elvish/lib/secrets.elv: shell/elvish/lib/secrets.elv
     ~/.zshrc: shell/.zshrc
     ~/.config/kitty/kitty.conf: kitty/kitty.conf
-    ~/.hyper.js: hyper/.hyper.js
     ~/.bin: shell/bin
     ~/.gitignore: git/.gitignore
     ~/.gitconfig:
