@@ -37,7 +37,7 @@ edit:insert:binding[Alt+Backspace]=$edit:kill-small-word-left~
 # aliases
 
 fn e [@a]{
-  if (> (ps -ax | rg -c emacs) 1) {
+  if (pgrep -f emacs) {
     if (> (emacsclient -e '(length (frame-list))') 1) {
       osascript -e 'tell application "emacs" to activate first window'
       emacsclient -n $@a
