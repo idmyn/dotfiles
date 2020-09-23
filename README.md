@@ -11,23 +11,18 @@ repo to encrypt all files with the word `secret` anywhere in their name.
 ## Emacs
 
 My current emacs setup consists of a base emacs install of [homebrew's
-emacs-plus](https://github.com/idmyn/dotfiles/blob/master/macOS/Brewfile#L1-L2)
-configured with my
+emacs-plus](https://github.com/d12frosted/homebrew-emacs-plus)
+and my [doom](https://github.com/hlissner/doom-emacs)-based
 [literate](https://en.wikipedia.org/wiki/Literate_programming)
-[init.org](https://github.com/idmyn/dotfiles/blob/master/emacs/vanilla/init.org)
-file. Emacs still looks for `~/.emacs.d/init.el` at startup, though, so I use
-that file to instruct emacs to configure itself with the elisp code-blocks in
-`~/.emacs.d/init.org`. My config currently takes around 4-5 (painfully slow)
-seconds to load, which I mitigate by [running emacs as a
-daemon](https://www.emacswiki.org/emacs/EmacsAsDaemon) (I followed [handy
-macOS-specific instructions for
-this](https://web.archive.org/web/20190407092503/https://east.fm/posts/emacs-26-and-macos-mojave/index.html)),
-but I'm [working on](https://github.com/idmyn/dotfiles/tree/master/emacs/doom)
-porting my config to [doom](https://github.com/hlissner/doom-emacs) to speed
-things up. Managing multiple emacs configs is surprisingly simple with
-[Chemacs](https://github.com/plexus/chemacs) :)
-
-**EDIT: I've been using doom full-time for a while now and I love it!**
+[config](emacs/.doom.d/config.org). Doom is great because it provides a large
+collection of really thoughtfully pieced-together 'modules' for different
+tasks/tools, allowing you to get up and running really quickly.
+The draw of Emacs for me in general is that all of the
+tools I need for editing text are tightly integrated but remain highly
+configurable. I'm not immune to the allure of the '[unix
+philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)' though, so
+I do keep an eye on interesting simpler editors, like
+[Kakoune](https://github.com/mawww/kakoune).
 
 ## Phoenix
 
@@ -49,13 +44,6 @@ as I can see, its only downside is its
 [POSIX-noncompliance](https://en.wikipedia.org/wiki/Friendly_interactive_shell#Syntax),
 which has forced me to rewrite a few shell aliases provided by others at work.
 Certainly not the end of the world.
-
-## Finicky
-
-My [Finicky](https://github.com/johnste/finicky)
-[config](finicky/.finicky.js) changes my 'default browser' based on
-which browsers are currently open. Safari is my fallback because it's nice and
-smooth, but if I have Brave or Firefox open then I want links to open in those.
 
 ## Honourable Mentions
 
