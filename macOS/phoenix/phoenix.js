@@ -65,8 +65,18 @@ const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
   }
 })
 
+const showOrOpenVSCodium = new Key('v', ['alt', 'ctrl'], () => {
+  if (App.get('VSCodium')) {
+    App.get('VSCodium').focus()
+  } else {
+    App.launch('VSCodium')
+  }
+})
+
 const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
-  if (App.get('Firefox')) {
+  if (App.get('Firefox Developer Edition')) {
+    App.get('Firefox Developer Edition').focus()
+  } else if (App.get('Firefox')) {
     App.get('Firefox').focus()
   } else {
     // App.launch('Firefox') causes prompt for safe mode

@@ -54,12 +54,14 @@ fn q { exit }
 fn k { kubectl }
 fn b [@a]{ buku --suggest --colors aaeca --db $E:HOME"/Tresors/System Config/bookmarks.db" $@a }
 fn gs [@a]{ git status $@a }
+fn gb [@a]{ git branch $@a }
 fn ls [@a]{ echo; exa -F -I 'Desktop|Documents|Downloads|Library|Movies|Music|Pictures|Public|Tresors' $@a }
 fn la [@a]{ ls -a $@a }
 fn ll [@a]{ ls -alh $@a }
 fn cd [@a]{ cd $@a; la }
 fn otp [@a]{ pass otp -c $@a }
 fn ssh [@a]{ kitty +kitten ssh $@a }
+fn code [@a]{ e:code --enable-proposed-api GitHub.vscode-pull-request-github $@a }
 fn glow [@a]{ e:glow -s light $@a }
 fn jjet [@a]{ jet --from json --keywordize --to edn --pretty $@a }
 fn jjetq [@a]{ jet --from json --keywordize --to edn --pretty --query $@a }

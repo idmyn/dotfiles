@@ -1,6 +1,6 @@
 source ~/.secret-aliases
 
-export EDITOR="emacsclient -q -c -a ''"
+export EDITOR="vi"
 
 PROMPT="
 %~
