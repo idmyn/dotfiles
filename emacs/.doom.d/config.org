@@ -142,71 +142,71 @@ Version 2017-07-25"
 ** Keybindings
 change vimkeys from hjkl to jkl: (I use karabiner to swap my ; and : keys)
 #+BEGIN_SRC emacs-lisp
-(map!
- (:after evil
-   :nv "j" 'evil-backward-char
-   :nv "k" 'evil-next-line
-   :nv "l" 'evil-previous-line
-   :nv ":" 'evil-forward-char
+;; (map!
+;;  (:after evil
+;;    :nv "j" 'evil-backward-char
+;;    :nv "k" 'evil-next-line
+;;    :nv "l" 'evil-previous-line
+;;    :nv ":" 'evil-forward-char
 
-   :nv "h" 'evil-paste-after
-   :nv "H" 'evil-paste-before))
+;;    :nv "h" 'evil-paste-after
+;;    :nv "H" 'evil-paste-before))
 #+END_SRC
 adjust magit vimkeys accordingly
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after magit
    :map magit-mode-map
-   :nv "k" 'magit-section-forward
-   :nv "l" 'magit-section-backward
+   :nv "j" 'magit-section-forward
+   :nv "k" 'magit-section-backward
 
-   :map git-rebase-mode-map
-   :nv "j" 'evil-backward-char
-   :nv "k" 'evil-next-line
-   :nv "l" 'evil-previous-line
-   :nv "C-k" 'git-rebase-move-line-down
-   :nv "C-l" 'git-rebase-move-line-up
+   ;; :map git-rebase-mode-map
+   ;; :nv "j" 'evil-backward-char
+   ;; :nv "k" 'evil-next-line
+   ;; :nv "l" 'evil-previous-line
+   ;; :nv "C-k" 'git-rebase-move-line-down
+   ;; :nv "C-l" 'git-rebase-move-line-up
    ))
 #+END_SRC
 adjust treemacs vimkeys accordingly
 #+BEGIN_SRC emacs-lisp
-(after! treemacs
- (general-def 'treemacs treemacs-mode-map
-   ":" 'treemacs-RET-action
-   "k" 'treemacs-next-line
-   "l" 'treemacs-previous-line
-   "M-j" 'evil-window-left
-   "M-k" 'evil-window-down
-   "M-l" 'evil-window-up
-   "M-;" 'evil-window-right))
+;; (after! treemacs
+;;  (general-def 'treemacs treemacs-mode-map
+;;    ":" 'treemacs-RET-action
+;;    "k" 'treemacs-next-line
+;;    "l" 'treemacs-previous-line
+;;    "M-j" 'evil-window-left
+;;    "M-k" 'evil-window-down
+;;    "M-l" 'evil-window-up
+;;    "M-;" 'evil-window-right))
 #+END_SRC
 adjust ivy minibuffer vimkeys accordingly (I was having issues with this but
 found out through `M-x which-key-show-keymap` that there is an
 `ivy-posframe-mode-map`, which turned out to be the missing link!)
 #+BEGIN_SRC emacs-lisp
-(map!
- (:after ivy
-   :map (ivy-minibuffer-map ivy-posframe-mode-map)
-   "C-j" 'ivy-backward-delete-char
-   "C-k" 'ivy-next-line
-   "C-l" 'ivy-previous-line
-   "C-;" 'ivy-done))
+;; (map!
+;;  (:after ivy
+;;    :map (ivy-minibuffer-map ivy-posframe-mode-map)
+;;    "C-j" 'ivy-backward-delete-char
+;;    "C-k" 'ivy-next-line
+;;    "C-l" 'ivy-previous-line
+;;    "C-;" 'ivy-done))
 #+END_SRC
 same thing for comint mode
 #+BEGIN_SRC emacs-lisp
-(map!
- :map comint-mode-map
- :i "C-k" 'comint-next-matching-input-from-input
- :i "C-l" 'comint-previous-matching-input-from-input)
+;; (map!
+;;  :map comint-mode-map
+;;  :i "C-k" 'comint-next-matching-input-from-input
+;;  :i "C-l" 'comint-previous-matching-input-from-input)
 #+END_SRC
 easier motion around lines and paragraphs
 #+BEGIN_SRC emacs-lisp
-(map!
- :after evil
- :nvm "J" 'evil-first-non-blank
- :nvm "K" 'forward-paragraph
- :nvm "L" 'backward-paragraph
- :nvm ";" 'evil-last-non-blank)
+;; (map!
+;;  :after evil
+;;  :nvm "J" 'evil-first-non-blank
+;;  :nvm "K" 'forward-paragraph
+;;  :nvm "L" 'backward-paragraph
+;;  :nvm ";" 'evil-last-non-blank)
 #+END_SRC
 easier movement between windows and frames (taken from [[https://github.com/Brettm12345/doom-emacs-literate-config/blob/master/config.org#easy-window-navigation][here]])
 #+BEGIN_SRC emacs-lisp
@@ -214,45 +214,45 @@ easier movement between windows and frames (taken from [[https://github.com/Bret
   :custom (framemove-hook-into-windmove t))
 (map!
  (:after evil
-   :ni "M-j" 'evil-window-left
-   :ni "M-k" 'evil-window-down
-   :ni "M-l" 'evil-window-up
-   :ni "M-;" 'evil-window-right)
+   :ni "M-h" 'evil-window-left
+   :ni "M-j" 'evil-window-down
+   :ni "M-k" 'evil-window-up
+   :ni "M-l" 'evil-window-right)
 
  (:after evil-org
    :map evil-org-mode-map
-   :ni "M-j" 'evil-window-left
-   :ni "M-k" 'evil-window-down
-   :ni "M-l" 'evil-window-up
-   :ni "M-;" 'evil-window-right)
+   :ni "M-h" 'evil-window-left
+   :ni "M-j" 'evil-window-down
+   :ni "M-k" 'evil-window-up
+   :ni "M-l" 'evil-window-right)
 
  (:after evil-markdown
    :map evil-markdown-mode-map
-   :ni "M-j" 'evil-window-left
-   :ni "M-k" 'evil-window-down
-   :ni "M-l" 'evil-window-up
-   :ni "M-;" 'evil-window-right)
+   :ni "M-h" 'evil-window-left
+   :ni "M-j" 'evil-window-down
+   :ni "M-k" 'evil-window-up
+   :ni "M-l" 'evil-window-right)
 
  (:after vterm
    :map vterm-mode-map
-   :ni "M-j" 'evil-window-left
-   :ni "M-k" 'evil-window-down
-   :ni "M-l" 'evil-window-up
-   :ni "M-;" 'evil-window-right)
+   :ni "M-h" 'evil-window-left
+   :ni "M-j" 'evil-window-down
+   :ni "M-k" 'evil-window-up
+   :ni "M-l" 'evil-window-right)
 
  (:after magit
    :map git-rebase-mode-map
-   :ni "M-j" 'evil-window-left
-   :ni "M-k" 'evil-window-down
-   :ni "M-l" 'evil-window-up
-   :ni "M-;" 'evil-window-right))
+   :ni "M-h" 'evil-window-left
+   :ni "M-j" 'evil-window-down
+   :ni "M-k" 'evil-window-up
+   :ni "M-l" 'evil-window-right))
 #+END_SRC
 bind jump-backward and jump-forward to more intuitive keys
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after evil
-   :n "C-j" 'better-jumper-jump-backward
-   :n "C-;" 'better-jumper-jump-forward))
+   :n "C-h" 'better-jumper-jump-backward
+   :n "C-l" 'better-jumper-jump-forward))
 #+END_SRC
 handy to have an insert-mode binding to jump to a new line above
 #+BEGIN_SRC emacs-lisp
@@ -306,17 +306,17 @@ undo-tree bindings
 (map!
  :after undo-tree
  :map undo-tree-visualizer-mode-map
- :m "k" 'undo-tree-visualize-redo
- :m "l" 'undo-tree-visualize-undo
- :m ":" 'undo-tree-visualize-switch-branch-right
- :m "j" 'undo-tree-visualize-switch-branch-left)
+ :m "h" 'undo-tree-visualize-switch-branch-left
+ :m "j" 'undo-tree-visualize-redo
+ :m "k" 'undo-tree-visualize-undo
+ :m "l" 'undo-tree-visualize-switch-branch-right)
 #+END_SRC
 evil-multiedit bindings
 #+BEGIN_SRC emacs-lisp
 (map!
  :after evil
- :n "C-k" 'evil-multiedit-match-symbol-and-next
- :n "C-l" 'evil-multiedit-match-symbol-and-prev)
+ :n "C-j" 'evil-multiedit-match-symbol-and-next
+ :n "C-k" 'evil-multiedit-match-symbol-and-prev)
 #+END_SRC
 ** Search
 *** Ivy
@@ -393,16 +393,8 @@ I want to eldoc disabled in most modes
 (map!
  :after evil-org
  :map evil-org-mode-map
- :ni "C-j" 'org-metaleft
- :ni "C-;" 'org-metaright)
-#+END_SRC
-*** Agenda
-#+BEGIN_SRC emacs-lisp
-(map!
- (:after evil-org-agenda
-   :map evil-org-agenda-mode-map
-   :m "k" 'org-agenda-next-line
-   :m "l" 'org-agenda-previous-line))
+ :ni "C-h" 'org-metaleft
+ :ni "C-l" 'org-metaright)
 #+END_SRC
 ** Eshell
 *** Keybindings
@@ -413,14 +405,14 @@ bindings to move between windows
   "Set up `evil' bindings for `eshell'."
   (map!
    :map eshell-mode-map
-   :i "C-l" 'eshell-previous-matching-input-from-input
-   :i "C-k" 'eshell-next-matching-input-from-input
-   :i "C-;" 'eshell-send-input
+   :i "C-j" 'eshell-next-matching-input-from-input
+   :i "C-k" 'eshell-previous-matching-input-from-input
+   ;:i "C-;" 'eshell-send-input
 
-   :ni "M-j" 'evil-window-left
-   :ni "M-k" 'evil-window-down
-   :ni "M-l" 'evil-window-up
-   :ni "M-;" 'evil-window-right))
+   :ni "M-h" 'evil-window-left
+   :ni "M-j" 'evil-window-down
+   :ni "M-k" 'evil-window-up
+   :ni "M-l" 'evil-window-right))
 (add-hook 'eshell-first-time-mode-hook 'eshell-setup-keys)
 #+END_SRC
 *** Aliases
@@ -455,10 +447,10 @@ tell CLI applications that it's ok to dump really long output into the buffer
 
   (map!
    :map dired-mode-map
-   :n "j" 'dired-up-directory
-   :n "k" 'dired-next-line
-   :n "l" 'dired-previous-line
-   :n ":" 'dired-find-file
+   :n "h" 'dired-up-directory
+   :n "j" 'dired-next-line
+   :n "k" 'dired-previous-line
+   :n "l" 'dired-find-file
 
    :n "/" 'dired-narrow
    :n "r" 'revert-buffer
@@ -551,10 +543,10 @@ use proportional (not monospaced) font in markdown mode
 (map!
  (:after sly
    :map sly-mrepl-mode-map
-   :i "C-k" 'sly-mrepl-next-input-or-button
-   :i "C-l" 'sly-mrepl-previous-input-or-button))
+   :i "C-j" 'sly-mrepl-next-input-or-button
+   :i "C-k" 'sly-mrepl-previous-input-or-button))
 #+END_SRC
 ** Rust
 #+BEGIN_SRC emacs-lisp
-(setq rustic-lsp-server 'rust-analyzer)
+;(setq rustic-lsp-server 'rust-analyzer)
 #+END_SRC
