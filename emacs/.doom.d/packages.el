@@ -23,10 +23,6 @@
 (package! ebuku
   :recipe (:host github :repo "flexibeast/ebuku"))
 
-(package! browser-refresh
-  :recipe (:host github :repo "syohex/emacs-browser-refresh"
-                        :fork "idmyn/emacs-browser-refresh"))
-
 (package! framemove
   :recipe (:host github :repo "emacsmirror/framemove"))
 
@@ -43,7 +39,7 @@
   :recipe (:host github :repo "mooz/js-doc"))
 
 
-(package! evil-snipe :disable t)
+;(package! evil-snipe :disable t)
 (package! ivy-rich :disable t)
 
 ;; This is where you install packages, by declaring them with the `package!'
