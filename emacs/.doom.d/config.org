@@ -201,12 +201,10 @@ same thing for comint mode
 #+END_SRC
 easier motion around lines and paragraphs
 #+BEGIN_SRC emacs-lisp
-;; (map!
-;;  :after evil
-;;  :nvm "J" 'evil-first-non-blank
-;;  :nvm "K" 'forward-paragraph
-;;  :nvm "L" 'backward-paragraph
-;;  :nvm ";" 'evil-last-non-blank)
+(map!
+ :after evil
+ :nvm "H" 'evil-first-non-blank
+ :nvm "L" 'evil-last-non-blank)
 #+END_SRC
 easier movement between windows and frames (taken from [[https://github.com/Brettm12345/doom-emacs-literate-config/blob/master/config.org#easy-window-navigation][here]])
 #+BEGIN_SRC emacs-lisp
@@ -317,6 +315,13 @@ evil-multiedit bindings
  :after evil
  :n "C-j" 'evil-multiedit-match-symbol-and-next
  :n "C-k" 'evil-multiedit-match-symbol-and-prev)
+#+END_SRC
+unbind evil-surround from S
+#+BEGIN_SRC emacs-lisp
+(map!
+ :after evil
+ :map evil-surround-mode-map
+ :v "S" 'evil-snipe-S)
 #+END_SRC
 ** Search
 *** Ivy
@@ -539,5 +544,6 @@ use proportional (not monospaced) font in markdown mode
 #+END_SRC
 ** Rust
 #+BEGIN_SRC emacs-lisp
+(add-to-list 'eglot-server-programs '(rust-mode . (eglot-rls "rls")))
 ;(setq rustic-lsp-server 'rust-analyzer)
 #+END_SRC

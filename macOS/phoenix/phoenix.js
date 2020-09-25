@@ -73,6 +73,14 @@ const showOrOpenVSCodium = new Key('v', ['alt', 'ctrl'], () => {
   }
 })
 
+const showOrOpenSublime = new Key('t', ['alt', 'ctrl'], () => {
+  if (App.get('Sublime Text')) {
+    App.get('Sublime Text').focus()
+  } else {
+    App.launch('Sublime Text')
+  }
+})
+
 const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
   if (App.get('Firefox Developer Edition')) {
     App.get('Firefox Developer Edition').focus()
