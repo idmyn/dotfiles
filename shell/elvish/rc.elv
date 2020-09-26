@@ -52,7 +52,7 @@ fn e [@a]{
 
 fn q { exit }
 fn k { kubectl }
-fn b [@a]{ buku --suggest --colors aaeca --db $E:HOME"/Tresors/System Config/bookmarks.db" $@a }
+fn b [@a]{ buku --suggest --colors aaeca --db $E:HOME"/.config/cloud/bookmarks.db" $@a }
 fn gs [@a]{ git status $@a }
 fn gb [@a]{ git branch $@a }
 fn ls [@a]{ echo; exa -F -I 'Desktop|Documents|Downloads|Library|Movies|Music|Pictures|Public|Tresors' $@a }

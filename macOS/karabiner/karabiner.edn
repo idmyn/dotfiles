@@ -39,7 +39,7 @@
                            "^org\\.mozilla\\.firefoxdeveloperedition$"
                            "^com\\.apple\\.Safari$"]}
 
- :main [{:des   "everywhere: right cmd alone to f13 (alfred), and to ctrl as modifier"
+ :main [{:des   "everywhere: right cmd alone to f13 (alfred), and to ctrl+opt as modifier"
          :rules [[:right_command :!Tleft_alt nil {:alone :f13}]]}
 
         {:des   "everywhere: tab to opt/meta as modifier"

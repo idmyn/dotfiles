@@ -22,7 +22,6 @@ cask "vscodium"
 cask "workflowy"
 cask "bartender"
 cask "appcleaner"
-cask "qlmarkdown"
 cask "sensiblesidebuttons"
 
 brew "fd"
