@@ -15,6 +15,17 @@ read more of [my thoughts about
 backups](https://notes.davidmyno.rs/backups.html) in [my public
 notes](https://sr.ht/~idmyn/notes.davidmyno.rs/).
 
+## Nix
+
+[Nix](https://nixos.org/) is a purely functional package manager which I don't
+yet totally understand. You're welcome to read [my
+notes on it](https://notes.davidmyno.rs/nix.html) for more info/resources/tips,
+but for the purposes of this Readme you just need to know that I have [a nix
+config for macOS](nix/darwin-configuration.nix) which instructs
+[nix-darwin](https://github.com/LnL7/nix-darwin) to setup/install the
+nix-related programs like [lorri](https://github.com/target/lorri) which I want
+available system-wide.
+
 ## Emacs
 
 My current emacs setup consists of a base emacs install of [homebrew's
