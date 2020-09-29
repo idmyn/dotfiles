@@ -28,6 +28,12 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
+(use-package persistent-scratch
+  :config (persistent-scratch-setup-default))
+
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+
 (use-package eink-theme
   :config
   (column-number-mode)
@@ -73,7 +79,8 @@
 
 (use-package magit
   :config
-  (use-package diff-hl)
+  (use-package diff-hl
+    :config (global-diff-hl-mode +1))
   (global-auto-revert-mode t) ; buffers should change when branch changes
   (global-leader 'normal
     "g" 'magit))
@@ -89,8 +96,11 @@
   (setq evil-vsplit-window-right t)
 
   (global-leader 'normal
+    "q" 'evil-quit
+    "Q" 'save-buffers-kill-emacs
     "v" 'evil-window-vsplit
-    "s" 'evil-window-split)
+    "s" 'evil-window-split
+    "`" 'evil-switch-to-windows-last-buffer)
 
   (general-def 'motion
     "H" 'evil-first-non-blank
@@ -134,8 +144,9 @@
     (find-file (completing-read "Find recent file: " files nil t))))
 
   (global-leader 'normal
-    "r" 'recentf-open-files+
     "b" 'switch-to-buffer)
+  (file-leader 'normal
+    "r" 'recentf-open-files+)
 
   (use-package prescient
     :config
@@ -159,7 +170,21 @@
     :after flymake
     :config
     (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
-  (add-hook 'go-mode-hook 'eglot-ensure))
+  (add-hook 'eglot-managed-mode-hook (setq global-eldoc-mode -1))
+  (add-hook 'go-mode-hook 'eglot-ensure)
+  (add-hook 'js-mode-hook 'eglot-ensure))
 
 (use-package go-mode
   :mode "\\.go\\'")
+
+(use-package markdown-mode
+  :mode "\\.md\\'"
+  :custom-face
+  (markdown-markup-face ((t (:inherit default :foreground "gray50"))))
+    (markdown-pre-face ((t (:inherit default)))))
+
+(setq js-indent-level 2)
+
+(use-package terraform-mode
+  :mode "\\.tf\\'"
+  :config (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode))
