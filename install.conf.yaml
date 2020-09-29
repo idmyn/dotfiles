@@ -10,7 +10,9 @@
 
 - link:
     ~/.backup.sh: backup.sh
+    ~/.emacs-profiles.el: emacs/.emacs-profiles.el
     ~/.doom.d: emacs/.doom.d
+    ~/.config/emacs/init.el: emacs/minimal.el
     ~/.nixpkgs/darwin-configuration.nix: nix/darwin-configuration.nix
     ~/.finicky.js: macOS/finicky/.finicky.js
     ~/.config/phoenix/phoenix.js: macOS/phoenix/phoenix.js

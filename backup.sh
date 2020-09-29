@@ -13,9 +13,13 @@ echo "Beginning backup at $(date)" >> "$LOGFILE"
 
 /usr/local/bin/restic backup ~       \
     --exclude="**/node_modules"      \
+    --exclude="**/straight/repos"    \
     --exclude="${HOME}/desk"         \
     --exclude="${HOME}/files"        \
     --exclude="${HOME}/.asdf"        \
+    --exclude="${HOME}/.cache"       \
+    --exclude="${HOME}/.cargo"       \
+    --exclude="${HOME}/.rustup"      \
     --exclude="${HOME}/.emacs.d"     \
     --exclude="${HOME}/.Trash"       \
     --exclude="${HOME}/Library"      \
