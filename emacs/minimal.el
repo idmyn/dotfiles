@@ -107,6 +107,13 @@
     "L" 'evil-last-non-blank
     "g c" 'comment-dwim)
 
+  (use-package better-jumper
+    :config
+    (better-jumper-mode +1)
+    (with-eval-after-load 'evil-maps
+      (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-forward)
+      (define-key evil-motion-state-map (kbd "TAB") 'better-jumper-jump-backward)))
+
   (use-package evil-magit
     :config
     (add-to-list 'evil-insert-state-modes 'magit-status-mode)
@@ -116,6 +123,9 @@
     (general-def 'normal 'magit-status-mode-map
     "j" 'magit-section-forward
     "k" 'magit-section-backward)))
+
+(use-package dumb-jump
+  :config (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (use-package ranger
     :config
