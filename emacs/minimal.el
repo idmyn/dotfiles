@@ -175,6 +175,9 @@
       (selectrum-prescient-mode +1)
       (prescient-persist-mode +1))))
 
+(use-package whitespace-cleanup-mode
+  :config (global-whitespace-cleanup-mode))
+
 (use-package projectile
   :config
   (projectile-mode +1)
@@ -208,3 +211,6 @@
 (use-package terraform-mode
   :mode "\\.tf\\'"
   :config (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode))
+
+(use-package yaml-mode
+  :mode (("\\.yaml\\'" . yaml-mode) ("\\.yml\\'" . yaml-mode)))
