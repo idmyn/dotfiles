@@ -25,6 +25,7 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
+(setq use-package-enable-imenu-support t)
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
@@ -33,6 +34,11 @@
 
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(use-package exec-path-from-shell
+  :config
+  (when (daemonp)
+    (setq exec-path-from-shell-arguments nil)
+    (exec-path-from-shell-initialize)))
 
 (use-package eink-theme
   :config
@@ -114,6 +120,9 @@
       (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-forward)
       (define-key evil-motion-state-map (kbd "TAB") 'better-jumper-jump-backward)))
 
+  (use-package evil-surround
+    :config (global-evil-surround-mode 1))
+
   (use-package evil-magit
     :config
     (add-to-list 'evil-insert-state-modes 'magit-status-mode)
@@ -121,22 +130,22 @@
     (evil-set-initial-state 'magit-log-edit-mode 'insert)
 
     (general-def 'normal 'magit-status-mode-map
-    "j" 'magit-section-forward
-    "k" 'magit-section-backward)))
+      "j" 'magit-section-forward
+      "k" 'magit-section-backward)))
 
 (use-package dumb-jump
   :config (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (use-package ranger
-    :config
-    (ranger-override-dired-mode t)
-    (setq ranger-hide-cursor nil)
-    (add-hook 'ranger-mode-hook 'ranger-toggle-dotfiles)
-    (file-leader 'normal
-      "d" 'ranger)
-    (general-def 'motion ranger-mode-map
-      "." 'ranger-toggle-dotfiles
-      "w" 'wdired-change-to-wdired-mode))
+  :config
+  (ranger-override-dired-mode t)
+  (setq ranger-hide-cursor nil)
+  (add-hook 'ranger-mode-hook 'ranger-toggle-dotfiles)
+  (file-leader 'normal
+    "d" 'ranger)
+  (general-def 'motion ranger-mode-map
+    "." 'ranger-toggle-dotfiles
+    "w" 'wdired-change-to-wdired-mode))
 
 (use-package selectrum
   :config
@@ -148,10 +157,10 @@
 
   (recentf-mode +1)
   (defun recentf-open-files+ ()
-  "Use `completing-read' to open a recent file."
-  (interactive)
-  (let ((files (mapcar 'abbreviate-file-name recentf-list)))
-    (find-file (completing-read "Find recent file: " files nil t))))
+    "Use `completing-read' to open a recent file."
+    (interactive)
+    (let ((files (mapcar 'abbreviate-file-name recentf-list)))
+      (find-file (completing-read "Find recent file: " files nil t))))
 
   (global-leader 'normal
     "b" 'switch-to-buffer)
@@ -174,15 +183,16 @@
     "p" 'projectile-command-map
     "SPC" 'projectile-find-file))
 
-(use-package eglot
+(use-package lsp-mode
+  :hook ((go-mode . lsp))
+  :commands lsp)
+
+(use-package flycheck
+  :init (global-flycheck-mode)
   :config
-  (use-package flymake-diagnostic-at-point
-    :after flymake
-    :config
-    (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
-  (add-hook 'eglot-managed-mode-hook (setq global-eldoc-mode -1))
-  (add-hook 'go-mode-hook 'eglot-ensure)
-  (add-hook 'js-mode-hook 'eglot-ensure))
+  (setq flycheck-global-modes '(not emacs-lisp-mode))
+  (use-package flycheck-title
+    :config (flycheck-title-mode)))
 
 (use-package go-mode
   :mode "\\.go\\'")
@@ -191,7 +201,7 @@
   :mode "\\.md\\'"
   :custom-face
   (markdown-markup-face ((t (:inherit default :foreground "gray50"))))
-    (markdown-pre-face ((t (:inherit default)))))
+  (markdown-pre-face ((t (:inherit default)))))
 
 (setq js-indent-level 2)
 

@@ -23,6 +23,7 @@
     ~/.elvish/lib/direnv.elv: shell/elvish/lib/direnv.elv
     ~/.elvish/lib/secrets.elv: shell/elvish/lib/secrets.elv
     ~/.zshrc: shell/.zshrc
+    ~/.zshenv: shell/.zshenv
     ~/.config/kitty/kitty.conf: kitty/kitty.conf
     ~/.bin: shell/bin
     ~/.gitignore: git/.gitignore
