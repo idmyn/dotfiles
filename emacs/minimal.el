@@ -71,9 +71,11 @@
   :config
   (general-create-definer global-leader
     :prefix "SPC")
-
+  (general-create-definer toggle-leader
+    :prefix "SPC t")
   (general-create-definer file-leader
     :prefix "SPC f")
+
   (file-leader 'normal
     "s" 'save-buffer)
 
@@ -202,9 +204,16 @@
 
 (use-package markdown-mode
   :mode "\\.md\\'"
+  :config (setq-default fill-column 80)
   :custom-face
   (markdown-markup-face ((t (:inherit default :foreground "gray50"))))
   (markdown-pre-face ((t (:inherit default)))))
+
+(use-package olivetti
+  :commands olivetti-mode
+  :init
+  (toggle-leader 'normal
+    "o" 'olivetti-mode))
 
 (setq js-indent-level 2)
 
