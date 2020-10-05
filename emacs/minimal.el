@@ -19,6 +19,12 @@
 (setq inhibit-startup-screen t)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(font . "Iosevka SS09-15"))
+(setq visible-bell nil
+      ring-bell-function 'flash-mode-line)
+(defun flash-mode-line ()
+  (invert-face 'mode-line)
+  (run-with-timer 0.1 nil #'invert-face 'mode-line))
+
 
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -39,6 +45,8 @@
   (when (daemonp)
     (setq exec-path-from-shell-arguments nil)
     (exec-path-from-shell-initialize)))
+
+(setq-default tab-width 5)
 
 (use-package eink-theme
   :config
@@ -84,6 +92,9 @@
    "M-j" 'windmove-down
    "M-k" 'windmove-up
    "M-l" 'windmove-right))
+
+(use-package which-key
+  :config (which-key-mode))
 
 (use-package magit
   :config
@@ -144,7 +155,7 @@
   (setq ranger-hide-cursor nil)
   (add-hook 'ranger-mode-hook 'ranger-toggle-dotfiles)
   (file-leader 'normal
-    "d" 'ranger)
+    "d" 'deer)
   (general-def 'motion ranger-mode-map
     "." 'ranger-toggle-dotfiles
     "w" 'wdired-change-to-wdired-mode))
@@ -154,6 +165,7 @@
   (selectrum-mode +1)
 
   (general-def selectrum-minibuffer-map
+    "<escape>" 'keyboard-escape-quit
     "C-j" 'selectrum-next-candidate
     "C-k" 'selectrum-previous-candidate)
 
@@ -183,14 +195,29 @@
 (use-package projectile
   :config
   (projectile-mode +1)
+  (use-package projectile-ripgrep)
+  (setq projectile-enable-caching t)
   (setq projectile-completion-system 'default)
+  (setq projectile-project-search-path '("~/src/"))
+  (setq projectile-indexing-method 'hybrid) ; to enable .projectile project markers
   (global-leader 'normal
     "p" 'projectile-command-map
-    "SPC" 'projectile-find-file))
+    "SPC" 'projectile-find-file)
+  (general-def 'projectile-command-map
+    "s" 'projectile-ripgrep))
+
+(use-package hl-todo
+  :config
+  (global-hl-todo-mode)
+  (setq hl-todo-keyword-faces
+      '(("TODO"   . "#ff8c00"))))
 
 (use-package lsp-mode
   :hook ((go-mode . lsp))
-  :commands lsp)
+  :commands lsp
+  :config
+  (global-leader 'normal
+    "c f" 'lsp-format-buffer))
 
 (use-package flycheck
   :init (global-flycheck-mode)
@@ -200,7 +227,7 @@
     :config (flycheck-title-mode)))
 
 (use-package go-mode
-  :mode "\\.go\\'")
+  :mode "\\.go\\'") ; TODO configure flycheck checker for golint
 
 (use-package markdown-mode
   :mode "\\.md\\'"
@@ -223,3 +250,11 @@
 
 (use-package yaml-mode
   :mode (("\\.yaml\\'" . yaml-mode) ("\\.yml\\'" . yaml-mode)))
+
+(use-package web-mode
+  :mode (("\\.html\\'" . web-mode) ("\\.gohtml\\'" . web-mode))
+  :config
+  (setq indent-tabs-mode nil)
+  (setq web-mode-enable-current-element-highlight t)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
