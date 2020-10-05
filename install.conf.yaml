@@ -18,6 +18,7 @@
     ~/.config/phoenix/phoenix.js: macOS/phoenix/phoenix.js
     ~/.config/karabiner.edn: macOS/karabiner/karabiner.edn
     ~/.secret-aliases: shell/.secret-aliases
+    ~/.tmux.conf: shell/.tmux.conf
     ~/.elvish/rc.elv: shell/elvish/rc.elv
     ~/.elvish/lib/nix.elv: shell/elvish/lib/nix.elv
     ~/.elvish/lib/direnv.elv: shell/elvish/lib/direnv.elv
@@ -36,4 +37,4 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
-  - [cd macOS/homebrew && bash install.sh, Installing packages from homebrew]
+  - [cd macOS/homebrew; bash install.sh, Installing packages from homebrew]
