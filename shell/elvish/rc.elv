@@ -51,7 +51,7 @@ fn e [@a]{
 }
 
 fn q { exit }
-fn k { kubectl }
+fn k [@a]{ kubectl $@a }
 fn b [@a]{ buku --suggest --colors aaeca --db $E:HOME"/.config/cloud/bookmarks.db" $@a }
 fn gs [@a]{ git status $@a }
 fn gb [@a]{ git branch $@a }
@@ -72,5 +72,6 @@ use secrets
 
 fn crm-vpn { secrets:crm-vpn }
 fn dev { secrets:dev }
+fn dev-test { secrets:dev-test }
 fn preprod { secrets:preprod }
 fn prod { secrets:prod }
