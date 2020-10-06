@@ -35,6 +35,7 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
+(setq initial-major-mode 'fundamental-mode)
 (use-package persistent-scratch
   :config (persistent-scratch-setup-default))
 
@@ -75,6 +76,11 @@
 
 (load-theme 'eink)
 
+(defun toggle-scratch ()
+  "Either show scratch buffer or switch away from it"
+  (interactive)
+  (if (eq (current-buffer) (get-buffer "*scratch*")) (evil-switch-to-windows-last-buffer) (switch-to-buffer "*scratch*")))
+
 (use-package general
   :config
   (general-create-definer global-leader
@@ -85,7 +91,8 @@
     :prefix "SPC f")
 
   (file-leader 'normal
-    "s" 'save-buffer)
+    "s" 'save-buffer
+    "x" 'toggle-scratch)
 
   (general-define-key
    "M-h" 'windmove-left
@@ -177,7 +184,8 @@
       (find-file (completing-read "Find recent file: " files nil t))))
 
   (global-leader 'normal
-    "b" 'switch-to-buffer)
+    "b" 'switch-to-buffer
+    "x" 'toggle-scratch)
   (file-leader 'normal
     "r" 'recentf-open-files+)
 
