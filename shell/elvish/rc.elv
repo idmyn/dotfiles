@@ -7,6 +7,8 @@ epm:install &silent-if-installed=$true ^
 
 use github.com/zzamboni/elvish-modules/terminal-title
 
+E:EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+
 E:EDITOR="emacsclient -q -c -a ''"
 
 E:ANDROID_HOME=$E:HOME"/Library/Android/sdk"
@@ -35,6 +37,9 @@ edit:rprompt = { put "" }
 edit:insert:binding[Alt+Backspace]=$edit:kill-small-word-left~
 
 # aliases
+
+fn emacs [@a]{ /Applications/Emacs.app/Contents/MacOS/Emacs }
+fn emacsclient [@a]{ /Applications/Emacs.app/Contents/MacOS/bin/emacsclient }
 
 fn e [@a]{
   if (> (ps -ax | rg -c emacs) 1) {
@@ -69,6 +74,9 @@ fn jjetq [@a]{ jet --from json --keywordize --to edn --pretty --query $@a }
 use nix
 use direnv
 use secrets
+use k8s
+
+fn kprompt { k8s:toggle-prompt }
 
 fn crm-vpn { secrets:crm-vpn }
 fn dev { secrets:dev }

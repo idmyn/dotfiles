@@ -23,6 +23,7 @@
     ~/.elvish/lib/nix.elv: shell/elvish/lib/nix.elv
     ~/.elvish/lib/direnv.elv: shell/elvish/lib/direnv.elv
     ~/.elvish/lib/secrets.elv: shell/elvish/lib/secrets.elv
+    ~/.elvish/lib/k8s.elv: shell/elvish/lib/k8s.elv
     ~/.zshrc: shell/.zshrc
     ~/.zshenv: shell/.zshenv
     ~/.config/kitty/kitty.conf: kitty/kitty.conf
