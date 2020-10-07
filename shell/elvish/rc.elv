@@ -57,6 +57,7 @@ fn e [@a]{
 
 fn q { exit }
 fn k [@a]{ kubectl $@a }
+fn kdebug { kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh }
 fn b [@a]{ buku --suggest --colors aaeca --db $E:HOME"/.config/cloud/bookmarks.db" $@a }
 fn gs [@a]{ git status $@a }
 fn gb [@a]{ git branch $@a }
