@@ -38,8 +38,8 @@ edit:insert:binding[Alt+Backspace]=$edit:kill-small-word-left~
 
 # aliases
 
-fn emacs [@a]{ /Applications/Emacs.app/Contents/MacOS/Emacs }
-fn emacsclient [@a]{ /Applications/Emacs.app/Contents/MacOS/bin/emacsclient }
+fn emacs [@a]{ /Applications/Emacs.app/Contents/MacOS/Emacs $@a }
+fn emacsclient [@a]{ /Applications/Emacs.app/Contents/MacOS/bin/emacsclient $@a }
 
 fn e [@a]{
   if (> (ps -ax | rg -c emacs) 1) {
