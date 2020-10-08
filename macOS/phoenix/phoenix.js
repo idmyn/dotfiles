@@ -57,11 +57,11 @@ const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
     if (App.get('Emacs').windows().length > 0) {
       App.get('Emacs').focus()
     } else {
-      Task.run('/bin/sh', ['-c', '/usr/local/bin/emacsclient -nc'])
+      Task.run('/bin/sh', ['-c', '/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nc'])
       App.get('Emacs').focus()
     }
   } else {
-    Task.run('/bin/sh', ['-c', '/usr/local/bin/emacs --daemon && /usr/local/bin/emacsclient -nc'])
+    Task.run('/bin/sh', ['-c', '/Applications/Emacs.app/Contents/MacOS/Emacs --daemon && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient  -nc'])
   }
 })
 

@@ -42,7 +42,7 @@ fn emacs [@a]{ /Applications/Emacs.app/Contents/MacOS/Emacs $@a }
 fn emacsclient [@a]{ /Applications/Emacs.app/Contents/MacOS/bin/emacsclient $@a }
 
 fn e [@a]{
-  if (> (ps -ax | rg -c emacs) 1) {
+  if (> (ps -ax | rg -c -i emacs) 1) {
     if (> (emacsclient -e '(length (frame-list))') 1) {
       osascript -e 'tell application "emacs" to activate first window'
       emacsclient -n $@a
