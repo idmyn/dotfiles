@@ -5,6 +5,7 @@
 	name = David Mynors
 	email = hello@davidmyno.rs
 [alias]
+	spp = !git stash && git pull && git stash pop
 	co = checkout
 	sc = sparse-checkout
 	recent = branch --sort=-committerdate -v

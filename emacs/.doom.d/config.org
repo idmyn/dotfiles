@@ -37,6 +37,7 @@ any others) and then I add those details as below.
   (hl-line-mode)
   (column-number-mode)
   :custom-face
+  (region ((t (:background "peach puff"))))
   (hl-line ((t (:inherit highlight :background "lavender"))))
   (lsp-ui-sideline-code-action ((t (:foreground "limegreen"))))
   (rustic-string-interpolation-face ((t)))
