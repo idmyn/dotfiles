@@ -146,5 +146,5 @@ const showOrOpenInsomnia = new Key('i', ['alt', 'ctrl'], () => {
   }
 })
 
-Phoenix.log("hello", App.get('Emacs').windows().length > 0)
+Phoenix.log("hello")
 /* eslint-enable no-unused-vars */

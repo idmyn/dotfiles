@@ -8,7 +8,7 @@ fn toggle-prompt {
     SHOW_PROMPT = $true
     HAS_CONTEXT = ?(kubectl config current-context 1>&- 2>&-)
     if $HAS_CONTEXT {
-      edit:rprompt = { put (kubectl config current-context):(kubectl config view --minify --output 'jsonpath={..namespace}') }
+      edit:rprompt = { put (kubectl config current-context):(kubens --current) }
     } else {
       edit:rprompt = { put "no context" }
     }

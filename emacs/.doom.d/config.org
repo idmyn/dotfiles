@@ -31,8 +31,8 @@ any others) and then I add those details as below.
 (use-package! eink-theme
   :custom
   (doom-theme 'eink)
-  (doom-font (font-spec :family "Input Mono Narrow" :size 15))
-  (doom-variable-pitch-font (font-spec :family "Input Sans Narrow"))
+  (doom-font (font-spec :family "Iosevka SS09" :size 15))
+  (doom-variable-pitch-font (font-spec :family "Iosevka Aile"))
   :config
   (hl-line-mode)
   (column-number-mode)
@@ -249,8 +249,8 @@ bind jump-backward and jump-forward to more intuitive keys
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after evil
-   :n "C-h" 'better-jumper-jump-backward
-   :n "C-l" 'better-jumper-jump-forward))
+   :n "C-i" 'better-jumper-jump-backward
+   :n "C-o" 'better-jumper-jump-forward))
 #+END_SRC
 handy to have an insert-mode binding to jump to a new line above
 #+BEGIN_SRC emacs-lisp
@@ -541,9 +541,4 @@ use proportional (not monospaced) font in markdown mode
    :map sly-mrepl-mode-map
    :i "C-j" 'sly-mrepl-next-input-or-button
    :i "C-k" 'sly-mrepl-previous-input-or-button))
-#+END_SRC
-** Rust
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'eglot-server-programs '(rust-mode . (eglot-rls "rls")))
-;(setq rustic-lsp-server 'rust-analyzer)
 #+END_SRC
