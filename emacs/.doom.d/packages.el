@@ -16,6 +16,7 @@
 (package! flymake-diagnostic-at-point)
 (package! dired-narrow)
 (package! ns-auto-titlebar)
+(package! ripgrep)
 
 (package! dired-show-readme
   :recipe (:host gitlab :repo "kisaragi-hiu/dired-show-readme"))

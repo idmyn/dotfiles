@@ -351,14 +351,14 @@ add some rules to exclude buffers from search
   (dolist (regexp '("^\\*"))
     (push regexp ivy-ignore-buffers)))
 #+END_SRC
-*** Deadgrep
-adjust the size of the deadgrep buffer, and give it a sensible keybinding
+*** Ripgrep
+adjust the size of the ripgrep buffer, and give it a sensible keybinding
 #+BEGIN_SRC emacs-lisp
-(set-popup-rule! "^\\*deadgrep" :size 0.4)
+(set-popup-rule! "^\\*ripgrep" :size 0.4)
 (map!
    :leader
    :prefix "s"
-   :desc "Search project" "p" 'deadgrep)
+   :desc "Search project" "p" 'projectile-ripgrep)
 #+END_SRC
 *** Dash
 #+BEGIN_SRC emacs-lisp
@@ -472,6 +472,7 @@ tell CLI applications that it's ok to dump really long output into the buffer
  :prefix "t"
  :desc "Olivetti" "o" 'olivetti-mode)
 (setq olivetti-body-width 85)
+(add-hook 'olivetti-mode-hook (lambda () (markdown-toggle-url-hiding 1)))
 #+END_SRC
 ** Ebuku
 set the path to my [[https://github.com/jarun/buku][buku]] bookmarks
@@ -530,10 +531,6 @@ set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-m
    :map evil-markdown-mode-map
    :i "C-d" 'delete-char
    :ni "C-;" 'self-insert-command))
-#+END_SRC
-use proportional (not monospaced) font in markdown mode
-#+BEGIN_SRC emacs-lisp
-(add-hook 'markdown-mode-hook 'variable-pitch-mode)
 #+END_SRC
 ** Common Lisp
 #+BEGIN_SRC emacs-lisp
