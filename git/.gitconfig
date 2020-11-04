@@ -8,6 +8,7 @@
 	spp = !git stash && git pull && git stash pop
 	co = checkout
 	sc = sparse-checkout
+	hash = rev-parse HEAD
 	recent = branch --sort=-committerdate -v
 	new = !git init && git symbolic-ref HEAD refs/heads/main
 	uf = ls-files -oz --exclude-standard

@@ -68,8 +68,10 @@ const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
 const showOrOpenVSCodium = new Key('v', ['alt', 'ctrl'], () => {
   if (App.get('VSCodium')) {
     App.get('VSCodium').focus()
+  } else if (App.get('Code')) {
+    App.get('Code').focus()
   } else {
-    App.launch('VSCodium')
+    App.launch('Code')
   }
 })
 
@@ -146,5 +148,13 @@ const showOrOpenInsomnia = new Key('i', ['alt', 'ctrl'], () => {
   }
 })
 
-Phoenix.log("hello")
+const showOrOpenPostman = new Key('h', ['alt', 'ctrl'], () => {
+  if (App.get('Postman')) {
+    App.get('Postman').focus()
+  } else {
+    App.launch('Postman')
+  }
+})
+
+//Phoenix.log(App.all().map(app => app.name() + "\n"))
 /* eslint-enable no-unused-vars */

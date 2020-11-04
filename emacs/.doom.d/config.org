@@ -324,6 +324,34 @@ unbind evil-surround from S
  :map evil-surround-mode-map
  :v "S" 'evil-snipe-S)
 #+END_SRC
+Make "ciq" operate with the nearest quotes of any type on the same line in evil normal mode
+source: https://discord.com/channels/406534637242810369/695450585758957609/759868990909841438
+#+BEGIN_SRC emacs-lisp
+(after! evil
+  (require 'evil-textobj-anyblock)
+  (evil-define-text-object my-evil-textobj-anyblock-inner-quote
+    (count &optional beg end type)
+    "Select the closest outer quote."
+    (let ((evil-textobj-anyblock-blocks
+           '(("'" . "'")
+             ("\"" . "\"")
+             ("`" . "`")
+             ("“" . "”"))))
+      (evil-textobj-anyblock--make-textobj beg end type count nil)))
+
+  (evil-define-text-object my-evil-textobj-anyblock-a-quote
+    (count &optional beg end type)
+    "Select the closest outer quote."
+    (let ((evil-textobj-anyblock-blocks
+           '(("'" . "'")
+             ("\"" . "\"")
+             ("`" . "`")
+             ("“" . "”"))))
+      (evil-textobj-anyblock--make-textobj beg end type count t)))
+
+  (define-key evil-inner-text-objects-map "q" 'my-evil-textobj-anyblock-inner-quote)
+  (define-key evil-outer-text-objects-map "q" 'my-evil-textobj-anyblock-a-quote))
+#+END_SRC
 ** Search
 *** Ivy
 instruct ivy-posframe to appear right under cursor with no border
@@ -355,6 +383,7 @@ add some rules to exclude buffers from search
 adjust the size of the ripgrep buffer, and give it a sensible keybinding
 #+BEGIN_SRC emacs-lisp
 (set-popup-rule! "^\\*ripgrep" :size 0.4)
+(set-popup-rule! "^\\*deadgrep" :size 0.4)
 (map!
    :leader
    :prefix "s"
