@@ -263,6 +263,7 @@ restore original emacs binding for paste, `save-buffer`, `delete-char`
 #+BEGIN_SRC emacs-lisp
 (map!
  (:after evil
+   :map global-map
    :i "C-y" 'xah-paste-or-paste-previous
    :i "C-d" 'delete-char
    :i "C-x C-s" 'save-buffer)
@@ -380,14 +381,23 @@ add some rules to exclude buffers from search
     (push regexp ivy-ignore-buffers)))
 #+END_SRC
 *** Ripgrep
-adjust the size of the ripgrep buffer, and give it a sensible keybinding
+adjust the size of the deadgrep buffer, give it a sensible keybinding, and use projectile root
 #+BEGIN_SRC emacs-lisp
-(set-popup-rule! "^\\*ripgrep" :size 0.4)
 (set-popup-rule! "^\\*deadgrep" :size 0.4)
 (map!
-   :leader
-   :prefix "s"
-   :desc "Search project" "p" 'projectile-ripgrep)
+ :leader
+ :prefix "s"
+ :desc "Search project" "p" 'deadgrep)
+
+(after! deadgrep
+  (defun deadgrep--project-root ()
+    "Guess the project root of the given FILE-PATH."
+    (let ((root default-directory)
+          (project (projectile-project-root)))
+      (when project
+        (setq root project))
+      (when root
+        (deadgrep--lookup-override root)))))
 #+END_SRC
 *** Dash
 #+BEGIN_SRC emacs-lisp
