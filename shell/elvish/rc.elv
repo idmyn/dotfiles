@@ -59,6 +59,7 @@ fn q { exit }
 fn k [@a]{ kubectl $@a }
 fn kdebug { kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh }
 fn b [@a]{ buku --suggest --colors aaeca --db $E:HOME"/.config/cloud/bookmarks.db" $@a }
+fn git [@a]{ git-together $@a }
 fn gs [@a]{ git status $@a }
 fn gb [@a]{ git branch $@a }
 fn ls [@a]{ echo; exa -F -I 'Applications|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|Public|Tresors' $@a }

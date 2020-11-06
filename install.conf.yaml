@@ -35,6 +35,9 @@
     ~/src/nandos/.gitconfig:
       if: '[ -d ~/src/nandos ]'
       path: git/.gitconfig-work
+    ~/src/nandos/.git-together:
+      if: '[ -d ~/src/nandos ]'
+      path: git/.git-together-secret
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
