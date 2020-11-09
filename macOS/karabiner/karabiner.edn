@@ -25,6 +25,8 @@
                            "^com\\.apple\\.Terminal$"
                            "^net\\.kovidgoyal\\.kitty$"
                            "^com\\.workflowy\\.desktop$"
+                           "^com\\.visualstudio\\.code\\.oss$"
+                           "^com\\.microsoft\\.VSCode$"
                            "^com\\.sublimetext\\.3$"]
                 :Terminals ["^com\\.googlecode\\.iterm2$"
                             "^co\\.zeit\\.hyper$"
@@ -37,6 +39,7 @@
                            "^ru\\.keepcoder\\.Telegram$"]
                 :Browsers ["^com\\.brave\\.Browser$"
                            "^org\\.mozilla\\.firefoxdeveloperedition$"
+                           "^org\\.mozilla\\.firefox$"
                            "^com\\.apple\\.Safari$"]}
 
  :main [{:des   "everywhere: right cmd alone to f13 (alfred), and to ctrl+opt as modifier"

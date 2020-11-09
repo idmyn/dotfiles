@@ -13,12 +13,13 @@
     ~/.emacs-profiles.el: emacs/.emacs-profiles.el
     ~/.doom.d: emacs/.doom.d
     ~/.config/emacs/init.el: emacs/minimal.el
+    ~/.vimrc: .vimrc
+    ~/.config/nvim/init.vim: .vimrc
     ~/.nixpkgs/darwin-configuration.nix: nix/darwin-configuration.nix
     ~/.finicky.js: macOS/finicky/.finicky.js
     ~/.config/phoenix/phoenix.js: macOS/phoenix/phoenix.js
     ~/.config/karabiner.edn: macOS/karabiner/karabiner.edn
     ~/.secret-aliases: shell/.secret-aliases
-    ~/.tmux.conf: shell/.tmux.conf
     ~/.elvish/rc.elv: shell/elvish/rc.elv
     ~/.elvish/lib/nix.elv: shell/elvish/lib/nix.elv
     ~/.elvish/lib/direnv.elv: shell/elvish/lib/direnv.elv

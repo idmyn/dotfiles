@@ -9,7 +9,7 @@ use github.com/zzamboni/elvish-modules/terminal-title
 
 E:EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
 
-E:EDITOR="emacsclient -q -c -a ''"
+E:EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -q -c -a ''"
 
 E:ANDROID_HOME=$E:HOME"/Library/Android/sdk"
 
