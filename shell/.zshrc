@@ -1,11 +1,28 @@
 source ~/.secret-aliases
 
-export EDITOR="vi"
+export EDITOR="nvim"
 
 PROMPT="
 %~
  $ "
 
-setopt autocd
 alias q="exit"
-alias ls="echo; ls"
+alias ls="echo; exa"
+
+setopt autocd
+function chpwd() {
+    emulate -L zsh
+    ls
+}
+
+zstyle ':completion:*' menu select
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+source <(antibody init)
+antibody bundle "agkozak/zsh-z"

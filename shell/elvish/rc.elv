@@ -8,7 +8,7 @@ epm:install &silent-if-installed=$true ^
 use github.com/zzamboni/elvish-modules/terminal-title
 
 E:EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
-
+E:EMACSCLIENT="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
 E:EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -q -c -a ''"
 
 E:ANDROID_HOME=$E:HOME"/Library/Android/sdk"
