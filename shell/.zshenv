@@ -1,4 +1,8 @@
-export PATH=/Users/davidmy/.asdf/shims:/usr/local/opt/asdf/bin:/Users/davidmy/.nix-profile/bin:/run/current-system/sw/bin:/Users/davidmy/Library/Android/sdk/emulator:/Users/davidmy/Library/Android/sdk/tools:/Users/davidmy/Library/Android/sdk/tools/bin:/Users/davidmy/Library/Android/sdk/platform-tools:/Users/davidmy/google-cloud-sdk/bin:/Users/davidmy/.cargo/bin:/Users/davidmy/.bin:/Users/davidmy/.local/bin:/Users/davidmy/.emacs.d/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=$HOME/.asdf/shims:/usr/local/opt/asdf/bin:$HOME/.nix-profile/bin:/run/current-system/sw/bin:$HOME/Library/Android/sdk/emulator:$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/tools/bin:$HOME/Library/Android/sdk/platform-tools:$HOME/google-cloud-sdk/bin:$HOME/.cargo/bin:$HOME/.bin:$HOME/.local/bin:$HOME/.emacs.d/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+export EMACSCLIENT="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+export EDITOR="$EMACSCLIENT -q -c -a ''"
 
 . /usr/local/opt/asdf/asdf.sh
 if [ -e /Users/david/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/david/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

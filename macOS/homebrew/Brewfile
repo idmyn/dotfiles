@@ -25,6 +25,7 @@ cask "appcleaner"
 cask "sensiblesidebuttons"
 
 brew "fd"
+brew "fzf"
 brew "exa"
 brew "git"
 brew "tmux"

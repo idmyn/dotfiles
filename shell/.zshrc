@@ -1,8 +1,6 @@
 source ~/.aliases
 source ~/.secret-aliases
 
-export EDITOR="nvim"
-
 PROMPT="
 %~
  $ "
