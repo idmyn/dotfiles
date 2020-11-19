@@ -579,3 +579,13 @@ set the =grip-binary-path= for [[https://github.com/seagle0128/grip-mode][grip-m
    :i "C-j" 'sly-mrepl-next-input-or-button
    :i "C-k" 'sly-mrepl-previous-input-or-button))
 #+END_SRC
+** Kubernetes
+#+BEGIN_SRC emacs-lisp
+(set-popup-rule! "^\\*kubernetes" :ignore t)
+ (use-package kubernetes-evil
+   :config
+   (define-key global-map (kbd "M-h") 'evil-window-left)
+   (define-key global-map (kbd "M-j") 'evil-window-down)
+   (define-key global-map (kbd "M-k") 'evil-window-up)
+   (define-key global-map (kbd "M-l") 'evil-window-right))
+#+END_SRC
