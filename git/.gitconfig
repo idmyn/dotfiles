@@ -1,6 +1,6 @@
 [core]
 	excludesfile = ~/.gitignore
-	editor = emacsclient -n -a ''
+	editor = nvim
 [user]
 	name = David Mynors
 	email = hello@davidmyno.rs

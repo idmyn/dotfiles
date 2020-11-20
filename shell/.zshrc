@@ -11,7 +11,20 @@ function chpwd() {
     echo; exa
 }
 
+# https://stackoverflow.com/a/8595614
+function tb() {
+  perl -MFile::Temp -MFile::Copy -e \
+  'copy *STDIN, $file = File::Temp->new; system "emacsclient", $file';
+}
+
 zstyle ':completion:*' menu select # prettier tab completion
+
+setopt share_history # append to history after each command
+setopt HIST_IGNORE_ALL_DUPS
+export HISTFILESIZE=1000000000
+export HISTSIZE=1000000000
+
+[ -f /usr/local/opt/asdf/asdf.sh ] && source /usr/local/opt/asdf/asdf.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f'
