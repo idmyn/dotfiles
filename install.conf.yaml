@@ -29,6 +29,7 @@
     ~/.zshrc: shell/.zshrc
     ~/.zshenv: shell/.zshenv
     ~/.config/kitty/kitty.conf: kitty/kitty.conf
+    ~/.tmux.conf: shell/.tmux.conf
     ~/.bin: shell/bin
     ~/.gitignore: git/.gitignore
     ~/.gitconfig:
