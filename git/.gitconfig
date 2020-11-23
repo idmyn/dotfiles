@@ -1,5 +1,4 @@
 [core]
-	excludesfile = ~/.gitignore
 	editor = nvim
 [user]
 	name = David Mynors

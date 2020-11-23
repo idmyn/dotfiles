@@ -31,7 +31,7 @@
     ~/.config/kitty/kitty.conf: kitty/kitty.conf
     ~/.tmux.conf: shell/.tmux.conf
     ~/.bin: shell/bin
-    ~/.gitignore: git/.gitignore
+    ~/.config/git/ignore: git/.gitignore
     ~/.gitconfig:
       force: true
       path: git/.gitconfig

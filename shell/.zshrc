@@ -12,7 +12,7 @@ function chpwd() {
 }
 
 # https://stackoverflow.com/a/8595614
-function tb() {
+function eb() {
   perl -MFile::Temp -MFile::Copy -e \
   'copy *STDIN, $file = File::Temp->new; system "emacsclient", $file';
 }
@@ -31,7 +31,10 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 source <(antibody init)
-antibody bundle "skywind3000/z.lua"
+antibody bundle "
+  skywind3000/z.lua
+  mroth/evalcache
+"
 export _ZL_MATCH_MODE=1
 alias zi="z -I"
 alias zh='z -I -t .'
@@ -41,5 +44,12 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
   autoload -Uz compinit
-  compinit
+  # only check compinit cache once per day
+  if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+    compinit;
+  else
+    compinit -C;
+  fi;
 fi
+
+_evalcache direnv hook zsh
