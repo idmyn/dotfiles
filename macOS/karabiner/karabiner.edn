@@ -42,8 +42,8 @@
                            "^org\\.mozilla\\.firefox$"
                            "^com\\.apple\\.Safari$"]}
 
- :main [{:des   "everywhere: right cmd alone to f13 (alfred), and to ctrl+opt as modifier"
-         :rules [[:right_command :!Tleft_alt nil {:alone :f13}]]}
+ :main [{:des   "everywhere: right cmd alone to cmd+opt+r (raycast), and to ctrl+opt as modifier"
+         :rules [[:right_command :!Tleft_alt nil {:alone :!COr}]]}
 
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt nil {:alone :tab}]]}
@@ -51,8 +51,8 @@
         {:des   "in vim (and emulators, and WorkFlowy): caps_lock to esc when pressed alone, to ctrl as modifier"
          :rules [[:condi :Vim] [:##caps_lock :left_control nil {:alone :escape}]]}
 
-        {:des   "outside vim (and emulators, and WorkFlowy): caps_lock to f13 when pressed alone, to ctrl as modifier"
-         :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :f13}]]}
+        {:des   "outside vim (and emulators, and WorkFlowy): caps_lock to cmd+opt+r when pressed alone, to ctrl as modifier"
+         :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :!COr}]]}
 
         {:des   "in Browsers, C-j and C-k are bound to down and up"
          :rules [[:condi :Browsers] [:!Tj :down_arrow] [:!Tk :up_arrow] [:!Tg :escape]]}
