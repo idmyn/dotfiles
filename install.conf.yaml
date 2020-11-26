@@ -10,9 +10,7 @@
 
 - link:
     ~/.backup.sh: backup.sh
-    ~/.emacs-profiles.el: emacs/.emacs-profiles.el
     ~/.doom.d: emacs/.doom.d
-    ~/.config/emacs/init.el: emacs/minimal.el
     ~/.vimrc: .vimrc
     ~/.config/nvim/init.vim: .vimrc
     ~/Library/Application Support/Code/User/settings.json:
