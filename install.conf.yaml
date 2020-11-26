@@ -15,6 +15,12 @@
     ~/.config/emacs/init.el: emacs/minimal.el
     ~/.vimrc: .vimrc
     ~/.config/nvim/init.vim: .vimrc
+    ~/Library/Application Support/Code/User/settings.json:
+      force: true
+      path: VSCode/settings.json
+    ~/Library/Application Support/Code/User/keybindings.json:
+      force: true
+      path: VSCode/keybindings.json
     ~/.nixpkgs/darwin-configuration.nix: nix/darwin-configuration.nix
     ~/.finicky.js: macOS/finicky/.finicky.js
     ~/.config/phoenix/phoenix.js: macOS/phoenix/phoenix.js
