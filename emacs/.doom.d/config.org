@@ -301,16 +301,6 @@ tweak a couple of evil behaviours
   (setq +evil-want-o/O-to-continue-comments nil)
   (advice-remove #'newline-and-indent #'+default--newline-indent-and-continue-comments-a))
 #+END_SRC
-undo-tree bindings
-#+BEGIN_SRC emacs-lisp
-(map!
- :after undo-tree
- :map undo-tree-visualizer-mode-map
- :m "h" 'undo-tree-visualize-switch-branch-left
- :m "j" 'undo-tree-visualize-redo
- :m "k" 'undo-tree-visualize-undo
- :m "l" 'undo-tree-visualize-switch-branch-right)
-#+END_SRC
 evil-multiedit bindings
 #+BEGIN_SRC emacs-lisp
 (map!

@@ -1,6 +1,6 @@
 alias q="exit"
 
-alias ls="echo; exa"
+alias ls="echo; exa -F -I 'Applications|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|Public|Tresors'"
 alias la="ls -a"
 alias ll="ls -alh"
 
