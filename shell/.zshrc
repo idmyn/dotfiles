@@ -3,7 +3,11 @@ source ~/.secret-aliases
 
 PROMPT="
 %~
- $ "
+-> "
+
+function kp() {
+  [ -z $RPROMPT ] && RPROMPT="$(~/.bin/kubesummary)" || RPROMPT=""
+}
 
 setopt autocd
 function chpwd() {
