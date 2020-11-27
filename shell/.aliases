@@ -4,6 +4,8 @@ alias ls="echo; exa -F -I 'Applications|Desktop|Documents|Downloads|Library|Movi
 alias la="ls -a"
 alias ll="ls -alh"
 
+alias grep="grep --color=always"
+
 alias gs="git status"
 alias gb="git branch"
 

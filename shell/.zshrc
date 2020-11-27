@@ -23,37 +23,42 @@ function eb() {
 
 zstyle ':completion:*' menu select # prettier tab completion
 
-setopt share_history # append to history after each command
+setopt BANG_HIST # Treat the '!' character specially during expansion
+setopt SHARE_HISTORY # append to history after each command
 setopt HIST_IGNORE_ALL_DUPS
-export HISTFILESIZE=1000000000
-export HISTSIZE=1000000000
+HISTSIZE=10000
+SAVEHIST=10000
 
-[ -f /usr/local/opt/asdf/asdf.sh ] && source /usr/local/opt/asdf/asdf.sh
+source ~/.zinit/bin/zinit.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-source <(antibody init)
-antibody bundle "
-  skywind3000/z.lua
-  mroth/evalcache
-"
+zinit ice wait lucid
+zinit light skywind3000/z.lua
 export _ZL_MATCH_MODE=1
 alias zi="z -I"
 alias zh='z -I -t .'
 alias b='z -b'
 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+zinit ice wait lucid
+zinit light zsh-users/zsh-history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+zle -N history-substring-search-up
+zle -N history-substring-search-down
 
-  autoload -Uz compinit
-  # only check compinit cache once per day
-  if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-    compinit;
-  else
-    compinit -C;
-  fi;
+if [ -d "$HOME/.asdf" ]; then
+  zinit ice wait lucid
+  zinit light asdf-vm/asdf
 fi
 
-_evalcache direnv hook zsh
+zinit as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' \
+    atpull'%atclone' pick"direnv" src"zhook.zsh" for \
+        direnv/direnv
+
+zinit light-mode for \
+  id-as'fzf/completion' https://github.com/junegunn/fzf/blob/master/shell/completion.zsh \
+  id-as'fzf/key-bindings' https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
+    zsh-users/zsh-completions
