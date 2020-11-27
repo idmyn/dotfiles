@@ -5,9 +5,11 @@ PROMPT="
 %~
 -> "
 
+SHOW_K8S_PROMPT=0
 function kp() {
-  [ -z $RPROMPT ] && RPROMPT="$(~/.bin/kubesummary)" || RPROMPT=""
+  ((SHOW_K8S_PROMPT ^= 1)) # https://unix.stackexchange.com/a/364489
 }
+precmd() { [ "$SHOW_K8S_PROMPT" = 1 ] && RPROMPT="$(~/.bin/kubesummary)" || RPROMPT="" }
 
 setopt autocd
 function chpwd() {
