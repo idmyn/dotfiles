@@ -4,7 +4,6 @@
 	name = David Mynors
 	email = hello@davidmyno.rs
 [alias]
-	spp = !git stash && git pull && git stash pop
 	co = checkout
 	sc = sparse-checkout
 	hash = rev-parse HEAD
@@ -16,4 +15,4 @@
 	path = ~/src/nandos/.gitconfig
 	path = ~/src/nandos/.git-together
 [pull]
-	rebase = true
+	ff = only
