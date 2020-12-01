@@ -20,6 +20,7 @@
 (package! kubernetes)
 (package! kubernetes-evil)
 (package! evil-string-inflection)
+(package! gruvbox-theme)
 
 (package! dired-show-readme
   :recipe (:host gitlab :repo "kisaragi-hiu/dired-show-readme"))

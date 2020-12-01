@@ -34,7 +34,7 @@ any others) and then I add those details as below.
   (doom-font (font-spec :family "Iosevka SS09" :size 15))
   (doom-variable-pitch-font (font-spec :family "Iosevka Aile"))
   :config
-  (hl-line-mode)
+  (global-hl-line-mode)
   (column-number-mode)
   :custom-face
   (region ((t (:background "peach puff"))))
@@ -57,6 +57,28 @@ any others) and then I add those details as below.
   (diredfl-compressed-file-suffix ((t)))
   (diredfl-dir-name ((t (:weight bold)))))
 #+END_SRC
+toggle-theme function to appease my colleages
+#+begin_src emacs-lisp
+(setq current-theme "eink")
+(defun toggle-theme ()
+  (interactive)
+  (if (equal current-theme "eink")
+      (progn
+        (setq current-theme "gruvbox")
+        (load-theme 'gruvbox-dark-soft t)
+        (global-hl-line-mode -1)
+        (face-spec-set 'region '((t (:foreground "white" :background "slate blue")))))
+    (progn
+      (setq current-theme "eink")
+      (load-theme 'eink t)
+      (global-hl-line-mode 1)
+      (face-spec-set 'region '((t (:foreground "black" :background "peach puff")))))))
+
+(map!
+ :leader
+ :prefix "t"
+ :desc "Theme" "t" 'toggle-theme)
+#+end_src
 remove minor modes from the mode line
 #+BEGIN_SRC emacs-lisp
 (define-minor-mode minor-mode-blackout-mode
