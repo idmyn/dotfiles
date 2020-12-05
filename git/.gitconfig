@@ -15,4 +15,6 @@
 	path = ~/src/nandos/.gitconfig
 	path = ~/src/nandos/.git-together
 [pull]
-	ff = only
+	rebase = true
+[rebase]
+	autoStash = true

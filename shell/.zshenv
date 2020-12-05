@@ -11,3 +11,4 @@ export GIT_DUET_CO_AUTHORED_BY="1"
 
 . /usr/local/opt/asdf/asdf.sh
 if [ -e /Users/david/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/david/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+export NIX_PATH="~/.nix-defexpr/channels:darwin-config=~/.nixpkgs/darwin-configuration.nix"

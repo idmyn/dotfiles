@@ -14,7 +14,7 @@ precmd() { [ "$SHOW_K8S_PROMPT" = 1 ] && RPROMPT="$(~/.bin/kubesummary)" || RPRO
 setopt autocd
 function chpwd() {
     emulate -L zsh
-    echo; exa
+    ls
 }
 
 # https://stackoverflow.com/a/8595614
