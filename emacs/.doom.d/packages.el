@@ -21,6 +21,8 @@
 (package! kubernetes-evil)
 (package! evil-string-inflection)
 (package! gruvbox-theme)
+(package! shell-command+
+  :recipe (:host github :repo "emacs-straight/shell-command-plus"))
 
 (package! dired-show-readme
   :recipe (:host gitlab :repo "kisaragi-hiu/dired-show-readme"))

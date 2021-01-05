@@ -8,6 +8,7 @@ alias grep="grep --color=always"
 
 alias gs="git status"
 alias gb="git branch"
+alias gl="git log --oneline -n 10"
 
 alias tf="terraform"
 

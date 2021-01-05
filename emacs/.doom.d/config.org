@@ -161,6 +161,10 @@ Version 2017-07-25"
  :prefix "t"
  :desc "Narrow" "n" 'md/narrow-dwim)
 #+END_SRC
+[[https://elpa.gnu.org/packages/shell-command+.html][shell-command+]] is potentially very nifty
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-!") #'shell-command+)
+#+end_src
 
 ** Keybindings
 change vimkeys from hjkl to jkl: (I use karabiner to swap my ; and : keys)
@@ -476,7 +480,6 @@ bindings to move between windows
 #+BEGIN_SRC emacs-lisp
 (set-eshell-alias!
  "e" "find-file $1"
- "git" "hub $*"
  "doom" "~/.emacs.d/bin/doom $1")
 #+END_SRC
 *** eshell-z
@@ -491,6 +494,13 @@ tell CLI applications that it's ok to dump really long output into the buffer
 #+BEGIN_SRC emacs-lisp
 (setenv "PAGER" "cat")
 #+END_SRC
+** vterm
+#+begin_src emacs-lisp
+(map!
+ :map vterm-mode-map
+ :i "C-j" 'vterm-send-down
+ :i "C-k" 'vterm-send-up)
+#+end_src
 
 ** Dired
 #+BEGIN_SRC emacs-lisp
