@@ -9,7 +9,9 @@ fi
 
 echo "Beginning backup at $(date)" >> "$LOGFILE"
 
-. .backup.env
+pass backup.env > tmp.sh
+. tmp.sh
+rm tmp.sh
 
 /usr/local/bin/restic backup ~       \
     --exclude="**/node_modules"      \
