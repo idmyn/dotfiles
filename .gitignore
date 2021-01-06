@@ -1,2 +1,3 @@
+**/*.pyc
 Brewfile.lock.json
 emacs/.doom.d/config.el
