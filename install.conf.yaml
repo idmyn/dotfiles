@@ -33,7 +33,9 @@
     ~/.elvish/lib/k8s.elv: shell/elvish/lib/k8s.elv
     ~/.zshrc: shell/.zshrc
     ~/.zshenv: shell/.zshenv
+    ~/.xonshrc: shell/.xonshrc
     ~/.config/kitty/kitty.conf: kitty/kitty.conf
+    ~/.config/alacritty/alacritty.yml: alacritty/alacritty.yml
     ~/.tmux.conf: shell/.tmux.conf
     ~/.bin: shell/bin
     ~/.config/git/ignore: git/.gitignore
