@@ -95,12 +95,7 @@ const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenTerminal = new Key('s', ['alt', 'ctrl'], () => {
-  if (App.get('kitty') && App.get('kitty').windows().length) {
-    App.get('kitty').focus()
-  } else {
-    Task.run('/bin/sh', ['-c', 'open -a kitty'])
-    // not sure why "App.launch('kitty')" doesn't work
-  }
+  Task.run('/bin/sh', ['-c', 'open -a Alacritty'])
 })
 
 const showOrOpenMail = new Key('m', ['alt', 'ctrl'], () => {
