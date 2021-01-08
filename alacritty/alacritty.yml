@@ -15,7 +15,6 @@ window:
     x: 10
 
 font:
-  use_thin_strokes: true
   size: 14
   normal:
     family: Iosevka SS09

@@ -8,7 +8,7 @@
     },
     {
         "key": "cmd+k cmd+g",
-        "command": "workbench.view.scm"
+        "command": "workbench.view.extension.github-pull-requests"
     },
     {
         "key": "cmd+k cmd+d",
@@ -287,4 +287,3 @@
         "when": "notificationToastsVisible"
     }
 ]
-}

@@ -496,10 +496,11 @@ tell CLI applications that it's ok to dump really long output into the buffer
 #+END_SRC
 ** vterm
 #+begin_src emacs-lisp
-(map!
- :map vterm-mode-map
- :i "C-j" 'vterm-send-down
- :i "C-k" 'vterm-send-up)
+(after! vterm
+  (map!
+   :map vterm-mode-map
+   :i "C-j" 'vterm-send-down
+   :i "C-k" 'vterm-send-up))
 #+end_src
 
 ** Dired

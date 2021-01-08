@@ -29,6 +29,7 @@
                            "^com\\.microsoft\\.VSCode$"
                            "^com\\.sublimetext\\.3$"]
                 :Terminals ["^com\\.googlecode\\.iterm2$"
+                            "^io\\.alacritty$"
                             "^co\\.zeit\\.hyper$"
                             "^com\\.apple\\.Terminal$"
                             "^net\\.kovidgoyal\\.kitty$"]
