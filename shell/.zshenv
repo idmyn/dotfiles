@@ -12,3 +12,4 @@ export GIT_DUET_CO_AUTHORED_BY="1"
 . /usr/local/opt/asdf/asdf.sh
 if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 export NIX_PATH="~/.nix-defexpr/channels:darwin-config=~/.nixpkgs/darwin-configuration.nix"
+export NIX_SSL_CERT_FILE="/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt"
