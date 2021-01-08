@@ -2,10 +2,12 @@
 
 {
   environment.systemPackages = with pkgs; [
+    cachix
     direnv
     niv
   ];
 
+  services.nix-daemon.enable = true;
   services.lorri.enable = true; # installs automatically
 
   # Auto upgrade nix package
