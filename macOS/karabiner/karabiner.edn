@@ -24,6 +24,7 @@
                            "^co\\.zeit\\.hyper$"
                            "^com\\.apple\\.Terminal$"
                            "^net\\.kovidgoyal\\.kitty$"
+                           "^io\\.alacritty$"
                            "^com\\.workflowy\\.desktop$"
                            "^com\\.visualstudio\\.code\\.oss$"
                            "^com\\.microsoft\\.VSCode$"
@@ -32,6 +33,7 @@
                             "^io\\.alacritty$"
                             "^co\\.zeit\\.hyper$"
                             "^com\\.apple\\.Terminal$"
+                            "^io\\.alacritty$"
                             "^net\\.kovidgoyal\\.kitty$"]
                 :uk       ["^com\\.apple\\.Mail$"
                            "^org\\.gnu\\.Emacs$"
