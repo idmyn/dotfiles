@@ -51,11 +51,8 @@
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt nil {:alone :tab}]]}
 
-        {:des   "in vim (and emulators, and WorkFlowy): caps_lock to esc when pressed alone, to ctrl as modifier"
-         :rules [[:condi :Vim] [:##caps_lock :left_control nil {:alone :escape}]]}
-
-        {:des   "outside vim (and emulators, and WorkFlowy): caps_lock to cmd+opt+r when pressed alone, to ctrl as modifier"
-         :rules [[:condi :!Vim] [:##caps_lock :left_control nil {:alone :!COr}]]}
+        {:des   "everywhere: caps_lock to esc when pressed alone, to ctrl as modifier"
+         :rules [[:##caps_lock :left_control nil {:alone :escape}]]}
 
         {:des   "in Browsers, C-j and C-k are bound to down and up"
          :rules [[:condi :Browsers] [:!Tj :down_arrow] [:!Tk :up_arrow] [:!Tg :escape]]}
