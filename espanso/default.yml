@@ -1,0 +1,25 @@
+matches:
+  # url expanders (to replace some chrome extensions)
+  - trigger: ":pk"
+    replace: "https://getpocket.com/edit?url="
+
+  - trigger: ":wb"
+    replace: "https://web.archive.org/save/"
+
+  # date
+  - trigger: ":date"
+    replace: "{{ISO-8601}}"
+    vars:
+      - name: ISO-8601
+        type: date
+        params:
+          format: "%Y-%m-%d"
+
+  # Shell commands
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo Hello from your shell"

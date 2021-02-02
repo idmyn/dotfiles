@@ -10,6 +10,9 @@
 
 - link:
     ~/.backup.sh: backup.sh
+    ~/Library/Preferences/espanso/default.yml:
+      force: true
+      path: espanso/default.yml
     ~/.doom.d: emacs/.doom.d
     ~/.vimrc: .vimrc
     ~/.config/nvim/init.vim: .vimrc

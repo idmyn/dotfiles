@@ -20,4 +20,3 @@ alias jsontidy="pbpaste | jq '.' | pbcopy"
 
 alias otp="pass otp -c"
 alias ssh="kitty +kitten ssh"
-alias glow="glow -s light"
