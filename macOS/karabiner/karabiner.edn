@@ -18,6 +18,7 @@
 
  :applications {:Editors  ["^org\\.gnu\\.Emacs$"
                            "^com\\.google\\.Chrome$"]
+                :Bitwig   ["^com\\.bitwig\\.studio$"]
                 :Vim      ["^org\\.gnu\\.Emacs$"
                            "^org\\.vim\\.MacVim$"
                            "^com\\.googlecode\\.iterm2$"
@@ -41,6 +42,7 @@
                            "^com\\.apple\\.Terminal$"
                            "^ru\\.keepcoder\\.Telegram$"]
                 :Browsers ["^com\\.brave\\.Browser$"
+                           "^com\\.vivaldi\\.Vivaldi$"
                            "^org\\.mozilla\\.firefoxdeveloperedition$"
                            "^org\\.mozilla\\.firefox$"
                            "^com\\.apple\\.Safari$"]}
@@ -51,8 +53,8 @@
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt nil {:alone :tab}]]}
 
-        {:des   "everywhere: caps_lock to esc when pressed alone, to ctrl as modifier"
-         :rules [[:##caps_lock :left_control nil {:alone :escape}]]}
+        {:des   "everywhere except bitwig: caps_lock to esc when pressed alone, to ctrl as modifier"
+         :rules [[:condi :!Bitwig] [:##caps_lock :left_control nil {:alone :escape}]]}
 
         {:des   "in Browsers, C-j and C-k are bound to down and up"
          :rules [[:condi :Browsers] [:!Tj :down_arrow] [:!Tk :up_arrow] [:!Tg :escape]]}

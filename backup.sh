@@ -1,6 +1,10 @@
 #!/bin/sh
 set -euf
 
+pass backup.env > tmp.sh
+. tmp.sh
+rm tmp.sh
+
 LOGFILE="${HOME}/.backup.log"
 
 if [ ! -e "$LOGFILE" ] ; then
@@ -9,15 +13,12 @@ fi
 
 echo "Beginning backup at $(date)" >> "$LOGFILE"
 
-pass backup.env > tmp.sh
-. tmp.sh
-rm tmp.sh
-
 /usr/local/bin/restic backup ~       \
     --exclude="**/node_modules"      \
     --exclude="**/straight/repos"    \
     --exclude="${HOME}/desk"         \
     --exclude="${HOME}/files"        \
+    --exclude="${HOME}/mail"         \
     --exclude="${HOME}/.asdf"        \
     --exclude="${HOME}/.cache"       \
     --exclude="${HOME}/.cargo"       \

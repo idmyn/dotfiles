@@ -24,6 +24,8 @@ cask "sensiblesidebuttons"
 
 brew "fd"
 brew "mu"
+brew "jq"
+brew "jid"
 brew "fzf"
 brew "exa"
 brew "git"
