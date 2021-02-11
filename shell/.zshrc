@@ -36,6 +36,7 @@ source ~/.zinit/bin/zinit.zsh
 zinit ice wait lucid
 zinit light skywind3000/z.lua
 export _ZL_MATCH_MODE=1
+export _ZL_FZF_FLAG="+s"
 alias zi="z -I"
 alias zh='z -I -t .'
 alias b='z -b'

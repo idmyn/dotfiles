@@ -6,6 +6,9 @@ matches:
   - trigger: ":wb"
     replace: "https://web.archive.org/save/"
 
+  - trigger: ":jira"
+    replace: "https://nandosuk.atlassian.net/browse/MW-"
+
   # date
   - trigger: ":date"
     replace: "{{ISO-8601}}"

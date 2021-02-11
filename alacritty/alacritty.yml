@@ -9,6 +9,7 @@ key_bindings:
   - { key: Left,  mods: Command, chars: "\u0001" }
   - { key: Right, mods: Command, chars: "\u0005" }
   - { key: Back,  mods: Command, chars: "\x15"   }
+  - { key: Key3,  mods: Alt,     chars: "#"      }
 
 window:
   padding:
