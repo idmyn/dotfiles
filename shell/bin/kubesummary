@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-CONTEXT=$(kubectl config current-context)
-
-if [ -z "$CONTEXT" ]; then
-    echo "no k8s context"
-else
-    echo "$CONTEXT:$(kubens --current)"
-fi
