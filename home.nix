@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, doom-emacs, ... }:
 
 {
   # Let Home Manager install and manage itself.
@@ -11,9 +11,13 @@
     sessionPath = [ "$HOME/.bin" ]; # TODO move scripts into home-manager
 
     packages = with pkgs; [
-      nixfmt
       cachix
+      nixfmt
       niv
+
+      doom-emacs
+      git-crypt
+      ripgrep
       restic
 
       nodejs
@@ -65,6 +69,7 @@
         set fish_greeting
         set -g fish_color_command black
         set -g fish_color_param black
+        set -g fish_color_operator black
         set -g fish_color_autosuggestion black -u
       '';
 

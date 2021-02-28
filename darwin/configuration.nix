@@ -1,17 +1,28 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+let
+  doom-emacs = pkgs.callPackage (builtins.fetchTarball {
+    url = https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz;
+  }) {
+    doomPrivateDir = ../dotfiles/doom;
+  };
+in {
   imports = [ <home-manager/nix-darwin> ];
-  home-manager.useGlobalPkgs = true;
   users.users.davidmy.home = "/Users/davidmy";
-  home-manager.users.davidmy = import ../home.nix;
-
-  # darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
-  environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
+  home-manager.useGlobalPkgs = true; # not sure I need this line anymore
+  home-manager.users.davidmy = import ../home.nix { inherit config pkgs lib doom-emacs; };
 
   # zsh is slow with this enabled:
   # programs.zsh.enable = true;
   programs.fish.enable = true;
+
+  services.emacs = {
+    enable = true;
+    package = doom-emacs;
+  };
+
+  # darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
+  environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
   # Auto upgrade nix package and the daemon service
   # daemon info: https://github.com/LnL7/nix-darwin/issues/188#issuecomment-626132049
