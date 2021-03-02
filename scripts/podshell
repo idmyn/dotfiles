@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+NAMESPACE=${1:-$(kubens | fzf)}
+PODNAME=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" -n "$NAMESPACE" | head -1)
+echo "connecting to $NAMESPACE in $PODNAME..."
+kubectl exec -it -n "$NAMESPACE" -c "$NAMESPACE" "$PODNAME" -- sh

@@ -1,0 +1,46 @@
+setopt autocd
+function chpwd() {
+    emulate -L zsh
+    ls
+}
+
+zstyle ':completion:*' menu select # prettier tab completion
+
+setopt BANG_HIST # Treat the '!' character specially during expansion
+setopt SHARE_HISTORY # append to history after each command
+setopt HIST_IGNORE_ALL_DUPS
+HISTSIZE=10000
+SAVEHIST=10000
+
+SHOW_K8S_PROMPT=0
+function kp() {
+  ((SHOW_K8S_PROMPT ^= 1)) # https://unix.stackexchange.com/a/364489
+}
+precmd() { [ "$SHOW_K8S_PROMPT" = 1 ] && RPROMPT="$(~/.bin/kubesummary)" || RPROMPT="" }
+
+# https://stackoverflow.com/a/8595614
+function eb() {
+  perl -MFile::Temp -MFile::Copy -e \
+  'copy *STDIN, $file = File::Temp->new; system "emacsclient", $file' \
+  & disown
+}
+
+function jsontidy() {
+  # TODO make this idempotent
+  deno eval "console.log(JSON.stringify(eval('($(pbpaste))')))" | jq '.' | pbcopy
+}
+
+alias q="exit"
+
+alias la="ls -a"
+alias ll="ls -alh"
+
+alias gs="git status"
+alias gb="git branch"
+alias gl="git log --oneline -n 10"
+
+alias tf="terraform"
+
+alias k="kubectl"
+alias kns="kubens"
+alias kdebug="kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh"

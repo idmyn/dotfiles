@@ -4,17 +4,17 @@ let
   doom-emacs = pkgs.callPackage (builtins.fetchTarball {
     url = https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz;
   }) {
-    doomPrivateDir = ../dotfiles/doom;
+    doomPrivateDir = ../dotfiles/dot-doom.d;
   };
-in {
+in
+
+{
   imports = [ <home-manager/nix-darwin> ];
   users.users.davidmy.home = "/Users/davidmy";
   home-manager.useGlobalPkgs = true; # not sure I need this line anymore
   home-manager.users.davidmy = import ../home.nix { inherit config pkgs lib doom-emacs; };
 
-  # zsh is slow with this enabled:
-  # programs.zsh.enable = true;
-  programs.fish.enable = true;
+  programs.zsh.enable = true;
 
   services.emacs = {
     enable = true;

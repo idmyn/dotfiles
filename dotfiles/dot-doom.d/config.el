@@ -8,7 +8,7 @@
 (setq display-line-numbers-type nil)
 
 ;; load secrets (encrypted with git-crypt)
-(load "~/.config/nixpkgs/dotfiles/doom/secrets.el")
+(load "~/.config/nixpkgs/dotfiles/dot-doom.d/secrets.el")
 
 ;; when I open emacs I want it to fill my screen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -199,8 +199,9 @@ Version 2017-07-25"
   :n "C-j" 'evil-multiedit-match-symbol-and-next
   :n "C-k" 'evil-multiedit-match-symbol-and-prev
 
-  :n "C-i" 'better-jumper-jump-backward
-  :n "C-o" 'better-jumper-jump-forward))
+  ;; :n "C-i" 'better-jumper-jump-backward
+  ;; :n "C-o" 'better-jumper-jump-forward
+  ))
 
 (map!
  (:after evil
@@ -376,6 +377,8 @@ Version 2017-07-25"
 
 (after! js2-mode
   (setq js2-basic-offset 2))
+
+(setq-hook! 'typescript-tsx-mode-hook flycheck-checker 'javascript-eslint)
 
 (setq css-indent-offset 2)
 (add-hook 'css-mode-hook (lambda () (flycheck-mode -1)))

@@ -1,5 +1,9 @@
 { config, pkgs, lib, doom-emacs, ... }:
 
+let
+  my-scripts = import ./scripts pkgs;
+in
+
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -7,10 +11,8 @@
   home = {
     username = builtins.getEnv "USER";
     homeDirectory = builtins.getEnv "HOME";
-    sessionVariables = { SHELL = "${pkgs.fish}/bin/fish"; };
-    sessionPath = [ "$HOME/.bin" ]; # TODO move scripts into home-manager
 
-    packages = with pkgs; [
+    packages = my-scripts ++ (with pkgs; [
       cachix
       nixfmt
       niv
@@ -22,8 +24,10 @@
 
       nodejs
       yarn
+      flow
+      nodePackages.prettier
       nodePackages.typescript-language-server
-    ];
+    ]);
   };
 
   programs = {
@@ -46,42 +50,49 @@
 
     zoxide = { enable = true; };
 
-    fish = {
+    zsh = {
       enable = true;
-
-      shellAliases = { ls = "echo; exa -F"; };
-
-      shellAbbrs = {
-        q = "exit";
-        la = "ls -a";
-        ll = "ls -alh";
-        gs = "git status";
-        gb = "git branch";
-        gl = "git log --oneline -n 10";
-        tf = "terraform";
-        k = "kubectl";
-        kns = "kubens";
-        kdebug =
-          "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";
+      enableAutosuggestions = true;
+      plugins = [
+        {
+          name = "zsh-history-substring-search";
+          file = "zsh-history-substring-search.zsh";
+          src = pkgs.fetchFromGitHub {
+            owner = "zsh-users";
+            repo = "zsh-history-substring-search";
+            rev = "v1.0.2";
+            sha256 = "0y8va5kc2ram38hbk2cibkk64ffrabfv1sh4xm7pjspsba9n5p1y";
+          };
+        }
+      ];
+      sessionVariables = {
+        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "underline";
       };
-
-      shellInit = ''
-        set fish_greeting
-        set -g fish_color_command black
-        set -g fish_color_param black
-        set -g fish_color_operator black
-        set -g fish_color_autosuggestion black -u
+      initExtra = '';
+        alias ls='echo; ${pkgs.exa}/bin/exa'
+        bindkey '^[[A' history-substring-search-up
+        bindkey '^[[B' history-substring-search-down
+        ${builtins.readFile dotfiles/dot-zshrc}
       '';
+    };
 
-      plugins = [{
-        name = "autols";
-        src = pkgs.fetchFromGitHub {
-          owner = "idmyn";
-          repo = "fish-autols";
-          rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
-          sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
-        };
-      }];
+    tmux = {
+      enable = true;
+      plugins = with pkgs; [
+        tmuxPlugins.yank
+        tmuxPlugins.pain-control
+      ];
+      extraConfig = ''
+        ${builtins.readFile dotfiles/dot-tmux.conf}
+      '';
+    };
+
+    kitty = {
+      enable = true;
+      extraConfig = ''
+        shell ${pkgs.zsh}/bin/zsh -c ${pkgs.tmux}/bin/tmux
+        ${builtins.readFile dotfiles/kitty.conf}
+      '';
     };
   };
 

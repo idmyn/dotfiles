@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+EMACS=${EMACS:-emacs}
+EMACSCLIENT=${EMACSCLIENT:-emacsclient}
+
+if [ "$(ps -ax | rg -c -i emacs)" -gt 1 ]; then
+    if [ "$($EMACSCLIENT -e '(length (frame-list))')" -gt 1 ]; then
+        $EMACSCLIENT -n "$1"
+    else
+        $EMACSCLIENT -nc "$1"
+    fi
+else
+    $EMACS --daemon; $EMACSCLIENT -nc "$1"
+fi
