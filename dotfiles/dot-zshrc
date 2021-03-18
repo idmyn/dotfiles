@@ -26,8 +26,7 @@ function eb() {
 }
 
 function jsontidy() {
-  # TODO make this idempotent
-  deno eval "console.log(JSON.stringify(eval('($(pbpaste))')))" | jq '.' | pbcopy
+  pbpaste | jq '.' | pbcopy
 }
 
 alias q="exit"

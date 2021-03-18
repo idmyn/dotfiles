@@ -378,7 +378,10 @@ Version 2017-07-25"
 (after! js2-mode
   (setq js2-basic-offset 2))
 
+(setq flycheck-javascript-eslint-executable "eslint_d")
 (setq-hook! 'typescript-tsx-mode-hook flycheck-checker 'javascript-eslint)
+(setq lsp-eslint-server-command `("node" ,(expand-file-name (car (last (file-expand-wildcards "~/src/clones/vscode-eslint/server/out/eslintServer.js")))) "--stdio"))
+(setq lsp-enable-file-watchers nil)
 
 (setq css-indent-offset 2)
 (add-hook 'css-mode-hook (lambda () (flycheck-mode -1)))

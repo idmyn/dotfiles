@@ -17,6 +17,18 @@ in
     username = builtins.getEnv "USER";
     homeDirectory = builtins.getEnv "HOME";
 
+    sessionVariables = {
+      ANDROID_SDK_ROOT = "$HOME/Library/Android/sdk";
+      GLAMOUR_STYLE = "light";
+    };
+
+    sessionPath = [
+      "$HOME/Library/Android/sdk/emulator"
+      "$HOME/Library/Android/sdk/tools"
+      "$HOME/Library/Android/sdk/tools/bin"
+      "$HOME/Library/Android/sdk/platform-tools"
+    ];
+
     packages = my-scripts ++ (with pkgs; [
       cachix
       nixfmt
@@ -26,10 +38,26 @@ in
       git-crypt
       ripgrep
       restic
+      reflex
+      ngrok
+      just
+      glow
+      pup
 
-      nodejs
+      pandoc
+      tectonic
+
+      google-cloud-sdk
+
+      rustup
+
+      gopls
+      golint
+
       yarn
-      flow
+      nodePackages.nodemon
+      nodePackages.eslint
+      nodePackages.eslint_d
       nodePackages.prettier
       nodePackages.typescript-language-server
     ]);
