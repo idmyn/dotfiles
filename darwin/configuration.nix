@@ -1,25 +1,14 @@
 { config, pkgs, lib, ... }:
 
-let
-  doom-emacs = pkgs.callPackage (builtins.fetchTarball {
-    url = https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz;
-  }) {
-    doomPrivateDir = ../dotfiles/dot-doom.d;
-  };
-in
-
 {
   imports = [ <home-manager/nix-darwin> ];
   users.users.davidmy.home = "/Users/davidmy";
-  home-manager.useGlobalPkgs = true; # not sure I need this line anymore
-  home-manager.users.davidmy = import ../home.nix { inherit config pkgs lib doom-emacs; };
+  home-manager.useGlobalPkgs = true;
+  home-manager.users.davidmy = import ../home.nix;
+
+  nixpkgs.config.allowUnfree = true;
 
   programs.zsh.enable = true;
-
-  services.emacs = {
-    enable = true;
-    package = doom-emacs;
-  };
 
   # darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";

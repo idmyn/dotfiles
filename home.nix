@@ -1,7 +1,12 @@
-{ config, pkgs, lib, doom-emacs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   my-scripts = import ./scripts pkgs;
+  doom-emacs = pkgs.callPackage (builtins.fetchTarball {
+    url = https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz;
+  }) {
+    doomPrivateDir = ./dotfiles/dot-doom.d;
+  };
 in
 
 {
@@ -50,6 +55,8 @@ in
 
     zoxide = { enable = true; };
 
+    fzf = { enable = true; };
+
     zsh = {
       enable = true;
       enableAutosuggestions = true;
@@ -72,6 +79,7 @@ in
         alias ls='echo; ${pkgs.exa}/bin/exa'
         bindkey '^[[A' history-substring-search-up
         bindkey '^[[B' history-substring-search-down
+        [[ -e $HOME/.asdf/asdf.sh ]] && . $HOME/.asdf/asdf.sh
         ${builtins.readFile dotfiles/dot-zshrc}
       '';
     };
