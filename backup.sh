@@ -21,6 +21,7 @@ echo "Beginning backup at $(date)" >> "$LOGFILE"
     --exclude="${HOME}/mail"         \
     --exclude="${HOME}/.asdf"        \
     --exclude="${HOME}/.cache"       \
+    --exclude="${HOME}/.stack"       \
     --exclude="${HOME}/.cargo"       \
     --exclude="${HOME}/.rustup"      \
     --exclude="${HOME}/.emacs.d"     \
