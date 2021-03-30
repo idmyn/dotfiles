@@ -2,11 +2,17 @@
 
 let
   my-scripts = import ./scripts pkgs;
+
   doom-emacs = pkgs.callPackage (builtins.fetchTarball {
-    url = https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz;
-  }) {
-    doomPrivateDir = ./dotfiles/dot-doom.d;
-  };
+    url = "https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz";
+  }) { doomPrivateDir = ./dotfiles/doom; };
+
+  gccemacs = (import (pkgs.fetchFromGitHub {
+    owner = "twlz0ne";
+    repo = "nix-gccemacs-darwin";
+    rev = "6e58775e7eddfe4b3a2130029346f11f23d677b1";
+    sha256 = "1dnyyz2jikvp28l4ayrgc9mvaivh42fndgy7sg7yxybgnslr2gqk";
+  })).emacsGccDarwin;
 in
 
 {
@@ -23,6 +29,8 @@ in
     };
 
     sessionPath = [
+      "$HOME/.local/bin"
+      "$HOME/.emacs.d/bin"
       "$HOME/Library/Android/sdk/emulator"
       "$HOME/Library/Android/sdk/tools"
       "$HOME/Library/Android/sdk/tools/bin"
@@ -34,7 +42,8 @@ in
       nixfmt
       niv
 
-      doom-emacs
+      # doom-emacs
+      gccemacs
       git-crypt
       ripgrep
       restic
@@ -43,6 +52,7 @@ in
       just
       glow
       pup
+      xsv
 
       pandoc
       tectonic
@@ -59,9 +69,13 @@ in
       nodePackages.eslint
       nodePackages.eslint_d
       nodePackages.prettier
+      nodePackages.typescript
       nodePackages.typescript-language-server
     ]);
   };
+
+  # TODO: clone doom to .config/emacs
+  xdg.configFile."doom".source = dotfiles/doom;
 
   programs = {
     direnv = {
@@ -81,29 +95,24 @@ in
       };
     };
 
-    zoxide = { enable = true; };
-
-    fzf = { enable = true; };
+    zoxide.enable = true;
+    fzf.enable = true;
 
     zsh = {
       enable = true;
       enableAutosuggestions = true;
-      plugins = [
-        {
-          name = "zsh-history-substring-search";
-          file = "zsh-history-substring-search.zsh";
-          src = pkgs.fetchFromGitHub {
-            owner = "zsh-users";
-            repo = "zsh-history-substring-search";
-            rev = "v1.0.2";
-            sha256 = "0y8va5kc2ram38hbk2cibkk64ffrabfv1sh4xm7pjspsba9n5p1y";
-          };
-        }
-      ];
-      sessionVariables = {
-        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "underline";
-      };
-      initExtra = '';
+      plugins = [{
+        name = "zsh-history-substring-search";
+        file = "zsh-history-substring-search.zsh";
+        src = pkgs.fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-history-substring-search";
+          rev = "v1.0.2";
+          sha256 = "0y8va5kc2ram38hbk2cibkk64ffrabfv1sh4xm7pjspsba9n5p1y";
+        };
+      }];
+      sessionVariables = { ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "underline"; };
+      initExtra = ''
         alias ls='echo; ${pkgs.exa}/bin/exa'
         bindkey '^[[A' history-substring-search-up
         bindkey '^[[B' history-substring-search-down
@@ -114,10 +123,7 @@ in
 
     tmux = {
       enable = true;
-      plugins = with pkgs; [
-        tmuxPlugins.yank
-        tmuxPlugins.pain-control
-      ];
+      plugins = with pkgs; [ tmuxPlugins.yank tmuxPlugins.pain-control ];
       extraConfig = ''
         ${builtins.readFile dotfiles/dot-tmux.conf}
       '';

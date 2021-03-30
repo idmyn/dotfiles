@@ -8,7 +8,7 @@
 (setq display-line-numbers-type nil)
 
 ;; load secrets (encrypted with git-crypt)
-(load "~/.config/nixpkgs/dotfiles/dot-doom.d/secrets.el")
+(load "~/.config/nixpkgs/dotfiles/doom/secrets.el")
 
 ;; when I open emacs I want it to fill my screen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -154,8 +154,7 @@ Version 2017-07-25"
   :ni "M-h" 'evil-window-left
   :ni "M-j" 'evil-window-down
   :ni "M-k" 'evil-window-up
-  :ni "M-l" 'evil-window-right
-  )
+  :ni "M-l" 'evil-window-right)
 
  (:after outline
   :map outline-mode-map
@@ -197,11 +196,7 @@ Version 2017-07-25"
   :i "C-o" '+default/newline-above
 
   :n "C-j" 'evil-multiedit-match-symbol-and-next
-  :n "C-k" 'evil-multiedit-match-symbol-and-prev
-
-  ;; :n "C-i" 'better-jumper-jump-backward
-  ;; :n "C-o" 'better-jumper-jump-forward
-  ))
+  :n "C-k" 'evil-multiedit-match-symbol-and-prev))
 
 (map!
  (:after evil
@@ -222,8 +217,11 @@ Version 2017-07-25"
  ((string-equal system-type "darwin")
   (progn
     (map!
-     "M-3" (lambda () (interactive) (insert "#")))
-    )))
+     "M-3" (lambda () (interactive) (insert "#"))))))
+
+(map! :map github-review-mode-map
+      :when IS-MAC
+      :i "M-3" (lambda () (interactive) (insert "#")))
 
 (after! evil
   (setq evil-insert-state-map (make-sparse-keymap)) ; emacs bindings in evil insert state
@@ -283,11 +281,11 @@ Version 2017-07-25"
   (dolist (regexp '("^\\*"))
     (push regexp ivy-ignore-buffers)))
 
-(set-popup-rule! "^\\*deadgrep" :size 0.4)
 (map!
  :leader
  :prefix "s"
  :desc "Search project" "p" 'deadgrep)
+(set-popup-rule! "^\\*deadgrep" :size 0.4)
 
 (after! deadgrep
   (defun deadgrep--project-root ()
@@ -317,6 +315,20 @@ Version 2017-07-25"
 
 (global-eldoc-mode -1)
 (remove-hook 'org-mode-hook #'org-eldoc-load)
+(use-package eldoc-box
+  :after eldoc
+  :custom-face
+  (eldoc-box-border ((t))))
+
+(add-hook! 'lsp-eldoc-hook #'lsp-hover #'eldoc-box-hover-mode)
+(setq lsp-signature-function 'lsp-signature-posframe)
+(setq lsp-signature-posframe-params (list :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
+                                          :background-color (face-attribute 'company-tooltip :background)
+                                          :height 1
+                                          :width 60
+                                          :border-width 5
+                                          :border-color (face-attribute 'company-tooltip :background)
+                                          :min-width 60))
 
 (map!
  :after evil-org
@@ -383,6 +395,8 @@ Version 2017-07-25"
 (setq lsp-eslint-server-command `("node" ,(expand-file-name (car (last (file-expand-wildcards "~/src/clones/vscode-eslint/server/out/eslintServer.js")))) "--stdio"))
 (setq lsp-enable-file-watchers nil)
 
+(setq safe-local-variable-values '((lsp-enabled-clients . (ts-ls eslint))))
+
 (setq css-indent-offset 2)
 (add-hook 'css-mode-hook (lambda () (flycheck-mode -1)))
 
@@ -415,3 +429,11 @@ Version 2017-07-25"
   :map sly-mrepl-mode-map
   :i "C-j" 'sly-mrepl-next-input-or-button
   :i "C-k" 'sly-mrepl-previous-input-or-button))
+
+; https://github.com/hlissner/doom-emacs/issues/1530#issuecomment-725588733
+(add-hook! 'lsp-after-initialize-hook
+  (run-hooks (intern (format "%s-lsp-hook" major-mode))))
+(defun go-flycheck-setup ()
+  (flycheck-add-next-checker 'lsp 'golangci-lint))
+(add-hook 'go-mode-lsp-hook
+          #'go-flycheck-setup)
