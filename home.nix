@@ -31,6 +31,7 @@ in
     sessionPath = [
       "$HOME/.local/bin"
       "$HOME/.emacs.d/bin"
+      "$HOME/.deta/bin"
       "$HOME/Library/Android/sdk/emulator"
       "$HOME/Library/Android/sdk/tools"
       "$HOME/Library/Android/sdk/tools/bin"

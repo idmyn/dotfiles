@@ -3,12 +3,14 @@
 EMACS=${EMACS:-emacs}
 EMACSCLIENT=${EMACSCLIENT:-emacsclient}
 
-if [ "$(ps -ax | rg -c -i emacs)" -gt 1 ]; then
+PATH_TO_OPEN=${1:-.}
+
+if [ "$(ps -ax | rg -c bin/emacs)" -gt 1 ]; then
     if [ "$($EMACSCLIENT -e '(length (frame-list))')" -gt 1 ]; then
-        $EMACSCLIENT -n "$1"
+        $EMACSCLIENT -n "$PATH_TO_OPEN"
     else
-        $EMACSCLIENT -nc "$1"
+        $EMACSCLIENT -nc "$PATH_TO_OPEN"
     fi
 else
-    $EMACS --daemon; $EMACSCLIENT -nc "$1"
+    $EMACS --daemon; $EMACSCLIENT -nc "$PATH_TO_OPEN"
 fi
