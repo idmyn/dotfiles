@@ -26,6 +26,8 @@ in {
     };
 
     sessionPath = [
+      "$HOME/.deta/bin"
+      "$HOME/.cargo/bin"
       "$HOME/.local/bin"
       "$HOME/.config/emacs/bin"
       "$HOME/.deta/bin"
@@ -85,7 +87,10 @@ in {
   programs = {
     direnv = {
       enable = true;
-      enableNixDirenvIntegration = true;
+      # enableNixDirenvIntegration = true;
+      # ^ I tried this, which uses https://github.com/nix-community/nix-direnv
+      # but I found it messed up my emacs daemon/client setup
+      # so I'm using lorri instead, which is configured in ./darwin/configuration.nix
     };
 
     starship = {

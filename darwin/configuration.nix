@@ -25,6 +25,8 @@ in
   programs.zsh.enable = true;
   programs.fish.enable = true;
 
+  services.lorri.enable = true;
+
   # darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 

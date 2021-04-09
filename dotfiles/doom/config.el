@@ -315,20 +315,24 @@ Version 2017-07-25"
 
 (global-eldoc-mode -1)
 (remove-hook 'org-mode-hook #'org-eldoc-load)
-(use-package eldoc-box
-  :after eldoc
-  :custom-face
-  (eldoc-box-border ((t))))
 
-(add-hook! 'lsp-eldoc-hook #'lsp-hover #'eldoc-box-hover-mode)
+(use-package eldoc-box
+  :after (eldoc company)
+  :custom-face
+  (eldoc-box-border ((t)))
+  (eldoc-box-body ((t (:inherit company-tooltip)))))
+
+(add-hook! 'lsp-eldoc-hook #'lsp-hover #'eldoc-box-hover-at-point-mode)
 (setq lsp-signature-function 'lsp-signature-posframe)
-(setq lsp-signature-posframe-params (list :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
-                                          :background-color (face-attribute 'company-tooltip :background)
-                                          :height 1
-                                          :width 60
-                                          :border-width 5
-                                          :border-color (face-attribute 'company-tooltip :background)
-                                          :min-width 60))
+(after! (company lsp posframe)
+  (setq lsp-signature-posframe-params (list :poshandler #'posframe-poshandler-point-window-center
+                                            :background-color (face-attribute 'company-tooltip :background)
+                                            :height 1
+                                            :width 60
+                                            :border-width 5
+                                            :border-color (face-attribute 'company-tooltip :background)
+                                            :min-width 60)))
+
 
 (map!
  :after evil-org
