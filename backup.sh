@@ -13,12 +13,16 @@ fi
 
 echo "Beginning backup at $(date)" >> "$LOGFILE"
 
+# TODO consider specifying includes rather than excludes
+
 /usr/local/bin/restic backup ~       \
     --exclude="**/node_modules"      \
     --exclude="**/straight/repos"    \
     --exclude="${HOME}/desk"         \
     --exclude="${HOME}/files"        \
     --exclude="${HOME}/mail"         \
+    --exclude="${HOME}/.ssh"         \
+    --exclude="${HOME}/.gnupg"       \
     --exclude="${HOME}/.asdf"        \
     --exclude="${HOME}/.cache"       \
     --exclude="${HOME}/.stack"       \

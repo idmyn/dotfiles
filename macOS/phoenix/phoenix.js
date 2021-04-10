@@ -53,15 +53,16 @@ const windowToFullNextScreen = new Key('o', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
-  if (App.get('Emacs')) {
-    if (App.get('Emacs').windows().length > 0) {
-      App.get('Emacs').focus()
+  const appName = 'emacs-28.0.50'
+  if (App.get(appName)) {
+    if (App.get(appName).windows().length > 0) {
+      App.get(appName).focus()
     } else {
-      Task.run('/bin/sh', ['-c', '/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nc'])
-      App.get('Emacs').focus()
+      Task.run('/bin/sh', ['-c', 'emacsclient -nc'])
+      App.get(appName).focus()
     }
   } else {
-    Task.run('/bin/sh', ['-c', '/Applications/Emacs.app/Contents/MacOS/Emacs --daemon && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient  -nc'])
+    Task.run('/bin/sh', ['-c', 'emacs --daemon && emacsclient  -nc'])
   }
 })
 
@@ -95,7 +96,7 @@ const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenTerminal = new Key('s', ['alt', 'ctrl'], () => {
-  Task.run('/bin/sh', ['-c', 'open -a Alacritty'])
+  Task.run('/bin/sh', ['-c', 'open -a kitty'])
 })
 
 const showOrOpenMail = new Key('m', ['alt', 'ctrl'], () => {
@@ -151,5 +152,5 @@ const showOrOpenPostman = new Key('h', ['alt', 'ctrl'], () => {
   }
 })
 
-//Phoenix.log(App.all().map(app => app.name() + "\n"))
+//Phoenix.log(App.all().filter(app => /.*/i.test(app.name())).map(app => app.name() + "\n"))
 /* eslint-enable no-unused-vars */
