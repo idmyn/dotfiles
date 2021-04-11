@@ -11,8 +11,9 @@ let
   })).emacsGccDarwin;
 
   isDarwin = pkgs.stdenv.isDarwin;
+in
 
-in {
+{
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -108,7 +109,43 @@ in {
     zoxide.enable = true;
     fzf.enable = true;
 
-    fish.enable = true;
+    fish = {
+      enable = true;
+
+      shellAliases.ls = "echo; ${pkgs.exa}/bin/exa -F";
+
+      shellAbbrs = {
+        q = "exit";
+        la = "ls -a";
+        ll = "ls -alh";
+        gs = "git status";
+        gb = "git branch";
+        gl = "git log --oneline -n 10";
+        tf = "terraform";
+        k = "kubectl";
+        kns = "kubens";
+        kdebug =
+          "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";
+      };
+
+      shellInit = ''
+        set fish_greeting
+        set -g fish_color_command black
+        set -g fish_color_param black
+        set -g fish_color_operator black
+        set -g fish_color_autosuggestion black -u
+      '';
+
+      plugins = [{
+        name = "autols";
+        src = pkgs.fetchFromGitHub {
+          owner = "idmyn";
+          repo = "fish-autols";
+          rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
+          sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
+        };
+      }];
+    };
 
     zsh = {
       enable = true;
@@ -152,9 +189,7 @@ in {
 
   xdg.configFile = with lib;
     mkMerge [
-      {
-        "doom".source = dotfiles/doom;
-      }
+      { doom.source = dotfiles/doom; }
       (mkIf isDarwin {
         "phoenix/phoenix.js".source = dotfiles/macOS/phoenix.js;
       })

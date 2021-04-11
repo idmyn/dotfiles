@@ -41,12 +41,17 @@ in
 
   homebrew = {
     enable = true;
-    taps = [ "yqrashawn/goku" "homebrew/cask-fonts" "d12frosted/emacs-plus" ];
-    brews = [ "goku" ];
+    taps = [
+      "yqrashawn/goku"
+      "homebrew/cask-fonts"
+      "d12frosted/emacs-plus"
+      "federico-terzi/espanso"
+    ];
+    brews = [ "goku" "espanso" ];
     casks = [
       "sensiblesidebuttons"
       "karabiner-elements"
-      "eloston-chromium"
+      "espanso"
       "libreoffice"
       "appcleaner"
       "phoenix"
