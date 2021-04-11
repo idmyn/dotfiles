@@ -30,7 +30,7 @@ in
 
     sessionPath = [
       "$HOME/.local/bin"
-      "$HOME/.emacs.d/bin"
+      "$HOME/.config/emacs/bin"
       "$HOME/.deta/bin"
       "$HOME/Library/Android/sdk/emulator"
       "$HOME/Library/Android/sdk/tools"
@@ -43,17 +43,19 @@ in
       nixfmt
       niv
 
-      # doom-emacs
-      gccemacs
+      #gccemacs # using homebrew's emacs-plus instead because big-sur weirdness
+
       git-crypt
       ripgrep
       restic
       reflex
+      ispell
       ngrok
       just
       glow
       pup
       xsv
+      jq
 
       pandoc
       tectonic
@@ -75,8 +77,13 @@ in
     ]);
   };
 
-  # TODO: clone doom to .config/emacs
-  xdg.configFile."doom".source = dotfiles/doom;
+  # cloning like this because if I clone the repo through a Nix builtin then it's read-only which causes issues
+  home.activation.cloneDoomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    [ ! -d $HOME/.config/emacs ] && \
+      $DRY_RUN_CMD git clone --depth 1 $VERBOSE_ARG \
+      https://github.com/hlissner/doom-emacs ~/.config/emacs;
+    # git checkout 5b3f52f5fb98cc3af653b043d809254cebe04e6a
+  '';
 
   programs = {
     direnv = {

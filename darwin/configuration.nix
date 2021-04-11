@@ -21,4 +21,26 @@
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
+
+  homebrew = {
+    enable = true;
+    taps = [ "yqrashawn/goku" "homebrew/cask-fonts" "d12frosted/emacs-plus" ];
+    brews = [ "goku" ];
+    casks = [
+      "sensiblesidebuttons"
+      "karabiner-elements"
+      "eloston-chromium"
+      "libreoffice"
+      "appcleaner"
+      "phoenix"
+
+      "font-jetbrains-mono"
+      "font-iosevka-ss09"
+      "font-iosevka-aile"
+    ];
+
+    extraConfig = ''
+      brew "emacs-plus@28", args:["with-native-comp", "with-modern-doom3-icon"]
+    '';
+  };
 }

@@ -5,7 +5,7 @@ EMACSCLIENT=${EMACSCLIENT:-emacsclient}
 
 PATH_TO_OPEN=${1:-.}
 
-if [ "$(ps -ax | rg -c bin/emacs)" -gt 1 ]; then
+if [ "$(ps -ax | rg -c emacs)" -gt 1 ]; then
     if [ "$($EMACSCLIENT -e '(length (frame-list))')" -gt 1 ]; then
         $EMACSCLIENT -n "$PATH_TO_OPEN"
     else
