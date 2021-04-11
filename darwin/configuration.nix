@@ -1,14 +1,29 @@
 { config, pkgs, lib, ... }:
 
+let
+  isWorkLaptop = (builtins.getEnv "USER") == "davidmy";
+in
+
 {
   imports = [ <home-manager/nix-darwin> ];
-  users.users.davidmy.home = "/Users/davidmy";
   home-manager.useGlobalPkgs = true;
-  home-manager.users.davidmy = import ../home.nix;
+
+  users.users = (if isWorkLaptop then {
+    davidmy.home = "/Users/davidmy";
+  } else {
+    david.home = "/Users/david";
+  });
+
+  home-manager.users = (if isWorkLaptop then {
+    davidmy = import ../home.nix;
+  } else {
+    david = import ../home.nix;
+  });
 
   nixpkgs.config.allowUnfree = true;
 
   programs.zsh.enable = true;
+  programs.fish.enable = true;
 
   # darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";

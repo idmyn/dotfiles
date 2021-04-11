@@ -3,19 +3,16 @@
 let
   my-scripts = import ./scripts pkgs;
 
-  doom-emacs = pkgs.callPackage (builtins.fetchTarball {
-    url = "https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz";
-  }) { doomPrivateDir = ./dotfiles/doom; };
-
   gccemacs = (import (pkgs.fetchFromGitHub {
     owner = "twlz0ne";
     repo = "nix-gccemacs-darwin";
     rev = "6e58775e7eddfe4b3a2130029346f11f23d677b1";
     sha256 = "1dnyyz2jikvp28l4ayrgc9mvaivh42fndgy7sg7yxybgnslr2gqk";
   })).emacsGccDarwin;
-in
 
-{
+  isDarwin = pkgs.stdenv.isDarwin;
+
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -106,6 +103,8 @@ in
     zoxide.enable = true;
     fzf.enable = true;
 
+    fish.enable = true;
+
     zsh = {
       enable = true;
       enableAutosuggestions = true;
@@ -140,11 +139,21 @@ in
     kitty = {
       enable = true;
       extraConfig = ''
-        shell ${pkgs.zsh}/bin/zsh -c ${pkgs.tmux}/bin/tmux
+        shell ${pkgs.fish}/bin/fish
         ${builtins.readFile dotfiles/kitty.conf}
       '';
     };
   };
+
+  xdg.configFile = with lib;
+    mkMerge [
+      {
+        "doom".source = dotfiles/doom;
+      }
+      (mkIf isDarwin {
+        "phoenix/phoenix.js".source = dotfiles/macOS/phoenix.js;
+      })
+    ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
