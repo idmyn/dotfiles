@@ -8,7 +8,6 @@
 	sc = sparse-checkout
 	hash = rev-parse HEAD
 	recent = branch --sort=-committerdate -v
-	new = !git init && git symbolic-ref HEAD refs/heads/main
 	uf = ls-files -oz --exclude-standard
 	lb = !git for-each-ref --sort='-authordate:iso8601' --format='%(authordate:relative)%09%(refname:short)' refs/heads | head -n 10
 	lo = log --oneline -n 10
@@ -20,3 +19,5 @@
 	rebase = true
 [rebase]
 	autoStash = true
+[init]
+	defaultBranch = main
