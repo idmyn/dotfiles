@@ -150,7 +150,7 @@ in
     };
 
     zsh = {
-      enable = false;
+      enable = true;
       enableAutosuggestions = true;
       plugins = [{
         name = "zsh-history-substring-search";
@@ -184,7 +184,7 @@ in
     kitty = {
       enable = true;
       extraConfig = ''
-        shell ${pkgs.tmux}/bin/tmux
+        shell ${pkgs.fish}/bin/fish
         ${builtins.readFile dotfiles/kitty.conf}
       '';
     };
