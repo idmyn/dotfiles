@@ -77,14 +77,6 @@ in
     ]);
   };
 
-  # cloning like this because if I clone the repo through a Nix builtin then it's read-only which causes issues
-  home.activation.cloneDoomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    [ ! -d $HOME/.config/emacs ] && \
-      $DRY_RUN_CMD git clone --depth 1 $VERBOSE_ARG \
-      https://github.com/hlissner/doom-emacs ~/.config/emacs;
-    # git checkout 5b3f52f5fb98cc3af653b043d809254cebe04e6a
-  '';
-
   programs = {
     direnv = {
       enable = true;
@@ -189,11 +181,28 @@ in
 
   xdg.configFile = with lib;
     mkMerge [
-      { doom.source = dotfiles/doom; }
+      {
+        "doom".source = dotfiles/doom;
+        "git/config".source = dotfiles/dot-gitconfig;
+      }
       (mkIf isDarwin {
         "phoenix/phoenix.js".source = dotfiles/macOS/phoenix.js;
+        "karabiner.edn".source = dotfiles/macOS/karabiner.edn;
       })
     ];
+
+  # cloning like this because if I clone the repo through a Nix builtin then it's read-only which causes issues
+  home.activation.cloneDoomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    [ ! -d $HOME/.config/emacs ] && \
+      $DRY_RUN_CMD git clone --depth 1 $VERBOSE_ARG \
+        https://github.com/hlissner/doom-emacs ~/.config/emacs;
+  '';
+
+  home.activation.installAsdfVm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    [ ! -d $HOME/.asdf ] && \
+      $DRY_RUN_CMD git clone --branch v0.8.0 $VERBOSE_ARG \
+        https://github.com/asdf-vm/asdf.git ~/.asdf;
+  '';
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
