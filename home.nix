@@ -57,7 +57,6 @@ in
       just
       glow
       croc
-      git
       pup
       xsv
       jq
