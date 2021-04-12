@@ -193,7 +193,7 @@ in
     mkMerge [
       {
         "doom".source = dotfiles/doom;
-        "git/config".source = dotfiles/dot-gitconfig;
+        "git".source = dotfiles/git;
       }
       (mkIf isDarwin {
         "phoenix/phoenix.js".source = dotfiles/macOS/phoenix.js;
