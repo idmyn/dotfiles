@@ -46,13 +46,18 @@ in
       #gccemacs # using homebrew's emacs-plus instead because big-sur weirdness
 
       git-crypt
+      moreutils
+      tealdeer
       ripgrep
       restic
       reflex
       ispell
       ngrok
+      dvtm
       just
       glow
+      croc
+      git
       pup
       xsv
       jq
@@ -126,6 +131,11 @@ in
         set -g fish_color_param black
         set -g fish_color_operator black
         set -g fish_color_autosuggestion black -u
+        set -g fish_color_redirection black
+        set -g fish_color_end black
+        set -g fish_color_search_match --reverse
+
+        source ~/.asdf/asdf.fish
       '';
 
       plugins = [{
@@ -140,7 +150,7 @@ in
     };
 
     zsh = {
-      enable = true;
+      enable = false;
       enableAutosuggestions = true;
       plugins = [{
         name = "zsh-history-substring-search";
@@ -166,6 +176,7 @@ in
       enable = true;
       plugins = with pkgs; [ tmuxPlugins.yank tmuxPlugins.pain-control ];
       extraConfig = ''
+        set-option -g default-command ${pkgs.fish}/bin/fish
         ${builtins.readFile dotfiles/dot-tmux.conf}
       '';
     };
@@ -173,7 +184,7 @@ in
     kitty = {
       enable = true;
       extraConfig = ''
-        shell ${pkgs.fish}/bin/fish
+        shell ${pkgs.tmux}/bin/tmux
         ${builtins.readFile dotfiles/kitty.conf}
       '';
     };

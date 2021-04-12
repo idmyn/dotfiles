@@ -22,7 +22,7 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
-  programs.zsh.enable = true;
+  programs.zsh.enable = false;
   programs.fish.enable = true;
 
   services.lorri.enable = true;
@@ -51,10 +51,10 @@ in
     casks = [
       "sensiblesidebuttons"
       "karabiner-elements"
-      "espanso"
       "libreoffice"
       "appcleaner"
       "phoenix"
+      "raycast"
 
       "font-jetbrains-mono"
       "font-iosevka-ss09"
