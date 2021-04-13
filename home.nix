@@ -53,7 +53,7 @@ in
       reflex
       ispell
       ngrok
-      dvtm
+      tree
       just
       glow
       croc
