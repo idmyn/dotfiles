@@ -60,6 +60,7 @@ in
       pup
       xsv
       jq
+      fd
 
       pandoc
       tectonic
@@ -196,8 +197,12 @@ in
         "git".source = dotfiles/git;
       }
       (mkIf isDarwin {
-        "phoenix/phoenix.js".source = dotfiles/macOS/phoenix.js;
         "karabiner.edn".source = dotfiles/macOS/karabiner.edn;
+
+        "phoenix/phoenix.js".text = ''
+          const pathToShellInNixStore = "${pkgs.fish}/bin/fish"
+          ${builtins.readFile dotfiles/macOS/phoenix.js}
+        '';
       })
     ];
 

@@ -4,6 +4,8 @@
 // https://github.com/Jaredk3nt/phoenix-padding
 // https://github.com/mafredri/phoenix-config/blob/5f4d7083d3e6dbc8956e63c2e010a05333e3af24/src/phoenix.ts#L29-L47
 
+const pathToShell = pathToShellInNixStore || '/bin/sh' // pathToShellInNixStore is set by nix home-manager config
+
 Phoenix.set({ 'daemon': true }) // hide menu bar icon
 
 const currentScreen = () => Screen.main().flippedVisibleFrame()
@@ -61,11 +63,11 @@ const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
     if (App.get(appName).windows().length > 0) {
       App.get(appName).focus()
     } else {
-      Task.run('/bin/sh', ['-c', 'emacsclient -nc'])
+      Task.run(pathToShell, ['-c', 'emacsclient -nc'])
       App.get(appName).focus()
     }
   } else {
-    Task.run('/bin/sh', ['-c', 'emacs --daemon && emacsclient  -nc'])
+    Task.run(pathToShell, ['-c', 'emacs --daemon && emacsclient  -nc'])
   }
 })
 
