@@ -322,7 +322,7 @@ Version 2017-07-25"
   (eldoc-box-border ((t)))
   (eldoc-box-body ((t (:inherit company-tooltip)))))
 
-(add-hook! 'lsp-eldoc-hook #'lsp-hover #'eldoc-box-hover-at-point-mode)
+(add-hook! 'lsp-eldoc-hook #'lsp-hover #'eldoc-box-hover-mode)
 (setq lsp-signature-function 'lsp-signature-posframe)
 (after! (company lsp posframe)
   (setq lsp-signature-posframe-params (list :poshandler #'posframe-poshandler-point-window-center
@@ -394,7 +394,28 @@ Version 2017-07-25"
 (after! js2-mode
   (setq js2-basic-offset 2))
 
-(setq flycheck-javascript-eslint-executable "eslint_d")
+(after! typescript-mode
+  (setq typescript-indent-level 2))
+
+(after! (flycheck lsp)
+  ;; Add buffer local Flycheck checkers after LSP for different major modes.
+  ;; lifted from https://github.com/flycheck/flycheck/issues/1762#issuecomment-749789589
+  (defvar-local my-flycheck-local-cache nil)
+  (defun my-flycheck-local-checker-get (fn checker property)
+    ;; Only check the buffer local cache for the LSP checker, otherwise we get
+    ;; infinite loops.
+    (if (eq checker 'lsp)
+        (or (alist-get property my-flycheck-local-cache)
+            (funcall fn checker property))
+      (funcall fn checker property)))
+  (advice-add 'flycheck-checker-get
+              :around 'my-flycheck-local-checker-get)
+  (add-hook 'lsp-managed-mode-hook
+            (lambda ()
+              (when (derived-mode-p 'typescript-tsx-mode)
+                (setq my-flycheck-local-cache '((next-checkers . (javascript-eslint))))))))
+
+;(setq flycheck-javascript-eslint-executable "eslint_d")
 (setq-hook! 'typescript-tsx-mode-hook flycheck-checker 'javascript-eslint)
 (setq lsp-eslint-server-command `("node" ,(expand-file-name (car (last (file-expand-wildcards "~/src/clones/vscode-eslint/server/out/eslintServer.js")))) "--stdio"))
 (setq lsp-enable-file-watchers nil)

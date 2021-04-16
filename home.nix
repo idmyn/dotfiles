@@ -31,10 +31,9 @@ in
       "$HOME/.cargo/bin"
       "$HOME/.local/bin"
       "$HOME/.config/emacs/bin"
-      "$HOME/.deta/bin"
-      "$HOME/Library/Android/sdk/emulator"
       "$HOME/Library/Android/sdk/tools"
       "$HOME/Library/Android/sdk/tools/bin"
+      "$HOME/Library/Android/sdk/emulator"
       "$HOME/Library/Android/sdk/platform-tools"
     ];
 
@@ -53,6 +52,7 @@ in
       reflex
       ispell
       ngrok
+      navi
       tree
       just
       glow
@@ -135,18 +135,30 @@ in
         set -g fish_color_end black
         set -g fish_color_search_match --reverse
 
+        navi widget fish | source
         source ~/.asdf/asdf.fish
       '';
 
-      plugins = [{
-        name = "autols";
-        src = pkgs.fetchFromGitHub {
-          owner = "idmyn";
-          repo = "fish-autols";
-          rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
-          sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
-        };
-      }];
+      functions = {
+        kp = ''
+          test "$SHOW_K8S_PROMPT" = 1; and set -g SHOW_K8S_PROMPT 0; or set -g SHOW_K8S_PROMPT 1
+        '';
+        fish_right_prompt = ''
+          test "$SHOW_K8S_PROMPT" = 1; and kubesummary
+        '';
+      };
+
+      plugins = [
+        {
+          name = "autols";
+          src = pkgs.fetchFromGitHub {
+            owner = "idmyn";
+            repo = "fish-autols";
+            rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
+            sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
+          };
+        }
+      ];
     };
 
     zsh = {
