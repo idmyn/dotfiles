@@ -56,6 +56,7 @@ in
       "phoenix"
       "raycast"
 
+      "font-fantasque-sans-mono"
       "font-jetbrains-mono"
       "font-iosevka-ss09"
       "font-iosevka-aile"
