@@ -74,10 +74,10 @@ const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
 const showOrOpenVSCodium = new Key('v', ['alt', 'ctrl'], () => {
   if (App.get('VSCodium')) {
     App.get('VSCodium').focus()
-  } else if (App.get('Code')) {
-    App.get('Code').focus()
+  } else if (App.get('Visual Studio Code')) {
+    App.get('Visual Studio Code').focus()
   } else {
-    App.launch('Code')
+    App.launch('Visual Studio Code')
   }
 })
 
