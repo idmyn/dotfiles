@@ -46,8 +46,9 @@ in
       "homebrew/cask-fonts"
       "d12frosted/emacs-plus"
       "federico-terzi/espanso"
+      "bradyjoslin/sharewifi"
     ];
-    brews = [ "goku" "espanso" ];
+    brews = [ "goku" "espanso" "sharewifi" "trash" ];
     casks = [
       "sensiblesidebuttons"
       "karabiner-elements"
