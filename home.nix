@@ -53,7 +53,6 @@ in
       reflex
       ispell
       ngrok
-      navi
       tree
       just
       glow
@@ -137,7 +136,9 @@ in
         set -g fish_color_end black
         set -g fish_color_search_match --reverse
 
-        navi widget fish | source
+        bind \cj down-or-search
+        bind \ck up-or-search
+
         source ~/.asdf/asdf.fish
       '';
 
