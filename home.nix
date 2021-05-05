@@ -55,6 +55,7 @@ in
       reflex
       ispell
       ngrok
+      watch
       tree
       just
       glow
@@ -125,6 +126,7 @@ in
         gl = "git log --oneline -n 10";
         tf = "terraform";
         k = "kubectl";
+        kx = "kubectx";
         kns = "kubens";
         kdebug =
           "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";

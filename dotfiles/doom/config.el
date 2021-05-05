@@ -26,6 +26,8 @@
   (hl-line ((t (:inherit highlight :background "lavender"))))
   (lsp-ui-sideline-code-action ((t (:foreground "limegreen"))))
   (rustic-string-interpolation-face ((t)))
+  (terraform--resource-name-face ((t)))
+  (terraform--resource-type-face ((t)))
   (diredfl-file-name ((t)))
   (diredfl-file-suffix ((t)))
   (diredfl-symlink ((t)))
