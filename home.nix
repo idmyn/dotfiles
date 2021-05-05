@@ -96,6 +96,8 @@ in
 
     starship = {
       enable = true;
+      enableZshIntegration = false;
+
       settings = {
         format = lib.concatStrings [ "$directory" "$line_break" "$character" ];
         directory = { style = ""; };

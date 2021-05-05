@@ -4,6 +4,7 @@ let
   scriptsFile = file: writeScriptBin "${file}" (builtins.readFile (./. + "/${file}"));
 
   e = scriptsFile "e";
+  eb = scriptsFile "eb";
   jwt = scriptsFile "jwt";
   podshell = scriptsFile "podshell";
   kubesummary = scriptsFile "kubesummary";
@@ -11,5 +12,5 @@ let
 in
 
 [
-  e jwt podshell kubesummary changed-files
+  e eb jwt podshell kubesummary changed-files
 ]

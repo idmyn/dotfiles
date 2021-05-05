@@ -14,18 +14,15 @@ setopt HIST_IGNORE_ALL_DUPS
 HISTSIZE=10000
 SAVEHIST=10000
 
+PROMPT="
+%~
+zsh-> "
+
 SHOW_K8S_PROMPT=0
 function kp() {
   ((SHOW_K8S_PROMPT ^= 1)) # https://unix.stackexchange.com/a/364489
 }
 precmd() { [ "$SHOW_K8S_PROMPT" = 1 ] && RPROMPT="$(~/.bin/kubesummary)" || RPROMPT="" }
-
-# https://stackoverflow.com/a/8595614
-function eb() {
-  perl -MFile::Temp -MFile::Copy -e \
-  'copy *STDIN, $file = File::Temp->new; system "emacsclient", $file' \
-  & disown
-}
 
 function jsontidy() {
   pbpaste | jq '.' | pbcopy
