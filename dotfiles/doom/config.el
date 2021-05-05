@@ -379,7 +379,7 @@ Version 2017-07-25"
    :n "l" 'dired-find-file
 
    :n "/" 'dired-narrow
-   :n "r" 'revert-buffer
+   :n "C-g" 'revert-buffer
 
    :n "g" 'dired-git-info-mode
    :n "W" 'wdired-change-to-wdired-mode))

@@ -25,6 +25,7 @@ in
       LS_COLORS = "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
       ANDROID_SDK_ROOT = "$HOME/Library/Android/sdk";
       GLAMOUR_STYLE = "light";
+      EDITOR = "emacsclient -q -c -a ''";
     };
 
     sessionPath = [
@@ -47,6 +48,7 @@ in
 
       git-crypt
       moreutils
+      watchexec
       tealdeer
       ripgrep
       restic
