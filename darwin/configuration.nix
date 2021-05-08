@@ -6,7 +6,6 @@ in
 
 {
   imports = [ <home-manager/nix-darwin> ];
-  home-manager.useGlobalPkgs = true;
 
   users.users = (if isWorkLaptop then {
     davidmy.home = "/Users/davidmy";
@@ -19,8 +18,6 @@ in
   } else {
     david = import ../home.nix;
   });
-
-  nixpkgs.config.allowUnfree = true;
 
   programs.zsh.enable = false;
   programs.fish.enable = true;

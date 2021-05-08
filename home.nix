@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
 let
+  sources = import nix/sources.nix;
+  pkgs = import sources.nixpkgs-unstable {};
+
   my-scripts = import ./scripts pkgs;
 
   gccemacs = (import (pkgs.fetchFromGitHub {
@@ -54,7 +57,6 @@ in
       restic
       reflex
       ispell
-      ngrok
       watch
       tree
       just

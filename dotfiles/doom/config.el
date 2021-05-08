@@ -464,3 +464,6 @@ Version 2017-07-25"
   (flycheck-add-next-checker 'lsp 'golangci-lint))
 (add-hook 'go-mode-lsp-hook
           #'go-flycheck-setup)
+
+(use-package! just-mode
+  :mode "justfile\\'")
