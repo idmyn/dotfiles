@@ -94,9 +94,11 @@ const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
     App.get('Firefox Developer Edition').focus()
   } else if (App.get('Firefox')) {
     App.get('Firefox').focus()
+  } else if (App.get('Brave Browser')) {
+    App.get('Brave Browser').focus()
   } else {
     // App.launch('Firefox') causes prompt for safe mode
-    Task.run('/bin/sh', ['-c', 'open -a firefox'])
+    Task.run('/bin/sh', ['-c', 'open -a "Brave Browser"'])
   }
 })
 

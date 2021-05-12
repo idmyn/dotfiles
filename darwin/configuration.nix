@@ -45,7 +45,7 @@ in
       "federico-terzi/espanso"
       "bradyjoslin/sharewifi"
     ];
-    brews = [ "goku" "espanso" "sharewifi" "trash" ];
+    brews = [ "goku" "espanso" "sharewifi" "trash" "svn" ]; # svn for font-ubuntu-mono
     casks = [
       "sensiblesidebuttons"
       "karabiner-elements"
@@ -58,6 +58,7 @@ in
       "font-jetbrains-mono"
       "font-iosevka-ss09"
       "font-iosevka-aile"
+      "font-ubuntu-mono"
     ];
 
     extraConfig = ''

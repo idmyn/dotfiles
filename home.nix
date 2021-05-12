@@ -102,8 +102,12 @@ in
       enableZshIntegration = false;
 
       settings = {
-        format = lib.concatStrings [ "$directory" "$line_break" "$character" ];
+        format = lib.concatStrings [ "$directory" "$git_branch" "$line_break" "$character" ];
         directory = { style = ""; };
+        git_branch = {
+          symbol = "🌱 ";
+          style = "green";
+        };
         character = {
           success_symbol = "->";
           error_symbol = "->";
