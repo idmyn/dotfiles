@@ -1,0 +1,42 @@
+matches:
+  # url expanders (to replace some chrome extensions)
+  - trigger: ":pk"
+    replace: "https://getpocket.com/edit?url="
+
+  - trigger: ":wb"
+    replace: "https://web.archive.org/save/"
+
+  - trigger: ":jira"
+    replace: "https://nandosuk.atlassian.net/browse/MW-"
+
+  # git co-authors (to replace git-duet)
+  - trigger: ":wrd"
+    replace: "Co-authored-by: Ryan Davis <ryan.davis@nandos.co.uk>"
+
+  - trigger: ":wweo"
+    replace: "Co-authored-by: Will Eldrid-Otterburn <will.eldrid-otterburn@red-badger.com>"
+
+  - trigger: ":wls"
+    replace: "Co-authored-by: Lee Solway <solway@outlook.com>"
+
+  - trigger: ":wps"
+    replace: "Co-authored-by: Phil Simmonds <phil.simmonds@nandos.co.uk>"
+
+  # date
+  - trigger: ":dt"
+    replace: "{{mydate}}"
+    force_clipboard: true
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%Y-%m-%d"
+
+  # Shell commands
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo Hello from your shell"

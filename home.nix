@@ -98,15 +98,30 @@ in
     };
 
     starship = {
+      # package = pkgs.starship.overrideDerivation (attrs: {
+      #   cargoBuildFlags = [ "--features notify-rust" ];
+      # });
+
       enable = true;
       enableZshIntegration = false;
 
       settings = {
-        format = lib.concatStrings [ "$directory" "$git_branch" "$line_break" "$character" ];
+        format = lib.concatStrings [
+          "$directory"
+          "$git_branch"
+          "$line_break"
+          "$cmd_duration"
+          "$character"
+        ];
         directory = { style = ""; };
         git_branch = {
           symbol = "🌱 ";
           style = "green";
+        };
+        cmd_duration = {
+          min_time = 60000; # 1 minute
+          show_notifications = true; # doesn't work atm
+          min_time_to_notify = 300000; # 5 minutes
         };
         character = {
           success_symbol = "->";
@@ -163,17 +178,15 @@ in
         '';
       };
 
-      plugins = [
-        {
-          name = "autols";
-          src = pkgs.fetchFromGitHub {
-            owner = "idmyn";
-            repo = "fish-autols";
-            rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
-            sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
-          };
-        }
-      ];
+      plugins = [{
+        name = "autols";
+        src = pkgs.fetchFromGitHub {
+          owner = "idmyn";
+          repo = "fish-autols";
+          rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
+          sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
+        };
+      }];
     };
 
     zsh = {
@@ -222,6 +235,7 @@ in
       {
         "doom".source = dotfiles/doom;
         "git".source = dotfiles/git;
+        "espanso".source = dotfiles/espanso;
       }
       (mkIf isDarwin {
         "karabiner.edn".source = dotfiles/macOS/karabiner.edn;
