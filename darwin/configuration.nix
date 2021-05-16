@@ -45,7 +45,16 @@ in
       "federico-terzi/espanso"
       "bradyjoslin/sharewifi"
     ];
-    brews = [ "goku" "espanso" "sharewifi" "trash" "svn" ]; # svn for font-ubuntu-mono
+
+    brews = [
+      "git"
+      "goku"
+      "espanso"
+      "sharewifi"
+      "trash"
+      "svn" # for font-ubuntu-mono
+    ];
+
     casks = [
       "sensiblesidebuttons"
       "karabiner-elements"

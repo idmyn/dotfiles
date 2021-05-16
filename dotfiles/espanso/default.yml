@@ -1,3 +1,5 @@
+show_icon: false
+
 matches:
   # url expanders (to replace some chrome extensions)
   - trigger: ":pk"

@@ -159,5 +159,13 @@ const showOrOpenPostman = new Key('h', ['alt', 'ctrl'], () => {
   }
 })
 
+const showOrOpenTodoist = new Key('t', ['alt', 'ctrl'], () => {
+  if (App.get('Todoist')) {
+    App.get('Todoist').focus()
+  } else {
+    App.launch('Todoist')
+  }
+})
+
 //Phoenix.log(App.all().filter(app => /.*/i.test(app.name())).map(app => app.name() + "\n"))
 /* eslint-enable no-unused-vars */
