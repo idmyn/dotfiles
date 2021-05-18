@@ -57,6 +57,7 @@ in
       restic
       reflex
       ispell
+      sqlite
       watch
       tree
       just
@@ -65,6 +66,7 @@ in
       pup
       xsv
       jq
+      yq
       sd
       fd
 
