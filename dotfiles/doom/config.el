@@ -186,6 +186,16 @@ Version 2017-07-25"
   :ni "M-k" 'evil-window-up
   :ni "M-l" 'evil-window-right)
 
+ (:after lisp-mode
+  :map lispyville-mode-map
+  :ni "M-h" 'evil-window-left
+  :ni "M-j" 'evil-window-down
+  :ni "M-k" 'evil-window-up
+  :ni "M-l" 'evil-window-right
+
+  :nv "C-h" 'lispyville-beginning-of-defun
+  :nv "C-l" 'lispyville-end-of-defun)
+
  (:after magit
   :map git-rebase-mode-map
   :ni "M-h" 'evil-window-left
