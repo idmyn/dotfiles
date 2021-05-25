@@ -1,9 +1,11 @@
 #!/usr/bin/env sh
 
 if test ! -t 0; then
-    STDIN=$(cat)
+    TEMP_FILE=$(mktemp)
+    cat > "$TEMP_FILE"
     BUFFER_NAME="*stdin-$(date "+%H:%M:%S")*"
-    emacsclient -n -a '' --eval "(let ((b (generate-new-buffer \"$BUFFER_NAME\"))) (switch-to-buffer b) (insert \"$STDIN\"))" >/dev/null
+    emacsclient -n -a '' --eval "(let ((b (generate-new-buffer \"$BUFFER_NAME\"))) (switch-to-buffer b) (insert-file-contents \"$TEMP_FILE\"))" >/dev/null
+    rm "$TEMP_FILE"
     echo "piped to emacs buffer $BUFFER_NAME"
     [ "$(uname)" = "Darwin" ] && osascript -e 'tell application "emacs" to activate first window'
 else
