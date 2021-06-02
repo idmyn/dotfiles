@@ -36,9 +36,9 @@ in
       "$HOME/.cargo/bin"
       "$HOME/.local/bin"
       "$HOME/.config/emacs/bin"
+      "$HOME/google-cloud-sdk/bin" # needs to be installed 'the google way' to use alpha features
+      "$HOME/Library/Android/sdk/emulator" # this needs to be before /tools
       "$HOME/Library/Android/sdk/tools"
-      "$HOME/Library/Android/sdk/tools/bin"
-      "$HOME/Library/Android/sdk/emulator"
       "$HOME/Library/Android/sdk/platform-tools"
     ];
 
@@ -73,9 +73,8 @@ in
       pandoc
       tectonic
 
-      google-cloud-sdk
-
       rustup
+      cargo-edit
 
       gopls
       golint
@@ -211,6 +210,9 @@ in
         bindkey '^[[B' history-substring-search-down
         [[ -e $HOME/.asdf/asdf.sh ]] && . $HOME/.asdf/asdf.sh
         ${builtins.readFile dotfiles/dot-zshrc}
+      '';
+      envExtra = ''
+        export PATH="$PATH:/usr/local/bin"
       '';
     };
 
