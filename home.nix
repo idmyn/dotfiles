@@ -227,10 +227,8 @@ in
 
     kitty = {
       enable = true;
-      extraConfig = ''
-        shell ${pkgs.fish}/bin/fish
-        ${builtins.readFile dotfiles/kitty.conf}
-      '';
+      settings.shell = "${pkgs.fish}/bin/fish";
+      extraConfig = builtins.readFile dotfiles/kitty.conf;
     };
   };
 

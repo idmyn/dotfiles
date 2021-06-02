@@ -51,6 +51,7 @@ in
       "goku"
       "espanso"
       "sharewifi"
+      "tesseract"
       "trash"
       "svn" # for font-ubuntu-mono
     ];

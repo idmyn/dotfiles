@@ -1,4 +1,4 @@
-source ~/.secret-aliases
+[ -e "~/.secret-aliases" ] && source ~/.secret-aliases
 
 setopt autocd
 function chpwd() {
