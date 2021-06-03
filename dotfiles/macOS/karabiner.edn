@@ -59,8 +59,8 @@
         {:des   "in Browsers, C-j and C-k are bound to down and up"
          :rules [[:condi :Browsers] [:!Tj :down_arrow] [:!Tk :up_arrow] [:!Tg :escape]]}
 
-        {:des   "in Terminals, C-j and C-k are bound to down and up, Cmd-l to C-l, C-; to C-a"
-         :rules [[:condi :Terminals] [:!Tj :down_arrow] [:!Tk :up_arrow] [:!Cl :!Tl] [:!Tsemicolon :!Ta]]}
+        {:des   "in Terminals, Cmd-l to C-l, C-; to C-a"
+         :rules [[:condi :Terminals] [:!Cl :!Tl] [:!Tsemicolon :!Ta]]}
 
         {:des "workman dead state"
          :rules [[:comma ["dead-state" 1] :!dead-state]
