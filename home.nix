@@ -132,7 +132,11 @@ in
     };
 
     zoxide.enable = true;
-    fzf.enable = true;
+    fzf = {
+      enable = true;
+      defaultCommand = "fd --type f";
+      fileWidgetCommand = "fd --type f";
+    };
 
     fish = {
       enable = true;
