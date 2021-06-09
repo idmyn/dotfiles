@@ -236,12 +236,17 @@ in
     };
   };
 
+  home.file = {
+    ".vimrc".source = dotfiles/dot-vimrc;
+  };
+
   xdg.configFile = with lib;
     mkMerge [
       {
         "doom".source = dotfiles/doom;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
+        "nvim".source = dotfiles/nvim;
       }
       (mkIf isDarwin {
         "karabiner.edn".source = dotfiles/macOS/karabiner.edn;

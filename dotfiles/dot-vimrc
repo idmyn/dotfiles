@@ -1,0 +1,83 @@
+set splitbelow
+set splitright
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set smartindent
+set clipboard=unnamedplus
+set noswapfile
+set nobackup
+set incsearch
+set ignorecase
+set smartcase
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+augroup trim_whitespace
+    autocmd!
+    autocmd BufWritePre * :call TrimWhitespace()
+augroup END
+
+noremap H ^
+noremap L g_
+
+nnoremap <ESC> :nohl<cr>
+
+nnoremap <M-h> <C-W><C-H>
+nnoremap <M-j> <C-W><C-J>
+nnoremap <M-k> <C-W><C-K>
+nnoremap <M-l> <C-W><C-L>
+
+inoremap <C-y> <C-r>*
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+inoremap <C-e> <Esc>A
+inoremap <C-d> <Right><BS>
+inoremap <M-f> <Esc>ea
+inoremap <M-b> <Esc>bi
+inoremap <M-BS> <C-w>
+
+let mapleader=" "
+
+nnoremap <leader>fs :w<cr>
+nnoremap <leader>` <C-^>
+
+let g:the_primeagen_qf_l = 0
+let g:the_primeagen_qf_g = 0
+
+fun! ToggleQFList(global)
+    if a:global
+        if g:the_primeagen_qf_g == 1
+            let g:the_primeagen_qf_g = 0
+            cclose
+        else
+            let g:the_primeagen_qf_g = 1
+            copen
+        end
+    else
+        if g:the_primeagen_qf_l == 1
+            let g:the_primeagen_qf_l = 0
+            lclose
+        else
+            let g:the_primeagen_qf_l = 1
+            lopen
+        end
+    endif
+endfun
+
+nnoremap <C-j> :cnext<CR>zz
+nnoremap <C-k> :cprev<CR>zz
+nnoremap <leader>j :lnext<CR>zz
+nnoremap <leader>k :lprev<CR>zz
+nnoremap <C-q> :call ToggleQFList(1)<CR>
+nnoremap <leader>q :call ToggleQFList(0)<CR>
+
+
+nnoremap <silent> <leader>fd :Explore<cr>
+au FileType netrw nmap <buffer> h -
+au FileType netrw nmap <buffer> l <CR>
+au FileType netrw nmap <buffer> q :bp<CR>
