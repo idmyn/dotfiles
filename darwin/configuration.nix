@@ -53,7 +53,6 @@ in
       "sharewifi"
       "tesseract"
       "trash"
-      "svn" # for font-ubuntu-mono
     ];
 
     casks = [
@@ -63,12 +62,12 @@ in
       "appcleaner"
       "phoenix"
       "raycast"
+      "kitty"
 
       "font-fantasque-sans-mono"
       "font-jetbrains-mono"
       "font-iosevka-ss09"
       "font-iosevka-aile"
-      "font-ubuntu-mono"
     ];
 
     extraConfig = ''
