@@ -132,6 +132,7 @@ in
     };
 
     zoxide.enable = true;
+
     fzf = {
       enable = true;
       defaultCommand = "fd --type f";
@@ -156,6 +157,7 @@ in
         kns = "kubens";
         kdebug =
           "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";
+        r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
       };
 
       shellInit = ''
@@ -222,9 +224,16 @@ in
 
     tmux = {
       enable = true;
-      plugins = with pkgs; [ tmuxPlugins.yank tmuxPlugins.pain-control ];
+      plugins = with pkgs; [
+        tmuxPlugins.yank
+        tmuxPlugins.pain-control
+        tmuxPlugins.resurrect
+        tmuxPlugins.continuum
+      ];
       extraConfig = ''
         set-option -g default-command ${pkgs.fish}/bin/fish
+        set -g @resurrect-capture-pane-contents 'on'
+        run-shell ~/.tmux/plugins/tmux-thumbs/tmux-thumbs.tmux
         ${builtins.readFile dotfiles/dot-tmux.conf}
       '';
     };

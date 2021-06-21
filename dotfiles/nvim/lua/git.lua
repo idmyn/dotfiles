@@ -1,4 +1,7 @@
-require('paq-nvim').paq {'lewis6991/gitsigns.nvim'}
+local paq = require('paq-nvim').paq
+paq {'lewis6991/gitsigns.nvim'}
+paq {'tpope/vim-fugitive'}
+paq {'tpope/vim-rhubarb'}
 
 require('gitsigns').setup {
   signs = {
@@ -13,3 +16,7 @@ require('gitsigns').setup {
 
 vim.g['gitgutter_signs'] = 0
 vim.g['gitgutter_highlight_linenrs'] = 1
+
+local opts = { noremap=true, silent=true }
+vim.api.nvim_set_keymap('n', '<leader>gg', ':G<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>goo', ':GBrowse<CR>', opts)

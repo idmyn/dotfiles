@@ -3,18 +3,12 @@
 
 vim.cmd 'source ~/.vimrc'
 
-local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
+vim.opt.number = true
+vim.opt.cursorline = true
+vim.opt.signcolumn = 'yes'
 
-local function opt(scope, key, value)
-  scopes[scope][key] = value
-  if scope ~= 'o' then scopes['o'][key] = value end
-end
-
-opt('w', 'number', true)
-opt('w', 'cursorline', true)
-opt('w', 'signcolumn', 'yes')
-
-opt('o', 'updatetime', 50)
+vim.opt.updatetime = 50
+vim.opt.hidden = true
 
 vim.api.nvim_command('set undofile')
 vim.api.nvim_command('set undodir=~/.vim/undodir')
@@ -25,13 +19,18 @@ paq {'savq/paq-nvim', opt = true}       -- paq-nvim manages itself
 paq {'nvim-lua/plenary.nvim'}           -- required for lots of lua plugins
 paq {'nvim-lua/popup.nvim'}             -- required for telescope.nvim
 
-paq {'Raimondi/delimitMate'}
+paq {'editorconfig/editorconfig-vim'}
+paq {'jiangmiao/auto-pairs'}
 paq {'tpope/vim-commentary'}
 paq {'airblade/vim-rooter'}
 paq {'tpope/vim-vinegar'}
+paq {'tpope/vim-surround'}
+paq {'leafOfTree/vim-matchtag'}
+paq {'eraserhd/parinfer-rust', run = 'cargo build --release'}
+paq {'mattn/emmet-vim'}
 
 paq {'idmyn/eink.vim'}
-paq {'LnL7/vim-nix'}
+paq {'sheerun/vim-polyglot'}
 
 require('lsp')
 require('telescope')
@@ -39,5 +38,7 @@ require('autocomplete')
 require('treesitter')
 require('git')
 
-opt('o', 'termguicolors', true)
+vim.opt.termguicolors = true
 vim.cmd 'colorscheme eink'
+
+vim.g.user_emmet_expandabbr_key='<C-e><C-e>'

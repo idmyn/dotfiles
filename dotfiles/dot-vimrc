@@ -1,3 +1,5 @@
+filetype plugin indent on
+
 set splitbelow
 set splitright
 set tabstop=2
@@ -32,6 +34,8 @@ nnoremap <M-j> <C-W><C-J>
 nnoremap <M-k> <C-W><C-K>
 nnoremap <M-l> <C-W><C-L>
 
+inoremap <C-o> <Esc>O
+
 inoremap <C-y> <C-r>*
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
@@ -40,7 +44,12 @@ inoremap <C-d> <Right><BS>
 inoremap <M-f> <Esc>ea
 inoremap <M-b> <Esc>bi
 inoremap <M-BS> <C-w>
+inoremap <C-x>0 <Esc>:q<CR>
+nnoremap <C-x>0 :q<CR>
+inoremap <C-x>1 <Esc>:only<CR>a
+nnoremap <C-x>1 :only<CR>
 
+nnoremap <SPACE> <Nop>
 let mapleader=" "
 
 nnoremap <leader>fs :w<cr>
@@ -75,7 +84,6 @@ nnoremap <leader>j :lnext<CR>zz
 nnoremap <leader>k :lprev<CR>zz
 nnoremap <C-q> :call ToggleQFList(1)<CR>
 nnoremap <leader>q :call ToggleQFList(0)<CR>
-
 
 nnoremap <silent> <leader>fd :Explore<cr>
 au FileType netrw nmap <buffer> h -
