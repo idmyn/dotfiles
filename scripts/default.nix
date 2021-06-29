@@ -5,6 +5,7 @@ let
 
   e = scriptsFile "e";
   eb = scriptsFile "eb";
+  ks = scriptsFile "ks";
   jwt = scriptsFile "jwt";
   podshell = scriptsFile "podshell";
   kubesummary = scriptsFile "kubesummary";
@@ -12,5 +13,5 @@ let
 in
 
 [
-  e eb jwt podshell kubesummary changed-files
+  e eb ks jwt podshell kubesummary changed-files
 ]

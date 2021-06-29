@@ -58,6 +58,7 @@ in
       reflex
       ispell
       sqlite
+      choose
       watch
       tree
       just

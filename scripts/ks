@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+if [ -z ${TMUX+x} ]; then
+    echo "not in tmux"; exit
+fi
+
+CURRENT=$(tmux display-message -p '#S')
+
+NEXT=$(tmux ls | rg -v -F "(attached)" | choose -f ":" 0 | fzf --header "where next?")
+
+tmux switch -t "$NEXT" && tmux kill-session -t "$CURRENT"
