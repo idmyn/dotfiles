@@ -19,6 +19,7 @@
 (package! gruvbox-theme)
 (package! edit-indirect)
 (package! just-mode)
+(package! windsize)
 
 ;(package! evil-snipe :disable t)
 (package! ivy-rich :disable t)

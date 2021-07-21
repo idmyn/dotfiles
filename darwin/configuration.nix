@@ -68,6 +68,9 @@ in
       "font-jetbrains-mono"
       "font-iosevka-ss09"
       "font-iosevka-aile"
+      "font-ia-writer-mono"
+      "font-ia-writer-duo"
+      "font-ia-writer-quattro"
     ];
 
     extraConfig = ''

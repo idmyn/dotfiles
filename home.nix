@@ -13,22 +13,36 @@ let
     sha256 = "1dnyyz2jikvp28l4ayrgc9mvaivh42fndgy7sg7yxybgnslr2gqk";
   })).emacsGccDarwin;
 
+  # neovim-nightly = (import (builtins.fetchTarball {
+  #   url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+  # }));
+
   isDarwin = pkgs.stdenv.isDarwin;
+  isWorkLaptop = (builtins.getEnv "USER") == "davidmy";
 in
 
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  # nixpkgs.overlays = [
+  #   (import (builtins.fetchTarball {
+  #     url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+  #   }))
+  # ];
+
   home = {
     username = builtins.getEnv "USER";
     homeDirectory = builtins.getEnv "HOME";
 
     sessionVariables = {
-      LS_COLORS = "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
+      LS_COLORS =
+        "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
       ANDROID_SDK_ROOT = "$HOME/Library/Android/sdk";
       GLAMOUR_STYLE = "light";
       EDITOR = "emacsclient -q -c -a ''";
+      NOTES_DIR =
+        if isWorkLaptop then "$HOME/Tresors/Documents/notes/work" else "";
     };
 
     sessionPath = [
@@ -54,6 +68,7 @@ in
       watchexec
       tealdeer
       ripgrep
+      httpie
       restic
       reflex
       ispell

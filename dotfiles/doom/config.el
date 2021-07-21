@@ -204,6 +204,14 @@ Version 2017-07-25"
   :ni "M-l" 'evil-window-right))
 
 (map!
+ :leader
+ :prefix "w"
+ :desc "move window border left"    "h" 'windsize-left
+ :desc "expand window border down"  "j" 'windsize-down
+ :desc "expand window border up"    "k" 'windsize-up
+ :desc "expand window border right" "l" 'windsize-right)
+
+(map!
  (:after evil
   :i "C-o" '+default/newline-above
 
