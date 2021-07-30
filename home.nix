@@ -63,6 +63,7 @@ in
 
       #gccemacs # using homebrew's emacs-plus instead because big-sur weirdness
 
+      any-nix-shell
       git-crypt
       moreutils
       watchexec
@@ -81,6 +82,7 @@ in
       croc
       pup
       xsv
+      jiq
       jq
       yq
       sd
@@ -189,6 +191,10 @@ in
         bind \cj down-or-search
         bind \ck up-or-search
 
+        any-nix-shell fish --info-right | source
+
+        source ~/.config/fish/secret_functions.fish
+
         source ~/.asdf/asdf.fish
       '';
 
@@ -261,9 +267,7 @@ in
     };
   };
 
-  home.file = {
-    ".vimrc".source = dotfiles/dot-vimrc;
-  };
+  home.file = { ".vimrc".source = dotfiles/dot-vimrc; };
 
   xdg.configFile = with lib;
     mkMerge [
