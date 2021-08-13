@@ -1,7 +1,9 @@
 ;;; bits/evil.el -*- lexical-binding: t; -*-
 
-(setq evil-disable-insert-state-bindings t)
-(setq +evil-want-o/O-to-continue-comments nil)
+(setq evil-split-window-below t
+      evil-vsplit-window-right t
+      evil-disable-insert-state-bindings t
+      +evil-want-o/O-to-continue-comments nil)
 
 (map!
  :i "C-d" 'delete-char
@@ -14,10 +16,10 @@
  :m "H" 'evil-first-non-blank
  :m "L" 'evil-last-non-blank
 
- :mi "M-h" 'evil-window-left
- :mi "M-j" 'evil-window-down
- :mi "M-k" 'evil-window-up
- :mi "M-l" 'evil-window-right)
+ :ni "M-h" 'evil-window-left
+ :ni "M-j" 'evil-window-down
+ :ni "M-k" 'evil-window-up
+ :ni "M-l" 'evil-window-right)
 
 (map!
  :leader
