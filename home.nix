@@ -68,6 +68,7 @@ in
       moreutils
       watchexec
       tealdeer
+      hadolint
       ripgrep
       httpie
       restic
@@ -83,6 +84,7 @@ in
       pup
       xsv
       jiq
+      oil
       jq
       yq
       sd
@@ -207,15 +209,26 @@ in
         '';
       };
 
-      plugins = [{
-        name = "autols";
-        src = pkgs.fetchFromGitHub {
-          owner = "idmyn";
-          repo = "fish-autols";
-          rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
-          sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
-        };
-      }];
+      plugins = [
+        {
+          name = "autols";
+          src = pkgs.fetchFromGitHub {
+            owner = "idmyn";
+            repo = "fish-autols";
+            rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
+            sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
+          };
+        }
+        # {
+        #   name = "history-merge";
+        #   src = pkgs.fetchFromGitHub {
+        #     owner = "2m";
+        #     repo = "fish-history-merge";
+        #     rev = "7e415b8ab843a64313708273cf659efbf471ad39";
+        #     sha256 = "1hlc2ghnc8xidwzj2v1rjrw7gbpkkkld9y2mg4dh2qmcvlizcbd3";
+        #   };
+        # }
+      ];
     };
 
     zsh = {

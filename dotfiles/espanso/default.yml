@@ -24,6 +24,9 @@ matches:
   - trigger: ":wps"
     replace: "Co-authored-by: Phil Simmonds <phil.simmonds@nandos.co.uk>"
 
+  - trigger: ":wtm"
+    replace: "Co-authored-by: Tom Grimley <tom.grimley@red-badger.com>"
+
   # date
   - trigger: ":dt"
     replace: "{{mydate}}"
