@@ -10,9 +10,10 @@
  :i "C-y" 'xah-paste-or-paste-previous)
 
 (map!
- :map general-override-mode-map
+ :map markdown-mode-map
  :n "RET" 'xah-open-file-at-cursor
 
+ :map general-override-mode-map
  :m "H" 'evil-first-non-blank
  :m "L" 'evil-last-non-blank
 

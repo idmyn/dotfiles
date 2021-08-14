@@ -2,9 +2,12 @@
 
 let
   sources = import nix/sources.nix;
-  pkgs = import sources.nixpkgs-unstable {};
+  pkgs = import sources.nixpkgs-unstable { };
 
-  my-scripts = import ./scripts pkgs;
+  my-scripts = import ./scripts {
+    pkgs = pkgs;
+    isWorkLaptop = isWorkLaptop;
+  };
 
   gccemacs = (import (pkgs.fetchFromGitHub {
     owner = "twlz0ne";
@@ -81,6 +84,7 @@ in
       just
       glow
       croc
+      pass
       pup
       xsv
       jiq

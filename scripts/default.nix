@@ -1,7 +1,8 @@
-{ writeScriptBin, ... }:
+{ pkgs, isWorkLaptop }:
 
 let
-  scriptsFile = file: writeScriptBin "${file}" (builtins.readFile (./. + "/${file}"));
+  scriptsFile = file:
+    pkgs.writeScriptBin "${file}" (builtins.readFile (./. + "/${file}"));
 
   e = scriptsFile "e";
   eb = scriptsFile "eb";
@@ -11,8 +12,16 @@ let
   podshell = scriptsFile "podshell";
   kubesummary = scriptsFile "kubesummary";
   changed-files = scriptsFile "changed-files";
-in
+  backup = scriptsFile "backup";
 
-[
-  e eb ks jwt note podshell kubesummary changed-files
+in [
+  e
+  eb
+  ks
+  jwt
+  note
+  podshell
+  kubesummary
+  changed-files
+  (if isWorkLaptop then null else backup)
 ]

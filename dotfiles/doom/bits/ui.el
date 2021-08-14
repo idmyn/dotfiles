@@ -44,7 +44,6 @@
     '(diredfl-compressed-file-suffix :inherit default)))
 
 (defun fix-cursor-color ()
-  (interactive)
   (if (string-equal (face-attribute 'default :foreground) "#111111")
       (setq evil-default-cursor "#111111")
     (setq evil-default-cursor (get 'cursor 'evil-normal-color))))

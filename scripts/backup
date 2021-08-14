@@ -1,0 +1,54 @@
+#!/usr/bin/env sh
+set -euf
+
+$(pass backup.env)
+
+LOGFILE="${HOME}/.backup.log"
+
+if [ ! -e "$LOGFILE" ] ; then
+    touch "$LOGFILE"
+fi
+
+#echo "Beginning backup at $(date)" >> "$LOGFILE"
+
+# TODO consider specifying includes rather than excludes
+
+restic backup ~                            \
+    --exclude="**/node_modules"            \
+    --exclude="${HOME}/src/clones/nixpkgs" \
+    --exclude="**/target/release"          \
+    --exclude="**/straight/repos"          \
+    --exclude="${HOME}/desk"               \
+    --exclude="${HOME}/files"              \
+    --exclude="${HOME}/mail"               \
+    --exclude="${HOME}/.ssh"               \
+    --exclude="${HOME}/.gnupg"             \
+    --exclude="${HOME}/.config/emacs*"     \
+    --exclude="${HOME}/.config/yarn"       \
+    --exclude="${HOME}/.npm"               \
+    --exclude="${HOME}/.pnpm-store"        \
+    --exclude="${HOME}/.quicklisp"         \
+    --exclude="${HOME}/.tmux"              \
+    --exclude="${HOME}/.vscode"            \
+    --exclude="${HOME}/.gem"               \
+    --exclude="${HOME}/.asdf"              \
+    --exclude="${HOME}/.local"             \
+    --exclude="${HOME}/.cache"             \
+    --exclude="${HOME}/.gradle"            \
+    --exclude="${HOME}/.bundle"            \
+    --exclude="${HOME}/.stack"             \
+    --exclude="${HOME}/.cargo"             \
+    --exclude="${HOME}/.rustup"            \
+    --exclude="${HOME}/.Trash"             \
+    --exclude="${HOME}/Library"            \
+    --exclude="${HOME}/Desktop"            \
+    --exclude="${HOME}/Documents"          \
+    --exclude="${HOME}/Applications"       \
+    --exclude="${HOME}/Pictures"           \
+    --exclude="${HOME}/Public"             \
+    --exclude="${HOME}/Movies"             \
+    --exclude="${HOME}/Music"              \
+    --exclude="${HOME}/Tresors"            \
+#    | tee -a "$LOGFILE"
+
+#printf "\n*******************************************************\n\n" >> "$LOGFILE"
