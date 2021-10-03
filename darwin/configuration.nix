@@ -58,11 +58,11 @@ in
     casks = [
       "sensiblesidebuttons"
       "karabiner-elements"
-      "libreoffice"
       "appcleaner"
       "phoenix"
       "raycast"
       "kitty"
+      "iina"
 
       "font-fantasque-sans-mono"
       "font-jetbrains-mono"

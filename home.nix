@@ -70,6 +70,7 @@ in
       git-crypt
       moreutils
       watchexec
+      gnumeric
       tealdeer
       hadolint
       ripgrep
@@ -96,6 +97,8 @@ in
 
       pandoc
       tectonic
+
+      minikube
 
       rustup
       cargo-edit
@@ -166,7 +169,10 @@ in
     fish = {
       enable = true;
 
-      shellAliases.ls = "echo; ${pkgs.exa}/bin/exa -F";
+      shellAliases = {
+        ls = "echo; ${pkgs.exa}/bin/exa -F";
+        r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
+      };
 
       shellAbbrs = {
         q = "exit";
@@ -181,7 +187,6 @@ in
         kns = "kubens";
         kdebug =
           "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";
-        r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
       };
 
       shellInit = ''
@@ -199,17 +204,17 @@ in
 
         any-nix-shell fish --info-right | source
 
-        source ~/.config/fish/secret_functions.fish
+        test -e ~/.config/fish/secret_functions.fish && source ~/.config/fish/secret_functions.fish
 
         source ~/.asdf/asdf.fish
       '';
 
       functions = {
         kp = ''
+          function fish_right_prompt
+              test "$SHOW_K8S_PROMPT" = 1; and kubesummary; or nix-shell-info
+          end
           test "$SHOW_K8S_PROMPT" = 1; and set -g SHOW_K8S_PROMPT 0; or set -g SHOW_K8S_PROMPT 1
-        '';
-        fish_right_prompt = ''
-          test "$SHOW_K8S_PROMPT" = 1; and kubesummary
         '';
       };
 
