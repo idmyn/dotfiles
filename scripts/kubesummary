@@ -1,9 +1,13 @@
 #!/usr/bin/env sh
 
-CONTEXT=$(kubectl config current-context 2>/dev/null)
+CONTEXT=$(kubectl config current-context 2>&1)
 
-if [ -z "$CONTEXT" ]; then
-    echo "no k8s context"
+if [ $? -gt 0 ]; then
+    if [ "$CONTEXT" = "error: current-context is not set" ]; then
+        echo "no k8s context"
+    else
+        echo $CONTEXT
+    fi
 else
     echo "$CONTEXT:$(kubens --current)"
 fi
