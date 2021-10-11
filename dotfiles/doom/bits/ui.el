@@ -4,7 +4,11 @@
 
 (setq display-line-numbers-type nil)
 
+(setq column-number-mode t)
+
 (after! hl-line (setq hl-line-sticky-flag nil))
+
+(setq doom-variable-pitch-font (font-spec :family "Iosevka Aile" :size 12))
 
 (use-package! eink-theme
   :custom

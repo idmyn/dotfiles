@@ -10,7 +10,7 @@
  :i "C-y" 'xah-paste-or-paste-previous)
 
 (map!
- :map markdown-mode-map
+ :map (markdown-mode-map yaml-mode-map prog-mode-map)
  :n "RET" 'xah-open-file-at-cursor
 
  :map general-override-mode-map

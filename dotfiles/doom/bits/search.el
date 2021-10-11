@@ -3,7 +3,8 @@
 (after! orderless
   (setq orderless-matching-styles '(orderless-literal orderless-regexp orderless-initialism orderless-flex)))
 
-(setq consult-buffer-filter '("^ " "\\*.*\\*"))
+(after! consult
+  (append-to-list 'consult-buffer-filter '("\\*help.*" "\\*lsp.*" "\\*ts-ls.*" "\\*deadgrep.*")))
 
 (map!
  :leader

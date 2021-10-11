@@ -6,3 +6,7 @@
 (map!
  "s--" 'text-scale-decrease
  "s-=" 'text-scale-increase)
+
+(after! windmove
+  (require 'framemove)
+  (setq framemove-hook-into-windmove t))

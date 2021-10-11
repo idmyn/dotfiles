@@ -127,3 +127,17 @@ Version 2020-10-17"
         ((derived-mode-p 'restclient-mode)
          (restclient-narrow-to-current))
         (t (narrow-to-defun))))
+
+(defun append-to-list (list-var elements)
+  "Append ELEMENTS to the end of LIST-VAR.
+
+The return value is the new value of LIST-VAR.
+
+https://stackoverflow.com/a/24357106"
+  (unless (consp elements)
+    (error "ELEMENTS must be a list"))
+  (let ((list (symbol-value list-var)))
+    (if list
+        (setcdr (last list) elements)
+      (set list-var elements)))
+  (symbol-value list-var))

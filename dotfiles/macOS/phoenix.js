@@ -57,8 +57,8 @@ const windowToFullNextScreen = new Key('o', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
-  //const appName = 'emacs-28.0.50'
-  const appName = 'Emacs'
+  const app = App.all().filter(app => /emacs/i.test(app.name()))[0]
+  const appName = app ? app.name() : 'Emacs'
   if (App.get(appName)) {
     if (App.get(appName).windows().length > 0) {
       App.get(appName).focus()
@@ -94,11 +94,11 @@ const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
     App.get('Firefox Developer Edition').focus()
   } else if (App.get('Firefox')) {
     App.get('Firefox').focus()
-  } else if (App.get('Brave Browser')) {
-    App.get('Brave Browser').focus()
+  } else if (App.get('Vivaldi')) {
+    App.get('Vivaldi').focus()
   } else {
     // App.launch('Firefox') causes prompt for safe mode
-    Task.run('/bin/sh', ['-c', 'open -a "Brave Browser"'])
+    Task.run('/bin/sh', ['-c', 'open -a Vivaldi'])
   }
 })
 
@@ -168,5 +168,5 @@ const showOrOpenTodoist = new Key('t', ['alt', 'ctrl'], () => {
 })
 
 // log stream --process Phoenix
-// Phoenix.log(App.all().filter(app => /code/i.test(app.name())).map(app => app.name() + "\n"))
+ Phoenix.log(App.all().filter(app => /emacs/i.test(app.name())).map(app => app.name() + "\n"))
 /* eslint-enable no-unused-vars */

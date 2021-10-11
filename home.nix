@@ -3,6 +3,7 @@
 let
   sources = import nix/sources.nix;
   pkgs = import sources.nixpkgs-unstable { };
+  stable-pkgs = import sources.nixpkgs { };
 
   my-scripts = import ./scripts {
     pkgs = pkgs;
@@ -12,8 +13,8 @@ let
   gccemacs = (import (pkgs.fetchFromGitHub {
     owner = "twlz0ne";
     repo = "nix-gccemacs-darwin";
-    rev = "6e58775e7eddfe4b3a2130029346f11f23d677b1";
-    sha256 = "1dnyyz2jikvp28l4ayrgc9mvaivh42fndgy7sg7yxybgnslr2gqk";
+    rev = "99cded45d9bc63ebf2b1e8ff28750091f5b260de";
+    sha256 = "0p40w5c3wj4na96y67lx71gambb9m9b650nfg3n0aaw83gapvky2";
   })).emacsGccDarwin;
 
   # neovim-nightly = (import (builtins.fetchTarball {
@@ -46,6 +47,8 @@ in
       EDITOR = "emacsclient -q -c -a ''";
       NOTES_DIR =
         if isWorkLaptop then "$HOME/Tresors/Documents/notes/work" else "";
+
+      JUST_SUPPRESS_DOTENV_LOAD_WARNING = "1"; # temporary: https://github.com/casey/just/issues/469
     };
 
     sessionPath = [
@@ -60,19 +63,20 @@ in
     ];
 
     packages = my-scripts ++ (with pkgs; [
+      any-nix-shell
       cachix
       nixfmt
       niv
 
-      #gccemacs # using homebrew's emacs-plus instead because big-sur weirdness
+      stable-pkgs.visidata
 
-      any-nix-shell
       git-crypt
       moreutils
       watchexec
       gnumeric
       tealdeer
       hadolint
+      gccemacs
       ripgrep
       httpie
       restic
@@ -86,6 +90,7 @@ in
       glow
       croc
       pass
+      nnn
       pup
       xsv
       jiq
@@ -187,6 +192,7 @@ in
         kns = "kubens";
         kdebug =
           "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";
+        teb = "tmux capture-pane -pS -1000000 | eb";
       };
 
       shellInit = ''
@@ -215,6 +221,40 @@ in
               test "$SHOW_K8S_PROMPT" = 1; and kubesummary; or nix-shell-info
           end
           test "$SHOW_K8S_PROMPT" = 1; and set -g SHOW_K8S_PROMPT 0; or set -g SHOW_K8S_PROMPT 1
+        '';
+        # https://github.com/jarun/nnn/blob/fa7c19c4097bfb71eef16060724c5bd8da424a9e/misc/quitcd/quitcd.fish
+        n = ''
+          # Block nesting of nnn in subshells
+          if test -n "$NNNLVL"
+              if [ (expr $NNNLVL + 0) -ge 1 ]
+                  echo "nnn is already running"
+                  return
+              end
+          end
+
+          # The behaviour is set to cd on quit (nnn checks if NNN_TMPFILE is set)
+          # To cd on quit only on ^G, remove the "-x" as in:
+          #    set NNN_TMPFILE "$XDG_CONFIG_HOME/nnn/.lastd"
+          #    (or, to a custom path: set NNN_TMPFILE "/tmp/.lastd")
+          # or, export NNN_TMPFILE after nnn invocation
+          if test -n "$XDG_CONFIG_HOME"
+              set -x NNN_TMPFILE "$XDG_CONFIG_HOME/nnn/.lastd"
+          else
+              set -x NNN_TMPFILE "$HOME/.config/nnn/.lastd"
+          end
+
+          # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+          # stty start undef
+          # stty stop undef
+          # stty lwrap undef
+          # stty lnext undef
+
+          nnn $argv
+
+          if test -e $NNN_TMPFILE
+              source $NNN_TMPFILE
+              rm $NNN_TMPFILE
+          end
         '';
       };
 

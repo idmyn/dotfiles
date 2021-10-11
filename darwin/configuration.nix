@@ -49,6 +49,7 @@ in
     brews = [
       "git"
       "goku"
+      "neovim"
       "espanso"
       "sharewifi"
       "tesseract"
