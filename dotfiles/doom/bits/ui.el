@@ -3,6 +3,22 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (setq display-line-numbers-type nil)
+(map!
+ :leader
+ :prefix "t"
+ :desc "Line numbers" "l" (lambda ()
+                            (interactive)
+                            (setq display-line-numbers-type t)
+                            (if global-display-line-numbers-mode
+                                (global-display-line-numbers-mode 0)
+                              (global-display-line-numbers-mode 1))
+                            ))
+
+(global-hide-mode-line-mode)
+
+;; https://magit.vc/manual/magit/The-mode_002dline-information-isn_0027t-always-up_002dto_002ddate.html
+(setq-default mode-line-format
+              (delete '(vc-mode vc-mode) mode-line-format))
 
 (setq column-number-mode t)
 
