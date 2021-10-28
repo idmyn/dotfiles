@@ -21,7 +21,9 @@
 (load! "bits/git")
 (load! "bits/evil")
 (load! "bits/basics")
+(load! "bits/custom")
 (load! "bits/search")
+(load! "bits/secrets")
 (load! "bits/functions")
 
 (load! "bits/lang/js")

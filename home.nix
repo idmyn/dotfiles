@@ -193,6 +193,7 @@ in
         kdebug =
           "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";
         teb = "tmux capture-pane -pS -1000000 | eb";
+        rg = "rg -S";
       };
 
       shellInit = ''
@@ -209,6 +210,8 @@ in
         bind \ck up-or-search
 
         any-nix-shell fish --info-right | source
+
+        thefuck --alias | source
 
         test -e ~/.config/fish/secret_functions.fish && source ~/.config/fish/secret_functions.fish
 

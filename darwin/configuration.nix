@@ -53,6 +53,7 @@ in
       "espanso"
       "sharewifi"
       "tesseract"
+      "thefuck"
       "trash"
     ];
 
