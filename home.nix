@@ -77,7 +77,7 @@ in
       tealdeer
       hadolint
       gccemacs
-      ripgrep
+      stable-pkgs.ripgrep
       httpie
       restic
       reflex
@@ -101,7 +101,7 @@ in
       fd
 
       pandoc
-      tectonic
+      stable-pkgs.tectonic
 
       minikube
 
