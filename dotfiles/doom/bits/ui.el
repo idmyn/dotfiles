@@ -44,6 +44,7 @@
     '(vertico-current :background "khaki1")
     '(hl-line :inherit highlight :background "lavender")
     '(lsp-ui-sideline-code-action :foreground "limegreen")
+    '(lsp-ui-doc-background :background "lavender blush")
     '(rustic-string-interpolation-face t)
     '(terraform--resource-name-face t)
     '(terraform--resource-type-face t)

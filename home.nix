@@ -52,6 +52,7 @@ in
     };
 
     sessionPath = [
+      "$HOME/.bin"
       "$HOME/.deta/bin"
       "$HOME/.cargo/bin"
       "$HOME/.local/bin"
@@ -175,6 +176,7 @@ in
       enable = true;
 
       shellAliases = {
+        rg = "rg --engine=auto";
         ls = "echo; ${pkgs.exa}/bin/exa -F";
         r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
       };
