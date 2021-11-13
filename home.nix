@@ -47,6 +47,7 @@ in
       EDITOR = "emacsclient -q -c -a ''";
       NOTES_DIR =
         if isWorkLaptop then "$HOME/Tresors/Documents/notes/work" else "";
+      RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep.conf";
 
       JUST_SUPPRESS_DOTENV_LOAD_WARNING = "1"; # temporary: https://github.com/casey/just/issues/469
     };
@@ -77,6 +78,7 @@ in
       gnumeric
       tealdeer
       hadolint
+      babashka
       gccemacs
       stable-pkgs.ripgrep
       httpie
@@ -176,7 +178,6 @@ in
       enable = true;
 
       shellAliases = {
-        rg = "rg --engine=auto";
         ls = "echo; ${pkgs.exa}/bin/exa -F";
         r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
       };
@@ -343,6 +344,7 @@ in
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
         "nvim".source = dotfiles/nvim;
+        "ripgrep.conf".source = dotfiles/ripgrep.conf;
       }
       (mkIf isDarwin {
         "karabiner.edn".source = dotfiles/macOS/karabiner.edn;

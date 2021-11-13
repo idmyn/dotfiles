@@ -53,6 +53,7 @@ in
       "goku"
       "neovim"
       "espanso"
+      "exercism"
       "sharewifi"
       "tesseract"
       "thefuck"
