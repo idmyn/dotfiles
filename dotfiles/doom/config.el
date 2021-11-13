@@ -27,3 +27,4 @@
 (load! "bits/functions")
 
 (load! "bits/lang/js")
+(load! "bits/lang/clojure")

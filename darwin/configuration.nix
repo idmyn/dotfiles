@@ -30,7 +30,9 @@ in
   # Auto upgrade nix package and the daemon service
   # daemon info: https://github.com/LnL7/nix-darwin/issues/188#issuecomment-626132049
   services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
+  nix.package = pkgs.nixFlakes;
+
+  nix.extraOptions = "experimental-features = nix-command flakes";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
