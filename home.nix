@@ -111,6 +111,9 @@ in
       rustup
       cargo-edit
 
+      jdk11
+      leiningen
+
       gopls
       golint
 
