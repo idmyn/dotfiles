@@ -11,6 +11,10 @@ matches:
   - trigger: ":jira"
     replace: "https://nandosuk.atlassian.net/browse/MW-"
 
+  # email addresses
+  - trigger: ":noloy"
+    replace: "nandos+noloyalty@davidmyno.rs"
+
   # git co-authors (to replace git-duet)
   - trigger: ":wrd"
     replace: "Co-authored-by: Ryan Davis <ryan.davis@nandos.co.uk>"
@@ -24,8 +28,11 @@ matches:
   - trigger: ":wps"
     replace: "Co-authored-by: Phil Simmonds <phil.simmonds@nandos.co.uk>"
 
-  - trigger: ":wtm"
-    replace: "Co-authored-by: Tom Grimley <tom.grimley@red-badger.com>"
+  - trigger: ":wmpg"
+    replace: "Co-authored-by: miguelpuiggarcia <miguelpg@nandos.co.uk>"
+
+  - trigger: ":wlc"
+    replace: "Co-authored-by: Lewis Clegg <lewis.clegg@nandos.co.uk>"
 
   # date
   - trigger: ":dt"

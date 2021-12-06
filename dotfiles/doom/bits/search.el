@@ -6,6 +6,12 @@
 (after! consult
   (append-to-list 'consult-buffer-filter '("\\*help.*" "\\*lsp.*" "\\*ts-ls.*" "\\*deadgrep.*")))
 
+(setq avy-all-windows t)
+(setq avy-style 'de-bruijn)
+(map!
+ :map general-override-mode-map
+ :n "S" 'evil-avy-goto-char-timer)
+
 (map!
  :leader
  :prefix "s"

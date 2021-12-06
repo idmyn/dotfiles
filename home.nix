@@ -110,6 +110,10 @@ in
 
       rustup
       cargo-edit
+      rust-script
+      rust-analyzer
+
+      chicken
 
       jdk11
       leiningen

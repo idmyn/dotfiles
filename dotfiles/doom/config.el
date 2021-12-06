@@ -20,6 +20,7 @@
 (load! "bits/ui")
 (load! "bits/git")
 (load! "bits/evil")
+(load! "bits/term")
 (load! "bits/basics")
 (load! "bits/custom")
 (load! "bits/search")

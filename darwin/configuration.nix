@@ -63,6 +63,7 @@ in
     casks = [
       "sensiblesidebuttons"
       "karabiner-elements"
+      "beekeeper-studio"
       "appcleaner"
       "phoenix"
       "raycast"
