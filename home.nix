@@ -342,7 +342,10 @@ in
     };
   };
 
-  home.file = { ".vimrc".source = dotfiles/dot-vimrc; };
+  home.file = {
+    ".vimrc".source = dotfiles/dot-vimrc;
+    ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
+  };
 
   xdg.configFile = with lib;
     mkMerge [
