@@ -2,24 +2,14 @@
 
 let
   sources = import nix/sources.nix;
-  pkgs = import sources.nixpkgs-unstable { };
+  emacs-overlay = import sources.emacs-overlay;
+  pkgs = import sources.nixpkgs-unstable { overlays = [ emacs-overlay ]; };
   stable-pkgs = import sources.nixpkgs { };
 
   my-scripts = import ./scripts {
     pkgs = pkgs;
     isWorkLaptop = isWorkLaptop;
   };
-
-  gccemacs = (import (pkgs.fetchFromGitHub {
-    owner = "twlz0ne";
-    repo = "nix-gccemacs-darwin";
-    rev = "99cded45d9bc63ebf2b1e8ff28750091f5b260de";
-    sha256 = "0p40w5c3wj4na96y67lx71gambb9m9b650nfg3n0aaw83gapvky2";
-  })).emacsGccDarwin;
-
-  # neovim-nightly = (import (builtins.fetchTarball {
-  #   url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-  # }));
 
   isDarwin = pkgs.stdenv.isDarwin;
   isWorkLaptop = (builtins.getEnv "USER") == "davidmy";
@@ -28,12 +18,6 @@ in
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  # nixpkgs.overlays = [
-  #   (import (builtins.fetchTarball {
-  #     url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-  #   }))
-  # ];
 
   home = {
     username = builtins.getEnv "USER";
@@ -79,7 +63,7 @@ in
       gnumeric
       tealdeer
       hadolint
-      gccemacs
+      emacsGcc
       stable-pkgs.ripgrep
       httpie
       restic
