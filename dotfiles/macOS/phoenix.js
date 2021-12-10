@@ -81,14 +81,6 @@ const showOrOpenVSCodium = new Key('v', ['alt', 'ctrl'], () => {
   }
 })
 
-const showOrOpenSublime = new Key('t', ['alt', 'ctrl'], () => {
-  if (App.get('Sublime Text')) {
-    App.get('Sublime Text').focus()
-  } else {
-    App.launch('Sublime Text')
-  }
-})
-
 const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
   if (App.get('Firefox Developer Edition')) {
     App.get('Firefox Developer Edition').focus()
@@ -123,11 +115,11 @@ const showOrOpenDash = new Key('d', ['alt', 'ctrl'], () => {
   }
 })
 
-const showOrOpenNotes = new Key('n', ['alt', 'ctrl'], () => {
-  if (App.get('WorkFlowy')) {
-    App.get('WorkFlowy').focus()
+const showOrOpenLogseq = new Key('l', ['alt', 'ctrl'], () => {
+  if (App.get('Logseq')) {
+    App.get('Logseq').focus()
   } else {
-    App.launch('WorkFlowy')
+    App.launch('Logseq')
   }
 })
 
@@ -156,14 +148,6 @@ const showOrOpenPostman = new Key('h', ['alt', 'ctrl'], () => {
     App.get('Postman').focus()
   } else {
     App.launch('Postman')
-  }
-})
-
-const showOrOpenTodoist = new Key('t', ['alt', 'ctrl'], () => {
-  if (App.get('Todoist')) {
-    App.get('Todoist').focus()
-  } else {
-    App.launch('Todoist')
   }
 })
 

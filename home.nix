@@ -72,13 +72,13 @@ in
 
       stable-pkgs.visidata
 
+      magic-wormhole
       git-crypt
       moreutils
       watchexec
       gnumeric
       tealdeer
       hadolint
-      babashka
       gccemacs
       stable-pkgs.ripgrep
       httpie
@@ -91,7 +91,6 @@ in
       tree
       just
       glow
-      croc
       pass
       nnn
       pup
@@ -116,6 +115,7 @@ in
       chicken
 
       jdk11
+      babashka
       leiningen
 
       gopls
