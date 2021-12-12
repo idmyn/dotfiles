@@ -10,3 +10,9 @@
 (after! windmove
   (require 'framemove)
   (setq framemove-hook-into-windmove t))
+
+(use-package! ace-window
+  :custom
+  (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  :bind (:map general-override-mode-map
+         ("M-o" . ace-window)))

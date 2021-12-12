@@ -7,10 +7,10 @@
   (append-to-list 'consult-buffer-filter '("\\*help.*" "\\*lsp.*" "\\*ts-ls.*" "\\*deadgrep.*")))
 
 (setq avy-all-windows t)
-(setq avy-style 'de-bruijn)
+;; (setq avy-style 'de-bruijn) ; seems to cause a bug when only one candidate is found
 (map!
  :map general-override-mode-map
- :n "S" 'evil-avy-goto-char-timer)
+ :ni "M-j" 'evil-avy-goto-char-timer)
 
 (map!
  :leader

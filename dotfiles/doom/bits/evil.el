@@ -15,12 +15,12 @@
 
  :map general-override-mode-map
  :m "H" 'evil-first-non-blank
- :m "L" 'evil-last-non-blank
+ :m "L" 'evil-last-non-blank)
 
- :ni "M-h" 'evil-window-left
- :ni "M-j" 'evil-window-down
- :ni "M-k" 'evil-window-up
- :ni "M-l" 'evil-window-right)
+ ;; :ni "M-h" 'evil-window-left
+ ;; :ni "M-j" 'evil-window-down
+ ;; :ni "M-k" 'evil-window-up
+ ;; :ni "M-l" 'evil-window-right)
 
 (map!
  :leader

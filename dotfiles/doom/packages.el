@@ -6,6 +6,7 @@
 (package! edit-indirect)
 (package! framemove)
 (package! deadgrep)
+(package! ace-window)
 
 (package! prettier-js)
 (package! deno-fmt)
