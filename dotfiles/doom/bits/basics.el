@@ -4,6 +4,9 @@
       :i "M-3" (lambda () (interactive) (insert "#")))
 
 (map!
+ "s-e" 'er/expand-region)
+
+(map!
  "s--" 'text-scale-decrease
  "s-=" 'text-scale-increase)
 
