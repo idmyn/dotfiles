@@ -18,6 +18,8 @@ restic backup ~                            \
     --exclude="${HOME}/src/clones/nixpkgs" \
     --exclude="**/target/release"          \
     --exclude="**/straight/repos"          \
+    --exclude="**/cache/eln"               \
+    --exclude="**/*.elc"                   \
     --exclude="${HOME}/desk"               \
     --exclude="${HOME}/files"              \
     --exclude="${HOME}/mail"               \

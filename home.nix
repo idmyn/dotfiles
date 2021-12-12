@@ -31,9 +31,10 @@ in
       EDITOR = "emacsclient -q -c -a ''";
       NOTES_DIR =
         if isWorkLaptop then "$HOME/Tresors/Documents/notes/work" else "";
-      RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep.conf";
+      RIPGREP_CONFIG_PATH = "$HOME/.config/ripgrep.conf";
 
-      JUST_SUPPRESS_DOTENV_LOAD_WARNING = "1"; # temporary: https://github.com/casey/just/issues/469
+      JUST_SUPPRESS_DOTENV_LOAD_WARNING =
+        "1"; # temporary: https://github.com/casey/just/issues/469
     };
 
     sessionPath = [
@@ -255,26 +256,15 @@ in
         '';
       };
 
-      plugins = [
-        {
-          name = "autols";
-          src = pkgs.fetchFromGitHub {
-            owner = "idmyn";
-            repo = "fish-autols";
-            rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
-            sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
-          };
-        }
-        # {
-        #   name = "history-merge";
-        #   src = pkgs.fetchFromGitHub {
-        #     owner = "2m";
-        #     repo = "fish-history-merge";
-        #     rev = "7e415b8ab843a64313708273cf659efbf471ad39";
-        #     sha256 = "1hlc2ghnc8xidwzj2v1rjrw7gbpkkkld9y2mg4dh2qmcvlizcbd3";
-        #   };
-        # }
-      ];
+      plugins = [{
+        name = "autols";
+        src = pkgs.fetchFromGitHub {
+          owner = "idmyn";
+          repo = "fish-autols";
+          rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
+          sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
+        };
+      }];
     };
 
     zsh = {
