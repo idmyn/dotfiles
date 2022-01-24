@@ -1,10 +1,20 @@
 { config, pkgs, lib, ... }:
 
+# inspo: https://github.com/gvolpe/nix-config
+
 let
   sources = import nix/sources.nix;
   emacs-overlay = import sources.emacs-overlay;
   pkgs = import sources.nixpkgs-unstable { overlays = [ emacs-overlay ]; };
   stable-pkgs = import sources.nixpkgs { };
+
+  # TODO move into sources?
+  node-packages = import ./node-packages {};
+  archiveboxPkgs = [
+    pkgs.archivebox
+    node-packages.single-file
+    node-packages.mercury-parser
+  ];
 
   my-scripts = import ./scripts {
     pkgs = pkgs;
@@ -13,6 +23,8 @@ let
 
   isDarwin = pkgs.stdenv.isDarwin;
   isWorkLaptop = (builtins.getEnv "USER") == "davidmy";
+
+  archiveboxOutputDir = if isWorkLaptop then "" else (builtins.getEnv "HOME") + "/files/Documents/ArchiveBox";
 in
 
 {
@@ -32,6 +44,7 @@ in
       NOTES_DIR =
         if isWorkLaptop then "$HOME/Tresors/Documents/notes/work" else "";
       RIPGREP_CONFIG_PATH = "$HOME/.config/ripgrep.conf";
+      ACHIVEBOX_OUTPUT_DIR = archiveboxOutputDir;
 
       JUST_SUPPRESS_DOTENV_LOAD_WARNING =
         "1"; # temporary: https://github.com/casey/just/issues/469
@@ -49,7 +62,7 @@ in
       "$HOME/Library/Android/sdk/platform-tools"
     ];
 
-    packages = my-scripts ++ (with pkgs; [
+    packages = my-scripts ++ archiveboxPkgs ++ (with pkgs; [
       any-nix-shell
       cachix
       nixfmt
@@ -172,6 +185,7 @@ in
       shellAliases = {
         ls = "echo; ${pkgs.exa}/bin/exa -F";
         r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
+        archivebox = "OUTPUT_DIR=${archiveboxOutputDir} ${pkgs.archivebox}/bin/archivebox";
       };
 
       shellAbbrs = {

@@ -65,6 +65,7 @@ in
       "karabiner-elements"
       "beekeeper-studio"
       "appcleaner"
+      "chromium"
       "phoenix"
       "raycast"
       "kitty"
