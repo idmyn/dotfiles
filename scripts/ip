@@ -1,0 +1,5 @@
+#!/usr/bin/env oil
+
+echo """
+local:  $(ipconfig getifaddr en0)
+public: $(curl -s https://api.ipify.org; echo)"""

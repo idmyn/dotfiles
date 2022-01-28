@@ -70,7 +70,9 @@ in
 
       stable-pkgs.visidata
 
+      stable-pkgs.ripgrep
       magic-wormhole
+      tesseract4
       git-crypt
       moreutils
       watchexec
@@ -78,7 +80,7 @@ in
       tealdeer
       hadolint
       emacsGcc
-      stable-pkgs.ripgrep
+      neovim
       httpie
       restic
       reflex
@@ -205,6 +207,7 @@ in
         teb = "tmux capture-pane -pS -1000000 | eb";
         rg = "rg -S";
         dig = "dig +short";
+        nsn = "nix search nixpkgs";
       };
 
       shellInit = ''

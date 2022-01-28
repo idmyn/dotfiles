@@ -5,6 +5,7 @@ let
     pkgs.writeScriptBin "${file}" (builtins.readFile (./. + "/${file}"));
 
   e = scriptsFile "e";
+  ip = scriptsFile "ip";
   eb = scriptsFile "eb";
   ks = scriptsFile "ks";
   jwt = scriptsFile "jwt";
@@ -14,6 +15,6 @@ let
   changed-files = scriptsFile "changed-files";
   backup = scriptsFile "backup";
 
-  scripts = [ e eb ks jwt note podshell kubesummary changed-files ];
+  scripts = [ e eb ks jwt note podshell kubesummary changed-files ip ];
 
 in if isWorkLaptop then scripts else scripts ++ [ backup ]

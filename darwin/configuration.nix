@@ -51,7 +51,6 @@ in
     brews = [
       "git"
       "goku"
-      "neovim"
       "espanso"
       "exercism"
       "sharewifi"
