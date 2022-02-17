@@ -72,11 +72,9 @@ in
 
       stable-pkgs.ripgrep
       magic-wormhole
-      tesseract4
       git-crypt
       moreutils
       watchexec
-      gnumeric
       tealdeer
       hadolint
       emacsGcc

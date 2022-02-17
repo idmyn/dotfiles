@@ -51,10 +51,10 @@ in
     brews = [
       "git"
       "goku"
+      "ffmpeg"
       "espanso"
       "exercism"
       "sharewifi"
-      "tesseract"
       "thefuck"
       "trash"
     ];
@@ -77,6 +77,7 @@ in
       "font-ia-writer-mono"
       "font-ia-writer-duo"
       "font-ia-writer-quattro"
+      "font-cooper-hewitt"
     ];
 
     extraConfig = ''
