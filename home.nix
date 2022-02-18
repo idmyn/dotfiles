@@ -201,8 +201,10 @@ in
         kns = "kubens";
         kdebug =
           "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";
+        unset-context = "kubectl config unset current-context";
         teb = "tmux capture-pane -pS -1000000 | eb";
         rg = "rg -S";
+        dig = "dig +short";
       };
 
       shellInit = ''

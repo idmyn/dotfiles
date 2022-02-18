@@ -19,6 +19,7 @@
 
 (load! "bits/ui")
 (load! "bits/git")
+(load! "bits/lsp")
 (load! "bits/evil")
 (load! "bits/term")
 (load! "bits/basics")
