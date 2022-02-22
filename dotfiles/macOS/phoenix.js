@@ -82,7 +82,9 @@ const showOrOpenVSCodium = new Key('v', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
-  if (App.get('Firefox Developer Edition')) {
+  if (App.get('Brave Browser')) {
+    App.get('Brave Browser').focus()
+  } else if (App.get('Firefox Developer Edition')) {
     App.get('Firefox Developer Edition').focus()
   } else if (App.get('Firefox')) {
     App.get('Firefox').focus()
@@ -90,7 +92,7 @@ const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
     App.get('Vivaldi').focus()
   } else {
     // App.launch('Firefox') causes prompt for safe mode
-    Task.run('/bin/sh', ['-c', 'open -a Vivaldi'])
+    Task.run('/bin/sh', ['-c', 'open -a "Brave Browser"'])
   }
 })
 

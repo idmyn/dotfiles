@@ -27,6 +27,7 @@
 (load! "bits/search")
 (load! "bits/secrets")
 (load! "bits/functions")
+(load! "bits/completion")
 
 (load! "bits/lang/js")
 (load! "bits/lang/clojure")

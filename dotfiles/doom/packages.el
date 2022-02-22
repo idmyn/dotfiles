@@ -7,6 +7,7 @@
 (package! framemove)
 (package! deadgrep)
 (package! ace-window)
+(package! corfu)
 
 (package! prettier-js)
 (package! deno-fmt)
