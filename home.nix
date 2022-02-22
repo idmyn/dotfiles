@@ -224,7 +224,7 @@ in
 
         thefuck --alias | source
 
-        test -e ~/.config/fish/secret_functions.fish && source ~/.config/fish/secret_functions.fish
+        test -e ~/.config/fish/secret_work_functions.fish && source ~/.config/fish/secret_work_functions.fish
 
         source ~/.asdf/asdf.fish
       '';
