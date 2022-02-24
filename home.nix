@@ -5,13 +5,13 @@
 let
   sources = import nix/sources.nix;
   emacs-overlay = import sources.emacs-overlay;
-  pkgs = import sources.nixpkgs-unstable { overlays = [ emacs-overlay ]; };
-  stable-pkgs = import sources.nixpkgs { };
+  pkgs = import sources.nixpkgs-unstable { };
+  stable-pkgs = import sources.nixpkgs { overlays = [ emacs-overlay ]; };
 
   # TODO move into sources?
   node-packages = import ./node-packages {};
   archiveboxPkgs = [
-    pkgs.archivebox
+  #   pkgs.archivebox # broken in unstable and doesn't exist in stable
     node-packages.single-file
     node-packages.mercury-parser
   ];
@@ -77,9 +77,9 @@ in
       watchexec
       tealdeer
       hadolint
-      emacsGcc
+      stable-pkgs.emacsGcc
       neovim
-      httpie
+      stable-pkgs.httpie
       restic
       reflex
       ispell
@@ -109,12 +109,6 @@ in
       cargo-edit
       rust-script
       rust-analyzer
-
-      chicken
-
-      jdk11
-      babashka
-      leiningen
 
       gopls
       golint
@@ -185,7 +179,7 @@ in
       shellAliases = {
         ls = "echo; ${pkgs.exa}/bin/exa -F";
         r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
-        archivebox = "OUTPUT_DIR=${archiveboxOutputDir} ${pkgs.archivebox}/bin/archivebox";
+        #archivebox = "OUTPUT_DIR=${archiveboxOutputDir} ${pkgs.archivebox}/bin/archivebox";
       };
 
       shellAbbrs = {
