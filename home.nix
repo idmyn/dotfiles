@@ -139,30 +139,6 @@ in
 
       enable = true;
       enableZshIntegration = false;
-
-      settings = {
-        format = lib.concatStrings [
-          "$directory"
-          "$git_branch"
-          "$line_break"
-          "$cmd_duration"
-          "$character"
-        ];
-        directory = { style = ""; };
-        git_branch = {
-          symbol = "🌱 ";
-          style = "green";
-        };
-        cmd_duration = {
-          min_time = 60000; # 1 minute
-          show_notifications = true; # doesn't work atm
-          min_time_to_notify = 300000; # 5 minutes
-        };
-        character = {
-          success_symbol = "->";
-          error_symbol = "->";
-        };
-      };
     };
 
     zoxide.enable = true;
@@ -335,6 +311,12 @@ in
   xdg.configFile = with lib;
     mkMerge [
       {
+        "starship.toml".text =
+          ''format = "$directory$git_branch$line_break$cmd_duration$character"''
+          + builtins.readFile dotfiles/starship.toml;
+        "starship-with-gcloud.toml".text = ''
+          format = "$gcloud$line_break$directory$git_branch$line_break$cmd_duration$character"''
+          + builtins.readFile dotfiles/starship.toml;
         "doom".source = dotfiles/doom;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
