@@ -176,6 +176,7 @@ in
         rg = "rg -S";
         dig = "dig +short";
         nsn = "nix search nixpkgs";
+        uuid = "uuidgen | tr -d '\\n' | tr '[:upper:]' '[:lower:]' | pbcopy";
       };
 
       shellInit = ''
