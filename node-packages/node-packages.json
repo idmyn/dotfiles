@@ -1,5 +1,0 @@
-[
-  "@postlight/mercury-parser",
-  { "single-file": "git+https://github.com/gildas-lormeau/SingleFile.git" },
-  { "node2nix": "git+https://github.com/svanderburg/node2nix.git" }
-]
