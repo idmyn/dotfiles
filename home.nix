@@ -320,14 +320,16 @@ in
         "starship.toml".text =
           ''format = "$directory$git_branch$line_break$cmd_duration$character"''
           + builtins.readFile dotfiles/starship.toml;
+        # export STARSHIP_CONFIG=$HOME/.config/starship-with-gcloud.toml
         "starship-with-gcloud.toml".text = ''
-          format = "$gcloud$line_break$directory$git_branch$line_break$cmd_duration$character"''
+          format = "$directory$git_branch$line_break$cmd_duration$gcloud$character"''
           + builtins.readFile dotfiles/starship.toml;
         "doom".source = dotfiles/doom;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
         "nvim".source = dotfiles/nvim;
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
+        "helix".source = dotfiles/helix;
       }
       (mkIf isDarwin {
         "karabiner.edn".source = dotfiles/macOS/karabiner.edn;
