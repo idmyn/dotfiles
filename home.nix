@@ -64,7 +64,6 @@ in
 
     packages = my-scripts ++ archiveboxPkgs ++ (with pkgs; [
       any-nix-shell
-      cachix
       nixfmt
       niv
 
