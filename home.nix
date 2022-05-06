@@ -72,6 +72,7 @@ in
 
       stable-pkgs.ripgrep
       magic-wormhole
+      sqlite-utils
       git-crypt
       moreutils
       watchexec
@@ -86,6 +87,8 @@ in
       sqlite
       choose
       watch
+      dasel
+      navi
       tree
       just
       glow
@@ -99,6 +102,7 @@ in
       yq
       sd
       fd
+      fx
 
       pandoc
       stable-pkgs.tectonic
@@ -177,6 +181,7 @@ in
         dig = "dig +short";
         nsn = "nix search nixpkgs";
         uuid = "uuidgen | tr -d '\\n' | tr '[:upper:]' '[:lower:]' | pbcopy";
+        bks = "open -a 'Beekeeper Studio'";
       };
 
       shellInit = ''
