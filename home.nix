@@ -66,7 +66,7 @@ in
       watchexec
       tealdeer
       hadolint
-      stable-pkgs.emacsGcc
+      # stable-pkgs.emacsGcc # can't get this to use cachix properly
       neovim
       stable-pkgs.httpie
       restic

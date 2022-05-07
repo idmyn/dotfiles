@@ -84,7 +84,7 @@ in
     ];
 
     extraConfig = ''
-      brew "emacs-plus@28", args:["with-native-comp", "with-modern-doom3-icon"]
+      brew "emacs-plus", args:["with-native-comp", "with-elrumo2-icon"]
     '';
   };
 }
