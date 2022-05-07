@@ -6,12 +6,19 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set smartindent
-set clipboard=unnamedplus
 set noswapfile
 set nobackup
 set incsearch
 set ignorecase
 set smartcase
+
+if has("clipboard")
+  set clipboard=unnamed " copy to the system clipboard
+
+  if has("unnamedplus") " X11 support
+    set clipboard+=unnamedplus
+  endif
+endif
 
 fun! TrimWhitespace()
     let l:save = winsaveview()

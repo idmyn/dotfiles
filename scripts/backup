@@ -3,6 +3,9 @@ set -euf
 
 $(pass backup.env)
 
+rm -rf ~/.logseq-backup
+cp -R /Users/david/Library/Mobile\ Documents/iCloud~com~logseq~logseq/Documents/ ~/.logseq-backup
+
 LOGFILE="${HOME}/.backup.log"
 
 if [ ! -e "$LOGFILE" ] ; then

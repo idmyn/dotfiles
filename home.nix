@@ -15,6 +15,8 @@ let
 
   isDarwin = pkgs.stdenv.isDarwin;
   isWorkLaptop = (builtins.getEnv "USER") == "davidmy";
+
+  mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
 in
 
 {
@@ -170,6 +172,7 @@ in
         nsn = "nix search nixpkgs";
         uuid = "uuidgen | tr -d '\\n' | tr '[:upper:]' '[:lower:]' | pbcopy";
         bks = "open -a 'Beekeeper Studio'";
+        jiq = "jiq -q";
       };
 
       shellInit = ''
