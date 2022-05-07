@@ -46,13 +46,11 @@ in
       "d12frosted/emacs-plus"
       "federico-terzi/espanso"
       "bradyjoslin/sharewifi"
-      "helix-editor/helix" # until new v22.03 in nixpks, or I install via flake
     ];
 
     brews = [
       "git"
       "goku"
-      "helix" # until new v22.03 in nixpks, or I install via flake
       "trash"
       "ffmpeg"
       "thefuck"

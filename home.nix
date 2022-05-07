@@ -76,6 +76,7 @@ in
       choose
       watch
       dasel
+      helix
       navi
       tree
       just
