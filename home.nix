@@ -30,27 +30,14 @@ in
     sessionVariables = {
       LS_COLORS =
         "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
-      ANDROID_SDK_ROOT = "$HOME/Library/Android/sdk";
       GLAMOUR_STYLE = "light";
       EDITOR = "emacsclient -q -c -a ''";
-      NOTES_DIR =
-        if isWorkLaptop then "$HOME/Tresors/Documents/notes/work" else "";
       RIPGREP_CONFIG_PATH = "$HOME/.config/ripgrep.conf";
-
-      JUST_SUPPRESS_DOTENV_LOAD_WARNING =
-        "1"; # temporary: https://github.com/casey/just/issues/469
+      JUST_SUPPRESS_DOTENV_LOAD_WARNING = "1";
     };
 
     sessionPath = [
-      "$HOME/.bin"
-      "$HOME/.deta/bin"
-      "$HOME/.cargo/bin"
-      "$HOME/.local/bin"
       "$HOME/.config/emacs/bin"
-      "$HOME/google-cloud-sdk/bin" # needs to be installed 'the google way' to use alpha features
-      "$HOME/Library/Android/sdk/emulator" # this needs to be before /tools
-      "$HOME/Library/Android/sdk/tools"
-      "$HOME/Library/Android/sdk/platform-tools"
     ];
 
     packages = my-scripts ++ (with pkgs; [
@@ -97,24 +84,6 @@ in
 
       pandoc
       stable-pkgs.tectonic
-
-      minikube
-
-      rustup
-      cargo-edit
-      rust-script
-      rust-analyzer
-
-      gopls
-      golint
-
-      yarn
-      nodePackages.nodemon
-      nodePackages.eslint
-      nodePackages.eslint_d
-      nodePackages.prettier
-      nodePackages.typescript
-      nodePackages.typescript-language-server
     ]);
   };
 
