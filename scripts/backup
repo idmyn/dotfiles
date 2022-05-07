@@ -15,6 +15,7 @@ fi
 
 restic backup ~                            \
     --exclude="**/node_modules"            \
+    --exclude="**/.log"                    \
     --exclude="${HOME}/src/clones/nixpkgs" \
     --exclude="**/target/release"          \
     --exclude="**/straight/repos"          \

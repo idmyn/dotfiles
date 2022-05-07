@@ -53,12 +53,12 @@ in
       "git"
       "goku"
       "helix" # until new v22.03 in nixpks, or I install via flake
+      "trash"
       "ffmpeg"
+      "thefuck"
       "espanso"
       "exercism"
       "sharewifi"
-      "thefuck"
-      "trash"
     ];
 
     casks = [

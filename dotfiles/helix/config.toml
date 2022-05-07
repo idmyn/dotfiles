@@ -1,5 +1,10 @@
-theme = "spacebones_light"
+theme = "eink"
 
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
+
+# [editor]
+# gutters = ["diagnostics"]
+# ^ to disable line numbers
+# merged but not yet released: https://github.com/helix-editor/helix/pull/1967

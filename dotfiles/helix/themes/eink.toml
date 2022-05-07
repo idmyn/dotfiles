@@ -1,0 +1,39 @@
+# Based on SpaceBones Light https://github.com/chipotle/spacebones
+# https://github.com/chipotle/spacebones/blob/main/SpaceBones%20Light.bbColorScheme
+# via https://github.com/helix-editor/helix/blob/master/runtime/themes/spacebones_light.toml
+
+"comment" = { modifiers = ["bold"]  }
+
+"warning" = { fg = "#da8b55" }
+"error" = { fg = "#e0211d" }
+"info" = { fg = "#b1951d" }
+"hint" = { fg = "#d1dcdf" }
+
+"ui.background" = { bg = "bg0" }
+"ui.linenr" = { fg = "bg3" }
+"ui.linenr.selected" = { fg = "#b1951d" }
+"ui.statusline" = { fg = "fg1", bg = "bg2" }
+"ui.statusline.inactive" = { fg = "fg4", bg = "bg1" }
+"ui.popup" = { bg = "bg1" }
+"ui.window" = { bg = "bg1" }
+"ui.help" = { bg = "bg1", fg = "fg1" }
+"ui.text" = { fg = "fg1" }
+"ui.text.focus" = { fg = "fg1" }
+"ui.selection" = { bg = "bg3" }
+"ui.cursor.primary" = { modifiers = ["reversed"] }
+"ui.cursor.match" = { modifiers = ["reversed"] }
+"ui.menu" = { fg = "fg1", bg = "bg2" }
+"ui.menu.selected" = { fg = "#655370", bg = "#d1dcdf", modifiers = ["bold"] }
+
+"diagnostic" = { modifiers = ["underlined"] }
+
+[palette]
+bg0 = "#fffff8"
+bg1 = "#efeae9"
+bg2 = "#d1dcdf"
+bg3 = "#b4c6cb"
+
+fg1 = "#111111"
+fg2 = "#5f3bc4"
+fg3 = "#bdae93"
+fg4 = "#a89984"

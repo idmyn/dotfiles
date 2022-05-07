@@ -4,7 +4,7 @@
   (setq orderless-matching-styles '(orderless-literal orderless-regexp orderless-initialism orderless-flex)))
 
 (after! consult
-  (append-to-list 'consult-buffer-filter '("\\*help.*" "\\*lsp.*" "\\*ts-ls.*" "\\*deadgrep.*")))
+  (append-to-list 'consult-buffer-filter '("\\*lsp.*" "\\*ts-ls.*" "\\*deadgrep.*")))
 
 (setq avy-all-windows t)
 ;; (setq avy-style 'de-bruijn) ; seems to cause a bug when only one candidate is found
