@@ -41,7 +41,8 @@
                            "^org\\.vim\\.MacVim$"
                            "^com\\.apple\\.Terminal$"
                            "^ru\\.keepcoder\\.Telegram$"]
-                :Browsers ["^com\\.brave\\.Browser$"
+                :Browsers ["^com\\.electron\\.logseq$"
+                           "^com\\.brave\\.Browser$"
                            "^com\\.vivaldi\\.Vivaldi$"
                            "^org\\.mozilla\\.firefoxdeveloperedition$"
                            "^org\\.mozilla\\.firefox$"
