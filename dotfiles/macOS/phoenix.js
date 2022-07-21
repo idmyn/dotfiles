@@ -81,8 +81,26 @@ const showOrOpenVSCodium = new Key('v', ['alt', 'ctrl'], () => {
   }
 })
 
-const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
-  if (App.get('Brave Browser')) {
+const showOrOpenDesignTool = new Key('d', ['alt', 'ctrl'], () => {
+  if (App.get('Figma')) {
+    App.get('Figma').focus()
+  } else {
+    Task.run('/bin/sh', ['-c', 'open -a "Figma"'])
+  }
+})
+
+const showOrOpenDevBrowser = new Key('b', ['alt', 'ctrl'], () => {
+  if (App.get('Polypane')) {
+    App.get('Polypane').focus()
+  } else {
+    Task.run('/bin/sh', ['-c', 'open -a "Polypane"'])
+  }
+})
+
+const showOrOpenWebBrowser = new Key('w', ['alt', 'ctrl'], () => {
+  if (App.get('Arc')) {
+    App.get('Arc').focus()
+  } else if (App.get('Brave Browser')) {
     App.get('Brave Browser').focus()
   } else if (App.get('Firefox Developer Edition')) {
     App.get('Firefox Developer Edition').focus()
@@ -91,8 +109,7 @@ const showOrOpenBrowser = new Key('w', ['alt', 'ctrl'], () => {
   } else if (App.get('Vivaldi')) {
     App.get('Vivaldi').focus()
   } else {
-    // App.launch('Firefox') causes prompt for safe mode
-    Task.run('/bin/sh', ['-c', 'open -a "Brave Browser"'])
+    Task.run('/bin/sh', ['-c', 'open -a "Arc"'])
   }
 })
 
@@ -106,14 +123,6 @@ const showOrOpenMail = new Key('m', ['alt', 'ctrl'], () => {
   } else {
     App.launch('Microsoft Outlook')
     setTimeout(() => App.get('Microsoft Outlook').focus(), 100)
-  }
-})
-
-const showOrOpenDash = new Key('d', ['alt', 'ctrl'], () => {
-  if (App.get('Dash')) {
-    App.get('Dash').focus()
-  } else {
-    App.launch('Dash')
   }
 })
 

@@ -46,6 +46,7 @@
                            "^com\\.vivaldi\\.Vivaldi$"
                            "^org\\.mozilla\\.firefoxdeveloperedition$"
                            "^org\\.mozilla\\.firefox$"
+                           "^company\\.thebrowser\\.Browser$"
                            "^com\\.apple\\.Safari$"]}
 
  :main [{:des   "everywhere: right cmd alone to cmd+opt+r (raycast), and to ctrl+opt as modifier"
