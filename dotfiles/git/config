@@ -3,6 +3,7 @@
 [user]
 	name = David Mynors
 	email = hello@davidmyno.rs
+	signingkey = DDE052DA5004EFF7
 [alias]
 	co = checkout
 	sc = sparse-checkout
@@ -12,16 +13,19 @@
 	lb = !git for-each-ref --sort='-authordate:iso8601' --format='%(authordate:relative)%09%(refname:short)' refs/heads | head -n 10
 	lo = log --oneline -n 10
 	reset-origin = !git fetch && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+	stashinc = stash --include-untracked
 [includeIf "gitdir:~/src/orgs/social.coop/"]
 	path = ~/src/orgs/social.coop/.gitconfig
-[includeIf "gitdir:~/src/nandos/"]
-	path = ~/src/nandos/.gitconfig
+[includeIf "gitdir:~/src/surfboard/"]
+	path = ~/src/surfboard/.gitconfig
 [pull]
 	rebase = true
 [rebase]
 	autoStash = true
 [init]
 	defaultBranch = main
+[commit]
+	gpgsign = true
 
 [url "https://github.com/"]
 	insteadOf = git://github.com/

@@ -8,5 +8,5 @@
 (package! deadgrep)
 (package! ace-window)
 
-(package! prettier-js)
+(package! prettier)
 (package! deno-fmt)

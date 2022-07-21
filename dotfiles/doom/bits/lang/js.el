@@ -1,7 +1,9 @@
 ;;; js.el -*- lexical-binding: t; -*-
 
-(use-package! prettier-js
-  :commands (prettier-js))
+(use-package! prettier
+  :commands (prettier-prettify))
+
+(setq prettier-mode-sync-config-flag nil)
 
 (after! js2-mode
   (setq js2-basic-offset 2))
