@@ -37,18 +37,23 @@ in
     };
 
     sessionPath = [
+      "$HOME/.local/bin" # for pipx
       "$HOME/.config/emacs/bin"
+      "$HOME/google-cloud-sdk/bin"
     ];
 
+    # TODO if isWorkLaptop
     packages = my-scripts ++ (with pkgs; [
+      heroku
+    ]) ++ (with pkgs; [
       any-nix-shell
       nixfmt
       niv
 
       stable-pkgs.visidata
-
       stable-pkgs.ripgrep
       magic-wormhole
+      diff-so-fancy # TODO fancydiff script = `diff -u file_a file_b | diff-so-fancy`
       sqlite-utils
       git-crypt
       moreutils
@@ -81,6 +86,8 @@ in
       sd
       fd
       fx
+
+      rustup
 
       pandoc
       stable-pkgs.tectonic
@@ -119,6 +126,7 @@ in
       shellAliases = {
         ls = "echo; ${pkgs.exa}/bin/exa -F";
         r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
+        confetti = "open raycast://confetti";
       };
 
       shellAbbrs = {
@@ -264,6 +272,7 @@ in
 
     kitty = {
       enable = true;
+      package = stable-pkgs.kitty;
       settings.shell = "${pkgs.fish}/bin/fish";
       extraConfig = builtins.readFile dotfiles/kitty.conf;
     };
@@ -272,6 +281,7 @@ in
   home.file = {
     ".vimrc".source = dotfiles/dot-vimrc;
     ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
+    ".asdfrc".text = "legacy_version_file = yes";
   };
 
   xdg.configFile = with lib;
@@ -305,7 +315,7 @@ in
   home.activation.cloneDoomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     [ ! -d $HOME/.config/emacs ] && \
       $DRY_RUN_CMD git clone --depth 1 $VERBOSE_ARG \
-        https://github.com/hlissner/doom-emacs ~/.config/emacs;
+        https://github.com/doomemacs/doomemacs ~/.config/emacs;
   '';
 
   home.activation.installAsdfVm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

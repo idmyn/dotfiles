@@ -54,20 +54,18 @@ in
       "trash"
       "ffmpeg"
       "thefuck"
+      "semgrep"
       "espanso"
       "exercism"
       "sharewifi"
     ];
 
     casks = [
-      "sensiblesidebuttons"
       "karabiner-elements"
       "beekeeper-studio"
-      "appcleaner"
       "chromium"
       "phoenix"
       "raycast"
-      "kitty"
       "iina"
 
       "font-fantasque-sans-mono"
@@ -79,6 +77,7 @@ in
       "font-ia-writer-quattro"
       "font-cooper-hewitt"
       "font-comic-mono"
+      "font-inter"
     ];
 
     extraConfig = ''
