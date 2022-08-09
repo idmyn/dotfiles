@@ -14,7 +14,7 @@ let
   };
 
   isDarwin = pkgs.stdenv.isDarwin;
-  isWorkLaptop = (builtins.getEnv "USER") == "davidmy";
+  isWorkLaptop = true;
 
   mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
 in
@@ -150,6 +150,7 @@ in
         uuid = "uuidgen | tr -d '\\n' | tr '[:upper:]' '[:lower:]' | pbcopy";
         bks = "open -a 'Beekeeper Studio'";
         jiq = "jiq -q";
+        semgrep = "semgrep --lang typescript -e";
       };
 
       shellInit = ''

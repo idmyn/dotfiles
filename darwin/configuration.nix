@@ -1,23 +1,19 @@
 { config, pkgs, lib, ... }:
 
 let
-  isWorkLaptop = (builtins.getEnv "USER") == "davidmy";
+  isWorkLaptop = true;
 in
 
 {
   imports = [ <home-manager/nix-darwin> ];
 
-  users.users = (if isWorkLaptop then {
-    davidmy.home = "/Users/davidmy";
-  } else {
+  users.users = {
     david.home = "/Users/david";
-  });
+  };
 
-  home-manager.users = (if isWorkLaptop then {
-    davidmy = import ../home.nix;
-  } else {
+  home-manager.users = {
     david = import ../home.nix;
-  });
+  };
 
   programs.zsh.enable = false;
   programs.fish.enable = true;
