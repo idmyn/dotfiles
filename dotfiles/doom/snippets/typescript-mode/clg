@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: console.log
+# key: clg
+# condition: t
+# --
+
+console.log($0)

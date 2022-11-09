@@ -1,13 +1,6 @@
 { config, pkgs, lib, ... }:
 
-# inspo: https://github.com/gvolpe/nix-config
-
 let
-  sources = import nix/sources.nix;
-  emacs-overlay = import sources.emacs-overlay;
-  pkgs = import sources.nixpkgs-unstable { };
-  stable-pkgs = import sources.nixpkgs { overlays = [ emacs-overlay ]; };
-
   my-scripts = import ./scripts {
     pkgs = pkgs;
     isWorkLaptop = isWorkLaptop;
@@ -20,13 +13,7 @@ let
 in
 
 {
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
   home = {
-    username = builtins.getEnv "USER";
-    homeDirectory = builtins.getEnv "HOME";
-
     sessionVariables = {
       LS_COLORS =
         "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
@@ -34,43 +21,49 @@ in
       EDITOR = "emacsclient -q -c -a ''";
       RIPGREP_CONFIG_PATH = "$HOME/.config/ripgrep.conf";
       JUST_SUPPRESS_DOTENV_LOAD_WARNING = "1";
+      LDFLAGS="-L/usr/local/opt/python@3.10/lib"; # for x86_64 homebrew python
+      KALEIDOSCOPE_DIR="$HOME/src/personal/kaleidoscope";
+      PNPM_HOME="$HOME/.pnpm-bin";
     };
 
     sessionPath = [
+      "$HOME/.pnpm-bin"
       "$HOME/.local/bin" # for pipx
+      "/opt/homebrew/bin"
       "$HOME/.config/emacs/bin"
       "$HOME/google-cloud-sdk/bin"
+      "/usr/local/opt/python@3.10/bin" # for x86_64 homebrew
+      "$KALEIDOSCOPE_DIR/bin"
     ];
 
-    # TODO if isWorkLaptop
     packages = my-scripts ++ (with pkgs; [
-      heroku
-    ]) ++ (with pkgs; [
       any-nix-shell
       nixfmt
       niv
 
-      stable-pkgs.visidata
-      stable-pkgs.ripgrep
-      magic-wormhole
+      visidata
+      ripgrep
+      # magic-wormhole
       diff-so-fancy # TODO fancydiff script = `diff -u file_a file_b | diff-so-fancy`
       sqlite-utils
       git-crypt
       moreutils
-      watchexec
+      unstable.watchexec
       tealdeer
       hadolint
       # stable-pkgs.emacsGcc # can't get this to use cachix properly
       neovim
-      stable-pkgs.httpie
+      unstable.httpie
       restic
       reflex
       ispell
       sqlite
       choose
+      cmake
+      gnupg
       watch
       dasel
-      helix
+      unstable.helix
       navi
       tree
       just
@@ -80,9 +73,9 @@ in
       pup
       xsv
       jiq
-      oil
+      unstable.oil
       jq
-      yq
+      unstable.yq
       sd
       fd
       fx
@@ -90,7 +83,7 @@ in
       rustup
 
       pandoc
-      stable-pkgs.tectonic
+      tectonic
     ]);
   };
 
@@ -151,6 +144,8 @@ in
         bks = "open -a 'Beekeeper Studio'";
         jiq = "jiq -q";
         semgrep = "semgrep --lang typescript -e";
+        prod-diff = "git fetch && git log (heroku releases -n 1 -a surfboard-app-prod --json | jq -r '.[].description' | choose 1)..origin/main --oneline";
+        drs = "darwin-rebuild switch --flake path:$HOME/.config/nixpkgs#mbp";
       };
 
       shellInit = ''
@@ -166,13 +161,15 @@ in
         bind \cj down-or-search
         bind \ck up-or-search
 
-        any-nix-shell fish --info-right | source
-
         thefuck --alias | source
 
         test -e ~/.config/fish/secret_work_functions.fish && source ~/.config/fish/secret_work_functions.fish
 
         source ~/.asdf/asdf.fish
+
+        test -e /opt/homebrew/Caskroom/miniforge/base/bin/conda && eval /opt/homebrew/Caskroom/miniforge/base/bin/conda "shell.fish" "hook" $argv | source
+
+        test -e /opt/homebrew/bin/pyenv && pyenv init - | source
       '';
 
       functions = {
@@ -262,18 +259,17 @@ in
         tmuxPlugins.pain-control
         tmuxPlugins.resurrect
         tmuxPlugins.continuum
+        tmuxPlugins.tmux-thumbs
       ];
       extraConfig = ''
         set-option -g default-command ${pkgs.fish}/bin/fish
         set -g @resurrect-capture-pane-contents 'on'
-        run-shell ~/.tmux/plugins/tmux-thumbs/tmux-thumbs.tmux
         ${builtins.readFile dotfiles/dot-tmux.conf}
       '';
     };
 
     kitty = {
-      enable = true;
-      package = stable-pkgs.kitty;
+      enable = false;
       settings.shell = "${pkgs.fish}/bin/fish";
       extraConfig = builtins.readFile dotfiles/kitty.conf;
     };
@@ -295,10 +291,12 @@ in
         "starship-with-gcloud.toml".text = ''
           format = "$directory$git_branch$line_break$cmd_duration$gcloud$character"''
           + builtins.readFile dotfiles/starship.toml;
+        "kitty/kitty.conf".text = ''shell ${pkgs.fish}/bin/fish
+          '' + builtins.readFile dotfiles/kitty.conf;
         "doom".source = dotfiles/doom;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
-        "nvim".source = dotfiles/nvim;
+        # "nvim".source = dotfiles/nvim;
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "helix".source = dotfiles/helix;
       }

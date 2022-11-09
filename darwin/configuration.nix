@@ -5,14 +5,8 @@ let
 in
 
 {
-  imports = [ <home-manager/nix-darwin> ];
-
   users.users = {
     david.home = "/Users/david";
-  };
-
-  home-manager.users = {
-    david = import ../home.nix;
   };
 
   programs.zsh.enable = false;
@@ -20,6 +14,7 @@ in
 
   services.lorri.enable = true;
 
+  # TODO this might need changing for flake
   # darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
@@ -41,14 +36,17 @@ in
       "homebrew/cask-fonts"
       "d12frosted/emacs-plus"
       "federico-terzi/espanso"
+      "heroku/brew"
       "bradyjoslin/sharewifi"
     ];
 
     brews = [
       "git"
-      "goku"
+      # "goku"
+      "pipx"
       "trash"
       "ffmpeg"
+      "heroku"
       "thefuck"
       "semgrep"
       "espanso"
@@ -59,9 +57,11 @@ in
     casks = [
       "karabiner-elements"
       "beekeeper-studio"
-      "chromium"
+      # "eloston-chromium"
+      "pennywise"
       "phoenix"
       "raycast"
+      "kitty"
       "iina"
 
       "font-fantasque-sans-mono"
