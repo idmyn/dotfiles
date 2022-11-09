@@ -85,3 +85,13 @@ tsfmt.json
 
 # asdf version manager
 .tool-versions
+
+# ripgrep
+.rgignore
+
+justfile
+
+.idea
+
+# restclient-mode
+*.http

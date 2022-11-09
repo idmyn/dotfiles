@@ -56,7 +56,20 @@ const windowToFullNextScreen = new Key('o', ['alt', 'ctrl'], () => {
   Window.focused().setFrame(windowLocations.full(nextScreen()))
 })
 
-const showOrOpenEmacs = new Key('e', ['alt', 'ctrl'], () => {
+const focusOrLaunch = (appName) => {
+  if (App.get(appName)) {
+    App.get(appName).focus()
+  } else {
+    App.launch(appName)
+  }
+}
+
+const showOrOpenEditor = new Key('e', ['alt', 'ctrl'], () => {
+  if (App.get('Code')) {
+    App.get('Code').focus()
+    return
+  }
+
   const app = App.all().filter(app => /emacs/i.test(app.name()))[0]
   const appName = app ? app.name() : 'Emacs'
   if (App.get(appName)) {
@@ -90,10 +103,10 @@ const showOrOpenDesignTool = new Key('d', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenDevBrowser = new Key('b', ['alt', 'ctrl'], () => {
-  if (App.get('Polypane')) {
-    App.get('Polypane').focus()
+  if (App.get('Chromium')) {
+    App.get('Chromium').focus()
   } else {
-    Task.run('/bin/sh', ['-c', 'open -a "Polypane"'])
+    Task.run('/bin/sh', ['-c', 'open -a "Chromium"'])
   }
 })
 
@@ -146,12 +159,8 @@ const showOrOpenChat = new Key('c', ['alt', 'ctrl'], () => {
   }
 })
 
-const showOrOpenInsomnia = new Key('i', ['alt', 'ctrl'], () => {
-  if (App.get('Insomnia')) {
-    App.get('Insomnia').focus()
-  } else {
-    App.launch('Insomnia')
-  }
+const showOrOpenIaWriter = new Key('i', ['alt', 'ctrl'], () => {
+  focusOrLaunch('iA Writer')
 })
 
 const showOrOpenPostman = new Key('h', ['alt', 'ctrl'], () => {
@@ -163,5 +172,5 @@ const showOrOpenPostman = new Key('h', ['alt', 'ctrl'], () => {
 })
 
 // log stream --process Phoenix
- Phoenix.log(App.all().filter(app => /emacs/i.test(app.name())).map(app => app.name() + "\n"))
+ Phoenix.log(App.all().filter(app => /code/i.test(app.name())).map(app => app.name() + "\n"))
 /* eslint-enable no-unused-vars */
