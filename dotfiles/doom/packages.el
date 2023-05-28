@@ -10,3 +10,6 @@
 
 (package! prettier)
 (package! deno-fmt)
+
+(package! posframe)
+(package! so-long :recipe (:host github :repo "manateelazycat/lsp-bridge"))

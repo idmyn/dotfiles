@@ -9,7 +9,10 @@
 
 (map!
  :i "C-d" 'delete-char
- :i "C-y" 'xah-paste-or-paste-previous)
+ :i "C-y" 'xah-paste-or-paste-previous
+
+ :i "C-j" nil
+ :i "C-k" nil)
 
 (map!
  :map (markdown-mode-map yaml-mode-map prog-mode-map)

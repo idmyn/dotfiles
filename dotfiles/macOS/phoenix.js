@@ -36,20 +36,63 @@ const windowLocations = {
     x: scr.x + scr.width / 2,
     width: scr.width / 2,
     height: scr.height
+  }),
+  top: (scr) => ({
+    y: scr.y,
+    x: scr.x,
+    width: scr.width,
+    height: scr.height / 2
+  }),
+  bottom: (scr) => ({
+    y: scr.y + scr.height / 2,
+    x: scr.x,
+    width: scr.width,
+    height: scr.height / 2
+  }),
+  soloFloat: (scr) => ({
+    y: scr.y + scr.height * 0.125,
+    x: scr.x + scr.width * 0.125,
+    width: scr.width * 0.75,
+    height: scr.height * 0.75
   })
+}
+
+const isDualUpMonitor = () => {
+  const { width, height } = currentScreen()
+  return height > width
+}
+
+const isAlreadyFullscreen = (window) => {
+  const { width: windowWidth, height: windowHeight } = window.frame()
+  const { width: screenWidth, height: screenHeight } = currentScreen()
+
+  return windowWidth === screenWidth && windowHeight === screenHeight
 }
 
 /* eslint-disable no-unused-vars */
 const windowToFull = new Key('f', ['alt', 'ctrl'], () => {
-  Window.focused().setFrame(windowLocations.full(currentScreen()))
+  if (isDualUpMonitor() && isAlreadyFullscreen(Window.focused())) {
+    Window.focused().others({ visible: true }).forEach(w => w.minimise())
+    Window.focused().setFrame(windowLocations.soloFloat(currentScreen()))
+  } else {
+    Window.focused().setFrame(windowLocations.full(currentScreen()))
+  }
 })
 
-const windowToLeft = new Key('j', ['alt', 'ctrl'], () => {
+const windowToLeft = new Key('h', ['alt', 'ctrl'], () => {
   Window.focused().setFrame(windowLocations.left(currentScreen()))
 })
 
-const windowToRight = new Key(';', ['alt', 'ctrl'], () => {
+const windowToRight = new Key('l', ['alt', 'ctrl'], () => {
   Window.focused().setFrame(windowLocations.right(currentScreen()))
+})
+
+const windowToTop = new Key('k', ['alt', 'ctrl'], () => {
+  Window.focused().setFrame(windowLocations.top(currentScreen()))
+})
+
+const windowToBottom = new Key('j', ['alt', 'ctrl'], () => {
+  Window.focused().setFrame(windowLocations.bottom(currentScreen()))
 })
 
 const windowToFullNextScreen = new Key('o', ['alt', 'ctrl'], () => {
@@ -64,7 +107,23 @@ const focusOrLaunch = (appName) => {
   }
 }
 
+const showOrOpenThings = new Key('t', ['alt', 'ctrl'], () => focusOrLaunch('Things'))
+
+const showOrOpenVim = new Key('v', ['alt', 'ctrl'], () => {
+  focusOrLaunch('WezTerm')
+})
+
 const showOrOpenEditor = new Key('e', ['alt', 'ctrl'], () => {
+  if (App.get('WezTerm')) {
+    App.get('WezTerm').focus()
+    return
+  }
+
+  if (App.get('WebStorm')) {
+    App.get('WebStorm').focus()
+    return
+  }
+
   if (App.get('Code')) {
     App.get('Code').focus()
     return
@@ -84,16 +143,6 @@ const showOrOpenEditor = new Key('e', ['alt', 'ctrl'], () => {
   }
 })
 
-const showOrOpenVSCodium = new Key('v', ['alt', 'ctrl'], () => {
-  if (App.get('VSCodium')) {
-    App.get('VSCodium').focus()
-  } else if (App.get('Code')) {
-    App.get('Code').focus()
-  } else {
-    App.launch('Code')
-  }
-})
-
 const showOrOpenDesignTool = new Key('d', ['alt', 'ctrl'], () => {
   if (App.get('Figma')) {
     App.get('Figma').focus()
@@ -103,10 +152,18 @@ const showOrOpenDesignTool = new Key('d', ['alt', 'ctrl'], () => {
 })
 
 const showOrOpenDevBrowser = new Key('b', ['alt', 'ctrl'], () => {
-  if (App.get('Chromium')) {
-    App.get('Chromium').focus()
+  if (App.get('Sizzy')) {
+    App.get('Sizzy').focus()
   } else {
-    Task.run('/bin/sh', ['-c', 'open -a "Chromium"'])
+    Task.run('/bin/sh', ['-c', 'open -a "Sizzy"'])
+  }
+})
+
+const showOrOpenNotes = new Key('n', ['alt', 'ctrl'], () => {
+  if (App.get('Logseq')) {
+    App.get('Logseq').focus()
+  } else {
+    Task.run('/bin/sh', ['-c', 'open -a "Logseq"'])
   }
 })
 
@@ -139,14 +196,6 @@ const showOrOpenMail = new Key('m', ['alt', 'ctrl'], () => {
   }
 })
 
-const showOrOpenLogseq = new Key('l', ['alt', 'ctrl'], () => {
-  if (App.get('Logseq')) {
-    App.get('Logseq').focus()
-  } else {
-    App.launch('Logseq')
-  }
-})
-
 const showOrOpenChat = new Key('c', ['alt', 'ctrl'], () => {
   if (App.get('Slack')) {
     App.get('Slack').focus()
@@ -161,14 +210,6 @@ const showOrOpenChat = new Key('c', ['alt', 'ctrl'], () => {
 
 const showOrOpenIaWriter = new Key('i', ['alt', 'ctrl'], () => {
   focusOrLaunch('iA Writer')
-})
-
-const showOrOpenPostman = new Key('h', ['alt', 'ctrl'], () => {
-  if (App.get('Postman')) {
-    App.get('Postman').focus()
-  } else {
-    App.launch('Postman')
-  }
 })
 
 // log stream --process Phoenix

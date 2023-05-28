@@ -30,3 +30,6 @@
 
 (load! "bits/lang/js")
 (load! "bits/lang/clojure")
+
+(after! restclient (require 'gnutls))
+;; temp fix https://github.com/doomemacs/doomemacs/issues/6073#issuecomment-1295649714

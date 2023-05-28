@@ -7,7 +7,7 @@ success_symbol = "->"
 [cmd_duration]
 min_time = 60000
 min_time_to_notify = 300000
-show_notifications = true
+# show_notifications = true
 
 [directory]
 style = ""

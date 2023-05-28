@@ -29,7 +29,7 @@
 (use-package! eink-theme
   :custom
   (doom-theme 'eink)
-  (doom-font "Iosevka SS09-15")
+  (doom-font "Iosevka SS09-18")
   ;; File path in title bar
   ;; https://stackoverflow.com/a/29821453
   (frame-title-format

@@ -11,6 +11,8 @@
 (after! typescript-mode
   (setq typescript-indent-level 2))
 
+(add-hook! typescript-tsx-mode (setq-local prettier-parsers '(typescript)))
+
 (after! web-mode
   (setq web-mode-code-indent-offset 2)
   (map!

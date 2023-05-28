@@ -38,6 +38,8 @@ in
       "federico-terzi/espanso"
       "heroku/brew"
       "bradyjoslin/sharewifi"
+      "wez/wezterm"
+      "edgedb/tap"
     ];
 
     brews = [
@@ -47,14 +49,19 @@ in
       "trash"
       "ffmpeg"
       "heroku"
+      "flyctl"
       "thefuck"
       "semgrep"
       "espanso"
       "exercism"
       "sharewifi"
+      "edgedb-cli"
+      "cloudflared"
+      "pinentry-mac"
     ];
 
     casks = [
+      "wez/wezterm/wezterm"
       "karabiner-elements"
       "beekeeper-studio"
       # "eloston-chromium"
@@ -68,6 +75,8 @@ in
       "font-jetbrains-mono"
       "font-iosevka-ss09"
       "font-iosevka-aile"
+      "monitorcontrol"
+      "font-input"
       "font-ia-writer-mono"
       "font-ia-writer-duo"
       "font-ia-writer-quattro"

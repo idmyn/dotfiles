@@ -52,6 +52,8 @@ in
       tealdeer
       hadolint
       # stable-pkgs.emacsGcc # can't get this to use cachix properly
+      git-branchless
+      lazygit
       neovim
       unstable.httpie
       restic
@@ -62,6 +64,7 @@ in
       cmake
       gnupg
       watch
+      htmlq
       dasel
       unstable.helix
       navi
@@ -79,6 +82,11 @@ in
       sd
       fd
       fx
+
+      # for https://github.com/manateelazycat/lsp-bridge
+      python310Packages.epc
+      unstable.python310Packages.orjson
+      python310Packages.six
 
       rustup
 

@@ -19,3 +19,6 @@
   (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
   :bind (:map general-override-mode-map
          ("M-o" . ace-window)))
+
+(after! general
+  (general-auto-unbind-keys))
