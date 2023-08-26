@@ -5,7 +5,8 @@
       evil-disable-insert-state-bindings t
       +evil-want-o/O-to-continue-comments nil)
 
-(add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
+(after! undo-tree
+        (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode))
 
 (map!
  :i "C-d" 'delete-char

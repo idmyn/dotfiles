@@ -58,6 +58,7 @@ in
       "edgedb-cli"
       "cloudflared"
       "pinentry-mac"
+      "libgccjit"
     ];
 
     casks = [
@@ -85,8 +86,8 @@ in
       "font-inter"
     ];
 
-    extraConfig = ''
-      brew "emacs-plus", args:["with-native-comp", "with-elrumo2-icon"]
-    '';
+    # extraConfig = ''
+    #   brew "emacs-plus", args:["with-native-comp", "with-elrumo2-icon"]
+    # '';
   };
 }

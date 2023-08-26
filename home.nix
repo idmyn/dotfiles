@@ -34,6 +34,8 @@ in
       "$HOME/google-cloud-sdk/bin"
       "/usr/local/opt/python@3.10/bin" # for x86_64 homebrew
       "$KALEIDOSCOPE_DIR/bin"
+      "/Applications/Emacs.app/Contents/MacOS"
+      "/Applications/Emacs.app/Contents/MacOS/bin"
     ];
 
     packages = my-scripts ++ (with pkgs; [
@@ -151,7 +153,6 @@ in
         uuid = "uuidgen | tr -d '\\n' | tr '[:upper:]' '[:lower:]' | pbcopy";
         bks = "open -a 'Beekeeper Studio'";
         jiq = "jiq -q";
-        semgrep = "semgrep --lang typescript -e";
         prod-diff = "git fetch && git log (heroku releases -n 1 -a surfboard-app-prod --json | jq -r '.[].description' | choose 1)..origin/main --oneline";
         drs = "darwin-rebuild switch --flake path:$HOME/.config/nixpkgs#mbp";
       };
