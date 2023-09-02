@@ -6,15 +6,13 @@
 }: let
   my-scripts = import ./scripts {
     pkgs = pkgs;
-    isWorkLaptop = isWorkLaptop;
+    isWorkLaptop = true;
   };
-
-  isDarwin = pkgs.stdenv.isDarwin;
-  isWorkLaptop = true;
-
-  mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
 in {
   home = {
+    username = "david";
+    homeDirectory = "/Users/david";
+    stateVersion = "23.05";
     sessionVariables = {
       LS_COLORS = "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
       GLAMOUR_STYLE = "light";
@@ -25,8 +23,9 @@ in {
       KALEIDOSCOPE_DIR = "$HOME/src/personal/kaleidoscope";
       PNPM_HOME = "$HOME/.pnpm-bin";
     };
-
     sessionPath = [
+      "$HOME/.nix-profile/bin"
+      "/nix/var/nix/profiles/default/bin"
       "$HOME/.pnpm-bin"
       "$HOME/.local/bin" # for pipx
       "/opt/homebrew/bin"
@@ -42,24 +41,22 @@ in {
       my-scripts
       ++ (with pkgs; [
         any-nix-shell
-        nixfmt
+        alejandra
+        # nixfmt
         niv
 
         visidata
         ripgrep
-        # magic-wormhole
+        magic-wormhole
         diff-so-fancy # TODO fancydiff script = `diff -u file_a file_b | diff-so-fancy`
         sqlite-utils
         git-crypt
         moreutils
-        unstable.watchexec
+        watchexec
         tealdeer
-        hadolint
-        # stable-pkgs.emacsGcc # can't get this to use cachix properly
-        git-branchless
         lazygit
         neovim
-        unstable.httpie
+        httpie
         restic
         reflex
         ispell
@@ -70,7 +67,7 @@ in {
         watch
         htmlq
         dasel
-        unstable.helix
+        helix
         navi
         tree
         just
@@ -80,17 +77,11 @@ in {
         pup
         xsv
         jiq
-        unstable.oil
         jq
-        unstable.yq
+        yq
         sd
         fd
         fx
-
-        # for https://github.com/manateelazycat/lsp-bridge
-        python310Packages.epc
-        unstable.python310Packages.orjson
-        python310Packages.six
 
         rustup
 
@@ -98,15 +89,10 @@ in {
         tectonic
       ]);
   };
+  programs.home-manager.enable = true;
 
   programs = {
-    direnv = {
-      enable = true;
-      # enableNixDirenvIntegration = true;
-      # ^ I tried this, which uses https://github.com/nix-community/nix-direnv
-      # but I found it messed up my emacs daemon/client setup
-      # so I'm using lorri instead, which is configured in ./darwin/configuration.nix
-    };
+    direnv.enable = true;
 
     starship = {
       # package = pkgs.starship.overrideDerivation (attrs: {
@@ -317,7 +303,7 @@ in {
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "helix".source = dotfiles/helix;
       }
-      (mkIf isDarwin {
+      (mkIf pkgs.stdenv.isDarwin {
         "karabiner.edn".source = dotfiles/macOS/karabiner.edn;
 
         "phoenix/phoenix.js".text = ''
@@ -327,26 +313,9 @@ in {
       })
     ];
 
-  # cloning like this because if I clone the repo through a Nix builtin then it's read-only which causes issues
-  home.activation.cloneDoomEmacs = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    [ ! -d $HOME/.config/emacs ] && \
-      $DRY_RUN_CMD git clone --depth 1 $VERBOSE_ARG \
-        https://github.com/doomemacs/doomemacs ~/.config/emacs;
-  '';
-
   home.activation.installAsdfVm = lib.hm.dag.entryAfter ["writeBoundary"] ''
     [ ! -d $HOME/.asdf ] && \
       $DRY_RUN_CMD git clone --branch v0.8.0 $VERBOSE_ARG \
         https://github.com/asdf-vm/asdf.git ~/.asdf;
   '';
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "21.05";
 }
