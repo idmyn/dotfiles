@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   my-scripts = import ./scripts {
     pkgs = pkgs;
     isWorkLaptop = isWorkLaptop;
@@ -10,20 +13,17 @@ let
   isWorkLaptop = true;
 
   mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-in
-
-{
+in {
   home = {
     sessionVariables = {
-      LS_COLORS =
-        "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
+      LS_COLORS = "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
       GLAMOUR_STYLE = "light";
       EDITOR = "emacsclient -q -c -a ''";
       RIPGREP_CONFIG_PATH = "$HOME/.config/ripgrep.conf";
       JUST_SUPPRESS_DOTENV_LOAD_WARNING = "1";
-      LDFLAGS="-L/usr/local/opt/python@3.10/lib"; # for x86_64 homebrew python
-      KALEIDOSCOPE_DIR="$HOME/src/personal/kaleidoscope";
-      PNPM_HOME="$HOME/.pnpm-bin";
+      LDFLAGS = "-L/usr/local/opt/python@3.10/lib"; # for x86_64 homebrew python
+      KALEIDOSCOPE_DIR = "$HOME/src/personal/kaleidoscope";
+      PNPM_HOME = "$HOME/.pnpm-bin";
     };
 
     sessionPath = [
@@ -38,63 +38,65 @@ in
       "/Applications/Emacs.app/Contents/MacOS/bin"
     ];
 
-    packages = my-scripts ++ (with pkgs; [
-      any-nix-shell
-      nixfmt
-      niv
+    packages =
+      my-scripts
+      ++ (with pkgs; [
+        any-nix-shell
+        nixfmt
+        niv
 
-      visidata
-      ripgrep
-      # magic-wormhole
-      diff-so-fancy # TODO fancydiff script = `diff -u file_a file_b | diff-so-fancy`
-      sqlite-utils
-      git-crypt
-      moreutils
-      unstable.watchexec
-      tealdeer
-      hadolint
-      # stable-pkgs.emacsGcc # can't get this to use cachix properly
-      git-branchless
-      lazygit
-      neovim
-      unstable.httpie
-      restic
-      reflex
-      ispell
-      sqlite
-      choose
-      cmake
-      gnupg
-      watch
-      htmlq
-      dasel
-      unstable.helix
-      navi
-      tree
-      just
-      glow
-      pass
-      nnn
-      pup
-      xsv
-      jiq
-      unstable.oil
-      jq
-      unstable.yq
-      sd
-      fd
-      fx
+        visidata
+        ripgrep
+        # magic-wormhole
+        diff-so-fancy # TODO fancydiff script = `diff -u file_a file_b | diff-so-fancy`
+        sqlite-utils
+        git-crypt
+        moreutils
+        unstable.watchexec
+        tealdeer
+        hadolint
+        # stable-pkgs.emacsGcc # can't get this to use cachix properly
+        git-branchless
+        lazygit
+        neovim
+        unstable.httpie
+        restic
+        reflex
+        ispell
+        sqlite
+        choose
+        cmake
+        gnupg
+        watch
+        htmlq
+        dasel
+        unstable.helix
+        navi
+        tree
+        just
+        glow
+        pass
+        nnn
+        pup
+        xsv
+        jiq
+        unstable.oil
+        jq
+        unstable.yq
+        sd
+        fd
+        fx
 
-      # for https://github.com/manateelazycat/lsp-bridge
-      python310Packages.epc
-      unstable.python310Packages.orjson
-      python310Packages.six
+        # for https://github.com/manateelazycat/lsp-bridge
+        python310Packages.epc
+        unstable.python310Packages.orjson
+        python310Packages.six
 
-      rustup
+        rustup
 
-      pandoc
-      tectonic
-    ]);
+        pandoc
+        tectonic
+      ]);
   };
 
   programs = {
@@ -143,8 +145,7 @@ in
         k = "kubectl";
         kx = "kubectx";
         kns = "kubens";
-        kdebug =
-          "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";
+        kdebug = "kubectl run -i --rm --tty debug --image=praqma/network-multitool --restart=Never -- sh";
         unset-context = "kubectl config unset current-context";
         teb = "tmux capture-pane -pS -1000000 | eb";
         rg = "rg -S";
@@ -224,31 +225,35 @@ in
         '';
       };
 
-      plugins = [{
-        name = "autols";
-        src = pkgs.fetchFromGitHub {
-          owner = "idmyn";
-          repo = "fish-autols";
-          rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
-          sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
-        };
-      }];
+      plugins = [
+        {
+          name = "autols";
+          src = pkgs.fetchFromGitHub {
+            owner = "idmyn";
+            repo = "fish-autols";
+            rev = "d53851d32aaf25c94dde1d02f45ffd9c86d49446";
+            sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
+          };
+        }
+      ];
     };
 
     zsh = {
       enable = true;
       enableAutosuggestions = true;
-      plugins = [{
-        name = "zsh-history-substring-search";
-        file = "zsh-history-substring-search.zsh";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-history-substring-search";
-          rev = "v1.0.2";
-          sha256 = "0y8va5kc2ram38hbk2cibkk64ffrabfv1sh4xm7pjspsba9n5p1y";
-        };
-      }];
-      sessionVariables = { ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "underline"; };
+      plugins = [
+        {
+          name = "zsh-history-substring-search";
+          file = "zsh-history-substring-search.zsh";
+          src = pkgs.fetchFromGitHub {
+            owner = "zsh-users";
+            repo = "zsh-history-substring-search";
+            rev = "v1.0.2";
+            sha256 = "0y8va5kc2ram38hbk2cibkk64ffrabfv1sh4xm7pjspsba9n5p1y";
+          };
+        }
+      ];
+      sessionVariables = {ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "underline";};
       initExtra = ''
         alias ls='echo; ${pkgs.exa}/bin/exa'
         bindkey '^[[A' history-substring-search-up
@@ -297,11 +302,14 @@ in
           ''format = "$directory$git_branch$line_break$cmd_duration$character"''
           + builtins.readFile dotfiles/starship.toml;
         # export STARSHIP_CONFIG=$HOME/.config/starship-with-gcloud.toml
-        "starship-with-gcloud.toml".text = ''
-          format = "$directory$git_branch$line_break$cmd_duration$gcloud$character"''
+        "starship-with-gcloud.toml".text =
+          ''
+            format = "$directory$git_branch$line_break$cmd_duration$gcloud$character"''
           + builtins.readFile dotfiles/starship.toml;
-        "kitty/kitty.conf".text = ''shell ${pkgs.fish}/bin/fish
-          '' + builtins.readFile dotfiles/kitty.conf;
+        "kitty/kitty.conf".text =
+          ''            shell ${pkgs.fish}/bin/fish
+          ''
+          + builtins.readFile dotfiles/kitty.conf;
         "doom".source = dotfiles/doom;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
@@ -320,13 +328,13 @@ in
     ];
 
   # cloning like this because if I clone the repo through a Nix builtin then it's read-only which causes issues
-  home.activation.cloneDoomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.cloneDoomEmacs = lib.hm.dag.entryAfter ["writeBoundary"] ''
     [ ! -d $HOME/.config/emacs ] && \
       $DRY_RUN_CMD git clone --depth 1 $VERBOSE_ARG \
         https://github.com/doomemacs/doomemacs ~/.config/emacs;
   '';
 
-  home.activation.installAsdfVm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.installAsdfVm = lib.hm.dag.entryAfter ["writeBoundary"] ''
     [ ! -d $HOME/.asdf ] && \
       $DRY_RUN_CMD git clone --branch v0.8.0 $VERBOSE_ARG \
         https://github.com/asdf-vm/asdf.git ~/.asdf;
