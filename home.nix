@@ -45,16 +45,21 @@ in {
         # nixfmt
         niv
 
+        poetry
+
         visidata
         ripgrep
-        magic-wormhole
+        #magic-wormhole
         diff-so-fancy # TODO fancydiff script = `diff -u file_a file_b | diff-so-fancy`
         sqlite-utils
+        shellcheck
         git-crypt
         moreutils
+        libgccjit
         watchexec
         tealdeer
         lazygit
+        neovide
         neovim
         httpie
         restic
@@ -87,6 +92,10 @@ in {
 
         pandoc
         tectonic
+
+        turso-cli
+        flyctl
+        heroku
       ]);
   };
   programs.home-manager.enable = true;
@@ -115,7 +124,7 @@ in {
       enable = true;
 
       shellAliases = {
-        ls = "echo; ${pkgs.exa}/bin/exa -F";
+        ls = "echo; ${pkgs.eza}/bin/eza -F";
         r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
         confetti = "open raycast://confetti";
       };
@@ -241,7 +250,7 @@ in {
       ];
       sessionVariables = {ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "underline";};
       initExtra = ''
-        alias ls='echo; ${pkgs.exa}/bin/exa'
+        alias ls='echo; ${pkgs.eza}/bin/eza'
         bindkey '^[[A' history-substring-search-up
         bindkey '^[[B' history-substring-search-down
         [[ -e $HOME/.asdf/asdf.sh ]] && . $HOME/.asdf/asdf.sh
