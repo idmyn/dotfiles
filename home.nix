@@ -318,6 +318,7 @@ in {
         "helix".source = dotfiles/helix;
         "zed/settings.json".source = mkMutableSymlink dotfiles/zed/settings.json;
         "zed/keymap.json".source = mkMutableSymlink dotfiles/zed/keymap.json;
+        "zed/tasks.json".source = mkMutableSymlink dotfiles/zed/tasks.json;
         "zed/themes/eink.json".source = mkMutableSymlink dotfiles/zed/themes/eink.json;
       }
       (mkIf pkgs.stdenv.isDarwin {
