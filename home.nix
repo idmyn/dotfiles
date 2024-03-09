@@ -316,6 +316,9 @@ in {
         # "nvim".source = dotfiles/nvim;
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "helix".source = dotfiles/helix;
+        "zed/settings.json".source = mkMutableSymlink dotfiles/zed/settings.json;
+        "zed/keymap.json".source = mkMutableSymlink dotfiles/zed/keymap.json;
+        "zed/themes/eink.json".source = mkMutableSymlink dotfiles/zed/themes/eink.json;
       }
       (mkIf pkgs.stdenv.isDarwin {
         "karabiner.edn".source = dotfiles/macOS/karabiner.edn;

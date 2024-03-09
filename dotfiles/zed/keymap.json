@@ -1,0 +1,65 @@
+[
+  // below inspired by https://github.com/zed-industries/community/issues/176
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "bindings": {
+      // put key-bindings here if you want them to work only in normal mode
+      "shift-h": "editor::MoveToBeginningOfLine",
+      "shift-l": "editor::MoveToEndOfLine",
+      "space space": "file_finder::Toggle",
+      "space f s": "workspace::Save",
+      "space s p": "pane::DeploySearch",
+      "space c a": "editor::ToggleCodeActions",
+      "space w v": "pane::SplitRight",
+      "space p p": "projects::OpenRecent",
+      "g e": "editor::Hover",
+      "u": "editor::Undo"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == g",
+    "bindings": {
+      "g": "vim::StartOfDocument",
+      "d": "editor::GoToDefinition",
+      "r": "editor::FindAllReferences",
+      "t": "editor::GoToTypeDefinition",
+      "f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "shift-h": "editor::SelectToBeginningOfLine",
+      "shift-l": "editor::SelectToEndOfLine",
+      "u": "editor::Undo"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "ctrl-y": "editor::Paste"
+    }
+  }
+  //{
+  //  "context": "ProjectPanel && !VimWaiting",
+  //  "bindings": {
+  //    "h": "project_panel::CollapseSelectedEntry",
+  //    "l": "project_panel::ExpandSelectedEntry",
+  //    "j": "menu::SelectNext",
+  //    "k": "menu::SelectPrev",
+  //    "o": "menu::Confirm",
+  //    "r": "project_panel::Rename",
+  //    "z c": "project_panel::CollapseSelectedEntry",
+  //    "z o": "project_panel::ExpandSelectedEntry",
+  //    "shift-o": "project_panel::RevealInFinder",
+  //    "x": "project_panel::Cut",
+  //    "c": "project_panel::Copy",
+  //    "p": "project_panel::Paste",
+  //    "d": "project_panel::Delete",
+  //    "a": "project_panel::NewFile",
+  //    "shift-a": "project_panel::NewDirectory",
+  //    "shift-y": "project_panel::CopyRelativePath",
+  //    "g y": "project_panel::CopyPath"
+  //  }
+  //}
+]
