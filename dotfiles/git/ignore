@@ -89,9 +89,9 @@ tsfmt.json
 # ripgrep
 .rgignore
 
-justfile
-
 .idea
 
 # restclient-mode
 *.http
+
+.bruno

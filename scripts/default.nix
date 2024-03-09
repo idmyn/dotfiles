@@ -1,4 +1,4 @@
-{ pkgs, isWorkLaptop }:
+{ pkgs }:
 
 let
   scriptsFile = file:
@@ -14,6 +14,6 @@ let
   changed-files = scriptsFile "changed-files";
   backup = scriptsFile "backup";
 
-  scripts = [ e eb ks jwt podshell kubesummary changed-files ip ];
+  scripts = [ backup e eb ks jwt podshell kubesummary changed-files ip ];
 
-in if isWorkLaptop then scripts else scripts ++ [ backup ]
+in  scripts

@@ -28,6 +28,8 @@
 	defaultBranch = main
 [commit]
 	gpgsign = true
+[gitbutler]
+	signCommits = true
 
 [url "https://github.com/"]
 	insteadOf = git://github.com/

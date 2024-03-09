@@ -23,6 +23,8 @@ restic backup ~                            \
     --exclude="**/target/release"          \
     --exclude="**/straight/repos"          \
     --exclude="**/cache/eln"               \
+    --exclude="**/.next/cache"             \
+    --exclude="**/.arduino"                \
     --exclude="**/*.elc"                   \
     --exclude="${HOME}/desk"               \
     --exclude="${HOME}/files"              \
@@ -37,6 +39,15 @@ restic backup ~                            \
     --exclude="${HOME}/.tmux"              \
     --exclude="${HOME}/.vscode"            \
     --exclude="${HOME}/.gem"               \
+    --exclude="${HOME}/.bun"               \
+    --exclude="${HOME}/.degit"             \
+    --exclude="${HOME}/.orbstack"          \
+    --exclude="${HOME}/.giget"             \
+    --exclude="${HOME}/.pnpm-bin"          \
+    --exclude="${HOME}/.pnpm-state"        \
+    --exclude="${HOME}/.tea"               \
+    --exclude="${HOME}/.yarn"              \
+    --exclude="${HOME}/.fly"               \
     --exclude="${HOME}/.asdf"              \
     --exclude="${HOME}/.local"             \
     --exclude="${HOME}/.cache"             \
@@ -52,9 +63,14 @@ restic backup ~                            \
     --exclude="${HOME}/Applications"       \
     --exclude="${HOME}/Pictures"           \
     --exclude="${HOME}/Public"             \
+    --exclude="${HOME}/google-cloud-sdk"   \
     --exclude="${HOME}/Movies"             \
     --exclude="${HOME}/Music"              \
     --exclude="${HOME}/Tresors"            \
+    --exclude="${HOME}/OrbStack"           \
+    --exclude="${HOME}/metabase"           \
+    --exclude="${HOME}/src/work"           \
+    --exclude="${HOME}/src/clones"         \
 #    | tee -a "$LOGFILE"
 
 #printf "\n*******************************************************\n\n" >> "$LOGFILE"
