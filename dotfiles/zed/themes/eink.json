@@ -17,7 +17,7 @@
         "border.disabled": "#b6bcb5ff",
         "elevated_surface.background": "#f3eddaff",
         "surface.background": "#f3eddaff",
-        "background": "#cfd0c4ff",
+        "background": "#FFFFF8",
         "element.background": "#f3eddaff",
         "element.hover": "#dcdacbff",
         "element.active": "#a2aca9ff",
@@ -26,10 +26,10 @@
         "drop_target.background": "#34555e80",
         "ghost_element.background": "#00000000",
         "ghost_element.hover": "#dcdacbff",
-        "ghost_element.active": "#a2aca9ff",
-        "ghost_element.selected": "#a2aca9ff",
+        "ghost_element.active": "#E1E7DF",
+        "ghost_element.selected": "#E1E7DF",
         "ghost_element.disabled": "#f3eddaff",
-        "text": "#002a35ff",
+        "text": "#111111",
         "text.muted": "#34555eff",
         "text.placeholder": "#6a7f86ff",
         "text.disabled": "#6a7f86ff",
@@ -41,12 +41,12 @@
         "icon.accent": "#288bd1ff",
         "status_bar.background": "#cfd0c4ff",
         "title_bar.background": "#cfd0c4ff",
-        "toolbar.background": "#fdf6e3ff",
+        "toolbar.background": "#FFFFF8",
         "tab_bar.background": "#f3eddaff",
         "tab.inactive_background": "#f3eddaff",
         "tab.active_background": "#fdf6e3ff",
-        "search.match_background": "#298bd166",
-        "panel.background": "#f3eddaff",
+        "search.match_background": "#91EE92",
+        "panel.background": "#FFFFF8",
         "panel.focused_border": null,
         "pane.focused_border": null,
         "scrollbar.thumb.background": "#002a354c",
@@ -55,8 +55,8 @@
         "scrollbar.track.background": "#00000000",
         "scrollbar.track.border": "#f5eedbff",
         "editor.foreground": "#002a35ff",
-        "editor.background": "#fdf6e3ff",
-        "editor.gutter.background": "#fdf6e3ff",
+        "editor.background": "#FFFFF8",
+        "editor.gutter.background": "#FFFFF8",
         "editor.subheader.background": "#f3eddaff",
         "editor.active_line.background": "#f3eddabf",
         "editor.highlighted_line.background": "#f3eddaff",
@@ -186,7 +186,7 @@
             "font_weight": 700
           },
           "keyword": {
-            "color": "#278ad1ff"
+            "color": "#484FD5"
           }
         }
       }

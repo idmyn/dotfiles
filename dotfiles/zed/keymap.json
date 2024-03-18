@@ -13,6 +13,9 @@
       "space w v": "pane::SplitRight",
       "space p p": "projects::OpenRecent",
       "space g g": "task::Spawn",
+      "space g r": "editor::FindAllReferences",
+      "space g o o": "editor::OpenPermalinkToLine",
+      "space t l": "editor::ToggleLineNumbers",
       "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
       "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
       "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
@@ -20,6 +23,7 @@
       "g e": "editor::Hover",
       "ctrl-x 0": "pane::CloseAllItems",
       "ctrl-x 1": "workspace::CloseInactiveTabsAndPanes",
+      "enter": "editor::OpenExcerpts",
       "u": "editor::Undo" // https://github.com/zed-industries/zed/issues/7521
     }
   },

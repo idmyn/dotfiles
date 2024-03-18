@@ -8,9 +8,21 @@
 // from the command palette or from `Zed` application menu.
 {
   "theme": "eink",
+  "buffer_font_family": "Iosevka SS09",
+  "buffer_font_size": 16,
+  "buffer_font_features": {
+    "calt": false
+  },
   "cursor_blink": false,
-  "buffer_font_size": 15,
   "vim_mode": true,
+  "assistant": {
+    // https://github.com/zed-industries/zed/issues/4424#issuecomment-1999319114
+    // ollama cp mistral gpt-4-1106-preview
+    "provider": {
+      "type": "openai",
+      "api_url": "http://localhost:11434/v1"
+    }
+  },
   "language_overrides": {
     "TypeScript": {
       "format_on_save": "on",
@@ -36,6 +48,15 @@
         "external": {
           "command": "/Users/david/.asdf/shims/prettierd",
           "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    }
+  },
+  "lsp": {
+    "typescript-language-server": {
+      "initialization_options": {
+        "preferences": {
+          "importModuleSpecifierPreference": "relative"
         }
       }
     }
