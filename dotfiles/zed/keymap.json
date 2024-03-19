@@ -12,9 +12,13 @@
       "space c a": "editor::ToggleCodeActions",
       "space w v": "pane::SplitRight",
       "space p p": "projects::OpenRecent",
-      "space g g": "task::Spawn",
+      "space g g": [
+        "workspace::SendKeystrokes",
+        ": new center terminal enter lazygit enter"
+      ],
       "space g r": "editor::FindAllReferences",
       "space g o o": "editor::OpenPermalinkToLine",
+      "space g o c": "editor::CopyPermalinkToLine",
       "space t l": "editor::ToggleLineNumbers",
       "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
       "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
