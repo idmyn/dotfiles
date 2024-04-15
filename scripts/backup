@@ -19,7 +19,6 @@ fi
 restic backup ~                            \
     --exclude="**/node_modules"            \
     --exclude="**/.log"                    \
-    --exclude="${HOME}/src/clones/nixpkgs" \
     --exclude="**/target/release"          \
     --exclude="**/straight/repos"          \
     --exclude="**/cache/eln"               \
@@ -34,6 +33,7 @@ restic backup ~                            \
     --exclude="${HOME}/.config/emacs*"     \
     --exclude="${HOME}/.config/yarn"       \
     --exclude="${HOME}/.npm"               \
+    --exclude="${HOME}/.ollama"            \
     --exclude="${HOME}/.pnpm-store"        \
     --exclude="${HOME}/.quicklisp"         \
     --exclude="${HOME}/.tmux"              \

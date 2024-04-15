@@ -10,7 +10,7 @@ min_time_to_notify = 300000
 # show_notifications = true
 
 [directory]
-style = ""
+style = "black"
 truncation_length = 5
 
 [gcloud]

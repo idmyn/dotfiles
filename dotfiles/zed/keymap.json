@@ -46,6 +46,7 @@
     "bindings": {
       "shift-h": "editor::SelectToBeginningOfLine",
       "shift-l": "editor::SelectToEndOfLine",
+      "space s p": "workspace::NewSearch",
       "u": "editor::Undo"
     }
   },

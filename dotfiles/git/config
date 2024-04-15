@@ -24,6 +24,8 @@
 	rebase = true
 [rebase]
 	autoStash = true
+[merge]
+    conflictstyle = zdiff3
 [init]
 	defaultBranch = main
 [commit]
