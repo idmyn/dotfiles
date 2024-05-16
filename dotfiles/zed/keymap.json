@@ -10,16 +10,22 @@
       "space f s": "workspace::Save",
       "space s p": "pane::DeploySearch",
       "space c a": "editor::ToggleCodeActions",
+      "space c r": "editor::Rename",
       "space w v": "pane::SplitRight",
       "space p p": "projects::OpenRecent",
       "space g g": [
         "workspace::SendKeystrokes",
         ": new center terminal enter lazygit enter"
       ],
+      "space f d": [
+        "workspace::SendKeystrokes",
+        ": new center terminal enter ya_zed enter"
+      ],
       "space g r": "editor::FindAllReferences",
       "space g o o": "editor::OpenPermalinkToLine",
       "space g o c": "editor::CopyPermalinkToLine",
       "space t l": "editor::ToggleLineNumbers",
+      "space t b": "editor::ToggleGitBlame",
       "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
       "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
       "alt-k": ["workspace::ActivatePaneInDirection", "Up"],

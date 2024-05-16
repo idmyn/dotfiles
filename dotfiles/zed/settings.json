@@ -8,11 +8,16 @@
 // from the command palette or from `Zed` application menu.
 {
   "theme": "eink",
+  "tab_bar": {
+    "show": false
+  },
+  "ui_font_family": "Zed Sans",
   "buffer_font_family": "Iosevka SS09",
   "buffer_font_size": 16,
   "buffer_font_features": {
     "calt": false
   },
+  "git": { "inline_blame": { "enabled": false } },
   "cursor_blink": false,
   "vim_mode": true,
   "assistant": {
@@ -22,6 +27,13 @@
       "type": "openai",
       "api_url": "http://localhost:11434/v1"
     }
+  },
+  "scrollbar": {
+    "selections": false,
+    "symbols_selections": false
+  },
+  "terminal": {
+    "font_family": "Iosevka Nerd Font Mono"
   },
   "language_overrides": {
     "TypeScript": {
@@ -48,6 +60,15 @@
         "external": {
           "command": "/Users/david/.asdf/shims/prettierd",
           "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    },
+    "Nix": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "/Users/david/.nix-profile/bin/nixfmt",
+          "arguments": []
         }
       }
     }
