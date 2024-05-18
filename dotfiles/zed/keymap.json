@@ -11,15 +11,21 @@
       "space s p": "pane::DeploySearch",
       "space c a": "editor::ToggleCodeActions",
       "space c r": "editor::Rename",
+      "space r": "editor::FindAllReferences",
       "space w v": "pane::SplitRight",
       "space p p": "projects::OpenRecent",
       "space g g": [
         "workspace::SendKeystrokes",
-        ": new center terminal enter lazygit enter"
+        // VISUAL=zed so zed is used to 'open' diffs but gitconfig editor (nvim) is used to edit commit messages
+        ": new center terminal enter VISUAL=zed space gitu enter"
       ],
       "space f d": [
         "workspace::SendKeystrokes",
         ": new center terminal enter ya_zed enter"
+      ],
+      "space `": [
+        "workspace::SendKeystrokes",
+        ": tab switcher toggle enter enter"
       ],
       "space g r": "editor::FindAllReferences",
       "space g o o": "editor::OpenPermalinkToLine",

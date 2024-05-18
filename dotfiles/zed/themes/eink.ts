@@ -40,6 +40,7 @@ const theme = {
         //"element.selected": darken(colors.bg),
         "ghost_element.active": colors.ghostWhite,
         "ghost_element.selected": colors.ghostWhite,
+        "terminal.background": colors.bg,
         syntax: {
           comment: {
             color: colors.text,
