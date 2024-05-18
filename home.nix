@@ -3,17 +3,18 @@
   pkgs,
   lib,
   ...
-}: let
-  my-scripts = import ./scripts {
-    pkgs = pkgs;
-  };
+}:
+let
+  my-scripts = import ./scripts { pkgs = pkgs; };
 
   # https://github.com/ncfavier/config/blob/954cbf4f569abe13eab456301a00560d82bd0165/modules/nix.nix#L12-L14
   # https://github.com/nix-community/home-manager/issues/676#issuecomment-1595827318
   configPath = "/Users/david/.config/home-manager";
-  mkMutableSymlink = path: config.lib.file.mkOutOfStoreSymlink
-    (configPath + lib.removePrefix (toString ./.) (toString path));
-in {
+  mkMutableSymlink =
+    path:
+    config.lib.file.mkOutOfStoreSymlink (configPath + lib.removePrefix (toString ./.) (toString path));
+in
+{
   home = {
     username = "david";
     homeDirectory = "/Users/david";
@@ -46,8 +47,8 @@ in {
       my-scripts
       ++ (with pkgs; [
         any-nix-shell
-        alejandra
-        # nixfmt
+        #nixfmt
+        nixfmt-rfc-style
         niv
 
         poetry
@@ -64,6 +65,7 @@ in {
         watchexec
         tealdeer
         lazygit
+        jujutsu
         neovide
         neovim
         httpie
@@ -81,8 +83,10 @@ in {
         navi
         tree
         just
+        yazi
         glow
         pass
+        gitu
         nnn
         pup
         xsv
@@ -271,7 +275,9 @@ in {
           };
         }
       ];
-      sessionVariables = {ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "underline";};
+      sessionVariables = {
+        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "underline";
+      };
       initExtra = ''
         alias ls='echo; ${pkgs.eza}/bin/eza'
         bindkey '^[[A' history-substring-search-up
@@ -313,7 +319,8 @@ in {
     ".asdfrc".text = "legacy_version_file = yes";
   };
 
-  xdg.configFile = with lib;
+  xdg.configFile =
+    with lib;
     mkMerge [
       {
         "starship.toml".text =
@@ -321,19 +328,23 @@ in {
           + builtins.readFile dotfiles/starship.toml;
         # export STARSHIP_CONFIG=$HOME/.config/starship-with-gcloud.toml
         "starship-with-gcloud.toml".text =
-          ''
-            format = "$directory$git_branch$line_break$cmd_duration$gcloud$character"''
+          ''format = "$directory$git_branch$line_break$cmd_duration$gcloud$character"''
           + builtins.readFile dotfiles/starship.toml;
         "kitty/kitty.conf".text =
-          ''            shell ${pkgs.fish}/bin/fish
+          ''
+            shell ${pkgs.fish}/bin/fish
           ''
           + builtins.readFile dotfiles/kitty.conf;
-        "doom".source = dotfiles/doom;
+        "doom".source = mkMutableSymlink dotfiles/doom;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
         # "nvim".source = dotfiles/nvim;
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "helix".source = dotfiles/helix;
+        "gitu/config.toml".text = ''
+          [bindings]
+          root.discard = ["x"]
+        '';
         "zed/settings.json".source = mkMutableSymlink dotfiles/zed/settings.json;
         "zed/keymap.json".source = mkMutableSymlink dotfiles/zed/keymap.json;
         "zed/tasks.json".source = mkMutableSymlink dotfiles/zed/tasks.json;
@@ -349,7 +360,7 @@ in {
       })
     ];
 
-  home.activation.installAsdfVm = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.installAsdfVm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     [ ! -d $HOME/.asdf ] && \
       $DRY_RUN_CMD git clone --branch v0.8.0 $VERBOSE_ARG \
         https://github.com/asdf-vm/asdf.git ~/.asdf;
