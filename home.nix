@@ -125,6 +125,23 @@ in {
       fileWidgetCommand = "fd --type f";
     };
 
+    atuin = {
+      enable = true;
+      flags = [ "--disable-up-arrow" ];
+    };
+
+    nushell = {
+      # https://github.com/taotien/NOflake/blob/9b1d4d53c2dee74189ad24c5a8da054df47d6112/users/tao/HOME.nix#L37-L42
+      # https://github.com/nushell/nushell/issues/9617#issuecomment-1707184218
+      # fede/sur-2805-minimum-session-length-for-activity-rules
+      enable = true;
+      extraConfig = ''
+        use /Users/david/src/clones/nu_scripts/themes/nu-themes/solarized-light.nu
+
+        $env.config.color_config = (solarized-light)
+      '';
+    };
+
     fish = {
       enable = true;
 
@@ -132,6 +149,7 @@ in {
         ls = "echo; ${pkgs.eza}/bin/eza -F";
         r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
         confetti = "open raycast://confetti";
+        nu = "${pkgs.nushell}/bin/nu";
       };
 
       shellAbbrs = {
