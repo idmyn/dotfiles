@@ -52,8 +52,8 @@
                             "^company\\.thebrowser\\.Browser$"
                             "^com\\.apple\\.Safari$"]}
 
- :main [{:des   "everywhere: right cmd alone to cmd+opt+r (raycast), and to ctrl+opt as modifier"
-         :rules [[:right_command :!Tleft_alt nil {:alone :f16}]]}
+ :main [{:des   "everywhere: right cmd alone to cmd+opt+= (raycast), and to ctrl+opt as modifier"
+         :rules [[:right_command :!Tleft_alt nil {:alone :!TOequal_sign}]]}
 
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt nil {:alone :tab}]]}
@@ -114,7 +114,8 @@
                  [:delete_or_backspace ["dead-state" 0] :dead-state] ;; exit dead-state
                  [:spacebar [:comma :spacebar ["dead-state" 0]] :dead-state]]}
 
-        {:des "swap : and ;"
-         :rules [[:#Psemicolon :!Ssemicolon]
-                 [:!Ssemicolon :semicolon]
-                 [:!Rsemicolon :semicolon]]}]}
+      ;  {:des "swap : and ;"
+      ;   :rules [[:#Psemicolon :!Ssemicolon]
+      ;           [:!Ssemicolon :semicolon]
+      ;           [:!Rsemicolon :semicolon]]}
+        ]}
