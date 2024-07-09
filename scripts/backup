@@ -29,6 +29,8 @@ restic backup ~                            \
     --exclude="${HOME}/files"              \
     --exclude="${HOME}/mail"               \
     --exclude="${HOME}/.ssh"               \
+    --exclude="${HOME}/.sbt"               \
+    --exclude="${HOME}/.sdkman"            \
     --exclude="${HOME}/.gnupg"             \
     --exclude="${HOME}/.config/emacs*"     \
     --exclude="${HOME}/.config/yarn"       \

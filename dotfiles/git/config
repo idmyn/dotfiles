@@ -1,5 +1,5 @@
 [core]
-	editor = nvim -u NORC -c 'startinsert'
+	editor = nvim -u NORC
 [user]
 	name = David Mynors
 	email = hello@davidmyno.rs
@@ -16,8 +16,8 @@
 	stashinc = stash --include-untracked
 [includeIf "gitdir:~/src/orgs/social.coop/"]
 	path = ~/src/orgs/social.coop/.gitconfig
-[includeIf "gitdir:~/src/surfboard/"]
-	path = ~/src/surfboard/.gitconfig
+[includeIf "gitdir:~/src/work/"]
+	path = ~/src/work/.gitconfig
 [push]
 	autoSetupRemote = true
 [pull]
