@@ -139,6 +139,11 @@ const showOrOpenEditor = new Key("e", ["alt", "ctrl"], () => {
     return;
   }
 
+  if (App.get("Zed")) {
+    App.get("Zed").focus();
+    return;
+  }
+
   const app = App.all().filter((app) => /emacs/i.test(app.name()))[0];
   const appName = app ? app.name() : "Emacs";
   if (App.get(appName)) {
