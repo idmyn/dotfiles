@@ -28,6 +28,7 @@ in
       LDFLAGS = "-L/usr/local/opt/python@3.10/lib"; # for x86_64 homebrew python
       KALEIDOSCOPE_DIR = "$HOME/src/personal/kaleidoscope";
       PNPM_HOME = "$HOME/.pnpm-bin";
+      HUSKY = "0";
     };
     sessionPath = [
       "$HOME/.nix-profile/bin"
@@ -96,6 +97,9 @@ in
         sd
         fd
         fx
+
+        # JVM/Scala installed through sdkman
+        metals
 
         rustup
 
@@ -257,6 +261,15 @@ in
             sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
           };
         }
+        {
+          name = "sdkman-for-fish";
+          src = pkgs.fetchFromGitHub {
+            owner = "reitzig";
+            repo = "sdkman-for-fish";
+            rev = "555203d56e534d91cde87ad600cbbf6f2d112a03";
+            sha256 = "7cgyR3hQ30Jv+9lJS5qaBvSaI/0YVT8xPXlUhDBTdFc=";
+          };
+        }
       ];
     };
 
@@ -313,11 +326,19 @@ in
     };
   };
 
-  home.file = {
-    ".vimrc".source = dotfiles/dot-vimrc;
-    ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
-    ".asdfrc".text = "legacy_version_file = yes";
-  };
+  home.file = lib.mkMerge [
+    {
+      ".vimrc".source = dotfiles/dot-vimrc;
+      ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
+      ".asdfrc".text = "legacy_version_file = yes";
+    }
+    (lib.mkIf pkgs.stdenv.isDarwin {
+      ".phoenix.js".text = ''
+        const pathToShellInNixStore = "${pkgs.fish}/bin/fish"
+        ${builtins.readFile dotfiles/macOS/phoenix.js}
+      '';
+    })
+  ];
 
   xdg.configFile =
     with lib;
@@ -344,20 +365,15 @@ in
         "gitu/config.toml".text = ''
           [bindings]
           root.discard = ["x"]
+          root.quit = ["q"]
+          rebase_menu.rebase_continue = ["r"]
         '';
         "zed/settings.json".source = mkMutableSymlink dotfiles/zed/settings.json;
         "zed/keymap.json".source = mkMutableSymlink dotfiles/zed/keymap.json;
         "zed/tasks.json".source = mkMutableSymlink dotfiles/zed/tasks.json;
         "zed/themes/eink.json".source = mkMutableSymlink dotfiles/zed/themes/eink.json;
       }
-      (mkIf pkgs.stdenv.isDarwin {
-        "karabiner.edn".source = dotfiles/macOS/karabiner.edn;
-
-        "phoenix/phoenix.js".text = ''
-          const pathToShellInNixStore = "${pkgs.fish}/bin/fish"
-          ${builtins.readFile dotfiles/macOS/phoenix.js}
-        '';
-      })
+      (mkIf pkgs.stdenv.isDarwin { "karabiner.edn".source = dotfiles/macOS/karabiner.edn; })
     ];
 
   home.activation.installAsdfVm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
