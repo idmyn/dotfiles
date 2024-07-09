@@ -59,6 +59,7 @@ in
         #magic-wormhole
         diff-so-fancy # TODO fancydiff script = `diff -u file_a file_b | diff-so-fancy`
         sqlite-utils
+        imagemagick
         shellcheck
         git-crypt
         moreutils
