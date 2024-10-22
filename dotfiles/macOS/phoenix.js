@@ -119,16 +119,7 @@ const showOrOpenTana = new Key("t", ["alt", "ctrl"], () => {
   focusOrLaunch("Tana");
 });
 
-const showOrOpenVim = new Key("v", ["alt", "ctrl"], () => {
-  focusOrLaunch("WezTerm");
-});
-
 const showOrOpenEditor = new Key("e", ["alt", "ctrl"], () => {
-  if (App.get("WezTerm")) {
-    App.get("WezTerm").focus();
-    return;
-  }
-
   if (App.get("WebStorm")) {
     App.get("WebStorm").focus();
     return;
@@ -199,7 +190,11 @@ const showOrOpenWebBrowser = new Key("w", ["alt", "ctrl"], () => {
 });
 
 const showOrOpenTerminal = new Key("s", ["alt", "ctrl"], () => {
-  Task.run("/bin/sh", ["-c", "open -a kitty"]);
+  if (App.get("WezTerm")) {
+    App.get("WezTerm").focus();
+  } else {
+    Task.run("/bin/sh", ["-c", "open -a kitty"]);
+  }
 });
 
 const showOrOpenMail = new Key("m", ["alt", "ctrl"], () => {
