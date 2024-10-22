@@ -18,7 +18,7 @@
       "space g g": [
         "workspace::SendKeystrokes",
         // VISUAL=zed so zed is used to 'open' diffs but gitconfig editor (nvim) is used to edit commit messages
-        "escape : new center terminal enter VISUAL=zed space gitu enter"
+        "escape : new center terminal enter VISUAL=zed space gitu space && space exit enter"
       ],
       "space f d": [
         "workspace::SendKeystrokes",
@@ -30,6 +30,7 @@
       "space g o c": "editor::CopyPermalinkToLine",
       "space t l": "editor::ToggleLineNumbers",
       "space t b": "editor::ToggleGitBlame",
+      "space t z": "workspace::ToggleCenteredLayout",
       "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
       "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
       "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
