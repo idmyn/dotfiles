@@ -1,5 +1,5 @@
 [core]
-	editor = nvim -u NORC
+	editor = micro
 [user]
 	name = David Mynors
 	email = hello@davidmyno.rs

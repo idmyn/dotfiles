@@ -22,26 +22,31 @@ in
     sessionVariables = {
       LS_COLORS = "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
       GLAMOUR_STYLE = "light";
-      EDITOR = "emacsclient -q -c -a ''";
+      #EDITOR = "emacsclient -q -c -a ''";
+      VISUAL = "zed";
       RIPGREP_CONFIG_PATH = "$HOME/.config/ripgrep.conf";
       JUST_SUPPRESS_DOTENV_LOAD_WARNING = "1";
       LDFLAGS = "-L/usr/local/opt/python@3.10/lib"; # for x86_64 homebrew python
       KALEIDOSCOPE_DIR = "$HOME/src/personal/kaleidoscope";
       PNPM_HOME = "$HOME/.pnpm-bin";
       HUSKY = "0";
+      ASDF_GOLANG_MOD_VERSION_ENABLED = "true";
     };
     sessionPath = [
       "$HOME/.nix-profile/bin"
       "/nix/var/nix/profiles/default/bin"
       "$HOME/.pnpm-bin"
       "$HOME/.local/bin" # for pipx
+      "$HOME/.deno/bin"
       "/opt/homebrew/bin"
       "$HOME/.config/emacs/bin"
       "$HOME/google-cloud-sdk/bin"
+      "$HOME/.orbstack/bin"
       "/usr/local/opt/python@3.10/bin" # for x86_64 homebrew
       "$KALEIDOSCOPE_DIR/bin"
       "/Applications/Emacs.app/Contents/MacOS"
       "/Applications/Emacs.app/Contents/MacOS/bin"
+      "/Applications/IntelliJ IDEA CE.app/Contents/MacOS"
     ];
 
     packages =
@@ -50,25 +55,30 @@ in
         any-nix-shell
         #nixfmt
         nixfmt-rfc-style
+        nixd
         niv
 
         poetry
 
-        visidata
+        #visidata
         ripgrep
         #magic-wormhole
         diff-so-fancy # TODO fancydiff script = `diff -u file_a file_b | diff-so-fancy`
         sqlite-utils
         imagemagick
         shellcheck
+        lazydocker
         git-crypt
+        prettierd
         moreutils
         libgccjit
         watchexec
+        exercism
         tealdeer
         lazygit
         jujutsu
         neovide
+        zellij
         neovim
         httpie
         restic
@@ -90,17 +100,20 @@ in
         pass
         gitu
         nnn
+        llm
         pup
         xsv
         jiq
         jq
-        yq
+        yq-go
         sd
         fd
         fx
 
         # JVM/Scala installed through sdkman
         metals
+
+        golangci-lint
 
         rustup
 
@@ -124,6 +137,7 @@ in
 
       enable = true;
       enableZshIntegration = false;
+      enableNushellIntegration = true;
     };
 
     zoxide.enable = true;
@@ -137,18 +151,20 @@ in
     atuin = {
       enable = true;
       flags = [ "--disable-up-arrow" ];
+      settings = {
+        enter_accept = false;
+      };
+      enableNushellIntegration = true;
     };
 
     nushell = {
       # https://github.com/taotien/NOflake/blob/9b1d4d53c2dee74189ad24c5a8da054df47d6112/users/tao/HOME.nix#L37-L42
       # https://github.com/nushell/nushell/issues/9617#issuecomment-1707184218
-      # fede/sur-2805-minimum-session-length-for-activity-rules
       enable = true;
-      extraConfig = ''
-        use /Users/david/src/clones/nu_scripts/themes/nu-themes/solarized-light.nu
-
-        $env.config.color_config = (solarized-light)
-      '';
+      # extraConfig = ''
+      #   use /Users/david/src/clones/nu_scripts/themes/nu-themes/solarized-light.nu
+      #   $env.config.color_config = (solarized-light)
+      # '';
     };
 
     fish = {
@@ -169,6 +185,7 @@ in
         gb = "git branch";
         gl = "git log --oneline -n 10";
         tf = "terraform";
+        llm = "llm -t concise";
         k = "kubectl";
         kx = "kubectx";
         kns = "kubens";
@@ -183,6 +200,7 @@ in
         jiq = "jiq -q";
         prod-diff = "git fetch && git log (heroku releases -n 1 -a surfboard-app-prod --json | jq -r '.[].description' | choose 1)..origin/main --oneline";
         drs = "darwin-rebuild switch --flake path:$HOME/.config/nixpkgs#mbp";
+        zj = "zellij";
       };
 
       shellInit = ''
@@ -198,11 +216,11 @@ in
         bind \cj down-or-search
         bind \ck up-or-search
 
-        thefuck --alias | source
-
         test -e ~/.config/fish/secret_work_functions.fish && source ~/.config/fish/secret_work_functions.fish
 
         source ~/.asdf/asdf.fish
+        source ~/.asdf/plugins/golang/set-env.fish
+        source ~/.zellij.fish
 
         test -e /opt/homebrew/Caskroom/miniforge/base/bin/conda && eval /opt/homebrew/Caskroom/miniforge/base/bin/conda "shell.fish" "hook" $argv | source
 
@@ -276,7 +294,7 @@ in
 
     zsh = {
       enable = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       plugins = [
         {
           name = "zsh-history-substring-search";
@@ -325,6 +343,11 @@ in
       settings.shell = "${pkgs.fish}/bin/fish";
       extraConfig = builtins.readFile dotfiles/kitty.conf;
     };
+
+    micro = {
+      enable = true;
+      settings.colorscheme = "simple";
+    };
   };
 
   home.file = lib.mkMerge [
@@ -332,6 +355,7 @@ in
       ".vimrc".source = dotfiles/dot-vimrc;
       ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
       ".asdfrc".text = "legacy_version_file = yes";
+      ".sdkman/etc/config".source = dotfiles/sdkman-config;
     }
     (lib.mkIf pkgs.stdenv.isDarwin {
       ".phoenix.js".text = ''
@@ -358,28 +382,39 @@ in
           ''
           + builtins.readFile dotfiles/kitty.conf;
         "doom".source = mkMutableSymlink dotfiles/doom;
+        "wezterm".source = mkMutableSymlink dotfiles/wezterm;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
         # "nvim".source = dotfiles/nvim;
+        "nvim/init.lua".text = ''
+          vim.cmd 'colorscheme eink'
+        '';
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "helix".source = dotfiles/helix;
+        "yazi".source = dotfiles/yazi;
+        "zellij".source = dotfiles/zellij;
         "gitu/config.toml".text = ''
           [bindings]
           root.discard = ["x"]
           root.quit = ["q"]
           rebase_menu.rebase_continue = ["r"]
         '';
-        "zed/settings.json".source = mkMutableSymlink dotfiles/zed/settings.json;
-        "zed/keymap.json".source = mkMutableSymlink dotfiles/zed/keymap.json;
-        "zed/tasks.json".source = mkMutableSymlink dotfiles/zed/tasks.json;
-        "zed/themes/eink.json".source = mkMutableSymlink dotfiles/zed/themes/eink.json;
+        "zed/settings.json".source = dotfiles/zed/settings.json;
+        "zed/keymap.json".source = dotfiles/zed/keymap.json;
+        "zed/tasks.json".source = dotfiles/zed/tasks.json;
+        "zed/themes/eink.json".source = dotfiles/zed/themes/eink.json;
+        "ideavim/ideavimrc".source = dotfiles/intellij/ideavimrc;
       }
       (mkIf pkgs.stdenv.isDarwin { "karabiner.edn".source = dotfiles/macOS/karabiner.edn; })
     ];
 
   home.activation.installAsdfVm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     [ ! -d $HOME/.asdf ] && \
-      $DRY_RUN_CMD git clone --branch v0.8.0 $VERBOSE_ARG \
+      $DRY_RUN_CMD ${pkgs.git}/bin/git clone --branch v0.14.0 $VERBOSE_ARG \
         https://github.com/asdf-vm/asdf.git ~/.asdf;
+  '';
+
+  home.activation.generateZellijCompletions = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    $DRY_RUN_CMD ${pkgs.zellij}/bin/zellij setup --generate-completion fish > ~/.zellij.fish
   '';
 }

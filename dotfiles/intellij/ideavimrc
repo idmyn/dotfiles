@@ -1,0 +1,78 @@
+set incsearch
+set ignorecase
+set smartcase
+set so=3
+
+set matchit
+set NERDTree
+
+nnoremap yy "+yy
+nnoremap y "+y
+vnoremap y "+y
+
+nnoremap cc "+cc
+nnoremap c "+c
+vnoremap c "+c
+
+nnoremap dd "+dd
+nnoremap d "+d
+vnoremap d "+d
+
+nnoremap p "+p
+vnoremap p "+p
+nnoremap P "+P
+vnoremap P "+P
+
+nmap H ^
+vmap H ^
+nmap L g_
+vmap L g_
+
+imap <C-y> <Esc>pa
+imap <C-f> <Esc>la
+imap <C-b> <Esc>i
+imap <C-a> <Esc>I
+imap <C-e> <Esc>A
+imap <C-d> <Right><BS>
+
+nnoremap <A-L> <C-W>l
+nnoremap <A-H> <C-W>h
+nnoremap <A-J> <C-W>j
+nnoremap <A-K> <C-W>k
+
+nnoremap <RET> <Action>(ShowIntentionActions)
+
+nnoremap <C-x>0 :q <cr>
+nnoremap <C-x>1 :action UnsplitAll <cr>
+
+map gh <Action>(QuickJavaDoc)
+map ge <Action>(ShowErrorDescription)
+
+let mapleader=" "
+
+map <leader>wv <Action>(SplitVertically)
+map <leader>tb <Action>(ToggleLineBreakpoint)
+map <leader>tm <Action>(ToggleBookmark)
+map <leader>tl <Action>(EditorGutterToggleGlobalLineNumbers)
+map <leader><Enter> <Action>(ShowBookmarks)
+map <leader>d <Action>(Debug)
+map <leader><Space> <Action>(GotoFile)
+map <leader>fs <Action>(SaveAll)
+map <leader>bb <Action>(RecentFiles)
+map <leader>gg <Action>(VcsGroups)
+map <leader>gi <Action>(GotoImplementation)
+map <leader>gr <Action>(FindUsages)
+map <leader>fd <Action>(ShowNavBar)
+map <leader>sp <Action>(FindInPath)
+map <leader>x <Action>(Scratch.OpenDefaultScratch)
+
+map <leader>ca <Action>(ShowIntentionActions)
+map <leader>cr <Action>(RenameElement)
+map <leader>ci <Action>(OptimizeImports)
+
+map <leader>z <Action>(ToggleDistractionFreeMode)
+
+map <leader>rf <Action>(RerunFailedTests)
+
+map <leader>goo <Action>(Github.Open.In.Browser)
+map <leader>goc <Action>(GitHub.Copy.Link)

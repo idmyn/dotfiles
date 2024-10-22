@@ -96,3 +96,5 @@ nnoremap <silent> <leader>fd :Explore<cr>
 au FileType netrw nmap <buffer> h -
 au FileType netrw nmap <buffer> l <CR>
 au FileType netrw nmap <buffer> q :bp<CR>
+
+colorscheme eink
