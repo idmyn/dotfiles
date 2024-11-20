@@ -95,3 +95,8 @@ tsfmt.json
 *.http
 
 .bruno
+
+.zed
+justfile
+
+mise.local.toml

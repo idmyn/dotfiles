@@ -30,7 +30,6 @@ in
       KALEIDOSCOPE_DIR = "$HOME/src/personal/kaleidoscope";
       PNPM_HOME = "$HOME/.pnpm-bin";
       HUSKY = "0";
-      ASDF_GOLANG_MOD_VERSION_ENABLED = "true";
     };
     sessionPath = [
       "$HOME/.nix-profile/bin"
@@ -78,6 +77,8 @@ in
         lazygit
         jujutsu
         neovide
+        ast-grep
+        lazyjj
         zellij
         neovim
         httpie
@@ -92,6 +93,7 @@ in
         htmlq
         dasel
         helix
+        mise
         navi
         tree
         just
@@ -175,9 +177,14 @@ in
         r = "glow -p README.md 2>/dev/null || echo 'no readme :('";
         confetti = "open raycast://confetti";
         nu = "${pkgs.nushell}/bin/nu";
+        # [f]uzzy check[o]ut
+        # https://github.com/mrnugget/dotfiles/blob/c4624ed521d539856bcf764f04a295bb19093566/zshrc#L164
+        fo = "git branch --no-color --sort=-committerdate --format='%(refname:short)' | fzf --header 'git checkout' | xargs git checkout";
       };
 
       shellAbbrs = {
+        j = "just";
+        mr = "mise run";
         q = "exit";
         la = "ls -a";
         ll = "ls -alh";
@@ -216,10 +223,10 @@ in
         bind \cj down-or-search
         bind \ck up-or-search
 
+        ${pkgs.mise}/bin/mise activate fish | source
+
         test -e ~/.config/fish/secret_work_functions.fish && source ~/.config/fish/secret_work_functions.fish
 
-        source ~/.asdf/asdf.fish
-        source ~/.asdf/plugins/golang/set-env.fish
         source ~/.zellij.fish
 
         test -e /opt/homebrew/Caskroom/miniforge/base/bin/conda && eval /opt/homebrew/Caskroom/miniforge/base/bin/conda "shell.fish" "hook" $argv | source
@@ -314,7 +321,6 @@ in
         alias ls='echo; ${pkgs.eza}/bin/eza'
         bindkey '^[[A' history-substring-search-up
         bindkey '^[[B' history-substring-search-down
-        [[ -e $HOME/.asdf/asdf.sh ]] && . $HOME/.asdf/asdf.sh
         ${builtins.readFile dotfiles/dot-zshrc}
       '';
       envExtra = ''
@@ -354,7 +360,6 @@ in
     {
       ".vimrc".source = dotfiles/dot-vimrc;
       ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
-      ".asdfrc".text = "legacy_version_file = yes";
       ".sdkman/etc/config".source = dotfiles/sdkman-config;
     }
     (lib.mkIf pkgs.stdenv.isDarwin {
@@ -407,12 +412,6 @@ in
       }
       (mkIf pkgs.stdenv.isDarwin { "karabiner.edn".source = dotfiles/macOS/karabiner.edn; })
     ];
-
-  home.activation.installAsdfVm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    [ ! -d $HOME/.asdf ] && \
-      $DRY_RUN_CMD ${pkgs.git}/bin/git clone --branch v0.14.0 $VERBOSE_ARG \
-        https://github.com/asdf-vm/asdf.git ~/.asdf;
-  '';
 
   home.activation.generateZellijCompletions = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     $DRY_RUN_CMD ${pkgs.zellij}/bin/zellij setup --generate-completion fish > ~/.zellij.fish
