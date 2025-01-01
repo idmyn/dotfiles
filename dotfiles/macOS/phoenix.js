@@ -115,9 +115,9 @@ const showOrOpenGPT = new Key("g", ["alt", "ctrl"], () =>
   focusOrLaunch("TypingMind"),
 );
 
-const showOrOpenTana = new Key("t", ["alt", "ctrl"], () => {
-  focusOrLaunch("Tana");
-});
+//const showOrOpenTana = new Key("t", ["alt", "ctrl"], () => {
+//  focusOrLaunch("Tana");
+//});
 
 const showOrOpenEditor = new Key("e", ["alt", "ctrl"], () => {
   if (App.get("WebStorm")) {
@@ -190,10 +190,10 @@ const showOrOpenWebBrowser = new Key("w", ["alt", "ctrl"], () => {
 });
 
 const showOrOpenTerminal = new Key("s", ["alt", "ctrl"], () => {
-  if (App.get("WezTerm")) {
-    App.get("WezTerm").focus();
+  if (App.get("Ghostty")) {
+    App.get("Ghostty").focus();
   } else {
-    Task.run("/bin/sh", ["-c", "open -a kitty"]);
+    Task.run("/bin/sh", ["-c", "open -a ghostty"]);
   }
 });
 

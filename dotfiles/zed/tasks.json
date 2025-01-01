@@ -14,11 +14,14 @@
   //  "allow_concurrent_runs": false
   //},
   {
-    "label": "lazygit",
-    "command": "lazygit"
-  },
-  {
     "label": "browse files",
     "command": "ya_zed $ZED_FILE" // https://github.com/zed-industries/zed/discussions/9067#discussion-6341932
+  },
+  {
+    "label": "gitu",
+    "command": "VISUAL=zed gitu",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true
   }
 ]

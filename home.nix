@@ -59,6 +59,8 @@ in
 
         poetry
 
+        emacs-lsp-booster
+
         #visidata
         ripgrep
         #magic-wormhole
@@ -78,6 +80,7 @@ in
         jujutsu
         neovide
         ast-grep
+        ffmpeg
         lazyjj
         zellij
         neovim
@@ -111,6 +114,7 @@ in
         sd
         fd
         fx
+        gh
 
         # JVM/Scala installed through sdkman
         metals
@@ -208,6 +212,7 @@ in
         prod-diff = "git fetch && git log (heroku releases -n 1 -a surfboard-app-prod --json | jq -r '.[].description' | choose 1)..origin/main --oneline";
         drs = "darwin-rebuild switch --flake path:$HOME/.config/nixpkgs#mbp";
         zj = "zellij";
+        pr = "gh pr view -w";
       };
 
       shellInit = ''
@@ -386,7 +391,7 @@ in
             shell ${pkgs.fish}/bin/fish
           ''
           + builtins.readFile dotfiles/kitty.conf;
-        "doom".source = mkMutableSymlink dotfiles/doom;
+        # "doom".source = mkMutableSymlink dotfiles/doom;
         "wezterm".source = mkMutableSymlink dotfiles/wezterm;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;

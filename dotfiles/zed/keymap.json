@@ -16,10 +16,14 @@
       "space w s": "pane::SplitDown",
       "space p p": "projects::OpenRecent",
       "space g g": [
-        "workspace::SendKeystrokes",
-        // VISUAL=zed so zed is used to 'open' diffs but gitconfig editor (nvim) is used to edit commit messages
-        "escape : new center terminal enter VISUAL=zed space gitu space && space exit enter"
+        "task::Spawn",
+        { "task_name": "gitu", "reveal_target": "center" }
       ],
+      //[
+      //  "workspace::SendKeystrokes",
+      //  // VISUAL=zed so zed is used to 'open' diffs but gitconfig editor (nvim) is used to edit commit messages
+      //  "escape : new center terminal enter VISUAL=zed space gitu space && space exit enter"
+      //],
       "space f d": [
         "workspace::SendKeystrokes",
         ": c r p enter cmd-w : new center terminal enter ya_zed space cmd-v enter"

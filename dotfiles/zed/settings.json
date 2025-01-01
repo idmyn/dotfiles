@@ -17,6 +17,7 @@
     },
     "version": "2"
   },
+  "file_finder": { "modal_max_width": "large" },
   "features": {
     "copilot": true
     //"inline_completion_provider": "supermaven"
