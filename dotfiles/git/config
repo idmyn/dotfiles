@@ -4,6 +4,8 @@
 	name = David Mynors
 	email = hello@davidmyno.rs
 	signingkey = DDE052DA5004EFF7
+[gpg]
+	program = /usr/local/bin/gpg
 [alias]
 	co = checkout
 	sc = sparse-checkout

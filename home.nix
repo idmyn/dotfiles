@@ -67,13 +67,16 @@ in
         diff-so-fancy # TODO fancydiff script = `diff -u file_a file_b | diff-so-fancy`
         sqlite-utils
         imagemagick
+        cloudflared
         shellcheck
         lazydocker
+        television
         git-crypt
         prettierd
         moreutils
         libgccjit
         watchexec
+        wasm-pack
         exercism
         tealdeer
         lazygit
@@ -90,6 +93,7 @@ in
         ispell
         sqlite
         choose
+        mkcert
         cmake
         gnupg
         watch
@@ -396,9 +400,9 @@ in
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
         # "nvim".source = dotfiles/nvim;
-        "nvim/init.lua".text = ''
-          vim.cmd 'colorscheme eink'
-        '';
+        #"nvim/init.lua".text = ''
+        #  vim.cmd 'colorscheme eink'
+        #'';
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "helix".source = dotfiles/helix;
         "yazi".source = dotfiles/yazi;

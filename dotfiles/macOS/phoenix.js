@@ -111,15 +111,30 @@ const focusOrLaunch = (appName) => {
 
 //const showOrOpenThings = new Key('t', ['alt', 'ctrl'], () => focusOrLaunch('Things'))
 
-const showOrOpenGPT = new Key("g", ["alt", "ctrl"], () =>
-  focusOrLaunch("TypingMind"),
+const showOrOpenGitButler = new Key("g", ["alt", "ctrl"], () =>
+  focusOrLaunch("GitButler"),
 );
 
 //const showOrOpenTana = new Key("t", ["alt", "ctrl"], () => {
 //  focusOrLaunch("Tana");
 //});
 
+
+//const showOrOpenRaycast = new Key("r", ["alt", "ctrl"], () => {
+//  Task.run("/bin/sh", ["-c", "open -a Raycast"]);
+//});
+
 const showOrOpenEditor = new Key("e", ["alt", "ctrl"], () => {
+  if (App.get("Windsurf")) {
+    App.get("Windsurf").focus();
+    return;
+  }
+
+  if (App.get("Cursor")) {
+    App.get("Cursor").focus();
+    return;
+  }
+
   if (App.get("WebStorm")) {
     App.get("WebStorm").focus();
     return;
@@ -166,27 +181,39 @@ const showOrOpenDevBrowser = new Key("b", ["alt", "ctrl"], () => {
 });
 
 const showOrOpenNotes = new Key("n", ["alt", "ctrl"], () => {
-  if (App.get("Heptabase")) {
-    App.get("Heptabase").focus();
+  if (App.get("NotePlan")) {
+    App.get("NotePlan").focus();
   } else {
-    Task.run("/bin/sh", ["-c", 'open -a "Heptabase"']);
+    Task.run("/bin/sh", ["-c", 'open -a "NotePlan"']);
   }
 });
 
-const showOrOpenWebBrowser = new Key("w", ["alt", "ctrl"], () => {
-  if (App.get("Arc")) {
-    App.get("Arc").focus();
-  } else if (App.get("Brave Browser")) {
-    App.get("Brave Browser").focus();
-  } else if (App.get("Firefox Developer Edition")) {
-    App.get("Firefox Developer Edition").focus();
-  } else if (App.get("Firefox")) {
-    App.get("Firefox").focus();
-  } else if (App.get("Vivaldi")) {
-    App.get("Vivaldi").focus();
-  } else {
-    Task.run("/bin/sh", ["-c", 'open -a "Arc"']);
+const showOrOpen = (appName, {preferIfOpen = []} = {}) => {
+  const mainApp = App.get(appName)
+
+  if (preferIfOpen.length > 0) {
+    const firstOpenApp = preferIfOpen.find((app) => App.get(app));
+    if (firstOpenApp) {
+      const preferred = App.get(firstOpenApp);
+      
+      if (!preferred.isActive()) {
+        preferred.focus()
+        return;
+      } else if (mainApp) {
+        mainApp.focus()
+      }
+    }
   }
+
+  if (mainApp) {
+    mainApp.focus();
+  } else {
+    Task.run("/bin/sh", ["-c", `open -a "${appName}"`]);
+  }
+};
+
+const showOrOpenWebBrowser = new Key("w", ["alt", "ctrl"], () => {
+  showOrOpen("Zen Browser", { preferIfOpen: ["Arc", "Google Chrome"] });
 });
 
 const showOrOpenTerminal = new Key("s", ["alt", "ctrl"], () => {

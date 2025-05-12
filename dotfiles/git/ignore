@@ -98,5 +98,8 @@ tsfmt.json
 
 .zed
 justfile
+.cursor
 
 mise.local.toml
+
+.vite
