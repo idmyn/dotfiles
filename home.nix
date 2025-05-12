@@ -111,7 +111,6 @@ in
         nnn
         llm
         pup
-        xsv
         jiq
         jq
         yq-go
@@ -326,7 +325,7 @@ in
       sessionVariables = {
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "underline";
       };
-      initExtra = ''
+      initContent = ''
         alias ls='echo; ${pkgs.eza}/bin/eza'
         bindkey '^[[A' history-substring-search-up
         bindkey '^[[B' history-substring-search-down
