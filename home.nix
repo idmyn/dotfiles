@@ -37,6 +37,7 @@ in
       "$HOME/.pnpm-bin"
       "$HOME/.local/bin" # for pipx
       "$HOME/.deno/bin"
+      "$HOME/.cargo/bin"
       "/opt/homebrew/bin"
       "$HOME/.config/emacs/bin"
       "$HOME/google-cloud-sdk/bin"
@@ -61,6 +62,8 @@ in
 
         emacs-lsp-booster
 
+        conduktor-ctl
+
         #visidata
         ripgrep
         #magic-wormhole
@@ -71,6 +74,7 @@ in
         shellcheck
         lazydocker
         television
+        difftastic
         git-crypt
         prettierd
         moreutils
@@ -84,7 +88,6 @@ in
         neovide
         ast-grep
         ffmpeg
-        lazyjj
         zellij
         neovim
         httpie
@@ -100,6 +103,7 @@ in
         htmlq
         dasel
         helix
+        jjui
         mise
         navi
         tree
@@ -190,11 +194,12 @@ in
       };
 
       shellAbbrs = {
-        j = "just";
         mr = "mise run";
         q = "exit";
         la = "ls -a";
         ll = "ls -alh";
+        js = "jj status";
+        jr = "jj log --no-pager -r 'my_recent_branches(3)'";
         gs = "git status";
         gb = "git branch";
         gl = "git log --oneline -n 10";
@@ -220,13 +225,7 @@ in
 
       shellInit = ''
         set fish_greeting
-        set -g fish_color_command black
-        set -g fish_color_param black
-        set -g fish_color_operator black
-        set -g fish_color_autosuggestion black -u
-        set -g fish_color_redirection black
-        set -g fish_color_end black
-        set -g fish_color_search_match --reverse
+        fish_config theme choose none
 
         bind \cj down-or-search
         bind \ck up-or-search
@@ -382,9 +381,7 @@ in
     with lib;
     mkMerge [
       {
-        "starship.toml".text =
-          ''format = "$directory$git_branch$line_break$cmd_duration$character"''
-          + builtins.readFile dotfiles/starship.toml;
+        "starship.toml".text = builtins.readFile dotfiles/starship.toml;
         # export STARSHIP_CONFIG=$HOME/.config/starship-with-gcloud.toml
         "starship-with-gcloud.toml".text =
           ''format = "$directory$git_branch$line_break$cmd_duration$gcloud$character"''
@@ -406,13 +403,14 @@ in
         "helix".source = dotfiles/helix;
         "yazi".source = dotfiles/yazi;
         "zellij".source = dotfiles/zellij;
+        "jjui/config.toml".text = "ui.highlight_light = '#EEEEE7'";
         "gitu/config.toml".text = ''
           [bindings]
           root.discard = ["x"]
           root.quit = ["q"]
           rebase_menu.rebase_continue = ["r"]
         '';
-        "zed/settings.json".source = dotfiles/zed/settings.json;
+        #"zed/settings.json".source = dotfiles/zed/settings.json;
         "zed/keymap.json".source = dotfiles/zed/keymap.json;
         "zed/tasks.json".source = dotfiles/zed/tasks.json;
         "zed/themes/eink.json".source = dotfiles/zed/themes/eink.json;

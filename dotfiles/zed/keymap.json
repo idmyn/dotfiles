@@ -1,93 +1,100 @@
 [
-    // below inspired by https://github.com/zed-industries/community/issues/176
-    {
-        "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
-        "bindings": {
-            // put key-bindings here if you want them to work only in normal mode
-            "shift-h": "editor::MoveToBeginningOfLine",
-            "shift-l": "editor::MoveToEndOfLine",
-            "space space": "file_finder::Toggle",
-            "space f s": "workspace::Save",
-            "space s p": "pane::DeploySearch",
-            "space c a": "editor::ToggleCodeActions",
-            "space c r": "editor::Rename",
-            "space r": "editor::FindAllReferences",
-            "space w v": "pane::SplitRight",
-            "space w s": "pane::SplitDown",
-            "space p p": "projects::OpenRecent",
-            "space g g": [
-                "task::Spawn",
-                { "task_name": "gitu", "reveal_target": "center" }
-            ],
-            "space f d": [
-                "task::Spawn",
-                { "task_name": "browse files", "reveal_target": "center" }
-            ],
-            "space `": "pane::AlternateFile",
-            "space g r": "editor::FindAllReferences",
-            "space g o o": "editor::OpenPermalinkToLine",
-            "space g o c": "editor::CopyPermalinkToLine",
-            "space t l": "editor::ToggleLineNumbers",
-            "space t b": "editor::ToggleGitBlame",
-            "space t z": "workspace::ToggleCenteredLayout",
-            "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
-            "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
-            "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
-            "alt-l": ["workspace::ActivatePaneInDirection", "Right"],
-            "g e": "editor::Hover",
-            "ctrl-x 0": "pane::CloseAllItems",
-            "ctrl-x 1": "workspace::CloseInactiveTabsAndPanes",
-            "enter": "editor::OpenExcerpts",
-            "u": "editor::Undo" // https://github.com/zed-industries/zed/issues/7521
-        }
-    },
-    {
-        "context": "Editor && vim_mode == normal && vim_operator == g && !VimWaiting",
-        "bindings": {
-            "g": "vim::StartOfDocument",
-            "d": "editor::GoToDefinition",
-            "r": "editor::FindAllReferences",
-            "t": "editor::GoToTypeDefinition",
-            "f": "file_finder::Toggle"
-        }
-    },
-    {
-        "context": "Editor && vim_mode == visual && vim_operator == none && !VimWaiting",
-        "bindings": {
-            "shift-h": ["workspace::SendKeystrokes", "g ^"],
-            "shift-l": ["workspace::SendKeystrokes", "$ h"],
-            "space s p": "workspace::NewSearch",
-            "space c g": "assistant::QuoteSelection",
-            "u": "editor::Undo",
-            "enter": "editor::OpenUrl"
-        }
-    },
-    {
-        "context": "Editor && vim_mode == insert",
-        "bindings": {
-            "ctrl-y": "editor::Paste"
-        }
+  {
+    "bindings": {
+      "ctrl-t": "editor::ToggleEditPrediction"
     }
-    //{
-    //  "context": "ProjectPanel && !VimWaiting",
-    //  "bindings": {
-    //    "h": "project_panel::CollapseSelectedEntry",
-    //    "l": "project_panel::ExpandSelectedEntry",
-    //    "j": "menu::SelectNext",
-    //    "k": "menu::SelectPrev",
-    //    "o": "menu::Confirm",
-    //    "r": "project_panel::Rename",
-    //    "z c": "project_panel::CollapseSelectedEntry",
-    //    "z o": "project_panel::ExpandSelectedEntry",
-    //    "shift-o": "project_panel::RevealInFinder",
-    //    "x": "project_panel::Cut",
-    //    "c": "project_panel::Copy",
-    //    "p": "project_panel::Paste",
-    //    "d": "project_panel::Delete",
-    //    "a": "project_panel::NewFile",
-    //    "shift-a": "project_panel::NewDirectory",
-    //    "shift-y": "project_panel::CopyRelativePath",
-    //    "g y": "project_panel::CopyPath"
-    //  }
-    //}
+  },
+  // below inspired by https://github.com/zed-industries/community/issues/176
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "bindings": {
+      // put key-bindings here if you want them to work only in normal mode
+      "shift-h": "editor::MoveToBeginningOfLine",
+      "shift-l": "editor::MoveToEndOfLine",
+      "space space": "file_finder::Toggle",
+      "space f s": "workspace::Save",
+      "space s p": "pane::DeploySearch",
+      "space c a": "editor::ToggleCodeActions",
+      "space c r": "editor::Rename",
+      "space r": "editor::FindAllReferences",
+      "space w v": "pane::SplitRight",
+      "space w s": "pane::SplitDown",
+      "space p p": "projects::OpenRecent",
+      "space g g": "git::Diff",
+      //"space g g": [
+      //  "task::Spawn",
+      //  { "task_name": "gitu", "reveal_target": "center" }
+      //],
+      "space f d": [
+        "task::Spawn",
+        { "task_name": "browse files", "reveal_target": "center" }
+      ],
+      "space `": "pane::AlternateFile",
+      "space g r": "editor::FindAllReferences",
+      "space g o o": "editor::OpenPermalinkToLine",
+      "space g o c": "editor::CopyPermalinkToLine",
+      "space t l": "editor::ToggleLineNumbers",
+      "space t b": "git::Blame",
+      "space t z": "workspace::ToggleCenteredLayout",
+      "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "alt-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-j": "vim::MoveToNext",
+      "ctrl-k": "vim::MoveToPrevious",
+      "g e": "editor::Hover",
+      "ctrl-x": "workspace::CloseInactiveTabsAndPanes",
+      "enter": "editor::OpenExcerpts",
+      "u": "editor::Undo" // https://github.com/zed-industries/zed/issues/7521
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == g && !VimWaiting",
+    "bindings": {
+      "g": "vim::StartOfDocument",
+      "d": "editor::GoToDefinition",
+      "r": "editor::FindAllReferences",
+      "t": "editor::GoToTypeDefinition",
+      "f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "shift-h": ["workspace::SendKeystrokes", "g ^"],
+      "shift-l": ["workspace::SendKeystrokes", "$ h"],
+      "space s p": "workspace::NewSearch",
+      "space c g": "assistant::QuoteSelection",
+      "u": "editor::Undo",
+      "enter": "editor::OpenUrl"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "ctrl-y": "editor::Paste"
+    }
+  }
+  //{
+  //  "context": "ProjectPanel && !VimWaiting",
+  //  "bindings": {
+  //    "h": "project_panel::CollapseSelectedEntry",
+  //    "l": "project_panel::ExpandSelectedEntry",
+  //    "j": "menu::SelectNext",
+  //    "k": "menu::SelectPrev",
+  //    "o": "menu::Confirm",
+  //    "r": "project_panel::Rename",
+  //    "z c": "project_panel::CollapseSelectedEntry",
+  //    "z o": "project_panel::ExpandSelectedEntry",
+  //    "shift-o": "project_panel::RevealInFinder",
+  //    "x": "project_panel::Cut",
+  //    "c": "project_panel::Copy",
+  //    "p": "project_panel::Paste",
+  //    "d": "project_panel::Delete",
+  //    "a": "project_panel::NewFile",
+  //    "shift-a": "project_panel::NewDirectory",
+  //    "shift-y": "project_panel::CopyRelativePath",
+  //    "g y": "project_panel::CopyPath"
+  //  }
+  //}
 ]

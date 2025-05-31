@@ -1,5 +1,7 @@
 # format set in ../home.nix
 
+format = "$directory${custom.jj}$line_break$cmd_duration$character"
+
 [character]
 error_symbol = "->"
 success_symbol = "->"
@@ -10,7 +12,7 @@ min_time_to_notify = 300000
 # show_notifications = true
 
 [directory]
-style = "black"
+style = "none"
 truncation_length = 5
 
 [gcloud]
@@ -20,3 +22,58 @@ symbol = "☁️ "
 [git_branch]
 style = "green"
 symbol = "🌱 "
+
+# [custom.jj]
+# command = '''starship-jj --ignore-working-copy starship prompt'''
+# format = "[$symbol](blue bold) $output "
+# symbol = "󱗆"
+# when = "jj root --ignore-working-copy"
+
+# [custom.jj]
+# style = "green"
+# command = '''
+# jj log -r@ -n1 --ignore-working-copy --no-graph --color always  -T '
+#   separate(" ",
+#     bookmarks.map(|x| truncate_end(10, x.name(), "…")).join(" "),
+#     tags.map(|x| truncate_end(10, x.name(), "…")).join(" "),
+#     surround("\"", "\"", truncate_end(24, description.first_line(), "…")),
+#     if(conflict, "conflict"),
+#     if(divergent, "divergent"),
+#     if(hidden, "hidden"),
+#   )
+# '
+# '''
+# when = "jj root --ignore-working-copy"
+# symbol = "jj"
+
+[custom.jj]
+command = '''
+jj log -r@ -n1 --ignore-working-copy --no-graph --color always  -T '
+  separate(" ",
+    change_id.shortest(),
+    concat(
+      if(conflict, "💥"),
+      if(divergent, "🚧"),
+      if(hidden, "👻"),
+      if(immutable, "🔒"),
+    ),
+    "|",
+    raw_escape_sequence("\x1b[1;32m") ++ coalesce(
+      truncate_end(29, description.first_line(), "…"),
+      "anonymous",
+    ) ++ raw_escape_sequence("\x1b[0m"),
+    raw_escape_sequence("\x1b[1;32m") ++ if(empty, "(empty)") ++ raw_escape_sequence("\x1b[0m"),
+    if(parents.filter(|c| c.contained_in("@- ~ ::trunk()")).len() == 1,
+      concat(
+        "on ",
+        parents.filter(|c| c.contained_in("@- ~ ::trunk()")).map(|c| "\"" ++ c.description().trim() ++ "\""),
+      )
+    ),
+  )
+'
+'''
+format = "[$symbol](blue bold) $output "
+symbol = "󱗆"
+when = "jj root --ignore-working-copy"
+
+# if(parents.filter(|c| !c.contained_in("::trunk()")).len() == 0, "on main")
