@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   lib,
@@ -58,6 +59,9 @@ in
         nixd
         niv
 
+        inputs.jjui.packages.${system}.default
+        jujutsu
+
         poetry
 
         emacs-lsp-booster
@@ -84,7 +88,6 @@ in
         exercism
         tealdeer
         lazygit
-        jujutsu
         neovide
         ast-grep
         ffmpeg
@@ -103,7 +106,6 @@ in
         htmlq
         dasel
         helix
-        jjui
         mise
         navi
         tree
@@ -403,6 +405,7 @@ in
         "helix".source = dotfiles/helix;
         "yazi".source = dotfiles/yazi;
         "zellij".source = dotfiles/zellij;
+        "jj".source = dotfiles/jj;
         "jjui/config.toml".text = "ui.highlight_light = '#EEEEE7'";
         "gitu/config.toml".text = ''
           [bindings]

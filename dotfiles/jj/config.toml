@@ -1,0 +1,42 @@
+# https://github.com/ethanal/dotfiles/blob/2234396c757ce5f8572f080379669a9450861c2d/jj-config.toml
+# https://github.com/bryceberger/config/blob/134d9bf6b8b4dd52a9cfdc408e78fe768b2671e9/home/jj/config.toml
+# https://github.com/avamsi/dotfiles/blob/54b7bf307dd5fb75d384f614e5db4cf5b44613c4/.jjconfig.toml
+
+[user]
+name = "David Mynors"
+email = "hello@davidmyno.rs"
+[signing]
+behavior = "own"
+backend = "gpg"
+key = "DDE052DA5004EFF7"
+
+[ui]
+editor = "zed --wait"
+diff-editor = ":builtin"
+diff.tool = ["difft", "--color=always", "$left", "$right"]
+default-command = "status"
+
+[git]
+auto-local-bookmark = true
+push-new-bookmarks = true
+
+[template-aliases]
+'format_short_change_id(id)' = 'id.shortest()'
+
+[revsets]
+short-prefixes = "trunk() | mine()"
+
+[revset-aliases]
+"mine()" = "author_name('David Mynors')"
+'recent()' = 'committer_date(after:"1 months ago")'
+'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+'merged()' = '::bookmarks() ~ ::remote_bookmarks()'
+'exclusively_remote_bookmarks()' = '::remote_bookmarks() ~ ::bookmarks()'
+# set all remote bookmarks (commits pushed to remote branches) to be immutable
+# 'immutable_heads()' = "builtin_immutable_heads() | remote_bookmarks()"
+"immutable_heads()" = "builtin_immutable_heads() | (trunk().. & ~mine())"
+"my_recent_branches(x)" = "::latest(heads(mine() ~ merged() ~ exclusively_remote_bookmarks()) & recent(), x) ~ ::trunk()"
+
+[aliases]
+tug = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@-"]
+mine = ["log", "-r", "mine()"]
