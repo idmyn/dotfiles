@@ -400,6 +400,7 @@ in
         "nvim/init.lua".source = dotfiles/nvim/init.lua;
 
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
+        "ghostty/config".source = dotfiles/ghostty-config;
         "helix".source = dotfiles/helix;
         "yazi".source = dotfiles/yazi;
         "zellij".source = dotfiles/zellij;

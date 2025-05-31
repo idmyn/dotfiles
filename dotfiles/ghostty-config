@@ -1,0 +1,15 @@
+command = /Users/david/.nix-profile/bin/fish
+
+mouse-scroll-multiplier = 2
+
+theme = flexoki-light
+background = fffff8
+foreground = 111111
+
+window-padding-x = 8
+macos-titlebar-proxy-icon = hidden
+macos-titlebar-style = tabs
+
+shell-integration-features = no-cursor
+cursor-style = block
+cursor-style-blink = false
