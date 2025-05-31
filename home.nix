@@ -114,6 +114,7 @@ in
         glow
         pass
         gitu
+        bat
         nnn
         llm
         pup
@@ -384,7 +385,6 @@ in
     mkMerge [
       {
         "starship.toml".text = builtins.readFile dotfiles/starship.toml;
-        # export STARSHIP_CONFIG=$HOME/.config/starship-with-gcloud.toml
         "starship-with-gcloud.toml".text =
           ''format = "$directory$git_branch$line_break$cmd_duration$gcloud$character"''
           + builtins.readFile dotfiles/starship.toml;
@@ -397,10 +397,8 @@ in
         "wezterm".source = mkMutableSymlink dotfiles/wezterm;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
-        # "nvim".source = dotfiles/nvim;
-        #"nvim/init.lua".text = ''
-        #  vim.cmd 'colorscheme eink'
-        #'';
+        "nvim/init.lua".source = dotfiles/nvim/init.lua;
+
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "helix".source = dotfiles/helix;
         "yazi".source = dotfiles/yazi;
