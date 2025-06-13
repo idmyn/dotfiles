@@ -13,7 +13,8 @@ let
   kubesummary = scriptsFile "kubesummary";
   changed-files = scriptsFile "changed-files";
   backup = scriptsFile "backup";
+  po = scriptsFile "po";
 
-  scripts = [ backup e eb ks jwt podshell kubesummary changed-files ip ];
+  scripts = [ backup e eb ks jwt podshell kubesummary changed-files ip po ];
 
 in  scripts

@@ -1,0 +1,92 @@
+#!/usr/bin/env -S deno run --allow-all
+
+import { $ } from "jsr:@david/dax@0.43.2";
+import { z } from "npm:zod@3.25.60";
+import { Temporal } from "npm:@js-temporal/polyfill@0.5.1";
+
+$`jj git fetch`.quiet();
+
+const PR = z.object({
+  author: z.union([
+    z.object({
+      name: z.string(),
+      is_bot: z.literal(false),
+    }),
+    z.object({
+      is_bot: z.literal(true),
+    }),
+  ]),
+  title: z.string(),
+  updatedAt: z.coerce.date(),
+  headRefName: z.string(),
+});
+
+const now = Temporal.Now.instant();
+const today = Temporal.Now.plainDateISO();
+const lastWeek = today.subtract({ weeks: 3 }).toString();
+
+const updatedAtFilter = `updated:>${lastWeek}`;
+
+const prs = PR.array().parse(
+  JSON.parse(
+    await $`gh pr list --search=${updatedAtFilter} --json="author,title,updatedAt,headRefName"`.text(),
+  ),
+);
+
+// First collect the entries so we can calculate the max width of the first column
+interface Entry {
+  authorWhen: string;
+  title: string;
+  branch: string;
+}
+
+const entries: Entry[] = prs.flatMap((pr) => {
+  if (pr.author.is_bot) {
+    return [];
+  }
+
+  const updatedAt = Temporal.Instant.from(pr.updatedAt.toISOString());
+  const duration = updatedAt.until(now);
+  const daysAgo = Math.floor(duration.total({ unit: "days" }));
+  const when = daysAgo === 0 ? "today" : `${daysAgo} days ago`;
+
+  return [
+    {
+      authorWhen: `${pr.author.name} (${when})`,
+      title: pr.title,
+      branch: pr.headRefName,
+    },
+  ];
+});
+
+// Determine the width for the first column so that all rows line up
+const maxAuthorWhenLen = entries.reduce(
+  (max, { authorWhen }) => Math.max(max, authorWhen.length),
+  0,
+);
+
+// Build the list: "<padded authorWhen>  <title>\t<branch>"
+const list = entries
+  .map(({ authorWhen, title, branch }) => {
+    const paddedAuthorWhen = authorWhen.padEnd(maxAuthorWhenLen + 2); // +2 for spacing between columns
+    return `${paddedAuthorWhen}${title}\t${branch}`;
+  })
+  .join("\n");
+
+// Pipe the list into fzf. We hide the branch column while keeping it in the
+// line so we can recover it after selection.
+const selectedLine = (
+  await $`fzf --ansi --delimiter="\t" --with-nth=1`.stdinText(list).noThrow(130).text()
+).trim();
+
+if (selectedLine.length === 0) {
+  console.error("no PR selected");
+  Deno.exit(1);
+}
+
+// Extract the branch name (hidden second column)
+const [, branch] = selectedLine.split("\t");
+
+const revision = `${branch}@origin`;
+
+await $`jj new ${revision}`;
