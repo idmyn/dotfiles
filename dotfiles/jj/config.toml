@@ -11,10 +11,16 @@ backend = "gpg"
 key = "DDE052DA5004EFF7"
 
 [ui]
-editor = "zed --wait"
+editor = "nvim"
 diff-editor = ":builtin"
 diff.tool = ["difft", "--color=always", "$left", "$right"]
 default-command = "status"
+
+[merge-tools.idea]
+program = "idea" 
+diff-args = ["diff",  "$left", "$right"]
+edit-args = ["diff",  "$left", "$right"]
+merge-args = ["merge" , "$left", "$right", "$base", "$output"]
 
 [git]
 auto-local-bookmark = true
@@ -37,6 +43,10 @@ short-prefixes = "trunk() | mine()"
 "immutable_heads()" = "builtin_immutable_heads() | (trunk().. & ~mine())"
 "my_recent_branches(x)" = "::latest(heads(mine() ~ merged() ~ exclusively_remote_bookmarks()) & recent(), x) ~ ::trunk()"
 
+# branch = jj log -r "::vukl ~ ::main"
+# branch_and_main = jj log -r "heads(::vukl & ::main):: & (::vukl | ::main)"
+
 [aliases]
 tug = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@-"]
 mine = ["log", "-r", "mine()"]
+gf = ["git", "fetch"]

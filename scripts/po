@@ -4,12 +4,13 @@ import { $ } from "jsr:@david/dax@0.43.2";
 import { z } from "npm:zod@3.25.60";
 import { Temporal } from "npm:@js-temporal/polyfill@0.5.1";
 
-$`jj git fetch`.quiet();
+const fetchPromise = $`jj git fetch`.quiet();
 
 const PR = z.object({
   author: z.union([
     z.object({
       name: z.string(),
+      login: z.string(),
       is_bot: z.literal(false),
     }),
     z.object({
@@ -18,7 +19,7 @@ const PR = z.object({
   ]),
   title: z.string(),
   updatedAt: z.coerce.date(),
-  headRefName: z.string(),
+  headRefOid: z.string(),
 });
 
 const now = Temporal.Now.instant();
@@ -29,7 +30,7 @@ const updatedAtFilter = `updated:>${lastWeek}`;
 
 const prs = PR.array().parse(
   JSON.parse(
-    await $`gh pr list --search=${updatedAtFilter} --json="author,title,updatedAt,headRefName"`.text(),
+    await $`gh pr list --search=${updatedAtFilter} --json="author,title,updatedAt,headRefOid"`.text(),
   ),
 );
 
@@ -37,7 +38,7 @@ const prs = PR.array().parse(
 interface Entry {
   authorWhen: string;
   title: string;
-  branch: string;
+  commit: string;
 }
 
 const entries: Entry[] = prs.flatMap((pr) => {
@@ -49,12 +50,13 @@ const entries: Entry[] = prs.flatMap((pr) => {
   const duration = updatedAt.until(now);
   const daysAgo = Math.floor(duration.total({ unit: "days" }));
   const when = daysAgo === 0 ? "today" : `${daysAgo} days ago`;
+  const author = pr.author.name || pr.author.login;
 
   return [
     {
-      authorWhen: `${pr.author.name} (${when})`,
+      authorWhen: `${author} (${when})`,
       title: pr.title,
-      branch: pr.headRefName,
+      commit: pr.headRefOid,
     },
   ];
 });
@@ -67,9 +69,9 @@ const maxAuthorWhenLen = entries.reduce(
 
 // Build the list: "<padded authorWhen>  <title>\t<branch>"
 const list = entries
-  .map(({ authorWhen, title, branch }) => {
+  .map(({ authorWhen, title, commit }) => {
     const paddedAuthorWhen = authorWhen.padEnd(maxAuthorWhenLen + 2); // +2 for spacing between columns
-    return `${paddedAuthorWhen}${title}\t${branch}`;
+    return `${paddedAuthorWhen}${title}\t${commit}`;
   })
   .join("\n");
 
@@ -84,9 +86,8 @@ if (selectedLine.length === 0) {
   Deno.exit(1);
 }
 
-// Extract the branch name (hidden second column)
-const [, branch] = selectedLine.split("\t");
+// Extract the commit (hidden second column)
+const [, commit] = selectedLine.split("\t");
 
-const revision = `${branch}@origin`;
-
-await $`jj new ${revision}`;
+await fetchPromise;
+await $`jj new ${commit}`.quiet();

@@ -172,11 +172,11 @@ const showOrOpen = (appName, { preferIfOpen = [] } = {}) => {
 };
 
 const showOrOpenWebBrowser = new Key("w", ["alt", "ctrl"], () => {
-    showOrOpen("Zen Browser", { preferIfOpen: ["Arc", "Google Chrome"] });
+    showOrOpen("Dia", { preferIfOpen: ["Arc", "Google Chrome"] });
 });
 
 const showOrOpenEditor = new Key("e", ["alt", "ctrl"], () => {
-    showOrOpen("Zed", { preferIfOpen: ["Cursor"] });
+    showOrOpen("Cursor", { preferIfOpen: ["Zed"] });
 });
 
 const showOrOpenTerminal = new Key("s", ["alt", "ctrl"], () => {

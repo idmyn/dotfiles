@@ -103,3 +103,5 @@ justfile
 mise.local.toml
 
 .vite
+
+AGENT.md

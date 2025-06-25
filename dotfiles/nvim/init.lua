@@ -21,6 +21,8 @@ map({ "n", "v" }, "L", "g_")
 -- Option+arrow keys for word movement in insert mode
 map("i", "<M-f>", "<Esc>ea")
 map("i", "<M-b>", "<Esc>bi")
+-- Option+backspace to delete word backwards
+map("i", "<M-BS>", "<C-w>")
 
 if vim.g.vscode then
     -- https://github.com/vscode-neovim/vscode-neovim/issues/1139

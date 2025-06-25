@@ -38,6 +38,7 @@ in
       "$HOME/.pnpm-bin"
       "$HOME/.local/bin" # for pipx
       "$HOME/.deno/bin"
+      "$HOME/.bun/bin"
       "$HOME/.cargo/bin"
       "/opt/homebrew/bin"
       "$HOME/.config/emacs/bin"
@@ -203,6 +204,8 @@ in
         ll = "ls -alh";
         js = "jj status";
         jr = "jj log --no-pager -r 'my_recent_branches(3)'";
+        ji = "jjui";
+        cdk = "conduktor";
         gs = "git status";
         gb = "git branch";
         gl = "git log --oneline -n 10";
