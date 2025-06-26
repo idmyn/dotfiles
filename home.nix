@@ -6,14 +6,14 @@
   ...
 }:
 let
-  my-scripts = import ./scripts { pkgs = pkgs; };
+  my-scripts = import ./scripts { pkgs = pkgs; self = inputs.self + "/scripts"; };
 
   # https://github.com/ncfavier/config/blob/954cbf4f569abe13eab456301a00560d82bd0165/modules/nix.nix#L12-L14
   # https://github.com/nix-community/home-manager/issues/676#issuecomment-1595827318
   configPath = "/Users/david/.config/home-manager";
   mkMutableSymlink =
     path:
-    config.lib.file.mkOutOfStoreSymlink (configPath + lib.removePrefix (toString ./.) (toString path));
+    config.lib.file.mkOutOfStoreSymlink (configPath + lib.removePrefix (toString inputs.self) (toString path));
 in
 {
   home = {

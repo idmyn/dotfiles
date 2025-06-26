@@ -1,8 +1,8 @@
-{ pkgs }:
+{ pkgs, self }:
 
 let
   scriptsFile = file:
-    pkgs.writeScriptBin "${file}" (builtins.readFile (./. + "/${file}"));
+    pkgs.writeScriptBin "${file}" (builtins.readFile (self + "/${file}"));
 
   e = scriptsFile "e";
   ip = scriptsFile "ip";
