@@ -13,16 +13,23 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    in
+    {
       homeConfigurations."david" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { inherit inputs outputs; };
+        extraSpecialArgs = { inherit inputs outputs system; };
       };
     };
 }

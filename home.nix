@@ -1,19 +1,25 @@
 {
   inputs,
   config,
+  system,
   pkgs,
   lib,
   ...
 }:
 let
-  my-scripts = import ./scripts { pkgs = pkgs; self = inputs.self + "/scripts"; };
+  my-scripts = import ./scripts {
+    pkgs = pkgs;
+    self = inputs.self + "/scripts";
+  };
 
   # https://github.com/ncfavier/config/blob/954cbf4f569abe13eab456301a00560d82bd0165/modules/nix.nix#L12-L14
   # https://github.com/nix-community/home-manager/issues/676#issuecomment-1595827318
   configPath = "/Users/david/.config/home-manager";
   mkMutableSymlink =
     path:
-    config.lib.file.mkOutOfStoreSymlink (configPath + lib.removePrefix (toString inputs.self) (toString path));
+    config.lib.file.mkOutOfStoreSymlink (
+      configPath + lib.removePrefix (toString inputs.self) (toString path)
+    );
 in
 {
   home = {
@@ -69,6 +75,8 @@ in
 
         conduktor-ctl
 
+        kubectl
+
         #visidata
         ripgrep
         #magic-wormhole
@@ -88,6 +96,8 @@ in
         wasm-pack
         exercism
         tealdeer
+        ast-grep
+        mergiraf
         lazygit
         neovide
         ast-grep
@@ -133,6 +143,8 @@ in
         golangci-lint
 
         rustup
+
+        uv
 
         pandoc
         tectonic
@@ -198,12 +210,15 @@ in
       };
 
       shellAbbrs = {
+        oc = "opencode";
+        ag = "ast-grep";
         mr = "mise run";
         q = "exit";
         la = "ls -a";
         ll = "ls -alh";
         js = "jj status";
         jr = "jj log --no-pager -r 'my_recent_branches(3)'";
+        wip = "jjui -r 'wip() | wip()+'";
         ji = "jjui";
         cdk = "conduktor";
         gs = "git status";
@@ -337,6 +352,7 @@ in
         ${builtins.readFile dotfiles/dot-zshrc}
       '';
       envExtra = ''
+        eval "$(${pkgs.mise}/bin/mise activate zsh)"
         export PATH="$PATH:/usr/local/bin"
       '';
     };
@@ -375,27 +391,26 @@ in
       ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
       ".sdkman/etc/config".source = dotfiles/sdkman-config;
     }
-    (lib.mkIf pkgs.stdenv.isDarwin {
-      ".phoenix.js".text = ''
-        const pathToShellInNixStore = "${pkgs.fish}/bin/fish"
-        ${builtins.readFile dotfiles/macOS/phoenix.js}
-      '';
-    })
   ];
 
   xdg.configFile =
     with lib;
     mkMerge [
+      (lib.mkIf pkgs.stdenv.isDarwin {
+        "phoenix/phoenix.js".text = ''
+          const pathToShellInNixStore = "${pkgs.fish}/bin/fish"
+          ${builtins.readFile dotfiles/macOS/phoenix.js}
+        '';
+      })
       {
         "starship.toml".text = builtins.readFile dotfiles/starship.toml;
         "starship-with-gcloud.toml".text =
           ''format = "$directory$git_branch$line_break$cmd_duration$gcloud$character"''
           + builtins.readFile dotfiles/starship.toml;
-        "kitty/kitty.conf".text =
-          ''
-            shell ${pkgs.fish}/bin/fish
-          ''
-          + builtins.readFile dotfiles/kitty.conf;
+        "kitty/kitty.conf".text = ''
+          shell ${pkgs.fish}/bin/fish
+        ''
+        + builtins.readFile dotfiles/kitty.conf;
         # "doom".source = mkMutableSymlink dotfiles/doom;
         "wezterm".source = mkMutableSymlink dotfiles/wezterm;
         "git".source = dotfiles/git;
@@ -408,7 +423,11 @@ in
         "yazi".source = dotfiles/yazi;
         "zellij".source = dotfiles/zellij;
         "jj".source = dotfiles/jj;
-        "jjui/config.toml".text = "ui.highlight_light = '#EEEEE7'";
+        "jjui/config.toml".text = ''
+          [ui]
+          theme = 'base16-atelier-dune-light'
+          highlight_light = '#EEEEE7'
+        '';
         "gitu/config.toml".text = ''
           [bindings]
           root.discard = ["x"]
