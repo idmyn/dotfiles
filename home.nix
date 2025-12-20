@@ -244,7 +244,6 @@ in
 
       shellInit = ''
         set fish_greeting
-        fish_config theme choose none
 
         bind \cj down-or-search
         bind \ck up-or-search
