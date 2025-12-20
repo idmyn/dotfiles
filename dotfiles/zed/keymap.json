@@ -1,7 +1,8 @@
 [
   {
     "bindings": {
-      "ctrl-t": "editor::ToggleEditPrediction"
+      "ctrl-t": "editor::ToggleEditPrediction",
+      "cmd-t": "terminal_panel::Toggle"
     }
   },
   // below inspired by https://github.com/zed-industries/community/issues/176
@@ -9,8 +10,8 @@
     "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
     "bindings": {
       // put key-bindings here if you want them to work only in normal mode
-      "shift-h": "editor::MoveToBeginningOfLine",
-      "shift-l": "editor::MoveToEndOfLine",
+      "shift-h": ["workspace::SendKeystrokes", "g ^"],
+      "shift-l": ["workspace::SendKeystrokes", "g _"],
       "space space": "file_finder::Toggle",
       "space f s": "workspace::Save",
       "space s p": "pane::DeploySearch",
@@ -45,7 +46,8 @@
       "g e": "editor::Hover",
       "ctrl-x": "workspace::CloseInactiveTabsAndPanes",
       "enter": "editor::OpenExcerpts",
-      "u": "editor::Undo" // https://github.com/zed-industries/zed/issues/7521
+      "u": "editor::Undo", // https://github.com/zed-industries/zed/issues/7521
+      "super-e": "vim::SelectLargerSyntaxNode"
     }
   },
   {
@@ -62,17 +64,19 @@
     "context": "Editor && vim_mode == visual && vim_operator == none && !VimWaiting",
     "bindings": {
       "shift-h": ["workspace::SendKeystrokes", "g ^"],
-      "shift-l": ["workspace::SendKeystrokes", "$ h"],
+      "shift-l": ["workspace::SendKeystrokes", "g _"],
       "space s p": "workspace::NewSearch",
       "space c g": "assistant::QuoteSelection",
       "u": "editor::Undo",
-      "enter": "editor::OpenUrl"
+      "enter": "editor::OpenUrl",
+      "super-e": "vim::SelectLargerSyntaxNode"
     }
   },
   {
     "context": "Editor && vim_mode == insert",
     "bindings": {
-      "ctrl-y": "editor::Paste"
+      "ctrl-y": "editor::Paste",
+      "ctrl-e": "vim::EndOfLine"
     }
   }
   //{
