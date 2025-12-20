@@ -3,9 +3,9 @@
 [user]
 	name = David Mynors
 	email = hello@davidmyno.rs
-	signingkey = DDE052DA5004EFF7
+	signingkey = ~/.ssh/id_ed25519.pub
 [gpg]
-	program = /usr/local/bin/gpg
+  format = ssh
 [alias]
 	co = checkout
 	sc = sparse-checkout

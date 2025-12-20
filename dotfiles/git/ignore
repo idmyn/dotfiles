@@ -100,8 +100,20 @@ tsfmt.json
 justfile
 .cursor
 
-mise.local.toml
+.vscode
+
+*.local.*
 
 .vite
 
 AGENT.md
+AGENTS.md
+.claude
+conductor.json
+.opencode
+opencode.json
+opencode.jsonc
+
+.beads
+
+.jj
