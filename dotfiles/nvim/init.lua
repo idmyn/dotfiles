@@ -61,6 +61,10 @@ if vim.g.vscode then
     map("i", "<C-x>",
         vscode_action("workbench.action.closeEditorsInOtherGroups") ..
         vscode_action("workbench.action.closeOtherEditors"))
+else
+    map("n", "<D-s>", "<cmd>w<CR>")
+    map("i", "<D-s>", "<cmd>w<CR>")
+    map("n", "<leader>fs", "<cmd>w<CR>")
 end
 
 

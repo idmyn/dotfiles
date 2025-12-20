@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --allow-all
+#!/usr/bin/env -S deno run --quiet --allow-all
 
 import { $ } from "jsr:@david/dax@0.43.2";
 import { z } from "npm:zod@3.25.60";

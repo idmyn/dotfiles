@@ -47,6 +47,7 @@ symbol = "🌱 "
 # symbol = "jj"
 
 [custom.jj]
+# ignore_timeout = true
 command = '''
 jj log -r@ -n1 --ignore-working-copy --no-graph --color always  -T '
   separate(" ",
@@ -59,14 +60,14 @@ jj log -r@ -n1 --ignore-working-copy --no-graph --color always  -T '
     ),
     "|",
     raw_escape_sequence("\x1b[1;32m") ++ coalesce(
-      truncate_end(29, description.first_line(), "…"),
+      truncate_end(35, description.first_line(), "…"),
       "anonymous",
     ) ++ raw_escape_sequence("\x1b[0m"),
     raw_escape_sequence("\x1b[1;32m") ++ if(empty, "(empty)") ++ raw_escape_sequence("\x1b[0m"),
     if(parents.filter(|c| c.contained_in("@- ~ ::trunk()")).len() == 1,
       concat(
         "on ",
-        parents.filter(|c| c.contained_in("@- ~ ::trunk()")).map(|c| "\"" ++ c.description().trim() ++ "\""),
+        parents.filter(|c| c.contained_in("@- ~ ::trunk()")).map(|c| "\"" ++ truncate_end(30, c.description().first_line(), "...") ++ "\""),
       )
     ),
   )

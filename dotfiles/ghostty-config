@@ -2,7 +2,7 @@ command = /Users/david/.nix-profile/bin/fish
 
 mouse-scroll-multiplier = 2
 
-theme = flexoki-light
+theme = Flexoki Light
 background = fffff8
 foreground = 111111
 
@@ -13,3 +13,5 @@ macos-titlebar-style = tabs
 shell-integration-features = no-cursor
 cursor-style = block
 cursor-style-blink = false
+
+macos-option-as-alt = true
