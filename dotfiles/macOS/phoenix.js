@@ -195,7 +195,7 @@ const showOrOpenEditor = new Key("e", ["alt", "ctrl"], () => {
   //  }
   //  return;
   //}
-  showOrOpen("Zed", {preferIfOpen: ['Cursor']});
+  showOrOpen("Zed", { preferIfOpen: ["Cursor"] });
 });
 
 const showOrOpenZed = new Key("z", ["alt", "ctrl"], () => showOrOpen("Zed"));

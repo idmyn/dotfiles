@@ -102,7 +102,6 @@ in
         neovide
         ast-grep
         ffmpeg
-        zellij
         neovim
         httpie
         restic
@@ -240,7 +239,6 @@ in
         jiq = "jiq -q";
         prod-diff = "git fetch && git log (heroku releases -n 1 -a surfboard-app-prod --json | jq -r '.[].description' | choose 1)..origin/main --oneline";
         drs = "darwin-rebuild switch --flake path:$HOME/.config/nixpkgs#mbp";
-        zj = "zellij";
         pr = "gh pr view -w";
       };
 
@@ -254,8 +252,6 @@ in
         ${pkgs.mise}/bin/mise activate fish | source
 
         test -e ~/.config/fish/secret_work_functions.fish && source ~/.config/fish/secret_work_functions.fish
-
-        source ~/.zellij.fish
 
         test -e /opt/homebrew/Caskroom/miniforge/base/bin/conda && eval /opt/homebrew/Caskroom/miniforge/base/bin/conda "shell.fish" "hook" $argv | source
 
@@ -421,7 +417,6 @@ in
         "ghostty/config".source = dotfiles/ghostty-config;
         "helix".source = dotfiles/helix;
         "yazi".source = dotfiles/yazi;
-        "zellij".source = dotfiles/zellij;
         "jj".source = dotfiles/jj;
         "jjui/config.toml".text = ''
           [ui]
@@ -442,8 +437,4 @@ in
       }
       (mkIf pkgs.stdenv.isDarwin { "karabiner.edn".source = dotfiles/macOS/karabiner.edn; })
     ];
-
-  home.activation.generateZellijCompletions = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    $DRY_RUN_CMD ${pkgs.zellij}/bin/zellij setup --generate-completion fish > ~/.zellij.fish
-  '';
 }
