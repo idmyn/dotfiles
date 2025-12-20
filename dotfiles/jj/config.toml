@@ -7,8 +7,8 @@ name = "David Mynors"
 email = "hello@davidmyno.rs"
 [signing]
 behavior = "own"
-backend = "gpg"
-key = "DDE052DA5004EFF7"
+backend = "ssh"
+key = "~/.ssh/id_ed25519.pub"
 
 [ui]
 editor = "nvim"
