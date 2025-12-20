@@ -22,9 +22,8 @@ diff-args = ["diff", "$left", "$right"]
 edit-args = ["diff", "$left", "$right"]
 merge-args = ["merge", "$left", "$right", "$base", "$output"]
 
-[git]
-auto-local-bookmark = true
-push-new-bookmarks = true
+[remotes.origin]
+auto-track-bookmarks = "glob:*"
 
 [template-aliases]
 'format_short_change_id(id)' = 'id.shortest()'
@@ -33,7 +32,7 @@ push-new-bookmarks = true
 short-prefixes = "trunk() | mine()"
 
 [revset-aliases]
-"mine()" = "author_name('David Mynors')"
+"mine()" = "author_name(exact:'David Mynors')"
 "wip()" = "description(glob-i:'wip*')"
 'on_trunk()' = '(::trunk())+ ~ ::trunk()'
 "mine_on_trunk()" = "on_trunk() & mine()"
