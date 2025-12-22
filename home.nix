@@ -7,6 +7,8 @@
   ...
 }:
 let
+  yaziPluginsModule = inputs.nix-yazi-plugins.legacyPackages.${system}.homeManagerModules.default;
+
   my-scripts = import ./scripts {
     pkgs = pkgs;
     self = inputs.self + "/scripts";
@@ -22,6 +24,8 @@ let
     );
 in
 {
+  imports = [ yaziPluginsModule ];
+
   home = {
     username = "david";
     homeDirectory = "/Users/david";
@@ -120,7 +124,6 @@ in
         navi
         tree
         just
-        yazi
         glow
         pass
         gitu
@@ -378,6 +381,28 @@ in
       enable = true;
       settings.colorscheme = "simple";
     };
+
+    yazi = {
+      enable = true;
+      enableFishIntegration = true;
+
+      settings = {
+        manager.show_hidden = true;
+        opener.edit = [{ run = ''zed "$@"''; block = false; }];
+        open.rules = [{ name = "*"; use = "edit"; }];
+      };
+
+      keymap = {
+        manager.prepend_keymap = [
+          { on = ["l"]; run = "plugin --sync smart-enter"; desc = "Enter the child directory, or open the file"; }
+        ];
+      };
+
+      yaziPlugins = {
+        enable = true;
+        plugins.smart-enter.enable = true;
+      };
+    };
   };
 
   home.file = lib.mkMerge [
@@ -415,7 +440,7 @@ in
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "ghostty/config".source = dotfiles/ghostty-config;
         "helix".source = dotfiles/helix;
-        "yazi".source = dotfiles/yazi;
+
         "jj".source = dotfiles/jj;
         "jjui/config.toml".text = ''
           [ui]
