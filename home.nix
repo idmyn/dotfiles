@@ -73,6 +73,9 @@ in
         inputs.jjui.packages.${system}.default
         jujutsu
 
+        mcfly
+        mcfly-fzf
+
         poetry
 
         emacs-lsp-booster
@@ -177,6 +180,7 @@ in
       enable = true;
       defaultCommand = "fd --type f";
       fileWidgetCommand = "fd --type f";
+      enableFishIntegration = false;
     };
 
     atuin = {
@@ -186,6 +190,7 @@ in
         enter_accept = false;
       };
       enableNushellIntegration = true;
+      enableFishIntegration = false;
     };
 
     nushell = {
@@ -250,6 +255,10 @@ in
 
         bind \cj down-or-search
         bind \ck up-or-search
+
+        mcfly init fish | source
+        mcfly-fzf init fish | source
+        fzf --fish | FZF_CTRL_R_COMMAND= source
 
         ${pkgs.mise}/bin/mise activate fish | source
 
@@ -388,13 +397,27 @@ in
 
       settings = {
         manager.show_hidden = true;
-        opener.edit = [{ run = ''zed "$@"''; block = false; }];
-        open.rules = [{ name = "*"; use = "edit"; }];
+        opener.edit = [
+          {
+            run = ''zed "$@"'';
+            block = false;
+          }
+        ];
+        open.rules = [
+          {
+            name = "*";
+            use = "edit";
+          }
+        ];
       };
 
       keymap = {
         manager.prepend_keymap = [
-          { on = ["l"]; run = "plugin --sync smart-enter"; desc = "Enter the child directory, or open the file"; }
+          {
+            on = [ "l" ];
+            run = "plugin --sync smart-enter";
+            desc = "Enter the child directory, or open the file";
+          }
         ];
       };
 
