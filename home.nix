@@ -261,6 +261,7 @@ in
         fzf --fish | FZF_CTRL_R_COMMAND= source
 
         ${pkgs.mise}/bin/mise activate fish | source
+        fnox activate fish | source
 
         test -e ~/.config/fish/secret_work_functions.fish && source ~/.config/fish/secret_work_functions.fish
 
@@ -456,6 +457,7 @@ in
         + builtins.readFile dotfiles/kitty.conf;
         # "doom".source = mkMutableSymlink dotfiles/doom;
         "wezterm".source = mkMutableSymlink dotfiles/wezterm;
+        "mise/config.toml".source = mkMutableSymlink dotfiles/mise-config.toml;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
         "nvim/init.lua".source = dotfiles/nvim/init.lua;
