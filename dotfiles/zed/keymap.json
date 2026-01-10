@@ -2,8 +2,8 @@
   {
     "bindings": {
       "ctrl-t": "editor::ToggleEditPrediction",
-      "cmd-t": "terminal_panel::Toggle"
-    }
+      "cmd-t": "terminal_panel::Toggle",
+    },
   },
   // below inspired by https://github.com/zed-industries/community/issues/176
   {
@@ -26,9 +26,13 @@
       //  "task::Spawn",
       //  { "task_name": "gitu", "reveal_target": "center" }
       //],
+      "space j i": [
+        "task::Spawn",
+        { "task_name": "jjui", "reveal_target": "center" },
+      ],
       "space f d": [
         "task::Spawn",
-        { "task_name": "browse files", "reveal_target": "center" }
+        { "task_name": "browse files", "reveal_target": "center" },
       ],
       "space `": "pane::AlternateFile",
       "space g r": "editor::FindAllReferences",
@@ -37,18 +41,18 @@
       "space t l": "editor::ToggleLineNumbers",
       "space t b": "git::Blame",
       "space t z": "workspace::ToggleCenteredLayout",
-      "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
-      "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "alt-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "alt-h": "workspace::ActivatePaneLeft",
+      "alt-j": "workspace::ActivatePaneDown",
+      "alt-k": "workspace::ActivatePaneUp",
+      "alt-l": "workspace::ActivatePaneRight",
       "ctrl-j": "vim::MoveToNext",
       "ctrl-k": "vim::MoveToPrevious",
       "g e": "editor::Hover",
       "ctrl-x": "workspace::CloseInactiveTabsAndPanes",
       "enter": "editor::OpenExcerpts",
       "u": "editor::Undo", // https://github.com/zed-industries/zed/issues/7521
-      "super-e": "vim::SelectLargerSyntaxNode"
-    }
+      "super-e": "vim::SelectLargerSyntaxNode",
+    },
   },
   {
     "context": "Editor && vim_mode == normal && vim_operator == g && !VimWaiting",
@@ -57,8 +61,8 @@
       "d": "editor::GoToDefinition",
       "r": "editor::FindAllReferences",
       "t": "editor::GoToTypeDefinition",
-      "f": "file_finder::Toggle"
-    }
+      "f": "file_finder::Toggle",
+    },
   },
   {
     "context": "Editor && vim_mode == visual && vim_operator == none && !VimWaiting",
@@ -66,19 +70,19 @@
       "shift-h": ["workspace::SendKeystrokes", "g ^"],
       "shift-l": ["workspace::SendKeystrokes", "g _"],
       "space s p": "workspace::NewSearch",
-      "space c g": "assistant::QuoteSelection",
+      "space c g": "agent::AddSelectionToThread",
       "u": "editor::Undo",
       "enter": "editor::OpenUrl",
-      "super-e": "vim::SelectLargerSyntaxNode"
-    }
+      "super-e": "vim::SelectLargerSyntaxNode",
+    },
   },
   {
     "context": "Editor && vim_mode == insert",
     "bindings": {
       "ctrl-y": "editor::Paste",
-      "ctrl-e": "vim::EndOfLine"
-    }
-  }
+      "ctrl-e": "vim::EndOfLine",
+    },
+  },
   //{
   //  "context": "ProjectPanel && !VimWaiting",
   //  "bindings": {
