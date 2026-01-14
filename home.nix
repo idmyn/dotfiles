@@ -478,8 +478,8 @@ in
           root.quit = ["q"]
           rebase_menu.rebase_continue = ["r"]
         '';
-        #"zed/settings.json".source = dotfiles/zed/settings.json;
-        "zed/keymap.json".source = dotfiles/zed/keymap.json;
+        "zed/settings.json".source = mkMutableSymlink dotfiles/zed/settings.json;
+        "zed/keymap.json".source = mkMutableSymlink dotfiles/zed/keymap.json;
         "zed/tasks.json".source = dotfiles/zed/tasks.json;
         "zed/themes/eink.json".source = dotfiles/zed/themes/eink.json;
         "ideavim/ideavimrc".source = dotfiles/intellij/ideavimrc;

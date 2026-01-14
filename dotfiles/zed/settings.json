@@ -1,136 +1,143 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run the `open default settings` command
-// from the command palette or from `Zed` application menu.
 {
-    "assistant": {
-        "default_model": {
-            "provider": "copilot_chat",
-            "model": "claude-3-5-sonnet"
+  "tab_size": 2,
+  "use_system_window_tabs": true,
+  "agent": {
+    "use_modifier_to_send": true,
+    "inline_assistant_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5-latest",
+    },
+    "always_allow_tool_actions": true,
+    "default_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5-thinking-latest",
+    },
+    "model_parameters": [],
+    "default_profile": "write",
+  },
+  "file_finder": { "modal_max_width": "large" },
+  "show_edit_predictions": false,
+  "edit_predictions": {
+    // A list of globs representing files that inline completions should be disabled for.
+    "mode": "subtle",
+    "disabled_globs": [".env", ".envrc", ".env*"],
+  },
+  "collaboration_panel": { "button": false },
+  "notification_panel": { "button": false },
+  "theme": "eink",
+  "tab_bar": {
+    "show": false,
+    "show_nav_history_buttons": false,
+  },
+  //"max_tabs": 1,
+  "gutter": {
+    "breakpoints": false,
+    "runnables": false,
+    "folds": false,
+  },
+  "ui_font_family": "Zed Sans Extended",
+  "buffer_font_family": "Iosevka SS09",
+  "buffer_font_size": 16,
+  "buffer_font_features": {
+    "calt": false,
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": false,
+    },
+  },
+  "cursor_blink": false,
+  "vim_mode": true,
+  //"helix_mode": true,
+  "terminal": {
+    "dock": "bottom",
+    "font_family": "JetBrainsMono Nerd Font",
+    "font_size": 13,
+    "font_features": {
+      "liga": true,
+      "kern": true,
+      "calt": true,
+    },
+    "button": true,
+    "shell": {
+      "program": "fish",
+    },
+  },
+  "file_scan_exclusions": ["**/public/monaco/vs/**"],
+  "colorize_brackets": false,
+  "languages": {
+    "TypeScript": {
+      "format_on_save": "on",
+      "language_servers": ["tsgo", "vtsls"],
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+      },
+      //"formatter": {
+      //  "external": {
+      //    "command": "prettierd",
+      //    "arguments": ["--stdin-filepath", "{buffer_path}"]
+      //  }
+    },
+    "TSX": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "prettierd",
+          "arguments": ["--stdin-filepath", "{buffer_path}"],
         },
-        "version": "2"
+      },
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+      },
     },
-    "file_finder": { "modal_max_width": "large" },
-    "features": {
-        "copilot": true
+    "CSS": {
+      "format_on_save": "on",
     },
-    "show_inline_completions": false,
-    "inline_completions": {
-        // A list of globs representing files that inline completions should be disabled for.
-        "disabled_globs": [".env", ".envrc", ".env*"]
-    },
-    "collaboration_panel": { "button": false },
-    "notification_panel": { "button": false },
-    "chat_panel": { "button": false },
-    "theme": "eink",
-    "tab_bar": {
-        "show": false,
-        "show_nav_history_buttons": false
-    },
-    "max_tabs": 0,
-    "gutter": {
-        "code_actions": false,
-        "runnables": false,
-        "folds": false
-    },
-    "ui_font_family": "Zed Sans Extended",
-    "buffer_font_family": "Iosevka SS09",
-    "buffer_font_size": 16,
-    "buffer_font_features": {
-        "calt": false
-    },
-    "git": {
-        "inline_blame": {
-            "enabled": false
-        }
-    },
-    "cursor_blink": false,
-    "vim_mode": true,
-    "scrollbar": {
-        "selections": false,
-        "symbols_selections": false
-    },
-    "terminal": {
-        "font_family": "Iosevka Nerd Font Mono",
-        "button": false
-    },
-    "file_scan_exclusions": ["**/public/monaco/vs/**"],
-    "languages": {
-        "TypeScript": {
-            "format_on_save": "on",
-            //"language_servers": ["!vtsls", "typescript-language-server", "..."],
-            //"formatter": {
-            //  "external": {
-            //    "command": "prettierd",
-            //    "arguments": ["--stdin-filepath", "{buffer_path}"]
-            //  }
-            //},
-            "code_actions_on_format": {
-                "source.fixAll.eslint": true
-            }
+    "Nix": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "/Users/david/.nix-profile/bin/nixfmt",
+          "arguments": [],
         },
-        "TSX": {
-            "format_on_save": "on",
-            "formatter": {
-                "external": {
-                    "command": "prettierd",
-                    "arguments": ["--stdin-filepath", "{buffer_path}"]
-                }
+      },
+    },
+  },
+  "lsp": {
+    "eslint": {
+      "settings": {
+        "codeActionOnSave": {
+          "rules": [
+            "import-x/order",
+            "@typescript-eslint/consistent-type-imports",
+            "unused-imports/no-unused-imports",
+          ],
+        },
+      },
+    },
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "tsserver": {
+            "experimental": {
+              "enableProjectDiagnostics": true,
             },
-            "code_actions_on_format": {
-                "source.fixAll.eslint": true
-            }
+          },
+          "updateImportsOnFileMove": {
+            "enabled": "always",
+          },
         },
-        "CSS": {
-            "format_on_save": "on",
-            "formatter": {
-                "external": {
-                    "command": "prettierd",
-                    "arguments": ["--stdin-filepath", "{buffer_path}"]
-                }
-            }
-        },
-        "Nix": {
-            "format_on_save": "on",
-            "formatter": {
-                "external": {
-                    "command": "/Users/david/.nix-profile/bin/nixfmt",
-                    "arguments": []
-                }
-            }
-        }
+      },
     },
-    "lsp": {
-        "eslint": {
-            "settings": {
-                "codeActionOnSave": {
-                    "rules": [
-                        "import/order",
-                        "@typescript-eslint/consistent-type-imports"
-                    ]
-                }
-            }
-        },
-        //"typescript-language-server": {
-        //  "initialization_options": {
-        //    "preferences": {
-        //      "importModuleSpecifierPreference": "relative"
-        //    }
-        //  }
-        //},
-        "vtsls": {
-            "initialization_options": {
-                "typescript": {
-                    "preferGoToSourceDefinition": true,
-                    "tsserver.experimental.enableProjectDiagnostics": true,
-                    "preferences.importModuleSpecifier": "relative",
-                    "format.enable": false
-                }
-            }
-        }
-    }
+  },
+  "agent_servers": {
+    "claude": {
+      "default_mode": "acceptEdits",
+    },
+    "opencode": {
+      "type": "custom",
+      "command": "opencode",
+      "args": ["acp"],
+    },
+  },
 }
