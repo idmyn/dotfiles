@@ -2,7 +2,7 @@ command = /Users/david/.nix-profile/bin/fish
 
 mouse-scroll-multiplier = 2
 
-theme = Flexoki Light
+theme = Xcode Light
 background = fffff8
 foreground = 111111
 

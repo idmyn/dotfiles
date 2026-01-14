@@ -11,10 +11,9 @@ Phoenix.set({ daemon: true }); // hide menu bar icon
 const currentScreen = () => Screen.main().flippedVisibleFrame();
 
 const nextScreen = () => {
-  const index =
-    Screen.all().indexOf(Screen.main()) + 1 === Screen.all().length
-      ? 0
-      : Screen.all().indexOf(Screen.main()) + 1;
+  const index = Screen.all().indexOf(Screen.main()) + 1 === Screen.all().length
+    ? 0
+    : Screen.all().indexOf(Screen.main()) + 1;
   return Screen.all()[index].flippedVisibleFrame();
 };
 
@@ -111,8 +110,10 @@ const focusOrLaunch = (appName) => {
 
 //const showOrOpenThings = new Key('t', ['alt', 'ctrl'], () => focusOrLaunch('Things'))
 
-const showOrOpenGitButler = new Key("g", ["alt", "ctrl"], () =>
-  focusOrLaunch("GitButler"),
+const showOrOpenGitButler = new Key(
+  "g",
+  ["alt", "ctrl"],
+  () => focusOrLaunch("GitButler"),
 );
 
 //const showOrOpenTana = new Key("t", ["alt", "ctrl"], () => {
@@ -140,10 +141,10 @@ const showOrOpenDevBrowser = new Key("b", ["alt", "ctrl"], () => {
 });
 
 const showOrOpenNotes = new Key("n", ["alt", "ctrl"], () => {
-  if (App.get("NotePlan")) {
-    App.get("NotePlan").focus();
+  if (App.get("Obsidian")) {
+    App.get("Obsidian").focus();
   } else {
-    Task.run("/bin/sh", ["-c", 'open -a "NotePlan"']);
+    Task.run("/bin/sh", ["-c", 'open -a "Obsidian"']);
   }
 });
 
@@ -172,7 +173,7 @@ const showOrOpen = (appName, { preferIfOpen = [] } = {}) => {
 };
 
 const showOrOpenWebBrowser = new Key("w", ["alt", "ctrl"], () => {
-  showOrOpen("Helium", { preferIfOpen: ["Arc", "Google Chrome"] });
+  showOrOpen("Helium", { preferIfOpen: ["Dia", "Google Chrome"] });
 });
 
 let lastUsedEditor;
