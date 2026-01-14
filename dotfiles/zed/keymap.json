@@ -5,13 +5,10 @@
       "cmd-t": "terminal_panel::Toggle",
     },
   },
-  // below inspired by https://github.com/zed-industries/community/issues/176
+  // "context": "!menu && (vim_mode == normal || vim_mode == helix_normal || vim_mode == helix_select)"
   {
-    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "context": "!menu && vim_mode == normal && vim_operator == none",
     "bindings": {
-      // put key-bindings here if you want them to work only in normal mode
-      "shift-h": ["workspace::SendKeystrokes", "g ^"],
-      "shift-l": ["workspace::SendKeystrokes", "g _"],
       "space space": "file_finder::Toggle",
       "space f s": "workspace::Save",
       "space s p": "pane::DeploySearch",
@@ -22,10 +19,6 @@
       "space w s": "pane::SplitDown",
       "space p p": "projects::OpenRecent",
       "space g g": "git::Diff",
-      //"space g g": [
-      //  "task::Spawn",
-      //  { "task_name": "gitu", "reveal_target": "center" }
-      //],
       "space j i": [
         "task::Spawn",
         { "task_name": "jjui", "reveal_target": "center" },
@@ -41,6 +34,8 @@
       "space t l": "editor::ToggleLineNumbers",
       "space t b": "git::Blame",
       "space t z": "workspace::ToggleCenteredLayout",
+      "shift-h": ["workspace::SendKeystrokes", "g ^"],
+      "shift-l": ["workspace::SendKeystrokes", "g _"],
       "alt-h": "workspace::ActivatePaneLeft",
       "alt-j": "workspace::ActivatePaneDown",
       "alt-k": "workspace::ActivatePaneUp",
@@ -55,7 +50,7 @@
     },
   },
   {
-    "context": "Editor && vim_mode == normal && vim_operator == g && !VimWaiting",
+    "context": "!menu && vim_mode == normal && vim_operator == g",
     "bindings": {
       "g": "vim::StartOfDocument",
       "d": "editor::GoToDefinition",
@@ -65,7 +60,7 @@
     },
   },
   {
-    "context": "Editor && vim_mode == visual && vim_operator == none && !VimWaiting",
+    "context": "!menu && vim_mode == visual && vim_operator == none",
     "bindings": {
       "shift-h": ["workspace::SendKeystrokes", "g ^"],
       "shift-l": ["workspace::SendKeystrokes", "g _"],
@@ -77,7 +72,7 @@
     },
   },
   {
-    "context": "Editor && vim_mode == insert",
+    "context": "vim_mode == insert",
     "bindings": {
       "ctrl-y": "editor::Paste",
       "ctrl-e": "vim::EndOfLine",
