@@ -250,6 +250,11 @@ in
         prod-diff = "git fetch && git log (heroku releases -n 1 -a surfboard-app-prod --json | jq -r '.[].description' | choose 1)..origin/main --oneline";
         drs = "darwin-rebuild switch --flake path:$HOME/.config/nixpkgs#mbp";
         pr = "gh pr view -w";
+        tug = "jj tug";
+        push = "jj git push";
+        gf = "jj git fetch";
+        bmc = "jj bookmark create -r=@";
+        bmb = "jj bookmark create -r=@-";
       };
 
       shellInit = ''
