@@ -107,12 +107,16 @@ justfile
 .vite
 
 AGENT.md
-AGENTS.md
 .claude
+.claude-plugins
 conductor.json
 .opencode
 opencode.json
 opencode.jsonc
+ralphwiggum
+openprose
+open-prose
+.prose
 
 .beads
 

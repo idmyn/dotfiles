@@ -1,31 +1,24 @@
 [
-    //{
-    //  "label": "Example task",
-    //  "command": "bash",
-    //  // rest of the parameters are optional
-    //  "args": ["-c", "for i in {1..5}; do echo \"Hello $i/5\"; sleep 1; done"],
-    //  // Env overrides for the command, will be appended to the terminal's environment from the settings.
-    //  "env": { "foo": "bar" },
-    //  // Current working directory to spawn the command into, defaults to current project root.
-    //  //"cwd": "/path/to/working/directory",
-    //  // Whether to use a new terminal tab or reuse the existing one to spawn the process, defaults to `false`.
-    //  "use_new_terminal": false,
-    //  // Whether to allow multiple instances of the same task to be run, or rather wait for the existing ones to finish, defaults to `false`.
-    //  "allow_concurrent_runs": false
-    //},
-    {
-        "label": "browse files",
-        "command": "ya_zed $ZED_FILE", // https://github.com/zed-industries/zed/discussions/9067#discussion-6341932
-        "hide": "always",
-        "allow_concurrent_runs": true,
-        "use_new_terminal": true
-    },
-    {
-        "label": "gitu",
-        // VISUAL=zed so zed is used to 'open' diffs but gitconfig editor (nvim) is used to edit commit messages
-        "command": "VISUAL=zed gitu",
-        "hide": "always",
-        "allow_concurrent_runs": true,
-        "use_new_terminal": true
-    }
+  {
+    "label": "browse files",
+    "command": "ya_zed $ZED_FILE", // https://github.com/zed-industries/zed/discussions/9067#discussion-6341932
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+  },
+  {
+    "label": "gitu",
+    // VISUAL=zed so zed is used to 'open' diffs but gitconfig editor (nvim) is used to edit commit messages
+    "command": "VISUAL=zed gitu",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+  },
+  {
+    "label": "jjui",
+    "command": "jjui",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+  },
 ]

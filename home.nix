@@ -81,6 +81,7 @@ in
         emacs-lsp-booster
 
         conduktor-ctl
+        apacheKafka_3_9
 
         kubectl
 
@@ -123,6 +124,7 @@ in
         htmlq
         dasel
         helix
+        caddy
         mise
         navi
         tree
