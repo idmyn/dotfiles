@@ -92,42 +92,28 @@ function defineCommand<TSchema extends ZodType>(
 
 // === Client Commands ===
 
-const cowsay = defineCommand({
-  name: "cowsay",
-  schema: z.object({ text: z.string() }),
-  server: async (args) => {
-    const text = String(args.text || "Moo!");
-    const output = await $`cowsay ${text}`.stdout("piped")
+const prComments = defineCommand({
+  name: "list-pr-comments",
+  schema: z.undefined(),
+  server: async () => {
+    const output = await $`list-pr-comments`.stdout("piped")
       .stderr("piped").noThrow();
     if (output.code !== 0) throw new Error(output.stderr);
     return output.stdout;
   },
   client: (sendCommand) =>
     buildCommand({
-      async func(this: CommandContext, _flags: unknown, text: string) {
-        const response = await sendCommand(
-          { text },
-        );
+      async func(this: CommandContext) {
+        const response = await sendCommand(undefined);
         if (response.status === "ok") {
           console.log(response.result);
         } else {
           console.error(response.message);
         }
       },
-      parameters: {
-        positional: {
-          kind: "tuple",
-          parameters: [
-            {
-              brief: "Text for the cow to say",
-              parse: String,
-              placeholder: "text",
-            },
-          ],
-        },
-      },
+      parameters: {},
       docs: {
-        brief: "Make the cow say something",
+        brief: "Get PR comments for current branch",
       },
     }),
 });
@@ -189,7 +175,7 @@ if (MODE === "server") {
 } else {
   const root = buildRouteMap({
     routes: {
-      cowsay,
+      "list-pr-comments": prComments,
     },
     docs: {
       brief: "a collection of tools",
