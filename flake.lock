@@ -20,10 +20,7 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": [
-          "nix-yazi-plugins",
-          "systems"
-        ]
+        "systems": ["nix-yazi-plugins", "systems"]
       },
       "locked": {
         "lastModified": 1731533236,
@@ -41,10 +38,7 @@
     },
     "flake-utils-plus": {
       "inputs": {
-        "flake-utils": [
-          "nix-yazi-plugins",
-          "flake-utils"
-        ]
+        "flake-utils": ["nix-yazi-plugins", "flake-utils"]
       },
       "locked": {
         "lastModified": 1696281284,
@@ -63,10 +57,7 @@
     },
     "haumea": {
       "inputs": {
-        "nixpkgs": [
-          "nix-yazi-plugins",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nix-yazi-plugins", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1685133229,
@@ -85,9 +76,7 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1766171975,
@@ -106,9 +95,7 @@
     "jjui": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1766247093,
@@ -129,9 +116,7 @@
         "flake-utils": "flake-utils",
         "flake-utils-plus": "flake-utils-plus",
         "haumea": "haumea",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": ["nixpkgs"],
         "systems": "systems"
       },
       "locked": {
