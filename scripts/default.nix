@@ -25,6 +25,7 @@ let
     changed-files
     ip
     po
+    (scriptsFile "zellij-sessionizer")
     (pkgs.writeScriptBin "agentbox" (builtins.readFile (self + "/agentbox.ts")))
     (pkgs.writeScriptBin "safetools" (builtins.readFile (self + "/safetools.ts")))
     (pkgs.writeScriptBin "list-pr-comments" (builtins.readFile (self + "/list-pr-comments.ts")))

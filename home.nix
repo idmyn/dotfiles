@@ -126,6 +126,7 @@ in
         dasel
         helix
         caddy
+        bash
         mise
         navi
         tree

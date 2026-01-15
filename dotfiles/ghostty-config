@@ -15,3 +15,7 @@ cursor-style = block
 cursor-style-blink = false
 
 macos-option-as-alt = true
+
+# used by zellij
+keybind = cmd+t=unbind
+keybind = cmd+p=unbind
