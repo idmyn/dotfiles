@@ -44,50 +44,14 @@ type Response = {
 
 // === Command Registry ===
 
-function defineCommand<TSchema extends ZodType>(
-  schema: TSchema,
-  fn: (args: z.infer<TSchema>) => string | Promise<string>,
-) {
-  return {
-    schema,
-    run: async (args: unknown): Promise<Response> => {
-      try {
-        const result = await fn(schema.parse(args));
-        return {
-          status: "ok",
-          result,
-        };
-      } catch (err) {
-        return {
-          status: "error",
-          message: `Command execution failed: ${err}`,
-        };
-      }
-    },
-  };
-}
+const serverCommandRegistry: Record<
+  string,
+  (args: unknown) => Promise<Response>
+> = {};
 
-const serverCommandRegistry = {
-  cowsay: defineCommand(
-    z.object({ text: z.string() }),
-    async (args) => {
-      const text = String(args.text || "Moo!");
-      const output = await $`cowsay ${text}`.text();
-      return output;
-    },
-  ),
-};
-
-// Extract parameter types for each command
-type CommandParams<T extends keyof typeof serverCommandRegistry> = z.infer<
-  typeof serverCommandRegistry[T]["schema"]
->;
-
-// === Client Commands ===
-
-async function sendCommand<TCommand extends keyof typeof serverCommandRegistry>(
-  command: TCommand,
-  args: CommandParams<TCommand>,
+async function sendCommand(
+  command: string,
+  args: unknown,
 ): Promise<Response> {
   const message = { command, args };
   const res = await fetch(`http://localhost:${PORT}/`, {
@@ -98,33 +62,74 @@ async function sendCommand<TCommand extends keyof typeof serverCommandRegistry>(
   return await res.json();
 }
 
-const cowsay = buildCommand({
-  async func(this: CommandContext, _flags: unknown, text: string) {
-    const response = await sendCommand(
-      "cowsay",
-      { text },
-    );
-    if (response.status === "ok") {
-      console.log(response.result);
-    } else {
-      console.error(`Error: ${response.message}`);
+function defineCommand<TSchema extends ZodType>(
+  { name, schema, server, client }: {
+    name: string;
+    schema: TSchema;
+    server: (args: z.infer<TSchema>) => string | Promise<string>;
+    client: (
+      sendCommand: (args: z.infer<TSchema>) => Promise<Response>,
+    ) => ReturnType<typeof buildCommand>;
+  },
+) {
+  serverCommandRegistry[name] = async (args: unknown) => {
+    try {
+      const result = await server(schema.parse(args));
+      return {
+        status: "ok",
+        result,
+      };
+    } catch (err) {
+      return {
+        status: "error",
+        message: `Command execution failed. ${err}`,
+      };
     }
+  };
+  const command = client((args) => sendCommand(name, args));
+  return command;
+}
+
+// === Client Commands ===
+
+const cowsay = defineCommand({
+  name: "cowsay",
+  schema: z.object({ text: z.string() }),
+  server: async (args) => {
+    const text = String(args.text || "Moo!");
+    const output = await $`cowsay ${text}`.stdout("piped")
+      .stderr("piped").noThrow();
+    if (output.code !== 0) throw new Error(output.stderr);
+    return output.stdout;
   },
-  parameters: {
-    positional: {
-      kind: "tuple",
-      parameters: [
-        {
-          brief: "Text for the cow to say",
-          parse: String,
-          placeholder: "text",
+  client: (sendCommand) =>
+    buildCommand({
+      async func(this: CommandContext, _flags: unknown, text: string) {
+        const response = await sendCommand(
+          { text },
+        );
+        if (response.status === "ok") {
+          console.log(response.result);
+        } else {
+          console.error(response.message);
+        }
+      },
+      parameters: {
+        positional: {
+          kind: "tuple",
+          parameters: [
+            {
+              brief: "Text for the cow to say",
+              parse: String,
+              placeholder: "text",
+            },
+          ],
         },
-      ],
-    },
-  },
-  docs: {
-    brief: "Make the cow say something",
-  },
+      },
+      docs: {
+        brief: "Make the cow say something",
+      },
+    }),
 });
 
 // === Server ===
@@ -146,12 +151,10 @@ async function startServer() {
 
       console.log(`Received: ${JSON.stringify(message)}`);
 
-      const command = serverCommandRegistry[
-        message.command as keyof typeof serverCommandRegistry
-      ];
+      const serverFn = serverCommandRegistry[message.command];
 
       // Validate command exists
-      if (!command) {
+      if (!serverFn) {
         return Response.json(
           {
             status: "error",
@@ -161,7 +164,7 @@ async function startServer() {
         );
       }
 
-      const response = await command.run(message.args);
+      const response = await serverFn(message.args);
 
       return Response.json(response);
     } catch (err) {
