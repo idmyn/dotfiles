@@ -110,6 +110,7 @@ in
         neovide
         ast-grep
         ffmpeg
+        zellij
         neovim
         httpie
         restic
@@ -468,6 +469,7 @@ in
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
         "nvim/init.lua".source = dotfiles/nvim/init.lua;
+        "zellij/config.kdl".source = mkMutableSymlink dotfiles/zellij/config.kdl;
 
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "ghostty/config".source = dotfiles/ghostty-config;
