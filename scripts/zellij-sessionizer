@@ -4,8 +4,8 @@
 
 #SEARCH_PATHS=(${ZELLIJ_SESSIONIZER_SEARCH_PATHS:-"$HOME/Projects $HOME/Code"})
 #SPECIFIC_PATHS=(${ZELLIJ_SESSIONIZER_SPECIFIC_PATHS:-"$HOME/.dotfiles $HOME/.dotfiles/.config/nvim"})
-SEARCH_PATHS=("$HOME/src/work/console-plus-web")
-SPECIFIC_PATHS=("$HOME/.config/home-manager" "$HOME/src/work/local-infra")
+SEARCH_PATHS=("$HOME/src/work/console-plus-web" "$HOME/src/conductor/repos")
+SPECIFIC_PATHS=("$HOME/.config/home-manager" "$HOME/src/personal/scripts" "$HOME/src/work/local-infra")
 OS_TYPE="${ZELLIJ_SESSIONIZER_OS_TYPE:-"$(uname)"}"
 ZELLIJ_SWITCH_PLUGIN="${ZELLIJ_SESSIONIZER_SWITCH_PLUGIN:-"https://github.com/mostafaqanbaryan/zellij-switch/releases/download/0.2.1/zellij-switch.wasm"}"
 
@@ -260,9 +260,14 @@ fi
 session_name=$(basename "$selected_dir")
 
 # Change to session
-if [[ -v "$ZELLIJ" ]]; then
+if [[ -n "$ZELLIJ" ]]; then
   # if we are in a zellij session
-  zellij pipe --plugin "$ZELLIJ_SWITCH_PLUGIN" -- "--session $session_name --cwd $selected_dir"
+  # Check if session exists; if not, create it first with correct cwd
+  if ! zellij list-sessions 2>/dev/null | grep -q "^$session_name\b"; then
+    zellij --session "$session_name" options --default-cwd "$selected_dir" &
+    sleep 0.1
+  fi
+  zellij pipe --plugin "$ZELLIJ_SWITCH_PLUGIN" -- "--session $session_name"
 else
   # if we are not in a zellij session
   cd "$selected_dir" && zellij attach "$session_name" --create

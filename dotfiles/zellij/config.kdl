@@ -159,16 +159,21 @@ keybinds clear-defaults=true {
         bind "Alt p" { TogglePaneInGroup; }
         bind "Alt Shift p" { ToggleGroupMarking; }
         bind "Ctrl q" { Quit; }
+        bind "Super e" {
+            Run "zed" "." {
+               close_on_exit true
+               in_place
+            }
+        }
         bind "Super s" {
             Run "zellij-sessionizer" {
                 close_on_exit true
                 floating true
-                x "30%"
-                y "10%"
-                width "40%"
-                height "80%"
+                x "23%"
+                y "23%"
+                width "54%"
+                height "54%"
             }
-            SwitchToMode "locked"
         }
     }
     shared_except "locked" "move" {
