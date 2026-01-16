@@ -6,9 +6,59 @@ import { Temporal } from "npm:@js-temporal/polyfill@0.5.1";
 
 const fetchPromise = $`jj git fetch`.quiet();
 
-// Detect if we're in a git repository
-const isGitRepo = await $`git rev-parse --git-dir`.noThrow().quiet()
-  .then((r) => r.code === 0);
+async function getRepoInfo(): Promise<
+  { repoArg: string; owner: string; repo: string }
+> {
+  // Check if we're in a git repository
+  const isGitRepo = await $`git rev-parse --git-dir`.noThrow().quiet()
+    .then((r) => r.code === 0);
+
+  let repoIdentifier: string;
+
+  if (isGitRepo) {
+    // In git repo, gh can auto-detect but we still need owner/repo for GraphQL
+    repoIdentifier =
+      (await $`gh repo view --json nameWithOwner --jq '.nameWithOwner'`.text())
+        .trim();
+  } else {
+    // Not in git repo, get from jj
+    const remoteListOutput = await $`jj git remote list`.text();
+    let originUrl = "";
+
+    for (const line of remoteListOutput.trim().split("\n")) {
+      const [remoteName, remoteUrl] = line.split(/\s+/);
+      if (remoteName === "origin") {
+        originUrl = remoteUrl;
+        break;
+      }
+    }
+
+    if (!originUrl) {
+      console.error('Error: No "origin" remote found in jj git remote list');
+      Deno.exit(1);
+    }
+
+    // Parse GitHub URL (SSH or HTTPS)
+    const sshMatch = originUrl.match(/git@github\.com:(.+?)(?:\.git)?$/);
+    const httpsMatch = originUrl.match(
+      /https:\/\/github\.com\/(.+?)(?:\.git)?$/,
+    );
+
+    if (sshMatch) {
+      repoIdentifier = sshMatch[1];
+    } else if (httpsMatch) {
+      repoIdentifier = httpsMatch[1];
+    } else {
+      console.error(`Error: Could not parse GitHub URL: ${originUrl}`);
+      Deno.exit(1);
+    }
+  }
+
+  const [owner, repo] = repoIdentifier.split("/");
+  const repoArg = `--repo=${repoIdentifier}`;
+
+  return { repoArg, owner, repo };
+}
 
 const PR = z.object({
   author: z.union([
@@ -32,58 +82,12 @@ const lastWeek = today.subtract({ weeks: 3 }).toString();
 
 const updatedAtFilter = `updated:>${lastWeek}`;
 
-async function getOriginRemote(): Promise<string> {
-  const output = await $`jj git remote list`.text();
-
-  for (const line of output.trim().split("\n")) {
-    const [remoteName, remoteUrl] = line.split(/\s+/);
-    if (remoteName === "origin") {
-      return remoteUrl;
-    }
-  }
-
-  console.error('Error: No "origin" remote found in jj git remote list');
-  console.error(
-    "Please configure an origin remote with: jj git remote add origin <url>",
-  );
-  Deno.exit(1);
-}
-
-function parseGitHubUrl(url: string): string {
-  // Handle SSH format: git@github.com:owner/repo.git
-  const sshMatch = url.match(/git@github\.com:(.+?)(?:\.git)?$/);
-  if (sshMatch) {
-    return sshMatch[1];
-  }
-
-  // Handle HTTPS format: https://github.com/owner/repo.git
-  const httpsMatch = url.match(/https:\/\/github\.com\/(.+?)(?:\.git)?$/);
-  if (httpsMatch) {
-    return httpsMatch[1];
-  }
-
-  console.error(`Error: Could not parse GitHub URL: ${url}`);
-  console.error(
-    "Expected format: git@github.com:owner/repo.git or https://github.com/owner/repo.git",
-  );
-  Deno.exit(1);
-}
-
-// Determine if we need to specify the repo explicitly
-let repoArg = "";
-if (!isGitRepo) {
-  const originUrl = await getOriginRemote();
-  const repoIdentifier = parseGitHubUrl(originUrl);
-  repoArg = `--repo=${repoIdentifier}`;
-}
-
-const ghCmd = repoArg
-  ? $`gh pr list ${repoArg} --search=${updatedAtFilter} --json="author,title,updatedAt,headRefOid"`
-  : $`gh pr list --search=${updatedAtFilter} --json="author,title,updatedAt,headRefOid"`;
+const { repoArg } = await getRepoInfo();
 
 const prs = PR.array().parse(
   JSON.parse(
-    await ghCmd.text(),
+    await $`gh pr list ${repoArg} --search=${updatedAtFilter} --json="author,title,updatedAt,headRefOid"`
+      .text(),
   ),
 );
 
