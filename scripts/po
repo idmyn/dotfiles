@@ -6,6 +6,10 @@ import { Temporal } from "npm:@js-temporal/polyfill@0.5.1";
 
 const fetchPromise = $`jj git fetch`.quiet();
 
+// Detect if we're in a git repository
+const isGitRepo = await $`git rev-parse --git-dir`.noThrow().quiet()
+  .then((r) => r.code === 0);
+
 const PR = z.object({
   author: z.union([
     z.object({
@@ -28,9 +32,58 @@ const lastWeek = today.subtract({ weeks: 3 }).toString();
 
 const updatedAtFilter = `updated:>${lastWeek}`;
 
+async function getOriginRemote(): Promise<string> {
+  const output = await $`jj git remote list`.text();
+
+  for (const line of output.trim().split("\n")) {
+    const [remoteName, remoteUrl] = line.split(/\s+/);
+    if (remoteName === "origin") {
+      return remoteUrl;
+    }
+  }
+
+  console.error('Error: No "origin" remote found in jj git remote list');
+  console.error(
+    "Please configure an origin remote with: jj git remote add origin <url>",
+  );
+  Deno.exit(1);
+}
+
+function parseGitHubUrl(url: string): string {
+  // Handle SSH format: git@github.com:owner/repo.git
+  const sshMatch = url.match(/git@github\.com:(.+?)(?:\.git)?$/);
+  if (sshMatch) {
+    return sshMatch[1];
+  }
+
+  // Handle HTTPS format: https://github.com/owner/repo.git
+  const httpsMatch = url.match(/https:\/\/github\.com\/(.+?)(?:\.git)?$/);
+  if (httpsMatch) {
+    return httpsMatch[1];
+  }
+
+  console.error(`Error: Could not parse GitHub URL: ${url}`);
+  console.error(
+    "Expected format: git@github.com:owner/repo.git or https://github.com/owner/repo.git",
+  );
+  Deno.exit(1);
+}
+
+// Determine if we need to specify the repo explicitly
+let repoArg = "";
+if (!isGitRepo) {
+  const originUrl = await getOriginRemote();
+  const repoIdentifier = parseGitHubUrl(originUrl);
+  repoArg = `--repo=${repoIdentifier}`;
+}
+
+const ghCmd = repoArg
+  ? $`gh pr list ${repoArg} --search=${updatedAtFilter} --json="author,title,updatedAt,headRefOid"`
+  : $`gh pr list --search=${updatedAtFilter} --json="author,title,updatedAt,headRefOid"`;
+
 const prs = PR.array().parse(
   JSON.parse(
-    await $`gh pr list --search=${updatedAtFilter} --json="author,title,updatedAt,headRefOid"`.text(),
+    await ghCmd.text(),
   ),
 );
 
@@ -78,7 +131,8 @@ const list = entries
 // Pipe the list into fzf. We hide the branch column while keeping it in the
 // line so we can recover it after selection.
 const selectedLine = (
-  await $`fzf --ansi --delimiter="\t" --with-nth=1`.stdinText(list).noThrow(130).text()
+  await $`fzf --ansi --delimiter="\t" --with-nth=1`.stdinText(list).noThrow(130)
+    .text()
 ).trim();
 
 if (selectedLine.length === 0) {
