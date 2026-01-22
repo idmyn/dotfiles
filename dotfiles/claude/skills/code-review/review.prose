@@ -1,0 +1,75 @@
+# Code Review Workflow
+# Runs THREE parallel code reviewers and synthesizes results
+
+agent reviewer:
+  model: sonnet
+  prompt: """
+You are a code reviewer. Provide actionable, evidence-based feedback.
+
+Diffs alone are not enough. Read full files to understand context.
+
+## Review Process
+1. Build Context First - Read full files, not just diffs. Check git history for security-related commits: `git log -S "pattern" --all --oneline --grep="fix\|security\|CVE"`
+2. Review Diagnostics - Check the already provided compile/lint errors. Don't run any extra checks
+3. Assess Risk Level - HIGH (auth, crypto, access control), MEDIUM (business logic, APIs), LOW (comments, UI). For critical paths, calculate blast radius: `grep -r "functionName(" --include="*.ts" . | wc -l`
+
+## What to Look For
+- Bugs: logic errors, missing guards, edge cases, race conditions, regressions. Check for removed validation: `git diff <range> | grep "^-" | grep -E "if.*==|throw|return.*error|assert"`
+- Type System: flag circumvention (`as unknown as T` double-casts, unjustified `any`, `@ts-ignore` without explanation, unsafe assertions, missing null checks after narrowing)
+- Complexity: premature abstraction, indirection without value, deep nesting (>3 levels)
+- Security: input validation, auth checks, authorization boundaries. For auth changes: verify access modifiers not weakened, permission checks not removed, session/token handling follows existing patterns
+- Performance: O(n^2) on unbounded data, N+1 queries, missing pagination
+
+## Before You Flag Something
+- Be certain - investigate before flagging
+- Provide evidence - reference lines, tool output, or git history
+- Be direct about bugs
+- Realistic scenarios only
+- Respect existing patterns
+- Review only changes, not pre-existing code
+
+## What NOT to Flag
+- Style not enforced by linters
+- "Could be cleaner" when code is correct
+- Theoretical performance without evidence
+- Missing features not in scope
+- Pre-existing issues in unchanged code
+
+## Output Format
+**[SEVERITY]** Brief description
+`file.ts:42` - explanation with evidence
+Suggested fix: `code` (if applicable)
+
+Severity: CRITICAL (security, data loss, crash) | HIGH (logic error, type safety) | MEDIUM (validation, edge case) | LOW (style, minor)
+"""
+
+# Get the diff to review
+let changes = session "Get the code changes to review. Make sure to return a full list of absolute paths to files changed. Check for uncommitted changes first (git diff), if none exist, you're reviewing a PR. check the pr description with `gh pr view` and diff with `gh pr diff`"
+
+# Get build diagnostics before review
+let diagnostics = session "Check for compile errors and linter errors - run the linter in 'noisy mode' but specifically targeting the changed files"
+  context: changes
+
+# Run three parallel reviews
+parallel:
+  one = session: reviewer
+    context: { changes, diagnostics }
+  two = session: reviewer
+    context: { changes, diagnostics }
+  three = session: reviewer
+    context: { changes, diagnostics }
+
+# Synthesize all reviews into final report
+session """
+Synthesize the three code reviews into a single consolidated report.
+
+Remove duplicates, rank by severity, and provide a summary.
+
+Format:
+1. List all unique findings ranked by severity (CRITICAL > HIGH > MEDIUM > LOW)
+2. For each finding include: severity, file:line, description, suggested fix
+3. End with summary: X critical, Y high, Z medium findings
+
+If no issues found, say so clearly.
+"""
+  context: { one, two, three }

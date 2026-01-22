@@ -4,7 +4,7 @@
 
 #SEARCH_PATHS=(${ZELLIJ_SESSIONIZER_SEARCH_PATHS:-"$HOME/Projects $HOME/Code"})
 #SPECIFIC_PATHS=(${ZELLIJ_SESSIONIZER_SPECIFIC_PATHS:-"$HOME/.dotfiles $HOME/.dotfiles/.config/nvim"})
-SEARCH_PATHS=("$HOME/src/work/console-plus-web" "$HOME/src/conductor/repos")
+SEARCH_PATHS=("$HOME/src/work/console-plus-web" "$HOME/src/conductor/repos" "$HOME/src/work/gitbutler")
 SPECIFIC_PATHS=("$HOME/.config/home-manager" "$HOME/src/personal/scripts" "$HOME/src/work/local-infra")
 OS_TYPE="${ZELLIJ_SESSIONIZER_OS_TYPE:-"$(uname)"}"
 ZELLIJ_SWITCH_PLUGIN="${ZELLIJ_SESSIONIZER_SWITCH_PLUGIN:-"https://github.com/mostafaqanbaryan/zellij-switch/releases/download/0.2.1/zellij-switch.wasm"}"

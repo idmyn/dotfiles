@@ -46,7 +46,7 @@ in
       "$HOME/.nix-profile/bin"
       "/nix/var/nix/profiles/default/bin"
       "$HOME/.pnpm-bin"
-      "$HOME/.local/bin" # for pipx
+      "$HOME/.local/bin"
       "$HOME/.deno/bin"
       "$HOME/.bun/bin"
       "$HOME/.cargo/bin"
@@ -152,6 +152,7 @@ in
         golangci-lint
 
         rustup
+        cargo-binstall
 
         uv
 
@@ -251,7 +252,8 @@ in
         jiq = "jiq -q";
         prod-diff = "git fetch && git log (heroku releases -n 1 -a surfboard-app-prod --json | jq -r '.[].description' | choose 1)..origin/main --oneline";
         drs = "darwin-rebuild switch --flake path:$HOME/.config/nixpkgs#mbp";
-        pr = "gh pr view -w";
+        d = "lumen diff";
+        cpr = "checkout-pr";
         tug = "jj tug";
         push = "jj git push";
         gf = "jj git fetch";
@@ -443,7 +445,15 @@ in
       ".vimrc".source = dotfiles/dot-vimrc;
       ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
       ".sdkman/etc/config".source = dotfiles/sdkman-config;
+
+      ".claude/skills".source = mkMutableSymlink dotfiles/claude/skills;
     }
+    (lib.mkIf pkgs.stdenv.isDarwin {
+      ".phoenix.js".text = ''
+        const pathToShellInNixStore = "${pkgs.fish}/bin/fish"
+        ${builtins.readFile dotfiles/macOS/phoenix.js}
+      '';
+    })
   ];
 
   xdg.configFile =

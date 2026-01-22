@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Check if we're in a jj repository first
+if ! jj root &>/dev/null; then
+  echo "Only jj repos supported"
+  exit 1
+fi
+
+HEAD=$(jj log -G -r @ -T 'self.commit_id().short()' 2>/dev/null)
+TRUNK_ANCESTOR=$(jj log -G -r "trunk_ancestor()" -T 'self.commit_id().short()' 2>/dev/null)
+
+critique review --agent claude "$TRUNK_ANCESTOR" "$HEAD"
