@@ -16,10 +16,11 @@
     "default_profile": "write",
   },
   "file_finder": { "modal_max_width": "large" },
-  "show_edit_predictions": false,
+  "show_edit_predictions": true,
   "edit_predictions": {
     // A list of globs representing files that inline completions should be disabled for.
-    "mode": "subtle",
+    "provider": "mercury",
+    "mode": "eager",
     "disabled_globs": [".env", ".envrc", ".env*"],
   },
   "collaboration_panel": { "button": false },
@@ -37,7 +38,7 @@
   },
   "ui_font_family": "Zed Sans Extended",
   "buffer_font_family": "Iosevka SS09",
-  "buffer_font_size": 16,
+  "buffer_font_size": 16.0,
   "buffer_font_features": {
     "calt": false,
   },
@@ -68,7 +69,10 @@
   "languages": {
     "TypeScript": {
       "format_on_save": "on",
-      "language_servers": ["tsgo", "vtsls"],
+      "language_servers": [
+        //"tsgo",
+        "vtsls",
+      ],
       "code_actions_on_format": {
         "source.fixAll.eslint": true,
       },
@@ -133,11 +137,6 @@
   "agent_servers": {
     "claude": {
       "default_mode": "acceptEdits",
-    },
-    "opencode": {
-      "type": "custom",
-      "command": "opencode",
-      "args": ["acp"],
     },
   },
 }

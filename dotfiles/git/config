@@ -22,7 +22,7 @@
 	path = ~/src/work/.gitconfig
 [push]
 	autoSetupRemote = true
-	default = current
+	default = simple
 [pull]
 	rebase = true
 [rebase]

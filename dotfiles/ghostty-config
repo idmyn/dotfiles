@@ -1,6 +1,8 @@
 command = /Users/david/.nix-profile/bin/fish
 
 mouse-scroll-multiplier = 2
+font-family = Iosevka Term SS08
+font-size = 14
 
 theme = Xcode Light
 background = fffff8

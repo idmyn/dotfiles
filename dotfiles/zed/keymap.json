@@ -19,6 +19,11 @@
       "space w s": "pane::SplitDown",
       "space p p": "projects::OpenRecent",
       "space g g": "git::Diff",
+      "space t p": ["task::Spawn", { "task_name": "Run test at point" }],
+      "space g i": [
+        "task::Spawn",
+        { "task_name": "gitu", "reveal_target": "center" },
+      ],
       "space j i": [
         "task::Spawn",
         { "task_name": "jjui", "reveal_target": "center" },
