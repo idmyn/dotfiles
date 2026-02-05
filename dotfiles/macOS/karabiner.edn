@@ -6,51 +6,9 @@
             :alone   1000
             :held    500}}
 
- :templates {:alfred "osascript -e 'tell application \"Alfred 4\" to run trigger \"%s\" in workflow \"%s\" with argument \"%s\"'"
-             :km "osascript -e 'tell application \"Keyboard Maestro Engine\" to do script \"%s\"'"
-             :hs "open -g hammerspoon://%s"}
-
- :devices      {:logitech [{:vendor_id 1133 :product_id 45890}]}
-
  :input-sources {:british {:input_mode_id   ""
                            :input_source_id "com.apple.keylayout.British"
                            :language        "en"}}
-
- :applications {:Editors   ["^org\\.gnu\\.Emacs$"
-                            "^com\\.google\\.Chrome$"]
-                :Bitwig    ["^com\\.bitwig\\.studio$"]
-                :JetBrains ["^com\\.jetbrains\\..+"]
-                :VSCode    ["^com\\.microsoft\\.VSCode$"
-                            "^com\\.visualstudio\\.code\\.oss$"]
-                :Vim       ["^org\\.gnu\\.Emacs$"
-                            "^org\\.vim\\.MacVim$"
-                            "^com\\.googlecode\\.iterm2$"
-                            "^co\\.zeit\\.hyper$"
-                            "^com\\.apple\\.Terminal$"
-                            "^net\\.kovidgoyal\\.kitty$"
-                            "^io\\.alacritty$"
-                            "^com\\.workflowy\\.desktop$"
-                            "^com\\.visualstudio\\.code\\.oss$"
-                            "^com\\.microsoft\\.VSCode$"
-                            "^com\\.sublimetext\\.3$"]
-                :Terminals  ["^com\\.googlecode\\.iterm2$"
-                             "^io\\.alacritty$"
-                             "^co\\.zeit\\.hyper$"
-                             "^com\\.apple\\.Terminal$"
-                             "^io\\.alacritty$"
-                             "^net\\.kovidgoyal\\.kitty$"]
-                :uk        ["^com\\.apple\\.Mail$"
-                            "^org\\.gnu\\.Emacs$"
-                            "^org\\.vim\\.MacVim$"
-                            "^com\\.apple\\.Terminal$"
-                            "^ru\\.keepcoder\\.Telegram$"]
-                :Browsers  ["^com\\.electron\\.logseq$"
-                            "^com\\.brave\\.Browser$"
-                            "^com\\.vivaldi\\.Vivaldi$"
-                            "^org\\.mozilla\\.firefoxdeveloperedition$"
-                            "^org\\.mozilla\\.firefox$"
-                            "^company\\.thebrowser\\.Browser$"
-                            "^com\\.apple\\.Safari$"]}
 
  :main [{:des   "everywhere: right cmd alone to cmd+opt+= (raycast), and to ctrl+opt as modifier"
          :rules [[:right_command :!Tleft_alt nil {:alone :!TOequal_sign}]]}
@@ -58,20 +16,8 @@
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt nil {:alone :tab}]]}
 
-        {:des   "everywhere except bitwig: caps_lock to esc when pressed alone, to ctrl as modifier"
-         :rules [[:condi :!Bitwig] [:##caps_lock :left_control nil {:alone :escape}]]}
-
-        {:des   "in JetBrains IDEs: ctrl + vim keys to arrow keys"
-         :rules [[:condi :JetBrains] [:!Tj :down_arrow] [:!Tk :up_arrow] [:!Th :left_arrow] [:!Tl :right_arrow]]}
-
-        {:des   "in VSCode: ctrl+g to esc"
-         :rules [[:condi :VSCode] [:!Tg :escape]]}
-
-        {:des   "in Browsers, C-j and C-k are bound to down and up"
-         :rules [[:condi :Browsers] [:!Tj :down_arrow] [:!Tk :up_arrow] [:!Tg :escape]]}
-
-        {:des   "in Terminals, Cmd-l to C-l, C-; to C-a"
-         :rules [[:condi :Terminals] [:!Cl :!Tl] [:!Tsemicolon :!Ta]]}
+        {:des   "everywhere: caps_lock to esc when pressed alone, to ctrl as modifier"
+         :rules [[:##caps_lock :left_control nil {:alone :escape}]]}
 
         {:des "workman dead state"
          :rules [[:comma ["dead-state" 1] :!dead-state]
@@ -112,10 +58,4 @@
                  [:return_or_enter [:comma :return_or_enter ["dead-state" 0]] :dead-state] ;; ,\n
                  [:escape ["dead-state" 0] :dead-state] ;; exit dead-state
                  [:delete_or_backspace ["dead-state" 0] :dead-state] ;; exit dead-state
-                 [:spacebar [:comma :spacebar ["dead-state" 0]] :dead-state]]}
-
-      ;  {:des "swap : and ;"
-      ;   :rules [[:#Psemicolon :!Ssemicolon]
-      ;           [:!Ssemicolon :semicolon]
-      ;           [:!Rsemicolon :semicolon]]}
-        ]}
+                 [:spacebar [:comma :spacebar ["dead-state" 0]] :dead-state]]}]}
