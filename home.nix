@@ -446,7 +446,9 @@ in
       ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
       ".sdkman/etc/config".source = dotfiles/sdkman-config;
 
-      ".claude/skills".source = mkMutableSymlink dotfiles/claude/skills;
+      ".config/agents/skills".source = mkMutableSymlink dotfiles/agent-skills;
+      ".agents/skills".source = mkMutableSymlink dotfiles/agent-skills;
+      ".claude/skills".source = mkMutableSymlink dotfiles/agent-skills;
     }
     (lib.mkIf pkgs.stdenv.isDarwin {
       ".phoenix.js".text = ''
