@@ -166,13 +166,8 @@ keybinds clear-defaults=true {
             }
         }
         bind "Super s" {
-            Run "zellij-sessionizer" {
-                close_on_exit true
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zsm.wasm" {
                 floating true
-                x "23%"
-                y "23%"
-                width "54%"
-                height "54%"
             }
         }
     }

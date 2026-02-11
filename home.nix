@@ -481,6 +481,10 @@ in
         "espanso".source = dotfiles/espanso;
         "nvim/init.lua".source = dotfiles/nvim/init.lua;
         "zellij/config.kdl".source = mkMutableSymlink dotfiles/zellij/config.kdl;
+        "zellij/plugins/zsm.wasm".source = pkgs.fetchurl {
+          url = "https://github.com/liam-mackie/zsm/releases/download/v0.4.1/zsm.wasm";
+          hash = "sha256-+VCf9MEHQVmr2q8lu95jAOsvCQU0iJa3ljqbnIC9ywg=";
+        };
 
         "ripgrep.conf".source = dotfiles/ripgrep.conf;
         "ghostty/config".source = dotfiles/ghostty-config;
