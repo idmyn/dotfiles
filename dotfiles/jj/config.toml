@@ -45,7 +45,9 @@ short-prefixes = "trunk() | mine()"
 "immutable_heads()" = "builtin_immutable_heads() | (trunk().. & ~mine())"
 "my_recent_branches(x)" = "::latest(heads(mine() ~ merged() ~ exclusively_remote_bookmarks()) & recent(), x) ~ ::trunk()"
 "my_recent_wip()" = "wip() & mine() & recent()"
-"trunk_ancestor()" = 'latest(::@ & ::main)'
+"trunk_ancestor(x)" = 'latest(::x & ::main)'
+"trunk_ancestor()" = 'trunk_ancestor(@)'
+"branch(x)" = 'trunk_ancestor(x)..x'
 
 # '(::(mine_on_trunk() ~ merged() ~ exclusively_remote_bookmarks()) ~ ::trunk())::'
 
