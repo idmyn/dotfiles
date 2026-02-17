@@ -151,9 +151,6 @@ in
         fx
         gh
 
-        # JVM/Scala installed through sdkman
-        metals
-
         golangci-lint
 
         rustup
@@ -331,15 +328,6 @@ in
             sha256 = "0pplqkaq5iycwsr2rcji4hkilcir7y9633qyiqzg9wmpbx102vj0";
           };
         }
-        {
-          name = "sdkman-for-fish";
-          src = pkgs.fetchFromGitHub {
-            owner = "reitzig";
-            repo = "sdkman-for-fish";
-            rev = "555203d56e534d91cde87ad600cbbf6f2d112a03";
-            sha256 = "7cgyR3hQ30Jv+9lJS5qaBvSaI/0YVT8xPXlUhDBTdFc=";
-          };
-        }
       ];
     };
 
@@ -441,7 +429,6 @@ in
     {
       ".vimrc".source = dotfiles/dot-vimrc;
       ".lein/profiles.clj".source = dotfiles/lein/profiles.clj;
-      ".sdkman/etc/config".source = dotfiles/sdkman-config;
 
       ".config/agents/skills".source = mkMutableSymlink dotfiles/agent-skills;
       ".agents/skills".source = mkMutableSymlink dotfiles/agent-skills;
