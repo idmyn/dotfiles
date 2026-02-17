@@ -83,6 +83,8 @@ in
         conduktor-ctl
         apacheKafka_3_9
 
+        kanata
+
         kubectl
 
         #visidata
@@ -195,7 +197,7 @@ in
         enter_accept = false;
       };
       enableNushellIntegration = true;
-      enableFishIntegration = false;
+      enableFishIntegration = true;
     };
 
     nushell = {
@@ -267,18 +269,10 @@ in
         bind \cj down-or-search
         bind \ck up-or-search
 
-        mcfly init fish | source
-        mcfly-fzf init fish | source
         fzf --fish | FZF_CTRL_R_COMMAND= source
 
         ${pkgs.mise}/bin/mise activate fish | source
         fnox activate fish | source
-
-        test -e ~/.config/fish/secret_work_functions.fish && source ~/.config/fish/secret_work_functions.fish
-
-        test -e /opt/homebrew/Caskroom/miniforge/base/bin/conda && eval /opt/homebrew/Caskroom/miniforge/base/bin/conda "shell.fish" "hook" $argv | source
-
-        test -e /opt/homebrew/bin/pyenv && pyenv init - | source
       '';
 
       functions = {
