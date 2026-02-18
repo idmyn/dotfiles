@@ -2,3 +2,5 @@
 Brewfile.lock.json
 emacs/.doom.d/config.el
 result
+.lsp
+.clj-kondo

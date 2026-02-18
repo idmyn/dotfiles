@@ -10,8 +10,8 @@
                            :input_source_id "com.apple.keylayout.British"
                            :language        "en"}}
 
- :main [{:des   "everywhere: right cmd alone to cmd+opt+= (raycast), and to ctrl+opt as modifier"
-         :rules [[:right_command :!Tleft_alt nil {:alone :!TOequal_sign}]]}
+ :main [{:des   "everywhere: right cmd alone to enter, and to 'hyper' as modifier"
+         :rules [[:right_command :!TOSleft_command nil {:alone :return_or_enter}]]}
 
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt nil {:alone :tab}]]}

@@ -132,6 +132,7 @@ in
         helix
         caddy
         bash
+        goku
         mise
         navi
         tree
