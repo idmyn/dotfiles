@@ -16,8 +16,24 @@
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt nil {:alone :tab}]]}
 
+        {:des   "everywhere: left cmd alone to backspace"
+         :rules [[:##left_command :left_command nil {:alone :delete_or_backspace}]]}
+
         {:des   "everywhere: caps_lock to esc when pressed alone, to ctrl as modifier"
          :rules [[:##caps_lock :left_control nil {:alone :escape}]]}
+
+        {:des "navigation layer (left option)"
+         :rules [[:left_option ["navigation" 1] nil {:afterup ["navigation" 0]}]
+                 [:##y :home :navigation]
+                 [:##u :page_down :navigation]
+                 [:##i :page_up :navigation]
+                 [:##o :end :navigation]
+                 [:##h :left_arrow :navigation]
+                 [:##j :down_arrow :navigation]
+                 [:##k :up_arrow :navigation]
+                 [:##l :right_arrow :navigation]
+                 [:tab :left_alt :navigation]
+                 [:##3 :!O3 :navigation]]}
 
         {:des "workman dead state"
          :rules [[:comma ["dead-state" 1] :!dead-state]
