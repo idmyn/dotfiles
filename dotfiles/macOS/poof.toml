@@ -1,0 +1,13 @@
+[[snippets]]
+trigger = "!dt"
+replace = "{{date}}"
+description = "Current date"
+
+[[snippets]]
+trigger = "!todo"
+replace = "```tasks\n(not done) AND NOT (scheduled after today)\n```"
+description = "obsidian todo query"
+
+[[snippets]]
+trigger = "!anyq"
+replace = "list any unresolved questions at the end, if any"

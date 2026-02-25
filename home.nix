@@ -107,6 +107,7 @@ in
         libgccjit
         watchexec
         wasm-pack
+        keepassxc
         exercism
         tealdeer
         ast-grep
@@ -495,6 +496,9 @@ in
         "zed/themes/eink.json".source = dotfiles/zed/themes/eink.json;
         "ideavim/ideavimrc".source = dotfiles/intellij/ideavimrc;
       }
-      (mkIf pkgs.stdenv.isDarwin { "karabiner.edn".source = dotfiles/macOS/karabiner.edn; })
+      (mkIf pkgs.stdenv.isDarwin {
+        "karabiner.edn".source = mkMutableSymlink dotfiles/macOS/karabiner.edn;
+        "poof/snippets/mine.toml".source = mkMutableSymlink dotfiles/macOS/poof.toml;
+      })
     ];
 }
