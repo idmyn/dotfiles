@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+idea merge "$1" "$2" "$3" "$4" 2>/dev/null

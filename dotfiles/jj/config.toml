@@ -10,11 +10,17 @@ behavior = "own"
 backend = "ssh"
 key = "~/.ssh/id_ed25519.pub"
 
+[[--scope]]
+--when.repositories = ["~/src/work"]
+[--scope.user]
+email = "david.mynors@attio.com"
+
 [ui]
 editor = "nvim"
 diff-editor = ":builtin"
 diff-formatter = ["difft", "--color=always", "$left", "$right"]
 default-command = "status"
+merge-editor = "idea-merge"
 
 [merge-tools.idea]
 program = "idea"
@@ -22,14 +28,15 @@ diff-args = ["diff", "$left", "$right"]
 edit-args = ["diff", "$left", "$right"]
 merge-args = ["merge", "$left", "$right", "$base", "$output"]
 
+[merge-tools.idea-merge]
+program = "idea-merge"
+merge-args = ["$left", "$right", "$base", "$output"]
+
 [remotes.origin]
 auto-track-bookmarks = "glob:*"
 
 [template-aliases]
 'format_short_change_id(id)' = 'id.shortest()'
-
-[revsets]
-short-prefixes = "trunk() | mine()"
 
 [revset-aliases]
 "mine()" = "author_name(exact:'David Mynors')"
@@ -45,9 +52,10 @@ short-prefixes = "trunk() | mine()"
 "immutable_heads()" = "builtin_immutable_heads() | (trunk().. & ~mine())"
 "my_recent_branches(x)" = "::latest(heads(mine() ~ merged() ~ exclusively_remote_bookmarks()) & recent(), x) ~ ::trunk()"
 "my_recent_wip()" = "wip() & mine() & recent()"
-"trunk_ancestor(x)" = 'latest(::x & ::main)'
+"trunk_ancestor(x)" = 'latest(::x & ::trunk())'
 "trunk_ancestor()" = 'trunk_ancestor(@)'
 "branch(x)" = 'trunk_ancestor(x)..x'
+"vertical(x)" = "::x | x::"
 
 # '(::(mine_on_trunk() ~ merged() ~ exclusively_remote_bookmarks()) ~ ::trunk())::'
 

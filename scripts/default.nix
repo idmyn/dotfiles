@@ -27,6 +27,7 @@ let
     po
     (scriptsFile "zellij-sessionizer")
     (scriptsFile "ai-review")
+    (scriptsFile "idea-merge")
   ];
 
 in

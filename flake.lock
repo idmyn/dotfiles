@@ -20,7 +20,7 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": ["nix-yazi-plugins", "systems"]
+        "systems": "systems"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -38,7 +38,10 @@
     },
     "flake-utils-plus": {
       "inputs": {
-        "flake-utils": ["nix-yazi-plugins", "flake-utils"]
+        "flake-utils": [
+          "nix-yazi-plugins",
+          "flake-utils"
+        ]
       },
       "locked": {
         "lastModified": 1696281284,
@@ -55,9 +58,33 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": [
+          "nix-yazi-plugins",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "haumea": {
       "inputs": {
-        "nixpkgs": ["nix-yazi-plugins", "nixpkgs"]
+        "nixpkgs": [
+          "nix-yazi-plugins",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1685133229,
@@ -76,7 +103,9 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1766171975,
@@ -92,10 +121,33 @@
         "type": "github"
       }
     },
+    "jj-starship": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772788588,
+        "narHash": "sha256-LtEmaOpExSTBoewYnSUdd7EnM3TuxzL/HZq4nLKVjsU=",
+        "owner": "idmyn",
+        "repo": "jj-starship",
+        "rev": "2132ed7bce702228142b4077fbc7b9c6c5bcfee6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "idmyn",
+        "repo": "jj-starship",
+        "type": "github"
+      }
+    },
     "jjui": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1766247093,
@@ -113,11 +165,13 @@
     },
     "nix-yazi-plugins": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-utils": "flake-utils_2",
         "flake-utils-plus": "flake-utils-plus",
         "haumea": "haumea",
-        "nixpkgs": ["nixpkgs"],
-        "systems": "systems"
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1766070404,
@@ -167,12 +221,28 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "jj-starship": "jj-starship",
         "jjui": "jjui",
         "nix-yazi-plugins": "nix-yazi-plugins",
         "nixpkgs": "nixpkgs"
       }
     },
     "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

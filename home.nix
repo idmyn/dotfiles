@@ -58,7 +58,7 @@ in
       "$KALEIDOSCOPE_DIR/bin"
       "/Applications/Emacs.app/Contents/MacOS"
       "/Applications/Emacs.app/Contents/MacOS/bin"
-      "/Applications/IntelliJ IDEA CE.app/Contents/MacOS"
+      "/Applications/IntelliJ IDEA.app/Contents/MacOS"
     ];
 
     packages =
@@ -71,6 +71,7 @@ in
         niv
 
         inputs.jjui.packages.${system}.default
+        inputs.jj-starship.packages.${system}.default
         jujutsu
 
         mcfly
@@ -234,8 +235,8 @@ in
         ll = "ls -alh";
         js = "jj status";
         jr = "jj log --no-pager -r 'my_recent_branches(3)'";
-        wip = "jjui -r 'wip() | wip()+'";
-        ji = "jjui";
+        wip = "jjui -r 'mine() & (wip() | wip()+)'";
+        ji = "jjui -r 'vertical(@-)'";
         cdk = "conduktor";
         gs = "git status";
         gb = "git branch";
@@ -479,11 +480,7 @@ in
         "helix".source = dotfiles/helix;
 
         "jj".source = dotfiles/jj;
-        "jjui/config.toml".text = ''
-          [ui]
-          theme = 'base16-atelier-dune-light'
-          highlight_light = '#EEEEE7'
-        '';
+        "jjui".source = dotfiles/jjui;
         "gitu/config.toml".text = ''
           [bindings]
           root.discard = ["x"]
