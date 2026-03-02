@@ -87,6 +87,9 @@ in
 
         kubectl
 
+        pango
+        pkg-config
+
         #visidata
         ripgrep
         #magic-wormhole
