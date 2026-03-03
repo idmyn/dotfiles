@@ -168,6 +168,7 @@ keybinds clear-defaults=true {
         bind "Super s" {
             LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zsm.wasm" {
                 floating true
+                base_paths "/Users/david/src/personal|/Users/david/src/work"
             }
         }
     }

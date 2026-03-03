@@ -1,9 +1,10 @@
 {
+  "diff_view_style": "unified",
   "tab_size": 2,
   "use_system_window_tabs": true,
   "agent": {
     "tool_permissions": {
-      "default": "allow"
+      "default": "allow",
     },
     "use_modifier_to_send": true,
     "inline_assistant_model": {
@@ -66,7 +67,6 @@
       "program": "fish",
     },
   },
-  "file_scan_exclusions": ["**/public/monaco/vs/**"],
   "colorize_brackets": false,
   "languages": {
     "TypeScript": {
@@ -141,4 +141,16 @@
       "default_mode": "acceptEdits",
     },
   },
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/.context",
+  ],
 }
