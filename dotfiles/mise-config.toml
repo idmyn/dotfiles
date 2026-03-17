@@ -4,6 +4,7 @@ idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
 bun = "latest"
+deno = "latest"
 fnox = "latest"
 go = "latest"
 node = "22"

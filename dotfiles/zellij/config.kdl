@@ -166,10 +166,14 @@ keybinds clear-defaults=true {
             }
         }
         bind "Super s" {
-            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zsm.wasm" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zellij-sessionizer.wasm" {
                 floating true
-                base_paths "/Users/david/src/personal|/Users/david/src/work"
+                move_to_focused_tab true
+                cwd "/"
+                root_dirs "/Users/david/src/personal;/Users/david/src/work;/Users/david/src/clones"
+                individual_dirs "/Users/david/.config/home-manager"
             }
+            SwitchToMode "normal"
         }
     }
     shared_except "locked" "move" {

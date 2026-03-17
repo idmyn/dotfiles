@@ -23,58 +23,8 @@ symbol = "☁️ "
 style = "green"
 symbol = "🌱 "
 
-# [custom.jj]
-# command = '''starship-jj --ignore-working-copy starship prompt'''
-# format = "[$symbol](blue bold) $output "
-# symbol = "󱗆"
-# when = "jj root --ignore-working-copy"
-
-# [custom.jj]
-# style = "green"
-# command = '''
-# jj log -r@ -n1 --ignore-working-copy --no-graph --color always  -T '
-#   separate(" ",
-#     bookmarks.map(|x| truncate_end(10, x.name(), "…")).join(" "),
-#     tags.map(|x| truncate_end(10, x.name(), "…")).join(" "),
-#     surround("\"", "\"", truncate_end(24, description.first_line(), "…")),
-#     if(conflict, "conflict"),
-#     if(divergent, "divergent"),
-#     if(hidden, "hidden"),
-#   )
-# '
-# '''
-# when = "jj root --ignore-working-copy"
-# symbol = "jj"
-
 [custom.jj]
-# ignore_timeout = true
-command = '''
-jj log -r@ -n1 --ignore-working-copy --no-graph --color always  -T '
-  separate(" ",
-    change_id.shortest(),
-    concat(
-      if(conflict, "💥"),
-      if(divergent, "🚧"),
-      if(hidden, "👻"),
-      if(immutable, "🔒"),
-    ),
-    "|",
-    raw_escape_sequence("\x1b[1;32m") ++ coalesce(
-      truncate_end(35, description.first_line(), "…"),
-      "anonymous",
-    ) ++ raw_escape_sequence("\x1b[0m"),
-    raw_escape_sequence("\x1b[1;32m") ++ if(empty, "(empty)") ++ raw_escape_sequence("\x1b[0m"),
-    if(parents.filter(|c| c.contained_in("@- ~ ::trunk()")).len() == 1,
-      concat(
-        "on ",
-        parents.filter(|c| c.contained_in("@- ~ ::trunk()")).map(|c| "\"" ++ truncate_end(30, c.description().first_line(), "...") ++ "\""),
-      )
-    ),
-  )
-'
-'''
-format = "[$symbol](blue bold) $output "
+when = "jj-starship detect"
+shell = ["jj-starship", "--no-jj-prefix", "--no-jj-status", "--no-jj-name", "--shortest-id", "--jj-desc-length", "35"]
 symbol = "󱗆"
-when = "jj root --ignore-working-copy"
-
-# if(parents.filter(|c| !c.contained_in("::trunk()")).len() == 0, "on main")
+format = "[$symbol](blue bold) $output "

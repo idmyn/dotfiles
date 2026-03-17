@@ -40,6 +40,7 @@ in
       LDFLAGS = "-L/usr/local/opt/python@3.10/lib"; # for x86_64 homebrew python
       KALEIDOSCOPE_DIR = "$HOME/src/personal/kaleidoscope";
       PNPM_HOME = "$HOME/.pnpm-bin";
+      ENABLE_CLAUDEAI_MCP_SERVERS = "false";
       HUSKY = "0";
     };
     sessionPath = [
@@ -68,28 +69,32 @@ in
         #nixfmt
         nixfmt-rfc-style
         nixd
+        nil
         niv
 
         inputs.jjui.packages.${system}.default
         inputs.jj-starship.packages.${system}.default
         jujutsu
+        watchman
 
         mcfly
         mcfly-fzf
 
         poetry
+        python313
 
         emacs-lsp-booster
 
         conduktor-ctl
         apacheKafka_3_9
 
-        kanata
-
         kubectl
 
         pango
         pkg-config
+        pulumi-bin
+        protobuf
+        grafana-loki
 
         #visidata
         ripgrep
@@ -224,9 +229,17 @@ in
         # [f]uzzy check[o]ut
         # https://github.com/mrnugget/dotfiles/blob/c4624ed521d539856bcf764f04a295bb19093566/zshrc#L164
         fo = "git branch --no-color --sort=-committerdate --format='%(refname:short)' | fzf --header 'git checkout' | xargs git checkout";
+        safe = lib.concatStringsSep " " [
+          "safehouse" # https://github.com/eugene1g/agent-safehouse
+          "--append-profile ~/.config/sandbox-exec.profile"
+          "--add-dirs-ro='~/src:~/.config/home-manager:~/.local/bin/safehouse'"
+          "--env-pass LOKI_ADDR"
+        ];
+        claude = "safe claude --dangerously-skip-permissions";
       };
 
       shellAbbrs = {
+        nx = "yarn run -T nx";
         oc = "opencode";
         ag = "ast-grep";
         mr = "mise run";
@@ -492,6 +505,10 @@ in
         "zed/tasks.json".source = dotfiles/zed/tasks.json;
         "zed/themes/eink.json".source = dotfiles/zed/themes/eink.json;
         "ideavim/ideavimrc".source = dotfiles/intellij/ideavimrc;
+        "sandbox-exec.profile".source = pkgs.replaceVars dotfiles/sandbox-exec.profile {
+          grafana-loki = pkgs.grafana-loki;
+          gh = pkgs.gh;
+        };
       }
       (mkIf pkgs.stdenv.isDarwin {
         "karabiner.edn".source = mkMutableSymlink dotfiles/macOS/karabiner.edn;

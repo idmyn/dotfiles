@@ -2,6 +2,9 @@
 # https://github.com/bryceberger/config/blob/134d9bf6b8b4dd52a9cfdc408e78fe768b2671e9/home/jj/config.toml
 # https://github.com/avamsi/dotfiles/blob/54b7bf307dd5fb75d384f614e5db4cf5b44613c4/.jjconfig.toml
 
+[fsmonitor]
+backend = "watchman"
+
 [user]
 name = "David Mynors"
 email = "hello@davidmyno.rs"

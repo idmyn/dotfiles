@@ -4,6 +4,11 @@ replace = "{{date}}"
 description = "Current date"
 
 [[snippets]]
+trigger = "!dateref"
+replace = "[[{{date}}]]"
+description = "Current date, but as a wikilink for obsidian"
+
+[[snippets]]
 trigger = "!todo"
 replace = "```tasks\n(not done) AND NOT (scheduled after today)\n```"
 description = "obsidian todo query"
@@ -11,3 +16,7 @@ description = "obsidian todo query"
 [[snippets]]
 trigger = "!anyq"
 replace = "list any unresolved questions at the end, if any"
+
+[[snippets]]
+trigger = "!human"
+replace = ">>>>>>>>>>HUMAN_COMMENT: "

@@ -55,7 +55,7 @@
   //"helix_mode": true,
   "terminal": {
     "dock": "bottom",
-    "font_family": "JetBrainsMono Nerd Font",
+    "font_family": "Iosevka NF",
     "font_size": 13,
     "font_features": {
       "liga": true,
@@ -72,12 +72,12 @@
     "TypeScript": {
       "format_on_save": "on",
       "language_servers": [
-        //"tsgo",
-        "vtsls",
+        "tsgo",
+        //"vtsls",
       ],
-      "code_actions_on_format": {
-        "source.fixAll.eslint": true,
-      },
+      //"code_actions_on_format": {
+      //  "source.fixAll.eslint": true,
+      //},
       //"formatter": {
       //  "external": {
       //    "command": "prettierd",
@@ -86,15 +86,15 @@
     },
     "TSX": {
       "format_on_save": "on",
-      "formatter": {
-        "external": {
-          "command": "prettierd",
-          "arguments": ["--stdin-filepath", "{buffer_path}"],
-        },
-      },
-      "code_actions_on_format": {
-        "source.fixAll.eslint": true,
-      },
+      //"formatter": {
+      //  "external": {
+      //    "command": "prettierd",
+      //    "arguments": ["--stdin-filepath", "{buffer_path}"],
+      //  },
+      //},
+      //"code_actions_on_format": {
+      //  "source.fixAll.eslint": true,
+      //},
     },
     "CSS": {
       "format_on_save": "on",
@@ -137,9 +137,10 @@
     },
   },
   "agent_servers": {
-    "claude": {
-      "default_mode": "acceptEdits",
-    },
+    "claude-acp": {
+      "type": "registry",
+      "default_mode": "acceptEdits"
+    }
   },
   "file_scan_exclusions": [
     "**/.git",
@@ -152,5 +153,6 @@
     "**/.classpath",
     "**/.settings",
     "**/.context",
+    "**/.yarn",
   ],
 }

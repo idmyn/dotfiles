@@ -123,3 +123,7 @@ open-prose
 .jj
 
 layout.kdl
+
+.mcp.json
+.safetools.json
+.context
