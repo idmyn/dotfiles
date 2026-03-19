@@ -124,6 +124,7 @@ in
         ffmpeg
         zellij
         neovim
+        tree-sitter
         httpie
         restic
         reflex
@@ -160,6 +161,8 @@ in
         gh
 
         golangci-lint
+
+        luajit
 
         rustup
         cargo-binstall
@@ -482,6 +485,7 @@ in
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
         "nvim/init.lua".source = dotfiles/nvim/init.lua;
+        "nvim/lua".source = dotfiles/nvim/lua;
         "zellij/config.kdl".source = mkMutableSymlink dotfiles/zellij/config.kdl;
         "zellij/plugins/zsm.wasm".source = pkgs.fetchurl {
           url = "https://github.com/liam-mackie/zsm/releases/download/v0.4.1/zsm.wasm";

@@ -3,6 +3,11 @@ vim.cmd([[
 		set clipboard+=unnamedplus
 		]])
 
+vim.opt.cursorline = true
+vim.opt.signcolumn = "yes"
+vim.opt.autoread = true
+vim.opt.splitright = true
+vim.opt.wrap = false
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
@@ -65,7 +70,16 @@ else
   map("n", "<D-s>", "<cmd>w<CR>")
   map("i", "<D-s>", "<cmd>w<CR>")
   map("n", "<leader>fs", "<cmd>w<CR>")
+  map("n", "<leader>wv", "<cmd>vsplit<CR>")
+  map("n", "<leader>ws", "<cmd>split<CR>")
+  map("n", "<C-x>1", "<cmd>only<CR>")
 end
+
+-- When exiting Neovim, switch Zellij back to normal mode (for zellij-autolock)
+vim.api.nvim_create_autocmd("VimLeave", {
+  pattern = "*",
+  command = "silent !zellij action switch-mode normal",
+})
 
 
 -- Bootstrap lazy.nvim
@@ -94,27 +108,23 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
+    { import = "plugins" },
     {
       "nvim-treesitter/nvim-treesitter",
+      lazy = false,
       build = ":TSUpdate",
       config = function()
-        require("nvim-treesitter").setup({
-          ensure_installed = { "lua", "javascript", "typescript", "tsx", "html" },
-          sync_install = false,
-          highlight = { enable = false },
-          indent = { enable = false },
+        require("nvim-treesitter").install({ "lua", "javascript", "typescript", "tsx", "html" })
+        vim.api.nvim_create_autocmd("FileType", {
+          callback = function(args)
+            pcall(vim.treesitter.start, args.buf)
+          end,
         })
-      end
+      end,
     },
-    {
-      "idmyn/eink.vim",
-      priority = 1000,
-      config = function()
-        vim.cmd('colorscheme eink')
-      end
-    }
+    
   },
-  install = { colorscheme = { "eink" } },
+  install = { colorscheme = { "solarized" } },
   -- don't automatically check for plugin updates
   checker = { enabled = false },
 })
