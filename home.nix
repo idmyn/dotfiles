@@ -33,7 +33,6 @@ in
     sessionVariables = {
       LS_COLORS = "di=1;34:ln=36:so=32:pi=33:ex=1;32:bd=34;46:cd=35;47:su=30;41:sg=30;46:tw=30;42:ow=1;34";
       GLAMOUR_STYLE = "light";
-      #EDITOR = "emacsclient -q -c -a ''";
       VISUAL = "zed";
       RIPGREP_CONFIG_PATH = "$HOME/.config/ripgrep.conf";
       JUST_SUPPRESS_DOTENV_LOAD_WARNING = "1";
@@ -66,8 +65,7 @@ in
       my-scripts
       ++ (with pkgs; [
         any-nix-shell
-        #nixfmt
-        nixfmt-rfc-style
+        nixfmt
         nixd
         nil
         niv
@@ -413,12 +411,6 @@ in
 
       settings = {
         manager.show_hidden = true;
-        opener.edit = [
-          {
-            run = ''zed "$@"'';
-            block = false;
-          }
-        ];
         open.rules = [
           {
             name = "*";
