@@ -1,6 +1,5 @@
 return {
   "stevearc/conform.nvim",
-  cond = not vim.g.vscode,
   event = "BufWritePre",
   opts = {
     formatters_by_ft = {

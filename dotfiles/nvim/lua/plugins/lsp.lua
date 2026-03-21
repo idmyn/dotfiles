@@ -1,22 +1,15 @@
 return {
   {
     "mason-org/mason.nvim",
-    cond = not vim.g.vscode,
     opts = {},
   },
 
   {
     "neovim/nvim-lspconfig",
-    cond = not vim.g.vscode,
     lazy = false,
     dependencies = {
       "mason-org/mason.nvim",
-      { "ms-jpq/coq_nvim", branch = "coq" },
-      { "ms-jpq/coq.artifacts", branch = "artifacts" },
     },
-    init = function()
-      vim.g.coq_settings = { auto_start = "shut-up" }
-    end,
     config = function()
       vim.lsp.enable('tsgo')
       vim.lsp.enable('biome')

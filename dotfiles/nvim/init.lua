@@ -1,8 +1,10 @@
 vim.g.vscode_clipboard = vim.g.vscode_clipboard or "unnamedplus"
 vim.cmd([[
 		set clipboard+=unnamedplus
-		]])
+]])
 
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
 vim.opt.autoread = true
@@ -14,11 +16,8 @@ vim.opt.smartcase = true
 vim.g.mapleader = " "
 local map = vim.keymap.set
 
-local function vscode_action(action)
-  return string.format("<cmd>lua require('vscode').action('%s')<CR>", action)
-end
-
 map("n", "<esc>", "<cmd>nohl<CR>")
+map({ "n", "v" }, ";", ":")
 
 map({ "n", "v" }, "H", "^")
 map({ "n", "v" }, "L", "g_")
@@ -30,57 +29,23 @@ map("i", "<M-b>", "<Esc>bi")
 map("i", "<M-BS>", "<C-w>")
 
 if vim.g.vscode then
-  -- https://github.com/vscode-neovim/vscode-neovim/issues/1139
-  map("n", "u", "<Cmd>call VSCodeNotify('undo')<CR>")
-  map("n", "<C-r>", "<Cmd>call VSCodeNotify('redo')<CR>")
-
-  map("n", "<M-h>", vscode_action("workbench.action.focusLeftGroup"))
-  map("n", "<M-l>", vscode_action("workbench.action.focusRightGroup"))
-  map("n", "<M-j>", vscode_action("workbench.action.focusBelowGroup"))
-  map("n", "<M-k>", vscode_action("workbench.action.focusAboveGroup"))
-
-  map("n", "<C-j>", vscode_action("editor.action.wordHighlight.next"))
-  map("n", "<C-k>", vscode_action("editor.action.wordHighlight.prev"))
-
-  map("n", "<leader> ", vscode_action("workbench.action.quickOpen"))
-  map("n", "<leader>fs", vscode_action("workbench.action.files.save"))
-  map("n", "<leader>wv", vscode_action("workbench.action.splitEditorRight"))
-  map("n", "<leader>ws", vscode_action("workbench.action.splitEditorDown"))
-  map({ "n", "v" }, "<leader>sp", vscode_action("search.action.openNewEditor"))
-  map("n", "<leader>gr", vscode_action("editor.action.referenceSearch.trigger"))
-  map("n", "<leader>goo", vscode_action("gitlens.openFileOnRemote"))
-  map("n", "<leader>pp", vscode_action("projectManager.listProjects"))
-  map("n", "<leader>tz", vscode_action("workbench.action.toggleCenteredLayout"))
-  map("n", "<leader>tb", vscode_action("gitlens.toggleFileBlame"))
-  map("n", "<leader>tc", vscode_action("editor.cpp.toggle"))
-  map("n", "<leader>tp", vscode_action("workbench.actions.view.problems"))
-
-  map("n", "<leader>cr", vscode_action("editor.action.rename"))
-
-  map("n", "]q", vscode_action("go-to-next-error.nextInFiles.error"))
-  map("n", "[q", vscode_action("go-to-next-error.prevInFiles.error"))
-
-  map("n", "<C-x>",
-    vscode_action("workbench.action.closeEditorsInOtherGroups") ..
-    vscode_action("workbench.action.closeOtherEditors"))
-  map("i", "<C-x>",
-    vscode_action("workbench.action.closeEditorsInOtherGroups") ..
-    vscode_action("workbench.action.closeOtherEditors"))
-else
-  map("n", "<D-s>", "<cmd>w<CR>")
-  map("i", "<D-s>", "<cmd>w<CR>")
-  map("n", "<leader>fs", "<cmd>w<CR>")
-  map("n", "<leader>wv", "<cmd>vsplit<CR>")
-  map("n", "<leader>ws", "<cmd>split<CR>")
-  map("n", "<C-x>1", "<cmd>only<CR>")
+  require("vscode-config")
+  return
 end
+
+map("n", "<D-s>", "<cmd>w<CR>")
+map("i", "<D-s>", "<cmd>w<CR>")
+map("n", "<leader>fs", "<cmd>w<CR>")
+map("n", "<leader>wv", "<cmd>vsplit<CR>")
+map("n", "<leader>ws", "<cmd>split<CR>")
+map("n", "<C-x>1", "<cmd>only<CR>")
+map("n", "<leader>`", "<cmd>b#<CR>")
 
 -- When exiting Neovim, switch Zellij back to normal mode (for zellij-autolock)
 vim.api.nvim_create_autocmd("VimLeave", {
   pattern = "*",
   command = "silent !zellij action switch-mode normal",
 })
-
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -110,7 +75,7 @@ require("lazy").setup({
   spec = {
     { import = "plugins" },
     {
-      "nvim-treesitter/nvim-treesitter",
+      "nvim-treesitter/nvim-treesitter", 
       lazy = false,
       build = ":TSUpdate",
       config = function()
@@ -122,7 +87,7 @@ require("lazy").setup({
         })
       end,
     },
-    
+
   },
   install = { colorscheme = { "solarized" } },
   -- don't automatically check for plugin updates
