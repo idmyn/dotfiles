@@ -477,8 +477,7 @@ in
         "mise/config.toml".source = mkMutableSymlink dotfiles/mise-config.toml;
         "git".source = dotfiles/git;
         "espanso".source = dotfiles/espanso;
-        "nvim/init.lua".source = dotfiles/nvim/init.lua;
-        "nvim/lua".source = dotfiles/nvim/lua;
+        "nvim".source = mkMutableSymlink dotfiles/nvim;
         "zellij/config.kdl".source = mkMutableSymlink dotfiles/zellij/config.kdl;
         "zellij/plugins/zsm.wasm".source = pkgs.fetchurl {
           url = "https://github.com/liam-mackie/zsm/releases/download/v0.4.1/zsm.wasm";
@@ -489,8 +488,8 @@ in
         "ghostty/config".source = dotfiles/ghostty-config;
         "helix".source = dotfiles/helix;
 
-        "jj".source = dotfiles/jj;
-        "jjui".source = dotfiles/jjui;
+        "jj".source = mkMutableSymlink dotfiles/jj;
+        "jjui".source = mkMutableSymlink dotfiles/jjui;
         "gitu/config.toml".text = ''
           [bindings]
           root.discard = ["x"]
