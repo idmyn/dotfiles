@@ -30,9 +30,9 @@ keybinds {
         bind "h" { SwitchToMode "Move"; }
         bind "s" { SwitchToMode "Scroll"; }
         bind "o" { SwitchToMode "Session"; }
-        bind "q" { Quit; }
+        bind "Q" { Quit; }
         bind "z" {
-            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zellij-sessionizer.wasm" {
+            LaunchOrFocusPlugin "https://github.com/idmyn/zellij-sessionizer/releases/latest/download/zellij-sessionizer.wasm" {
                 floating true
                 move_to_focused_tab true
                 cwd "/"

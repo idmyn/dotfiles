@@ -9,6 +9,7 @@ return {
       typescriptreact = { lsp_format = "prefer", filter = function(c) return c.name == "biome" end },
       json = { lsp_format = "prefer", filter = function(c) return c.name == "biome" end },
       jsonc = { lsp_format = "prefer", filter = function(c) return c.name == "biome" end },
+      lua = { "stylua" },
     },
     format_on_save = {
       timeout_ms = 1000,

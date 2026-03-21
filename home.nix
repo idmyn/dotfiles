@@ -161,6 +161,7 @@ in
         golangci-lint
 
         luajit
+        stylua
 
         rustup
         cargo-binstall
@@ -270,7 +271,7 @@ in
         bks = "open -a 'Beekeeper Studio'";
         jiq = "jiq -q";
         prod-diff = "git fetch && git log (heroku releases -n 1 -a surfboard-app-prod --json | jq -r '.[].description' | choose 1)..origin/main --oneline";
-        drs = "darwin-rebuild switch --flake path:$HOME/.config/nixpkgs#mbp";
+        hs = "home-manager switch";
         d = "lumen diff";
         cpr = "checkout-pr";
         tug = "jj tug";
