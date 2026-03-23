@@ -5,8 +5,12 @@ return {
 		cmd = "J",
 		keys = {
 			{ "<leader>gg", "<cmd>J diff<cr>", desc = "Jujutsu diff" },
+			{ "<leader>gb", "<cmd>J annotate<cr>", desc = "Jujutsu blame" },
+			{ "<leader>goo", "<cmd>Jbrowse<cr>", desc = "Jujutsu browse" },
+			{ "<leader>gom", "<cmd>Jbrowse trunk()<cr>", desc = "Jujutsu browse trunk" },
 		},
 		config = function()
+			vim.api.nvim_set_hl(0, "JJAnnotateId", { link = "Normal" })
 			require("jj").setup({
 				editor = {
 					auto_insert = false,
@@ -21,9 +25,14 @@ return {
 		"esmuellert/codediff.nvim",
 		cmd = "CodeDiff",
 		opts = {
+			explorer = {
+				initial_focus = "modified",
+			},
 			keymaps = {
 				view = {
 					close_on_open_in_prev_tab = true,
+					next_file = "<C-j>",
+					prev_file = "<C-k>",
 				},
 			},
 			highlights = {

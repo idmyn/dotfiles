@@ -238,6 +238,7 @@ in
           "--env-pass LOKI_ADDR"
         ];
         claude = "safe claude --dangerously-skip-permissions";
+				difit = "/Users/david/src/clones/difit/dist/cli/index.js";
       };
 
       shellAbbrs = {

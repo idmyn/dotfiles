@@ -14,6 +14,7 @@ return {
     local fg = "#111111"
     local purple = "#484FD5"
     local green = "#91EE92"
+    local float_bg = "#E1E7DF"
     local hl = function(name, val)
       vim.api.nvim_set_hl(0, name, val)
     end
@@ -21,15 +22,23 @@ return {
     -- editor
     hl("Normal", { fg = fg, bg = bg })
     hl("NormalNC", { fg = fg, bg = bg })
-    hl("NormalFloat", { fg = fg, bg = bg })
-    hl("FloatBorder", { fg = "#93A1A1", bg = bg })
+    hl("NormalFloat", { fg = fg, bg = float_bg })
+    hl("FloatBorder", { fg = "#93A1A1", bg = float_bg })
     hl("SignColumn", { bg = bg })
     hl("LineNr", { fg = "#93A1A1", bg = bg })
     hl("CursorLineNr", { fg = fg, bg = bg, bold = true })
     hl("CursorLine", { bg = "#F3EDDA" })
     hl("EndOfBuffer", { fg = bg })
-    hl("Pmenu", { fg = fg, bg = "#E1E7DF" })
+    hl("Pmenu", { fg = fg, bg = float_bg })
     hl("PmenuSel", { fg = fg, bg = "#C9D1C7" })
+
+    -- snacks picker: use regular bg for large modals
+    hl("SnacksPicker", { bg = bg })
+    hl("SnacksPickerBorder", { fg = "#93A1A1", bg = bg })
+
+    -- bqf preview
+    hl("BqfPreviewFloat", { fg = fg, bg = bg })
+    hl("BqfPreviewBorder", { fg = "#93A1A1", bg = bg })
 
     -- gitsigns
     hl("GitSignsAdd", { fg = "#859900", bg = bg })

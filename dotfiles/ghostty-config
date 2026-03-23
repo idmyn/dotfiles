@@ -22,3 +22,4 @@ keybind = opt+three=text:#
 # used by zellij
 keybind = cmd+t=unbind
 keybind = cmd+p=unbind
+keybind = cmd+f=unbind

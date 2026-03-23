@@ -18,8 +18,8 @@
         {:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt :!keyboardio {:alone :tab}]]}
 
-        {:des   "everywhere: left cmd alone to backspace"
-         :rules [[:##left_command :left_command :!keyboardio {:alone :delete_or_backspace}]]}
+        ; {:des   "everywhere: left cmd alone to backspace"
+        ;  :rules [[:##left_command :left_command :!keyboardio {:alone :delete_or_backspace}]]}
 
         {:des   "everywhere: caps_lock to esc when pressed alone, to ctrl as modifier"
          :rules [[:##caps_lock :left_control :!keyboardio {:alone :escape}]]}
