@@ -12,10 +12,7 @@
 
  :devices {:keyboardio [{:vendor_id 13462 :product_id 6}]}
 
- :main [{:des   "everywhere: right cmd alone to enter, and to 'hyper' as modifier"
-         :rules [[:right_command :!TOSleft_command :!keyboardio {:alone :return_or_enter}]]}
-
-        {:des   "everywhere: tab to opt/meta as modifier"
+ :main [{:des   "everywhere: tab to opt/meta as modifier"
          :rules [[:#Ttab :left_alt :!keyboardio {:alone :tab}]]}
 
         ; {:des   "everywhere: left cmd alone to backspace"
@@ -24,18 +21,56 @@
         {:des   "everywhere: caps_lock to esc when pressed alone, to ctrl as modifier"
          :rules [[:##caps_lock :left_control :!keyboardio {:alone :escape}]]}
 
-        {:des "navigation layer (left option)"
-         :rules [[:left_option ["navigation" 1] :!keyboardio {:afterup ["navigation" 0]}]
-                 [:##y :home [:!keyboardio :navigation]]
-                 [:##u :page_down [:!keyboardio :navigation]]
-                 [:##i :page_up [:!keyboardio :navigation]]
-                 [:##o :end [:!keyboardio :navigation]]
-                 [:##h :left_arrow [:!keyboardio :navigation]]
-                 [:##j :down_arrow [:!keyboardio :navigation]]
-                 [:##k :up_arrow [:!keyboardio :navigation]]
-                 [:##l :right_arrow [:!keyboardio :navigation]]
-                 [:tab :left_alt [:!keyboardio :navigation]]
-                 [:##3 :!O3 [:!keyboardio :navigation]]]}
+        {:des "right cmd: tap=enter, hold=nav, hold+lcmd=hyper"
+         :rules [[:##right_command ["rcommand" 1] :!keyboardio {:afterup ["rcommand" 0] :alone :return_or_enter}]
+                 ;; hyper (right cmd + left cmd + key → cmd+ctrl+opt+shift+key)
+                 [:!Ca :!CTOSa [:!keyboardio :rcommand]]
+                 [:!Cb :!CTOSb [:!keyboardio :rcommand]]
+                 [:!Cc :!CTOSc [:!keyboardio :rcommand]]
+                 [:!Cd :!CTOSd [:!keyboardio :rcommand]]
+                 [:!Ce :!CTOSe [:!keyboardio :rcommand]]
+                 [:!Cf :!CTOSf [:!keyboardio :rcommand]]
+                 [:!Cg :!CTOSg [:!keyboardio :rcommand]]
+                 [:!Ch :!CTOSh [:!keyboardio :rcommand]]
+                 [:!Ci :!CTOSi [:!keyboardio :rcommand]]
+                 [:!Cj :!CTOSj [:!keyboardio :rcommand]]
+                 [:!Ck :!CTOSk [:!keyboardio :rcommand]]
+                 [:!Cl :!CTOSl [:!keyboardio :rcommand]]
+                 [:!Cm :!CTOSm [:!keyboardio :rcommand]]
+                 [:!Cn :!CTOSn [:!keyboardio :rcommand]]
+                 [:!Co :!CTOSo [:!keyboardio :rcommand]]
+                 [:!Cp :!CTOSp [:!keyboardio :rcommand]]
+                 [:!Cq :!CTOSq [:!keyboardio :rcommand]]
+                 [:!Cr :!CTOSr [:!keyboardio :rcommand]]
+                 [:!Cs :!CTOSs [:!keyboardio :rcommand]]
+                 [:!Ct :!CTOSt [:!keyboardio :rcommand]]
+                 [:!Cu :!CTOSu [:!keyboardio :rcommand]]
+                 [:!Cv :!CTOSv [:!keyboardio :rcommand]]
+                 [:!Cw :!CTOSw [:!keyboardio :rcommand]]
+                 [:!Cx :!CTOSx [:!keyboardio :rcommand]]
+                 [:!Cy :!CTOSy [:!keyboardio :rcommand]]
+                 [:!Cz :!CTOSz [:!keyboardio :rcommand]]
+                 [:!C1 :!CTOS1 [:!keyboardio :rcommand]]
+                 [:!C2 :!CTOS2 [:!keyboardio :rcommand]]
+                 [:!C3 :!CTOS3 [:!keyboardio :rcommand]]
+                 [:!C4 :!CTOS4 [:!keyboardio :rcommand]]
+                 [:!C5 :!CTOS5 [:!keyboardio :rcommand]]
+                 [:!C6 :!CTOS6 [:!keyboardio :rcommand]]
+                 [:!C7 :!CTOS7 [:!keyboardio :rcommand]]
+                 [:!C8 :!CTOS8 [:!keyboardio :rcommand]]
+                 [:!C9 :!CTOS9 [:!keyboardio :rcommand]]
+                 [:!C0 :!CTOS0 [:!keyboardio :rcommand]]
+                 ;; nav (right cmd alone + key)
+                 [:##y :home [:!keyboardio :rcommand]]
+                 [:##u :page_down [:!keyboardio :rcommand]]
+                 [:##i :page_up [:!keyboardio :rcommand]]
+                 [:##o :end [:!keyboardio :rcommand]]
+                 [:##h :left_arrow [:!keyboardio :rcommand]]
+                 [:##j :down_arrow [:!keyboardio :rcommand]]
+                 [:##k :up_arrow [:!keyboardio :rcommand]]
+                 [:##l :right_arrow [:!keyboardio :rcommand]]
+                 [:tab :left_alt [:!keyboardio :rcommand]]
+                 [:##3 :!O3 [:!keyboardio :rcommand]]]}
 
         {:des "workman dead state"
          :rules [[:comma ["dead-state" 1] :!dead-state]
