@@ -1,16 +1,42 @@
+local function wide_vertical(preview_height)
+	return {
+		layout = {
+			backdrop = false,
+			width = 0.8,
+			min_width = 80,
+			height = 0.8,
+			min_height = 30,
+			box = "vertical",
+			border = true,
+			title = "{title} {live} {flags}",
+			title_pos = "center",
+			{ win = "input", height = 1, border = "bottom" },
+			{ win = "list", border = "none" },
+			{ win = "preview", title = "{preview}", height = preview_height, border = "top" },
+		},
+	}
+end
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
 	---@type snacks.Config
 	opts = {
-		picker = { enabled = true },
+		picker = {
+			enabled = true,
+			formatters = {
+				file = {
+					truncate = "left",
+				},
+			},
+		},
 	},
 	keys = {
 		{
 			"gr",
 			function()
-				Snacks.picker.lsp_references()
+				Snacks.picker.lsp_references({ layout = wide_vertical(0.8) })
 			end,
 			nowait = true,
 			desc = "References",
@@ -30,9 +56,16 @@ return {
 			desc = "Diagnostics",
 		},
 		{
+			"<leader>pp",
+			function()
+				Snacks.picker.projects()
+			end,
+			desc = "projects",
+		},
+		{
 			"<leader>fr",
 			function()
-				Snacks.picker.recent()
+				Snacks.picker.recent({ layout = wide_vertical(0.6) })
 			end,
 			desc = "recent",
 		},

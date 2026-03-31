@@ -1,25 +1,27 @@
 return {
 	{
-		"nicolasgb/jj.nvim",
-		version = "*",
-		cmd = "J",
-		keys = {
-			{ "<leader>gg", "<cmd>J diff<cr>", desc = "Jujutsu diff" },
-			{ "<leader>gb", "<cmd>J annotate<cr>", desc = "Jujutsu blame" },
-			{ "<leader>goo", "<cmd>Jbrowse<cr>", desc = "Jujutsu browse" },
-			{ "<leader>gom", "<cmd>Jbrowse trunk()<cr>", desc = "Jujutsu browse trunk" },
+		"NicholasZolton/neojj",
+		lazy = true,
+		dependencies = {
+			"nvim-lua/plenary.nvim",
 		},
-		config = function()
-			vim.api.nvim_set_hl(0, "JJAnnotateId", { link = "Normal" })
-			require("jj").setup({
-				editor = {
-					auto_insert = false,
-				},
-				diff = {
-					backend = "codediff",
-				},
-			})
-		end,
+		cmd = "Neojj",
+		keys = {
+			{ "<leader>gg", "<cmd>Neojj<cr>", desc = "Show Neojj UI" },
+		},
+		opts = {
+			highlight = {
+				red = "#DC322F",
+				orange = "#CB4B16",
+				yellow = "#B58900",
+				green = "#5a7400",
+				cyan = "#2AA198",
+				blue = "#268BD2",
+				purple = "#6C71C4",
+				line_red = "#f8d7da",
+				line_green = "#d4edda",
+			},
+		},
 	},
 	{
 		"esmuellert/codediff.nvim",
