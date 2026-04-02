@@ -31,28 +31,56 @@ map("i", "<C-f>", "<Right>")
 -- Option+backspace to delete word backwards
 map("i", "<M-BS>", "<C-w>")
 
+if vim.g.neovide then
+  local socket_path = "/tmp/nvim-server.sock"
+  local ok = pcall(vim.fn.serverstart, socket_path)
+  if not ok then
+    vim.defer_fn(function()
+      vim.notify("Neovim server already running on " .. socket_path, vim.log.levels.WARN)
+    end, 0)
+  end
+
+  vim.g.neovide_position_animation_length = 0
+  vim.g.neovide_cursor_animation_length = 0.00
+  vim.g.neovide_cursor_trail_size = 0
+  vim.g.neovide_cursor_animate_in_insert_mode = false
+  vim.g.neovide_cursor_animate_command_line = false
+  vim.g.neovide_scroll_animation_far_lines = 0
+  vim.g.neovide_scroll_animation_length = 0.00
+
+  vim.o.guifont = "Iosevka SS09:h16:#e-subpixelantialias:#h-slight"
+
+  vim.g.neovide_input_macos_option_key_is_meta = "both"
+  vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
+  vim.keymap.set("v", "<D-c>", '"+y')    -- Copy
+  vim.keymap.set("n", "<D-v>", '"+P')    -- Paste normal mode
+  vim.keymap.set("v", "<D-v>", '"+P')    -- Paste visual mode
+  vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
+  vim.keymap.set("i", "<D-v>", "<C-R>+") -- Paste insert mode
+end
+
 if vim.g.vscode then
-	require("vscode-config")
-	return
+  require("vscode-config")
+  return
 end
 
 map("n", "<D-s>", "<cmd>w<CR>")
 map("i", "<D-s>", "<cmd>w<CR>")
 map("n", "<leader>fs", "<cmd>w<CR>", { desc = "save" })
 map("n", "<leader>fy", function()
-	local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
-	vim.fn.setreg("+", path)
-	vim.notify(path, vim.log.levels.INFO, { title = "Copied path" })
+  local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
+  vim.fn.setreg("+", path)
+  vim.notify(path, vim.log.levels.INFO, { title = "Copied path" })
 end, { desc = "yank path" })
 map("n", "<leader>wv", "<cmd>vsplit<CR>")
 map("n", "<leader>ws", "<cmd>split<CR>")
 map("n", "<C-x>1", function()
-	local cur = vim.api.nvim_get_current_win()
-	for _, win in ipairs(vim.api.nvim_list_wins()) do
-		if win ~= cur and vim.fn.getwininfo(win)[1].quickfix == 0 then
-			vim.api.nvim_win_close(win, false)
-		end
-	end
+  local cur = vim.api.nvim_get_current_win()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if win ~= cur and vim.fn.getwininfo(win)[1].quickfix == 0 then
+      vim.api.nvim_win_close(win, false)
+    end
+  end
 end)
 map("n", "<leader>`", "<cmd>b#<CR>")
 
@@ -67,24 +95,24 @@ map("n", "<C-p>", "<cmd>cprev<CR>")
 
 -- When exiting Neovim, switch Zellij back to normal mode (for zellij-autolock)
 vim.api.nvim_create_autocmd("VimLeave", {
-	pattern = "*",
-	command = "silent !zellij action switch-mode normal",
+  pattern = "*",
+  command = "silent !zellij action switch-mode normal",
 })
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-	if vim.v.shell_error ~= 0 then
-		vim.api.nvim_echo({
-			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
-			{ "\nPress any key to exit..." },
-		}, true, {})
-		vim.fn.getchar()
-		os.exit(1)
-	end
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out,                            "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -96,23 +124,23 @@ vim.g.maplocalleader = "\\"
 
 -- Setup lazy.nvim
 require("lazy").setup({
-	spec = {
-		{ import = "plugins" },
-		{
-			"nvim-treesitter/nvim-treesitter",
-			lazy = false,
-			build = ":TSUpdate",
-			config = function()
-				require("nvim-treesitter").install({ "lua", "javascript", "typescript", "tsx", "html" })
-				vim.api.nvim_create_autocmd("FileType", {
-					callback = function(args)
-						pcall(vim.treesitter.start, args.buf)
-					end,
-				})
-			end,
-		},
-	},
-	install = { colorscheme = { "solarized" } },
-	-- don't automatically check for plugin updates
-	checker = { enabled = false },
+  spec = {
+    { import = "plugins" },
+    {
+      "nvim-treesitter/nvim-treesitter",
+      lazy = false,
+      build = ":TSUpdate",
+      config = function()
+        require("nvim-treesitter").install({ "lua", "javascript", "typescript", "tsx", "html" })
+        vim.api.nvim_create_autocmd("FileType", {
+          callback = function(args)
+            pcall(vim.treesitter.start, args.buf)
+          end,
+        })
+      end,
+    },
+  },
+  install = { colorscheme = { "solarized" } },
+  -- don't automatically check for plugin updates
+  checker = { enabled = false },
 })

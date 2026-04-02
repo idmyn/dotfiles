@@ -24,6 +24,20 @@ return {
 		},
 	},
 	{
+		"NicolasGB/jj.nvim",
+		keys = {
+			{
+				"<leader>gb",
+				function() require("jj.annotate").file() end,
+				desc = "JJ blame file",
+			},
+			{ "<leader>goo", "<cmd>Jbrowse<cr>", desc = "JJ browse" },
+			{ "<leader>goo", ":<C-u>Jbrowse<cr>", mode = "v", desc = "JJ browse selection" },
+			{ "<leader>gom", "<cmd>Jbrowse trunk()<cr>", desc = "JJ browse trunk" },
+		},
+		opts = {},
+	},
+	{
 		"esmuellert/codediff.nvim",
 		cmd = "CodeDiff",
 		opts = {
