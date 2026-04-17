@@ -55,10 +55,9 @@
   //"helix_mode": true,
   "terminal": {
     "dock": "bottom",
-    "font_family": "Iosevka NF",
+    "font_family": "IosevkaTerm NFM",
     "font_size": 13,
     "font_features": {
-      "liga": true,
       "kern": true,
       "calt": true,
     },
@@ -71,10 +70,7 @@
   "languages": {
     "TypeScript": {
       "format_on_save": "on",
-      "language_servers": [
-        "tsgo",
-        //"vtsls",
-      ],
+      "language_servers": ["tsgo", "!vtsls"],
       //"code_actions_on_format": {
       //  "source.fixAll.eslint": true,
       //},
@@ -86,6 +82,7 @@
     },
     "TSX": {
       "format_on_save": "on",
+      "language_servers": ["tsgo", "!vtsls"],
       //"formatter": {
       //  "external": {
       //    "command": "prettierd",
@@ -121,26 +118,26 @@
         },
       },
     },
-    "vtsls": {
-      "settings": {
-        "typescript": {
-          "tsserver": {
-            "experimental": {
-              "enableProjectDiagnostics": true,
-            },
-          },
-          "updateImportsOnFileMove": {
-            "enabled": "always",
-          },
-        },
-      },
-    },
+    //"vtsls": {
+    //  "settings": {
+    //    "typescript": {
+    //      "tsserver": {
+    //        "experimental": {
+    //          "enableProjectDiagnostics": true,
+    //        },
+    //      },
+    //      "updateImportsOnFileMove": {
+    //        "enabled": "always",
+    //      },
+    //    },
+    //  },
+    //},
   },
   "agent_servers": {
     "claude-acp": {
       "type": "registry",
-      "default_mode": "acceptEdits"
-    }
+      "default_mode": "acceptEdits",
+    },
   },
   "file_scan_exclusions": [
     "**/.git",

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+items=()
+while IFS= read -r line || [ -n "$line" ]; do
+  item="${line//[[:space:]]/}"
+  [ -n "$item" ] && items+=("$item")
+done < "${1:-/dev/stdin}"
+
+[ ${#items[@]} -gt 0 ] && jj bookmark forget "${items[@]}"

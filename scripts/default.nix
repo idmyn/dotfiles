@@ -28,6 +28,7 @@ let
     (scriptsFile "zellij-sessionizer")
     (scriptsFile "ai-review")
     (scriptsFile "idea-merge")
+    (scriptsFile "jj-forget-bookmarks")
   ];
 
 in

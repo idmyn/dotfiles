@@ -20,6 +20,7 @@ email = "david.mynors@attio.com"
 
 [ui]
 editor = "nvim"
+#diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
 diff-editor = ":builtin"
 diff-formatter = ["difft", "--color=always", "$left", "$right"]
 default-command = "status"
@@ -36,7 +37,7 @@ program = "idea-merge"
 merge-args = ["$left", "$right", "$base", "$output"]
 
 [remotes.origin]
-auto-track-bookmarks = "glob:*"
+auto-track-created-bookmarks = "*"
 
 [template-aliases]
 'format_short_change_id(id)' = 'id.shortest()'

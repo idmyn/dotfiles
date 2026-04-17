@@ -38,6 +38,8 @@ in
       JUST_SUPPRESS_DOTENV_LOAD_WARNING = "1";
       LDFLAGS = "-L/usr/local/opt/python@3.10/lib"; # for x86_64 homebrew python
       KALEIDOSCOPE_DIR = "$HOME/src/personal/kaleidoscope";
+      ANDROID_HOME = "$HOME/Library/Android/sdk";
+      JAVA_HOME = "/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home";
       PNPM_HOME = "$HOME/.pnpm-bin";
       ENABLE_CLAUDEAI_MCP_SERVERS = "false";
       HUSKY = "0";
@@ -56,6 +58,9 @@ in
       "$HOME/.orbstack/bin"
       "/usr/local/opt/python@3.10/bin" # for x86_64 homebrew
       "$KALEIDOSCOPE_DIR/bin"
+      "$ANDROID_HOME/emulator"
+      "$ANDROID_HOME/cmdline-tools/latest/bin"
+      "$ANDROID_HOME/platform-tools"
       "/Applications/Emacs.app/Contents/MacOS"
       "/Applications/Emacs.app/Contents/MacOS/bin"
       "/Applications/IntelliJ IDEA.app/Contents/MacOS"
@@ -80,7 +85,10 @@ in
 
         poetry
         python313
+        pipx
 
+        fontconfig
+        coreutils-prefixed
         emacs-lsp-booster
 
         conduktor-ctl
@@ -237,8 +245,9 @@ in
           "--add-dirs-ro='~/src:~/.config/home-manager:~/.local/bin/safehouse'"
           "--env-pass LOKI_ADDR"
         ];
-        claude = "safe claude --dangerously-skip-permissions";
-				difit = "/Users/david/src/clones/difit/dist/cli/index.js";
+        claude = "CLAUDE_CODE_NO_FLICKER=1 safe claude --dangerously-skip-permissions";
+        agent = "safe agent --yolo";
+        difit = "/Users/david/src/clones/difit/dist/cli/index.js";
       };
 
       shellAbbrs = {
