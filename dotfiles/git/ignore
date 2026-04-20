@@ -127,5 +127,6 @@ layout.kdl
 .mcp.json
 .safetools.json
 .context
+prompts
 
 tmp

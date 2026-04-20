@@ -29,6 +29,7 @@ let
     (scriptsFile "ai-review")
     (scriptsFile "idea-merge")
     (scriptsFile "jj-forget-bookmarks")
+    (scriptsFile "jj-branch-diff")
   ];
 
 in

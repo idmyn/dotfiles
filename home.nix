@@ -245,7 +245,7 @@ in
           "--add-dirs-ro='~/src:~/.config/home-manager:~/.local/bin/safehouse'"
           "--env-pass LOKI_ADDR"
         ];
-        claude = "CLAUDE_CODE_NO_FLICKER=1 safe claude --dangerously-skip-permissions";
+        claude = "CLAUDE_CODE_NO_FLICKER=1 safe claude --dangerously-skip-permissions --system-prompt '.'";
         agent = "safe agent --yolo";
         difit = "/Users/david/src/clones/difit/dist/cli/index.js";
       };

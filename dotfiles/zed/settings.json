@@ -1,8 +1,18 @@
 {
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
   "diff_view_style": "unified",
   "tab_size": 2,
   "use_system_window_tabs": true,
   "agent": {
+    "dock": "right",
     "tool_permissions": {
       "default": "allow",
     },
@@ -26,7 +36,8 @@
     "mode": "eager",
     "disabled_globs": [".env", ".envrc", ".env*"],
   },
-  "collaboration_panel": { "button": false },
+  "collaboration_panel": { "dock": "left",
+                           "button": false },
   "notification_panel": { "button": false },
   "theme": "eink",
   "tab_bar": {
